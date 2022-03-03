@@ -5,7 +5,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import Container from 'react-bootstrap/Container';
 import { Link } from 'react-router-dom';
 
-const NavBar: FC<any> = (props) => {
+const NavBar: FC<any> = () => {
 	return (
 		<Navbar bg="dark" variant="dark" expand="lg">
 			<Container>
