@@ -2,12 +2,12 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css';
-import NavBar from './components/common/navbar';
-import Pricing from './components/pages/pricing';
-import NotFound from './components/pages/notFound';
-import About from './components/pages/about';
-import Contact from './components/pages/contact';
-import Home from './components/pages/home';
+import NavBar from './components/common/Navbar';
+import Pricing from './pages/Pricing';
+import NotFound from './pages/NotFound';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Home from './pages/Home';
 
 function App() {
 	return (
