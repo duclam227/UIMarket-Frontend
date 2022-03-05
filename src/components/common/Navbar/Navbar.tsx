@@ -24,6 +24,9 @@ const NavBar: FC<any> = () => {
 						<Nav.Link as={Link} to="/contact">
 							Contact Us
 						</Nav.Link>
+						<Nav.Link as={Link} to="/home/ask">
+							Ask a question
+						</Nav.Link>
 						<NavDropdown title="⚙ Item One" id="basic-nav-dropdown">
 							<NavDropdown.Item href="#action/3.1">Some link</NavDropdown.Item>
 							<NavDropdown.Item href="#action/3.2">
