@@ -1,0 +1,40 @@
+.container {
+	position: relative;
+	min-height: 100vh;
+}
+
+.title {
+	margin: 40px 0 15px 15px;
+	font-weight: 600;
+}
+
+.mainContent {
+	background-color: rgb(245, 245, 245);
+	min-height: 100vh;
+}
+
+.tabContainer {
+	display: flex;
+	flex-direction: row;
+	gap: 5px;
+}
+
+.tabItem {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	text-decoration: none;
+
+	padding: 5px 10px;
+
+	border: none;
+}
+
+.tabItem.active {
+	background-color: white;
+
+	border: 1px solid lightgray;
+	border-bottom: none;
+	border-radius: 3px 3px 0 0;
+}
