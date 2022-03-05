@@ -1,0 +1,14 @@
+.page-container {
+	/* border: 2px cornflowerblue dashed; */
+}
+
+.page-title {
+	position: relative;
+	left: 0.45em;
+	margin: 1em 0em;
+}
+
+.ck-editor__editable_inline {
+	min-height: 10em;
+	max-height: 30em;
+}
