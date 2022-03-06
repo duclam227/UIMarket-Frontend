@@ -3,6 +3,8 @@ import { FC } from 'react';
 import { Card } from 'react-bootstrap';
 import { question } from '../../app/util/interfaces';
 
+import style from './QuestionList.module.css';
+
 interface Props {
   questionsList: Array<question>
 }
@@ -28,9 +30,9 @@ const QuestionList: FC<Props> = (props) => {
 
   return (
     <>
-      <Container fluid='sm'>
+      <div className={style.container}>
         {renderQuestions()}
-      </Container>
+      </div>
     </>
   );
 };
