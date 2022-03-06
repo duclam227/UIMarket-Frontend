@@ -1,8 +1,7 @@
-import Container from 'react-bootstrap/Container';
 import { FC } from 'react';
 import { Card } from 'react-bootstrap';
-import { question } from '../../app/util/interfaces';
 
+import { question } from '../../app/util/interfaces';
 import style from './QuestionList.module.css';
 
 interface Props {
