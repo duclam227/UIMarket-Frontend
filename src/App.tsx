@@ -3,13 +3,14 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css';
 import { Navbar } from './components';
-import { AboutUsPage, ContactUsPage, QuestionListsPage, NotFoundPage, PricingPage } from './pages';
+import { AboutUsPage, ContactUsPage, QuestionListsPage, NotFoundPage, PricingPage, LoginPage } from './pages';
 
 function App() {
 	return (
 		<div className='App'>
-			<Navbar />
+			{/* <Navbar /> */}
 			<Routes>
+				<Route path='/login' element={<LoginPage />} />
 				<Route path='/about' element={<AboutUsPage />} />
 				<Route path='/contact' element={<ContactUsPage />} />
 				<Route path='/pricing' element={<PricingPage />} />
