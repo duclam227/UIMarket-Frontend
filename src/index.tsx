@@ -5,11 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+import { LanguageWrapper } from './components';
+
 ReactDOM.render(
 	<React.StrictMode>
-		<BrowserRouter>
-			<App />
-		</BrowserRouter>
+		<LanguageWrapper>
+			<BrowserRouter>
+				<App />
+			</BrowserRouter>
+		</LanguageWrapper>
 	</React.StrictMode>,
 	document.getElementById('root'),
 );

@@ -2,24 +2,21 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css';
-import NavBar from './components/common/Navbar';
-import Pricing from './pages/Pricing';
-import NotFound from './pages/NotFound';
-import About from './pages/About';
-import Contact from './pages/Contact';
-import Home from './pages/Home';
+import { Navbar } from './components';
+import { AboutUsPage, ContactUsPage, QuestionListsPage, NotFoundPage, PricingPage, LoginPage } from './pages';
 
 function App() {
 	return (
-		<div className="App">
-			<NavBar></NavBar>
+		<div className='App'>
+			{/* <Navbar /> */}
 			<Routes>
-				<Route path="/about" element={<About />}></Route>
-				<Route path="/contact" element={<Contact />}></Route>
-				<Route path="/pricing" element={<Pricing />}></Route>
-				<Route path="/home" element={<Home />}></Route>
-				<Route path="/" element={<Navigate replace to="/home" />}></Route>
-				<Route path="*" element={<NotFound />}></Route>
+				<Route path='/login' element={<LoginPage />} />
+				<Route path='/about' element={<AboutUsPage />} />
+				<Route path='/contact' element={<ContactUsPage />} />
+				<Route path='/pricing' element={<PricingPage />} />
+				<Route path='/questions/*' element={<QuestionListsPage />} />
+				<Route path='/' element={<Navigate replace to='/questions' />} />
+				<Route path='*' element={<NotFoundPage />} />
 			</Routes>
 		</div>
 	);

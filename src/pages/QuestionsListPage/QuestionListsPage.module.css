@@ -1,0 +1,64 @@
+@import '../../app/util/colors.css';
+
+.container {
+	height: 100%;
+
+	display: grid;
+	grid-template-columns: 1fr 3.5fr 1fr;
+}
+
+.title {
+	margin: 40px 0 30px 15px;
+	font-weight: 600;
+}
+
+.mainContent {
+	grid-column: 2;
+	background-color: var(--gray);
+}
+
+.tabContainer {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	gap: 5px;
+}
+
+.tabItem {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 5px 10px;
+
+	border: 1px solid transparent;
+	text-decoration: none;
+}
+
+.tabItem.active {
+	position: relative;
+	background-color: white;
+
+	border: 1px solid lightgray;
+	border-bottom: none;
+	border-radius: 3px 3px 0 0;
+
+	z-index: 5;
+}
+
+.tabItem.active::before {
+	content: '';
+	position: absolute;
+	bottom: -1px;
+	width: 100%;
+	border-bottom: white solid 2px;
+}
+
+.questionsList {
+	margin: 0 10px;
+
+	background-color: white;
+	border: 1px solid lightgray;
+	border-radius: 3px;
+
+	min-height: 100px;
+}

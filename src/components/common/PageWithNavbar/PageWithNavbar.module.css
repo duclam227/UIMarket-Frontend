@@ -1,0 +1,11 @@
+@import '../../../app/util/colors.css';
+
+.pageWrapper {
+	display: flex;
+	flex-flow: column;
+	height: 100%;
+}
+
+.pageContainer {
+	flex-grow: 1;
+}

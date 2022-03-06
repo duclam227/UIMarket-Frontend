@@ -1,0 +1,11 @@
+.loginFormContainer {
+	display: flex;
+	flex-direction: column;
+
+	width: 60%;
+}
+
+.title {
+	margin: 40px 0 25px 0;
+	font-weight: 600;
+}
