@@ -2,13 +2,9 @@ import classNames from 'classnames';
 import { FC } from 'react';
 import Container from 'react-bootstrap/Container';
 import { NavLink } from 'react-router-dom';
+import { navigatorTabItem } from '../../app/util/interfaces';
 
 import style from './QuestionListsPage.module.css';
-
-interface navigatorTabItem {
-  path: string,
-  label: string,
-}
 
 interface Props {
   tabList: Array<navigatorTabItem>;
