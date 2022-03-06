@@ -1,3 +1,4 @@
+export { default as LanguageWrapper } from './LanguageWrapper/LanguageWrapper';
 export { default as QuestionList } from './QuestionList/QuestionList';
 
 /* =============== Common =============== */

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 import QuestionListsPageNavigator from './QuestionListsPageNavigator';
 import { QuestionList, PageWithNavbar } from '../../components';
@@ -28,7 +29,9 @@ const QuestionListsPage: FC = () => {
 			<PageWithNavbar>
 				<div className={style.container}>
 					<div className={style.mainContent}>
-						<h1 className={style.title}>All Questions</h1>
+						<h1 className={style.title}>
+							<FormattedMessage id="QuestionListsPage.title" defaultMessage="All Questions" />
+						</h1>
 						<QuestionListsPageNavigator tabList={tabList} />
 
 						<div className={style.questionsList}>
