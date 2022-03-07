@@ -1,0 +1,14 @@
+@import '../../app/util/colors.css';
+.pageContainer {
+  /* display: grid to prevent margin collapsing */
+}
+
+.pageTitle {
+  position: relative;
+  left: 0.45em;
+  margin: 1em 0em;
+}
+
+.whatever {
+  display: inline-flex;
+}
