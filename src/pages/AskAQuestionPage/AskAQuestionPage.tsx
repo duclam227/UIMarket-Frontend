@@ -9,7 +9,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import { post } from '../../app/util/interfaces';
+import { question } from '../../app/util/interfaces';
 
 import { PageWithNavbar } from '../../components';
 
@@ -25,17 +25,18 @@ const Ask = () => {
   const topUpGroupClassName =
     'd-flex flex-column align-items-end justify-content-evenly';
 
-  const [post, setPost] = useState<post>({
+  const [question, setQuestion] = useState<question>({
     title: '',
     body: '',
     tags: [],
     bounty: 0,
+    question: '',
   });
 
   const [balance, setBalance] = useState<number>(0);
 
   const handleChange = ({ currentTarget: input }: any) => {
-    setPost({ ...post, [input.id]: input.value });
+    setQuestion({ ...question, [input.id]: input.value });
   };
 
   return (
@@ -65,7 +66,7 @@ const Ask = () => {
                   editor={ClassicEditor}
                   name="body"
                   onChange={(event: SyntheticEvent, editor: any): void => {
-                    setPost({ ...post, body: editor.getData() });
+                    setQuestion({ ...question, body: editor.getData() });
                   }}
                 ></CKEditor>
               </Form.Group>
