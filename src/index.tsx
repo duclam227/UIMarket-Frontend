@@ -1,19 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+
+import App from './App';
+import { LanguageWrapper } from './components';
+import store from './redux/store';
+
+import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import { LanguageWrapper } from './components';
 
 ReactDOM.render(
 	<React.StrictMode>
 		<LanguageWrapper>
-			<BrowserRouter>
-				<App />
-			</BrowserRouter>
+			<Provider store={store}>
+				<BrowserRouter>
+					<App />
+				</BrowserRouter>
+			</Provider>
 		</LanguageWrapper>
 	</React.StrictMode>,
 	document.getElementById('root'),
