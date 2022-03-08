@@ -1,4 +1,8 @@
 {
+  "LoginForm.emailLabel": "Email",
+  "LoginForm.logInWithGoogleLabel": "Continue with Google",
+  "LoginForm.logInWithFacebookLabel": "Continue with Facebook",
+  "LoginForm.passwordLabel": "Password",
   "LoginForm.title": "Sign in",
   "QuestionListsPage.title": "All Questions"
 }
