@@ -2,10 +2,16 @@
 	display: flex;
 	flex-direction: column;
 
-	width: 60%;
+	width: 50%;
 }
 
 .title {
 	margin: 40px 0 25px 0;
 	font-weight: 600;
+}
+
+.otherIdpButtonRow {
+	display: flex;
+	flex-direction: row;
+	gap: 15px;
 }
