@@ -1,5 +1,5 @@
 export {
-  signIn,
-  signOut,
+  logIn,
+  logOut,
   setActiveUser
 } from './auth/authActions';

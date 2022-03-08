@@ -20,7 +20,7 @@ const setError = (msg) => {
   }
 }
 
-const signIn = (credentials) => {
+const logIn = (credentials) => {
   return async (dispatch) => {
     dispatch(setError(null));
     try {
@@ -39,11 +39,11 @@ const signIn = (credentials) => {
   }
 }
 
-const signOut = () => {
+const logOut = () => {
   return (dispatch) => {
     localStorage.clear();
     dispatch(setUserToNull());
   }
 }
 
-export { signIn, signOut, setActiveUser };
+export { logIn, logOut, setActiveUser };
