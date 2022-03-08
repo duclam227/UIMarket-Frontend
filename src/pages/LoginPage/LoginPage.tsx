@@ -12,7 +12,9 @@ const LoginPage: FC = () => {
           <div className={style.loginPageCover}>
             image
           </div>
-          <LoginForm />
+          <div className={style.loginForm}>
+            <LoginForm />
+          </div>
         </div>
       </PageWithNavbar>
     </>
