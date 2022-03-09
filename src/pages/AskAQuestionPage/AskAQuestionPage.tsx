@@ -1,9 +1,9 @@
 import { SyntheticEvent, useState } from 'react';
 import classNames from 'classnames';
+import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -34,17 +34,26 @@ const Ask = ({ intl }: any) => {
     />
   );
   const questionTitle = (
-    <FormattedMessage id="AskAQuestionPage.questionTitle" defaultMessage="Title" />
+    <FormattedMessage
+      id="AskAQuestionPage.questionTitle"
+      defaultMessage="Title"
+    />
   );
   const questionTitlePlaceholder = intl.formatMessage({
     id: 'AskAQuestionPage.questionTitlePlaceholder',
     defaultMessage: 'e.g How do I...',
   });
   const questionBody = (
-    <FormattedMessage id="AskAQuestionPage.questionBody" defaultMessage="Body" />
+    <FormattedMessage
+      id="AskAQuestionPage.questionBody"
+      defaultMessage="Body"
+    />
   );
   const questionTags = (
-    <FormattedMessage id="AskAQuestionPage.questionTags" defaultMessage="Tags" />
+    <FormattedMessage
+      id="AskAQuestionPage.questionTags"
+      defaultMessage="Tags"
+    />
   );
   const questionTagsPlaceholder = intl.formatMessage({
     id: 'AskAQuestionPage.questionTagsPlaceholder',
@@ -125,7 +134,7 @@ const Ask = ({ intl }: any) => {
                   <h4>{questionBody}</h4>
                 </Form.Label>
                 <CKEditor
-                  editor={ClassicEditor}
+                  editor={Editor}
                   name="body"
                   onChange={(event: SyntheticEvent, editor: any): void => {
                     setQuestion({ ...question, body: editor.getData() });
