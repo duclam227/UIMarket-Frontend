@@ -24,5 +24,17 @@
   "SignupForm.signIn": "Đăng nhập.",
   "SignupForm.submit": "Đăng ký",
   "SignupForm.title": "Tạo tài khoản",
-  "QuestionListsPage.title": "Câu hỏi"
+  "QuestionListsPage.title": "Câu hỏi",
+  "AskAQuestionPage.pageTitle": "Đặt câu hỏi",
+  "AskAQuestionPage.questionTitle": "Tiêu đề",
+  "AskAQuestionPage.questionTitlePlaceholder": "vd: Làm sao để...",
+  "AskAQuestionPage.questionBody": "Nội dung",
+  "AskAQuestionPage.questionTags": "Thẻ",
+  "AskAQuestionPage.questionTagsPlaceholder": "vd: UI, màu, căn chỉnh, ...",
+  "AskAQuestionPage.addBountyLabel": "Treo tiền thưởng",
+  "AskAQuestionPage.addBountyDescription": "Những câu hỏi có treo thưởng sẽ được làm nổi và thu hút nhiều câu trả lời hơn. Bạn cần đủ số dư để treo thưởng",
+  "AskAQuestionPage.addBountyBalanceLabel": "Số dư: $",
+  "AskAQuestionPage.addBountyTopUpBtnText": "Nạp xu",
+  "AskAQuestionPage.addBountyInputPlaceholder": "$10",
+  "AskAQuestionPage.submitBtnText": "Đăng câu hỏi"
 }
