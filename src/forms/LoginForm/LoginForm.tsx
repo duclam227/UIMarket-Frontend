@@ -1,23 +1,40 @@
 import { FC } from "react";
 import { Button, Form } from "react-bootstrap";
-import { FormattedMessage, injectIntl } from "react-intl";
+import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 
 import style from './LoginForm.module.css';
 
-const LoginForm: FC = () => {
+interface loginFormProps {
+  intl: IntlShape
+}
+
+const LoginForm: FC<loginFormProps> = (props) => {
+  const { intl } = props;
 
   //general login form labels
   const title = <FormattedMessage id="LoginForm.title" defaultMessage="Sign in" />
+  const submitMessage = <FormattedMessage
+    id="LoginForm.submit" defaultMessage="Sign in" />
   const continueWithGoogleLabel = <FormattedMessage
     id="LoginForm.continueWithGoogleLabel" defaultMessage="Continue with Google" />
   const continueWithFacebookLabel = <FormattedMessage
     id="LoginForm.continueWithFacebookLabel" defaultMessage="Continue with Facebook" />
 
-  //login form fields labels
+  //email
   const loginFormEmailLabel = <FormattedMessage
     id="LoginForm.emailLabel" defaultMessage="Email" />
+  const loginFormEmailPlaceholder = intl.formatMessage({
+    id: "LoginForm.emailPlaceholder",
+    defaultMessage: "example@email.com",
+  })
+
+  //password
   const loginFormPasswordLabel = <FormattedMessage
     id="LoginForm.passwordLabel" defaultMessage="Password" />
+  const loginFormPasswordPlaceholder = intl.formatMessage({
+    id: "LoginForm.passwordPlaceholder",
+    defaultMessage: "some-secret-password",
+  })
 
   return (
     <>
@@ -31,16 +48,16 @@ const LoginForm: FC = () => {
         <Form>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>{loginFormEmailLabel}</Form.Label>
-            <Form.Control type="email" placeholder="Enter email" />
+            <Form.Control type="email" placeholder={loginFormEmailPlaceholder} />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>{loginFormPasswordLabel}</Form.Label>
-            <Form.Control type="password" placeholder="Password" />
+            <Form.Control type="password" placeholder={loginFormPasswordPlaceholder} />
           </Form.Group>
 
           <Button variant="primary" type="submit">
-            Submit
+            {submitMessage}
           </Button>
         </Form>
       </div>
@@ -48,4 +65,4 @@ const LoginForm: FC = () => {
   )
 }
 
-export default LoginForm;
+export default injectIntl(LoginForm);
