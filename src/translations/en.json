@@ -1,8 +1,11 @@
 {
   "LoginForm.emailLabel": "Email",
+  "LoginForm.emailPlaceholder": "example@email.com",
   "LoginForm.logInWithGoogleLabel": "Continue with Google",
   "LoginForm.logInWithFacebookLabel": "Continue with Facebook",
   "LoginForm.passwordLabel": "Password",
+  "LoginForm.passwordPlaceholder": "some-secret-password",
+  "LoginForm.submit": "Sign in",
   "LoginForm.title": "Sign in",
   "QuestionListsPage.title": "All Questions"
 }

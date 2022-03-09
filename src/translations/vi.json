@@ -1,8 +1,11 @@
 {
   "LoginForm.emailLabel": "Email",
+  "LoginForm.emailPlaceholder": "example@email.com",
   "LoginForm.logInWithGoogleLabel": "Đăng nhập bằng Google",
   "LoginForm.logInWithFacebookLabel": "Đăng nhập bằng Facebook",
   "LoginForm.passwordLabel": "Mật khẩu",
+  "LoginForm.passwordPlaceholder": "some-secret-password",
+  "LoginForm.submit": "Đăng nhập",
   "LoginForm.title": "Đăng nhập",
   "QuestionListsPage.title": "Câu hỏi"
 }
