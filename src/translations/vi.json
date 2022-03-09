@@ -1,4 +1,5 @@
 {
+  "LoginForm.divider": "Hoặc",
   "LoginForm.emailLabel": "Email",
   "LoginForm.emailPlaceholder": "example@email.com",
   "LoginForm.forgotPassword": "Bạn quên mật khẩu?",
