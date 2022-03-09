@@ -1,10 +1,13 @@
 {
   "LoginForm.emailLabel": "Email",
   "LoginForm.emailPlaceholder": "example@email.com",
-  "LoginForm.logInWithGoogleLabel": "Đăng nhập bằng Google",
-  "LoginForm.logInWithFacebookLabel": "Đăng nhập bằng Facebook",
+  "LoginForm.forgotPassword": "Bạn quên mật khẩu?",
+  "LoginForm.continueWithGoogleLabel": "Đăng nhập bằng Google",
+  "LoginForm.continueWithFacebookLabel": "Đăng nhập bằng Facebook",
+  "LoginForm.newToUs": "Chưa có tài khoản?",
   "LoginForm.passwordLabel": "Mật khẩu",
   "LoginForm.passwordPlaceholder": "some-secret-password",
+  "LoginForm.signUp": "Đăng ký ngay.",
   "LoginForm.submit": "Đăng nhập",
   "LoginForm.title": "Đăng nhập",
   "QuestionListsPage.title": "Câu hỏi"
