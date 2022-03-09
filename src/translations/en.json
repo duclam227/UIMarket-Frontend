@@ -1,4 +1,5 @@
 {
+  "LoginForm.divider": "Or",
   "LoginForm.emailLabel": "Email",
   "LoginForm.emailPlaceholder": "example@email.com",
   "LoginForm.forgotPassword": "Forgot your password?",

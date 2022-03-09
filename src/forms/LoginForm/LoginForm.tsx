@@ -20,6 +20,8 @@ const LoginForm: FC<loginFormProps> = (props) => {
     id="LoginForm.newToUs" defaultMessage="New to us?" />;
   const signUpMessage = <FormattedMessage
     id="LoginForm.signUp" defaultMessage="Sign up." />
+  const dividerMesage = <FormattedMessage
+    id="LoginForm.divider" defaultMessage="Or" />
 
   //button labels
   const submitMessage = <FormattedMessage
@@ -53,7 +55,9 @@ const LoginForm: FC<loginFormProps> = (props) => {
           <Button>{continueWithGoogleLabel}</Button>
           <Button>{continueWithFacebookLabel}</Button>
         </div>
-        <hr />
+        <div className={style.divider}>
+          <span>{dividerMesage}</span>
+        </div>
         <Form>
           <Form.Group className="mb-3">
             <Form.Label className={style.label}>{loginFormEmailLabel}</Form.Label>
