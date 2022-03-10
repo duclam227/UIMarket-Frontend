@@ -12,13 +12,12 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 import { question } from '../../app/util/interfaces';
-
 import { PageWithNavbar } from '../../components';
 
 import './AskAQuestionPage.css';
 import style from './AskAQuestionPage.module.css';
 
-const Ask = ({ intl }: any) => {
+const AskAQuestionPage = ({ intl }: any) => {
   const formGroupClassName = 'mb-3';
   const cardClassName = 'mb-4';
   const containerClassName = classNames(style.pageContainer, 'w-75');
@@ -197,4 +196,4 @@ const Ask = ({ intl }: any) => {
   );
 };
 
-export default injectIntl(Ask);
+export default injectIntl(AskAQuestionPage);
