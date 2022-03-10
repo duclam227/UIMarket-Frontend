@@ -5,12 +5,10 @@ import { composeWithDevTools } from '@redux-devtools/extension';
 import authReducer from './auth/authReducer';
 
 const rootReducer = combineReducers({
-  auth: authReducer,
-})
+	auth: authReducer,
+});
 
-const store = createStore(
-  rootReducer,
-  composeWithDevTools(applyMiddleware(thunk))
-);
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
 
 export default store;
+export type State = ReturnType<typeof rootReducer>;
