@@ -22,6 +22,18 @@ const authReducer = (state: authState = initialState, action: Action) => {
 				error: null,
 				isInProgress: true,
 			};
+		case actionTypes.AUTH_SIGNUP_SUCCESS:
+			return {
+				...state,
+				error: null,
+				isInProgress: false,
+			};
+		case actionTypes.AUTH_SIGNUP_REQUEST:
+			return {
+				...state,
+				error: null,
+				isInProgress: true,
+			};
 		case actionTypes.AUTH_ERROR:
 			return {
 				...state,

@@ -14,6 +14,20 @@ interface authLoginSuccess {
 	isInProgress: boolean;
 }
 
+interface authSignUpRequest {
+	type: actionTypes.AUTH_SIGNUP_REQUEST;
+	user?: Object | null;
+	error: string | null;
+	isInProgress: boolean;
+}
+
+interface authSignUpSuccess {
+	type: actionTypes.AUTH_SIGNUP_SUCCESS;
+	user: null;
+	error: null;
+	isInProgress: boolean;
+}
+
 interface authError {
 	type: actionTypes.AUTH_ERROR;
 	user?: null;
@@ -28,7 +42,13 @@ interface authSignOut {
 	isInProgress: boolean;
 }
 
-export type Action = authError | authLoginRequest | authLoginSuccess | authSignOut;
+export type Action =
+	| authError
+	| authLoginRequest
+	| authLoginSuccess
+	| authSignOut
+	| authSignUpRequest
+	| authSignUpSuccess;
 export interface authState {
 	user: Object | null;
 	error: string | null;

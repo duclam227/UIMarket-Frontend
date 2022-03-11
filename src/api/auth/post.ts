@@ -7,6 +7,12 @@ class Post {
 			...credentials,
 		});
 	};
+
+	signUp = (credentials: authCredentials) => {
+		return axiosClient.post('/api/v1/auth/register', {
+			...credentials,
+		});
+	};
 }
 
 export default new Post();

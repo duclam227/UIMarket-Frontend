@@ -19,6 +19,18 @@ const loginSuccess = (userData: Object) => {
 	} as Action;
 };
 
+const signUpInProgress = () => {
+	return {
+		type: actionTypes.AUTH_LOGIN_REQUEST,
+	} as Action;
+};
+
+const signUpSuccess = () => {
+	return {
+		type: actionTypes.AUTH_LOGIN_SUCCESS,
+	} as Action;
+};
+
 const setUserToNull = () => {
 	return {
 		type: actionTypes.AUTH_USER_SIGN_OUT,
@@ -49,6 +61,24 @@ const logIn = (credentials: authCredentials) => {
 	};
 };
 
+const signUp = (credentials: authCredentials) => {
+	return async (dispatch: Dispatch<Action>) => {
+		dispatch(setError(null));
+		dispatch(signUpInProgress());
+		try {
+			const res: any = await authAPI.post.signUp(credentials);
+			console.log(res);
+
+			// const { user, token } = res;
+			// localStorage.setItem('authToken', token);
+			// dispatch(loginSuccess({ customerEmail: credentials.customerEmail, ...user }));
+		} catch (error) {
+			const errorMsg = getErrorMessage(error);
+			dispatch(setError(errorMsg));
+		}
+	};
+};
+
 const logOut = () => {
 	return (dispatch: Dispatch<Action>) => {
 		localStorage.clear();
@@ -56,4 +86,4 @@ const logOut = () => {
 	};
 };
 
-export { logIn, logOut };
+export { signUp, logIn, logOut };

@@ -1,4 +1,1 @@
-export {
-  logIn,
-  logOut,
-} from './auth/authActions';
+export { signUp, logIn, logOut } from './auth/authActions';
