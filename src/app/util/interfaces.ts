@@ -10,4 +10,5 @@ export interface navigatorTabItem {
 export interface authCredentials {
 	customerEmail: string;
 	customerPassword: string;
+	customerName?: string;
 }
