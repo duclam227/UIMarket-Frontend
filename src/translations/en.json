@@ -11,5 +11,18 @@
   "LoginForm.signUp": "Sign up.",
   "LoginForm.submit": "Sign in",
   "LoginForm.title": "Sign in",
+  "SignupForm.divider": "Or",
+  "SignupForm.emailLabel": "Email",
+  "SignupForm.emailPlaceholder": "example@email.com",
+  "SignupForm.continueWithGoogleLabel": "Continue with Google",
+  "SignupForm.continueWithFacebookLabel": "Continue with Facebook",
+  "SignupForm.nameLabel": "Name",
+  "SignupForm.namePlaceholder": "John",
+  "SignupForm.hasAnAccount": "Already have an account?",
+  "SignupForm.passwordLabel": "Password",
+  "SignupForm.passwordPlaceholder": "some-secret-password",
+  "SignupForm.signIn": "Sign in.",
+  "SignupForm.submit": "Sign up",
+  "SignupForm.title": "Create an account",
   "QuestionListsPage.title": "All Questions"
 }
