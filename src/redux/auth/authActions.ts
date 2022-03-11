@@ -37,13 +37,11 @@ const logIn = (credentials: authCredentials) => {
 		dispatch(setError(null));
 		dispatch(loginInProgress());
 		try {
-			const res: AxiosResponse = await authAPI.post.logIn(credentials);
-			console.log(res);
+			const res: any = await authAPI.post.logIn(credentials);
+			const { user, token } = res;
 
-			// const { user, token } = res;
-
-			// localStorage.setItem('authToken', token);
-			// dispatch(loginSuccess({ customerEmail: credentials.email, ...user }));
+			localStorage.setItem('authToken', token);
+			dispatch(loginSuccess({ customerEmail: credentials.customerEmail, ...user }));
 		} catch (error) {
 			const errorMsg = getErrorMessage(error);
 			dispatch(setError(errorMsg));
