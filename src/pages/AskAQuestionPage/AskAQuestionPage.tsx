@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from 'react';
+import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import classNames from 'classnames';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -16,6 +16,7 @@ import { PageWithNavbar } from '../../components';
 
 import './AskAQuestionPage.css';
 import style from './AskAQuestionPage.module.css';
+import questionAPI from '../../api/question';
 
 const AskAQuestionPage = ({ intl }: any) => {
   const formGroupClassName = 'mb-3';
@@ -103,11 +104,20 @@ const AskAQuestionPage = ({ intl }: any) => {
 
   const [balance, setBalance] = useState<number>(0);
 
-  const handleChange = ({ currentTarget: input }: any) => {
-    setQuestion({ ...question, [input.id]: input.value });
+  const handleChange = ({ target: input }: ChangeEvent<HTMLInputElement>) => {
+    setQuestion({
+      ...question,
+      [input.id]: input.value,
+    });
   };
-  const handleSubmit = () => {
-    console.log(question);
+
+  const handleTagsChange = ({ currentTarget: input }: any) => {
+    let tags = input.value.trim().split(',');
+    setQuestion({ ...question, tags });
+  };
+
+  const handleSubmit = async () => {
+    await questionAPI.add(question);
   };
   return (
     <PageWithNavbar>
@@ -124,7 +134,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                 <Form.Control
                   placeholder={questionTitlePlaceholder}
                   type="text"
-                  onChange={(e) => handleChange(e)}
+                  onChange={e => handleChange(e as any)}
                 />
               </Form.Group>
 
@@ -148,6 +158,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                 <Form.Control
                   type="text"
                   placeholder={questionTagsPlaceholder}
+                  onChange={e => handleTagsChange(e)}
                 />
               </Form.Group>
             </Form>
@@ -177,7 +188,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                 <Form.Control
                   type="number"
                   placeholder={addBountyInputPlaceholder}
-                  onChange={(e) => handleChange(e)}
+                  onChange={e => handleChange(e as any)}
                 />
               </Form.Group>
             </Row>
