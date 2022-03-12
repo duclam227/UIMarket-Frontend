@@ -25,9 +25,10 @@ const signUpInProgress = () => {
 	} as Action;
 };
 
-const signUpSuccess = () => {
+const signUpSuccess = (userData: Object) => {
 	return {
-		type: actionTypes.AUTH_LOGIN_SUCCESS,
+		type: actionTypes.AUTH_SIGNUP_SUCCESS,
+		user: { ...userData },
 	} as Action;
 };
 
@@ -48,34 +49,35 @@ const logIn = (credentials: authCredentials) => {
 	return async (dispatch: Dispatch<Action>) => {
 		dispatch(setError(null));
 		dispatch(loginInProgress());
-		try {
-			const res: any = await authAPI.post.logIn(credentials);
-			const { user, token } = res;
-
-			localStorage.setItem('authToken', token);
-			dispatch(loginSuccess({ customerEmail: credentials.customerEmail, ...user }));
-		} catch (error) {
-			const errorMsg = getErrorMessage(error);
-			dispatch(setError(errorMsg));
-		}
+		authAPI.post
+			.logIn(credentials)
+			.then((res: any) => {
+				const { user, token } = res;
+				localStorage.setItem('authToken', token);
+				dispatch(loginSuccess({ customerEmail: credentials.customerEmail, ...user }));
+			})
+			.catch(error => {
+				const errorMsg = getErrorMessage(error);
+				dispatch(setError(errorMsg));
+			});
 	};
 };
 
 const signUp = (credentials: authCredentials) => {
-	return async (dispatch: Dispatch<Action>) => {
+	return (dispatch: Dispatch<Action>) => {
 		dispatch(setError(null));
 		dispatch(signUpInProgress());
-		try {
-			const res: any = await authAPI.post.signUp(credentials);
-			console.log(res);
-
-			// const { user, token } = res;
-			// localStorage.setItem('authToken', token);
-			// dispatch(loginSuccess({ customerEmail: credentials.customerEmail, ...user }));
-		} catch (error) {
-			const errorMsg = getErrorMessage(error);
-			dispatch(setError(errorMsg));
-		}
+		authAPI.post
+			.signUp(credentials)
+			.then((res: any) => {
+				const { user, token } = res;
+				localStorage.setItem('authToken', token);
+				dispatch(signUpSuccess({ customerEmail: credentials.customerEmail, ...user }));
+			})
+			.catch(error => {
+				const errorMsg = getErrorMessage(error);
+				dispatch(setError(errorMsg));
+			});
 	};
 };
 

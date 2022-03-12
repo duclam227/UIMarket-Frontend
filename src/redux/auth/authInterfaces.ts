@@ -23,7 +23,7 @@ interface authSignUpRequest {
 
 interface authSignUpSuccess {
 	type: actionTypes.AUTH_SIGNUP_SUCCESS;
-	user: null;
+	user: Object;
 	error: null;
 	isInProgress: boolean;
 }
