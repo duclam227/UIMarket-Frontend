@@ -46,7 +46,7 @@ const setError = (msg: string | null) => {
 };
 
 const logIn = (credentials: authCredentials) => {
-	return async (dispatch: Dispatch<Action>) => {
+	return (dispatch: Dispatch<Action>) => {
 		dispatch(setError(null));
 		dispatch(loginInProgress());
 		authAPI.post
@@ -55,6 +55,23 @@ const logIn = (credentials: authCredentials) => {
 				const { user, token } = res;
 				localStorage.setItem('authToken', token);
 				dispatch(loginSuccess({ customerEmail: credentials.customerEmail, ...user }));
+			})
+			.catch(error => {
+				const errorMsg = getErrorMessage(error);
+				dispatch(setError(errorMsg));
+			});
+	};
+};
+
+const logInWithJWT = (jwt: string) => {
+	return (dispatch: Dispatch<Action>) => {
+		dispatch(setError(null));
+		dispatch(loginInProgress());
+		authAPI.get
+			.getUserFromToken(jwt)
+			.then((res: any) => {
+				const { user } = res;
+				dispatch(loginSuccess({ ...user }));
 			})
 			.catch(error => {
 				const errorMsg = getErrorMessage(error);
@@ -88,4 +105,4 @@ const logOut = () => {
 	};
 };
 
-export { signUp, logIn, logOut };
+export { signUp, logIn, logInWithJWT, logOut };
