@@ -1,8 +1,10 @@
 :root {
+	--blue-100: #e7f1ff;
 	--blue-200: #9ec5fe;
 	--blue-400: #3d8bfd;
 	--blue-500: #0d6efd;
+	--blue-600: #0a58ca;
 
-	--gray: #e5e5e5;
+	--gray: #f8f9fa;
 	--gray-600: #6c757d;
 }
