@@ -1,10 +1,10 @@
 @import '../../app/util/colors.css';
 
-.loginFormContainer {
+.signupFormContainer {
 	display: flex;
 	flex-direction: column;
 
-	margin-top: 60px;
+	margin-top: 30px;
 
 	width: 50%;
 }

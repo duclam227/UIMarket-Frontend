@@ -8,6 +8,7 @@ export interface navigatorTabItem {
 }
 
 export interface authCredentials {
-	email: string;
-	password: string;
+	customerEmail: string;
+	customerPassword: string;
+	customerName?: string;
 }
