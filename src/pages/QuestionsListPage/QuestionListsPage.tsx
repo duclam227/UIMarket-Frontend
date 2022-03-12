@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useSearchParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
 import QuestionListsPageNavigator from './QuestionListsPageNavigator';
@@ -10,15 +10,23 @@ import questionAPI from '../../api/question/index';
 import style from './QuestionListsPage.module.css';
 import { NotFoundPage } from '..';
 
+const ITEMS_PER_PAGE = 10;
+
 const QuestionListsPage: FC = () => {
 	const [totalPages, setTotalPages] = useState(1);
 	const [questions, setQuestions] = useState([]);
 
+	const [searchParams, setSearchParams] = useSearchParams();
+	const page = searchParams.get('page') || 1;
+
 	useEffect(() => {
-		questionAPI.get.getQuestionByPageNumber(1, 10)
+		questionAPI.get.getQuestionByPageNumber(page, ITEMS_PER_PAGE)
 			.then((res: any) => {
-				const { totalPages, page, questions } = res;
+				const { totalPages, questions } = res;
 				setQuestions(questions);
+			})
+			.catch(error => {
+				console.log(error);
 			})
 	}, [])
 
