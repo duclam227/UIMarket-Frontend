@@ -1,5 +1,5 @@
-const tokenKey = 'authToken';
+const TOKEN_KEY = 'authToken';
 
 export function getJwt() {
-  return localStorage.getItem(tokenKey);
+  return localStorage.getItem(TOKEN_KEY);
 }
