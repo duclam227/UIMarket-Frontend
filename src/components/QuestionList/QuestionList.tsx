@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
 import style from './QuestionList.module.css';
@@ -56,9 +57,9 @@ const QuestionList: FC<Props> = (props) => {
       return (
         <div key={q._id} className={style.questionContainer}>
           <div className={style.sideContent}>
-            <div>{q.totalUpvote - q.totalDownvote} votes</div>
-            <div>{q.totalAnswer} answers</div>
-            <div>{q.totalView} views</div>
+            <div><FormattedMessage id="QuestionList.numberOfVotes" values={{ count: q.totalUpvote - q.totalDownvote }} /></div>
+            <div className={style.answersCount}><FormattedMessage id="QuestionList.numberOfAnswers" values={{ count: q.totalAnswer }} /></div>
+            <div className={style.viewsCount}><FormattedMessage id="QuestionList.numberOfViews" values={{ count: q.totalView }} /></div>
           </div>
           <div className={style.mainContent}>
             <Link to={qLink} className={style.title}>{q.questionTitle}</Link>
