@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css';
-import { Navbar } from './components';
 import { AboutUsPage, ContactUsPage, QuestionListsPage, NotFoundPage, PricingPage, AuthenticationPage } from './pages';
+import { logInWithJWT } from './redux/index';
 
 function App() {
+	const dispatch = useDispatch()
+
+	const initialGetUserFromBrowser = () => {
+		const authToken = localStorage.getItem('authToken');
+		if (authToken) {
+			dispatch(logInWithJWT(authToken));
+		}
+	}
+
+	useEffect(() => {
+		initialGetUserFromBrowser();
+	}, [])
+
 	return (
 		<div className='App'>
-			{/* <Navbar /> */}
 			<Routes>
 				<Route path='/login' element={<AuthenticationPage destination='login' />} />
 				<Route path='/signup' element={<AuthenticationPage destination='signup' />} />
