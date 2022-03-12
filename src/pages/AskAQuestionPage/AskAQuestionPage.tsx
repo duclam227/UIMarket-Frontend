@@ -10,6 +10,8 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
+import Spinner from 'react-bootstrap/Spinner';
 
 import { question } from '../../app/util/interfaces';
 import { PageWithNavbar } from '../../components';
@@ -17,7 +19,6 @@ import { PageWithNavbar } from '../../components';
 import './AskAQuestionPage.css';
 import style from './AskAQuestionPage.module.css';
 import questionAPI from '../../api/question';
-
 
 const AskAQuestionPage = ({ intl }: any) => {
   const formGroupClassName = 'mb-3';
@@ -102,8 +103,9 @@ const AskAQuestionPage = ({ intl }: any) => {
     bounty: 0,
     question: '',
   });
-
   const [balance, setBalance] = useState<number>(0);
+  const [postInProgress, setPostInProgress] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleChange = ({ target: input }: ChangeEvent<HTMLInputElement>) => {
     setQuestion({
@@ -118,7 +120,15 @@ const AskAQuestionPage = ({ intl }: any) => {
   };
 
   const handleSubmit = async () => {
-    await questionAPI.add(question);
+    try {
+      setPostInProgress(true);
+      let response = await questionAPI.add(question);
+    } catch (error) {
+      let message: string;
+      if (error instanceof Error) message = error.message;
+      setPostInProgress(false);
+      setErrorMessage(String(error));
+    }
   };
   return (
     <PageWithNavbar>
@@ -196,12 +206,29 @@ const AskAQuestionPage = ({ intl }: any) => {
           </Card.Body>
         </Card>
 
+        <Alert
+          variant="danger"
+          onClose={() => setErrorMessage('')}
+          show={errorMessage ? true : false}
+          dismissible
+        >
+          <Alert.Heading>
+            Something went wrong!
+          </Alert.Heading>
+          {errorMessage}
+        </Alert>
+
         <Button
           variant="primary"
           className={postQuestionButtonClassName}
           onClick={handleSubmit}
+          disabled={postInProgress}
         >
-          {submitBtnText}
+          {postInProgress ? (
+            <Spinner animation="border" variant="light" size="sm" />
+          ) : (
+            submitBtnText
+          )}
         </Button>
       </Container>
     </PageWithNavbar>
