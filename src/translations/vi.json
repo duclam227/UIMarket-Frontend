@@ -11,5 +11,18 @@
   "LoginForm.signUp": "Đăng ký ngay.",
   "LoginForm.submit": "Đăng nhập",
   "LoginForm.title": "Đăng nhập",
+  "SignupForm.divider": "Hoặc",
+  "SignupForm.emailLabel": "Email",
+  "SignupForm.emailPlaceholder": "example@email.com",
+  "SignupForm.continueWithGoogleLabel": "Đăng nhập bằng Google",
+  "SignupForm.continueWithFacebookLabel": "Đăng nhập bằng Facebook",
+  "SignupForm.nameLabel": "Tên",
+  "SignupForm.namePlaceholder": "John",
+  "SignupForm.hasAnAccount": "Đã có tài khoản?",
+  "SignupForm.passwordLabel": "Mật khẩu",
+  "SignupForm.passwordPlaceholder": "some-secret-password",
+  "SignupForm.signIn": "Đăng nhập.",
+  "SignupForm.submit": "Đăng ký",
+  "SignupForm.title": "Tạo tài khoản",
   "QuestionListsPage.title": "Câu hỏi"
 }
