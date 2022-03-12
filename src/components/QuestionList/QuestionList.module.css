@@ -1,2 +1,66 @@
-.container {
+@import '../../app/util/colors.css';
+
+.questionContainer {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	border-bottom: 1px solid var(--gray);
+	padding: 10px;
+	text-decoration: none;
+}
+
+.sideContent {
+	min-width: 50px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+
+	margin-right: 20px;
+	box-sizing: border-box;
+}
+
+.mainContent {
+	flex-grow: 1;
+	display: grid;
+	grid-template-rows: auto minmax(20px, 25px);
+	text-decoration: none;
+	box-sizing: border-box;
+}
+
+.title {
+	font-size: larger;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.mainFooter {
+	width: 100%;
+	display: grid;
+	grid-template-columns: auto minmax(100px, 1fr);
+}
+
+.tagsContainer {
+	display: flex;
+	flex-direction: row;
+	gap: 5px;
+
+	font-size: medium;
+}
+
+.tag {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	padding: 1px 8px;
+
+	color: var(--blue-600);
+	background-color: var(--blue-100);
+
+	border-radius: 4px;
+}
+
+.authorName {
+	display: flex;
+	justify-content: end;
 }
