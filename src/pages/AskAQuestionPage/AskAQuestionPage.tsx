@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { ChangeEvent, SyntheticEvent, useState } from 'react';
+=======
+import { SyntheticEvent, useState } from 'react';
+>>>>>>> 6c49555499a3165555ac8f3fe2ee1f42fbff266c
 import classNames from 'classnames';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -12,13 +16,22 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
 import { question } from '../../app/util/interfaces';
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6c49555499a3165555ac8f3fe2ee1f42fbff266c
 import { PageWithNavbar } from '../../components';
 
 import './AskAQuestionPage.css';
 import style from './AskAQuestionPage.module.css';
+<<<<<<< HEAD
 import questionAPI from '../../api/question';
 
 const AskAQuestionPage = ({ intl }: any) => {
+=======
+
+const Ask = ({ intl }: any) => {
+>>>>>>> 6c49555499a3165555ac8f3fe2ee1f42fbff266c
   const formGroupClassName = 'mb-3';
   const cardClassName = 'mb-4';
   const containerClassName = classNames(style.pageContainer, 'w-75');
@@ -188,7 +201,11 @@ const AskAQuestionPage = ({ intl }: any) => {
                 <Form.Control
                   type="number"
                   placeholder={addBountyInputPlaceholder}
+<<<<<<< HEAD
                   onChange={e => handleChange(e as any)}
+=======
+                  onChange={(e) => handleChange(e)}
+>>>>>>> 6c49555499a3165555ac8f3fe2ee1f42fbff266c
                 />
               </Form.Group>
             </Row>
@@ -207,4 +224,8 @@ const AskAQuestionPage = ({ intl }: any) => {
   );
 };
 
+<<<<<<< HEAD
 export default injectIntl(AskAQuestionPage);
+=======
+export default injectIntl(Ask);
+>>>>>>> 6c49555499a3165555ac8f3fe2ee1f42fbff266c
