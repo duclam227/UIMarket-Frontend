@@ -71,4 +71,9 @@
 .authorName {
 	display: flex;
 	justify-content: end;
+	align-items: flex-end;
+	height: 100%;
+
+	font-size: small;
+	font-style: italic;
 }

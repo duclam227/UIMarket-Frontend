@@ -19,7 +19,10 @@ const QuestionList: FC<Props> = (props) => {
 
   const renderAuthor = (author: any) => {
     return (
-      <div className={style.authorName}>{author.customerName}</div>
+      <div className={style.authorName}>
+        <FormattedMessage id="QuestionList.postedBy" />
+        {author.customerName}
+      </div>
     )
   }
 
