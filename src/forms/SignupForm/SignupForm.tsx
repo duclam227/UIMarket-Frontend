@@ -76,7 +76,7 @@ const SignupForm: FC<SignupFormProps> = (props) => {
 
   return (
     <>
-      <div className={style.SignupFormContainer}>
+      <div className={style.signupFormContainer}>
         <h2 className={style.title}>{title}</h2>
         <div className={style.otherIdpButtonRow}>
           <Button>{continueWithGoogleLabel}</Button>
@@ -139,7 +139,7 @@ const SignupForm: FC<SignupFormProps> = (props) => {
 
         <div className={style.bottomWrapper}>
           <span>{hasAnAccountMessage}</span>
-          <Link to="/signup">{signInMessage}</Link>
+          <Link to="/login">{signInMessage}</Link>
         </div>
       </div>
     </>
