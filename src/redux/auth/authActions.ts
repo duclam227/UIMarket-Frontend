@@ -54,7 +54,7 @@ const logIn = (credentials: authCredentials) => {
 			.then((res: any) => {
 				const { user, token } = res;
 				localStorage.setItem('authToken', token);
-				dispatch(loginSuccess({ customerEmail: credentials.customerEmail, ...user }));
+				dispatch(loginSuccess({ ...user }));
 			})
 			.catch(error => {
 				const errorMsg = getErrorMessage(error);
@@ -89,7 +89,7 @@ const signUp = (credentials: authCredentials) => {
 			.then((res: any) => {
 				const { user, token } = res;
 				localStorage.setItem('authToken', token);
-				dispatch(signUpSuccess({ customerEmail: credentials.customerEmail, ...user }));
+				dispatch(signUpSuccess({ ...user }));
 			})
 			.catch(error => {
 				const errorMsg = getErrorMessage(error);
