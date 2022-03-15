@@ -1,12 +1,9 @@
 import axios from 'axios';
-import { getJwt } from '../app/util/authHelpers';
 
-const jwt = getJwt();
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_BASE_SERVER_URL,
   headers: {
     'content-type': 'application/json',
-    Authorization: `Bearer ${jwt}`,
   },
 });
 

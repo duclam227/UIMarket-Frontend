@@ -1,18 +1,26 @@
 import axiosClient from '..';
 import { question } from '../../app/util/interfaces';
+import { getJwt } from '../../app/util/authHelpers';
 
-const apiEndpoint = '/api/v1/questions';
+const API_ENDPOINT = '/api/v1/questions';
+
 class Post {
   add = (question: question) => {
-    let { title, body, tags, bounty } = question;
-    let questionBounty = +bounty > 0 ? +bounty : -1;
-    let data = {
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    const { title, body, tags, bounty } = question;
+    const questionBounty = +bounty > 0 ? +bounty : -1;
+    const data = {
       questionTitle: title,
       questionContent: body,
       questionTag: tags,
       questionBounty,
     };
-    return axiosClient.post(apiEndpoint, data);
+    return axiosClient.post(API_ENDPOINT, data, config);
   };
 }
 
