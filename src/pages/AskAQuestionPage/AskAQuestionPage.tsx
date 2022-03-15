@@ -16,6 +16,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import { question } from '../../app/util/interfaces';
 import { PageWithNavbar } from '../../components';
+import { getErrorMessage } from '../../app/util';
 
 import './AskAQuestionPage.css';
 import style from './AskAQuestionPage.module.css';
@@ -118,20 +119,19 @@ const AskAQuestionPage = ({ intl }: any) => {
   };
 
   const handleTagsChange = ({ currentTarget: input }: any) => {
-    let tags = input.value.trim().split(',');
+    const tags = input.value.trim().split(',');
     setQuestion({ ...question, tags });
   };
 
   const handleSubmit = async () => {
     try {
       setPostInProgress(true);
-      let response = await questionAPI.add(question);
+      const response = await questionAPI.addNewQuestion(question);
       navigate('/', { replace: true });
     } catch (error) {
-      let message: string;
-      if (error instanceof Error) message = error.message;
+      const errorMessage = getErrorMessage(error);
       setPostInProgress(false);
-      setErrorMessage(String(error));
+      setErrorMessage(errorMessage);
     }
   };
   return (
