@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import { useNavigate } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -96,6 +97,8 @@ const AskAQuestionPage = ({ intl }: any) => {
     />
   );
 
+  const navigate = useNavigate();
+
   const [question, setQuestion] = useState<question>({
     title: '',
     body: '',
@@ -123,6 +126,7 @@ const AskAQuestionPage = ({ intl }: any) => {
     try {
       setPostInProgress(true);
       let response = await questionAPI.add(question);
+      navigate('/', { replace: true });
     } catch (error) {
       let message: string;
       if (error instanceof Error) message = error.message;
@@ -212,9 +216,7 @@ const AskAQuestionPage = ({ intl }: any) => {
           show={errorMessage ? true : false}
           dismissible
         >
-          <Alert.Heading>
-            Something went wrong!
-          </Alert.Heading>
+          <Alert.Heading>Something went wrong!</Alert.Heading>
           {errorMessage}
         </Alert>
 
