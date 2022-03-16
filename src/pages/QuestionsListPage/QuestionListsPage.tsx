@@ -2,31 +2,40 @@ import { FC, useEffect, useState } from 'react';
 import { Routes, Route, Navigate, useSearchParams } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
+import { getErrorMessage } from '../../app/util/index';
+
 import QuestionListsPageNavigator from './QuestionListsPageNavigator';
-import { QuestionList, PageWithNavbar } from '../../components';
+import { QuestionList, PageWithNavbar, Paginator } from '../../components';
+import { NotFoundPage } from '..';
 
 import questionAPI from '../../api/question/index';
 
 import style from './QuestionListsPage.module.css';
-import { NotFoundPage } from '..';
 
 const ITEMS_PER_PAGE = 10;
 
 const QuestionListsPage: FC = () => {
-	const [totalPages, setTotalPages] = useState(1);
-	const [questions, setQuestions] = useState([]);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [error, setError] = useState<string | null>(null);
+	const [totalPages, setTotalPages] = useState<number | string>(1);
+	const [questions, setQuestions] = useState<Array<any>>([]);
 
 	const [searchParams, setSearchParams] = useSearchParams();
 	const page = searchParams.get('page') || 1;
 
 	useEffect(() => {
+		setIsLoading(true);
 		questionAPI.get.getQuestionByPageNumber(page, ITEMS_PER_PAGE)
 			.then((res: any) => {
 				const { totalPages, questions } = res;
 				setQuestions(questions);
+				setTotalPages(totalPages);
+				setIsLoading(false);
 			})
 			.catch(error => {
-				console.log(error);
+				const errorMsg = getErrorMessage(error);
+				setError(errorMsg);
+				setIsLoading(false);
 			})
 	}, [])
 
@@ -55,13 +64,19 @@ const QuestionListsPage: FC = () => {
 					<QuestionListsPageNavigator tabList={tabList} />
 
 					<div className={style.questionsList}>
-						<Routes>
-							<Route path="all" element={<QuestionList questionsList={questions} />} />
-							<Route path="bountied" element={<p>bountied hey</p>} />
-							<Route path="popular" element={<p>popular yo</p>} />
-							<Route path="/:id" element={<NotFoundPage />} />
-							<Route path="/*" element={<Navigate replace to='all' />} />
-						</Routes>
+						{isLoading
+							? <p>loading...</p>
+							:
+							<Routes>
+								<Route path="all" element={<QuestionList questionsList={questions} />} />
+								<Route path="bountied" element={<p>bountied hey</p>} />
+								<Route path="popular" element={<p>popular yo</p>} />
+								<Route path="/:id" element={<NotFoundPage />} />
+								<Route path="/*" element={<Navigate replace to='all' />} />
+							</Routes>
+						}
+
+						<Paginator totalNumberOfPages={totalPages} currentPage={page} />
 					</div>
 				</div>
 			</div>
