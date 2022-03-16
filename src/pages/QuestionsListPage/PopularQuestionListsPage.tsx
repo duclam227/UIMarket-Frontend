@@ -9,25 +9,11 @@ import { QuestionList, PageWithNavbar, Paginator } from '../../components';
 import questionAPI from '../../api/question/index';
 
 import style from './QuestionListsPage.module.css';
+import { tabList } from './QuestionListsPage';
 
 const ITEMS_PER_PAGE = 10;
 
-export const tabList = [
-	{
-		path: '/questions/all',
-		label: 'All',
-	},
-	{
-		path: '/questions/bountied',
-		label: 'Bountied',
-	},
-	{
-		path: '/questions/popular',
-		label: 'Popular',
-	},
-];
-
-const QuestionListsPage: FC = () => {
+const PopularQuestionListsPage: FC = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 	const [totalPages, setTotalPages] = useState<number>(1);
@@ -77,7 +63,7 @@ const QuestionListsPage: FC = () => {
 					<h1 className={style.title}>
 						<FormattedMessage id="QuestionListsPage.title" defaultMessage="All Questions" />
 					</h1>
-					<QuestionListsPageNavigator tabList={tabList} active='All' />
+					<QuestionListsPageNavigator tabList={tabList} active='Popular' />
 
 					<div className={style.questionsList}>
 						{isLoading
@@ -98,4 +84,4 @@ const QuestionListsPage: FC = () => {
 
 };
 
-export default QuestionListsPage;
+export default PopularQuestionListsPage;
