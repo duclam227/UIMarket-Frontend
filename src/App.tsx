@@ -11,7 +11,9 @@ import {
 	PricingPage,
 	AuthenticationPage,
 	AskAQuestionPage,
-	ViewQuestionPage
+	ViewQuestionPage,
+	BountiedQuestionListsPage,
+	PopularQuestionListsPage
 } from './pages';
 import { logInWithJWT } from './redux/index';
 
@@ -38,7 +40,10 @@ function App() {
 				<Route path='/contact' element={<ContactUsPage />} />
 				<Route path='/pricing' element={<PricingPage />} />
 				<Route path='/questions/new' element={<AskAQuestionPage />} />
-				<Route path='/questions/*' element={<QuestionListsPage />} />
+				<Route path='/questions/all' element={<QuestionListsPage />} />
+				<Route path='/questions/bountied' element={<BountiedQuestionListsPage />} />
+				<Route path='/questions/popular' element={<PopularQuestionListsPage />} />
+				<Route path='/questions/*' element={<Navigate replace to='/questions/all' />} />
 				<Route path="/question/:id" element={<ViewQuestionPage />} />
 				<Route path='/' element={<Navigate replace to='/questions' />} />
 				<Route path='*' element={<NotFoundPage />} />
