@@ -29,21 +29,34 @@ const QuestionListsPage: FC = () => {
 				console.log(error);
 			})
 	}, [])
+    
+  const tabList = [
+    {
+      path: 'all',
+      label: 'All',
+    },
+    {
+      path: 'bountied',
+      label: 'Bountied',
+    },
+    {
+      path: 'popular',
+      label: 'Popular',
+    },
+  ];
 
-	const tabList = [
-		{
-			path: 'all',
-			label: 'All',
-		},
-		{
-			path: 'bountied',
-			label: 'Bountied',
-		},
-		{
-			path: 'popular',
-			label: 'Popular',
-		},
-	]
+  return (
+    <>
+      <PageWithNavbar>
+        <div className={style.container}>
+          <div className={style.mainContent}>
+            <h1 className={style.title}>
+              <FormattedMessage
+                id="QuestionListsPage.title"
+                defaultMessage="All Questions"
+              />
+            </h1>
+            <QuestionListsPageNavigator tabList={tabList} />
 
 	return (
 		<>

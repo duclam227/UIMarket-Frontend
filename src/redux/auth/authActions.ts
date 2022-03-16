@@ -49,12 +49,12 @@ const logIn = (credentials: authCredentials) => {
 	return (dispatch: Dispatch<Action>) => {
 		dispatch(setError(null));
 		dispatch(loginInProgress());
-		authAPI.post
+		authAPI
 			.logIn(credentials)
 			.then((res: any) => {
 				const { user, token } = res;
 				localStorage.setItem('authToken', token);
-				dispatch(loginSuccess({ customerEmail: credentials.customerEmail, ...user }));
+				dispatch(loginSuccess({ ...user }));
 			})
 			.catch(error => {
 				const errorMsg = getErrorMessage(error);
@@ -67,7 +67,7 @@ const logInWithJWT = (jwt: string) => {
 	return (dispatch: Dispatch<Action>) => {
 		dispatch(setError(null));
 		dispatch(loginInProgress());
-		authAPI.get
+		authAPI
 			.getUserFromToken(jwt)
 			.then((res: any) => {
 				const { user } = res;
@@ -84,12 +84,12 @@ const signUp = (credentials: authCredentials) => {
 	return (dispatch: Dispatch<Action>) => {
 		dispatch(setError(null));
 		dispatch(signUpInProgress());
-		authAPI.post
+		authAPI
 			.signUp(credentials)
 			.then((res: any) => {
 				const { user, token } = res;
 				localStorage.setItem('authToken', token);
-				dispatch(signUpSuccess({ customerEmail: credentials.customerEmail, ...user }));
+				dispatch(signUpSuccess({ ...user }));
 			})
 			.catch(error => {
 				const errorMsg = getErrorMessage(error);
