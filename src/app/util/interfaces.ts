@@ -36,6 +36,7 @@ export interface customer {
 }
 
 export interface PaginatorProps {
-	totalNumberOfPages: number | string;
-	currentPage: number | string;
+	totalNumberOfPages: number;
+	currentPage: number;
+	handleClickGoToPage: Function;
 }
