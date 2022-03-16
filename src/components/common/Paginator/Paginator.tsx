@@ -10,7 +10,7 @@ const Paginator: FC<PaginatorProps> = (props) => {
 
   return (
     <div className={style.container}>
-      <Pagination>
+      <Pagination className={style.paginator}>
         <Pagination.First />
         <Pagination.Prev />
         <Pagination.Item>{1}</Pagination.Item>
