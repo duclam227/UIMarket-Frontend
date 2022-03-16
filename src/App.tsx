@@ -3,7 +3,16 @@ import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css';
-import { AboutUsPage, ContactUsPage, QuestionListsPage, NotFoundPage, PricingPage, AuthenticationPage, AskAQuestionPage } from './pages';
+import {
+	AboutUsPage,
+	ContactUsPage,
+	QuestionListsPage,
+	NotFoundPage,
+	PricingPage,
+	AuthenticationPage,
+	AskAQuestionPage,
+	ViewQuestionPage
+} from './pages';
 import { logInWithJWT } from './redux/index';
 
 function App() {
@@ -30,6 +39,7 @@ function App() {
 				<Route path='/pricing' element={<PricingPage />} />
 				<Route path='/questions/new' element={<AskAQuestionPage />} />
 				<Route path='/questions/*' element={<QuestionListsPage />} />
+				<Route path="/question/:id" element={<ViewQuestionPage />} />
 				<Route path='/' element={<Navigate replace to='/questions' />} />
 				<Route path='*' element={<NotFoundPage />} />
 			</Routes>
