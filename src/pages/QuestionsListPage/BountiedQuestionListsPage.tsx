@@ -61,7 +61,7 @@ const BountiedQuestionListsPage: FC = () => {
 			<div className={style.container}>
 				<div className={style.mainContent}>
 					<h1 className={style.title}>
-						<FormattedMessage id="QuestionListsPage.title" defaultMessage="All Questions" />
+						<FormattedMessage id="QuestionListsPage.titleBountied" defaultMessage="Bountied Questions" />
 					</h1>
 					<QuestionListsPageNavigator tabList={tabList} active='Bountied' />
 
