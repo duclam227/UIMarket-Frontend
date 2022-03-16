@@ -1,5 +1,5 @@
 {
-   "AskAQuestionPage.pageTitle": "Đặt câu hỏi",
+  "AskAQuestionPage.pageTitle": "Đặt câu hỏi",
   "AskAQuestionPage.questionTitle": "Tiêu đề",
   "AskAQuestionPage.questionTitlePlaceholder": "vd: Làm sao để...",
   "AskAQuestionPage.questionBody": "Nội dung",
@@ -40,5 +40,6 @@
   "QuestionList.numberOfVotes": "{count, plural, =0 {# vote} one {# vote} other {# votes}}",
   "QuestionList.numberOfViews": "{count, plural, =0 {# lượt xem} one {# lượt xem} other {# lượt xem}}",
   "QuestionList.postedBy": "đăng bởi ",
-  "QuestionListsPage.title": "Câu hỏi"
+  "QuestionListsPage.title": "Câu hỏi",
+  "ViewQuestionPage.askedBy": "Được hỏi bởi"
 }

@@ -1,5 +1,5 @@
 {
-   "AskAQuestionPage.pageTitle": "Ask a question",
+  "AskAQuestionPage.pageTitle": "Ask a question",
   "AskAQuestionPage.questionTitle": "Title",
   "AskAQuestionPage.questionTitlePlaceholder": "e.g How do I...",
   "AskAQuestionPage.questionBody": "Body",
@@ -40,5 +40,6 @@
   "QuestionList.numberOfVotes": "{count, plural, =0 {# vote} one {# vote} other {# votes}}",
   "QuestionList.numberOfViews": "{count, plural, =0 {# view} one {# view} other {# views}}",
   "QuestionList.postedBy": "posted by ",
-  "QuestionListsPage.title": "All Questions"
+  "QuestionListsPage.title": "All Questions",
+  "ViewQuestionPage.askedBy": "Asked by"
 }
