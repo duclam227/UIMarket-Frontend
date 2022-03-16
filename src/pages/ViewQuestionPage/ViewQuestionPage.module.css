@@ -1,0 +1,36 @@
+@import '../../app/util/colors.css';
+
+.container {
+	display: flex;
+	justify-content: center;
+
+	width: 100%;
+}
+
+.content {
+	width: 70%;
+}
+
+.question {
+	margin-top: 50px;
+}
+
+.title {
+	font-weight: 600;
+}
+
+.moreInfo {
+	display: flex;
+	flex-direction: row;
+
+	font-size: small;
+	color: var(--gray-600);
+
+	width: 100%;
+}
+
+.authorInfo {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+}
