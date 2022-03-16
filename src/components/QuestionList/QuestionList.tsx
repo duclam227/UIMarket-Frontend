@@ -11,8 +11,6 @@ interface Props {
 const QuestionList: FC<Props> = (props) => {
   const { questionsList } = props;
 
-  console.log(questionsList);
-
   if (!questionsList || questionsList.length < 1) {
     return null;
   }
