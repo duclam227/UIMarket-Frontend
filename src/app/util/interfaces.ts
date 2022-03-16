@@ -18,6 +18,7 @@ export interface authCredentials {
 }
 
 export interface PaginatorProps {
-	totalNumberOfPages: number | string;
-	currentPage: number | string;
+	totalNumberOfPages: number;
+	currentPage: number;
+	handleClickGoToPage: Function;
 }
