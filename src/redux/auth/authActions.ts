@@ -49,7 +49,7 @@ const logIn = (credentials: authCredentials) => {
 	return (dispatch: Dispatch<Action>) => {
 		dispatch(setError(null));
 		dispatch(loginInProgress());
-		authAPI.post
+		authAPI
 			.logIn(credentials)
 			.then((res: any) => {
 				const { user, token } = res;
@@ -67,7 +67,7 @@ const logInWithJWT = (jwt: string) => {
 	return (dispatch: Dispatch<Action>) => {
 		dispatch(setError(null));
 		dispatch(loginInProgress());
-		authAPI.get
+		authAPI
 			.getUserFromToken(jwt)
 			.then((res: any) => {
 				const { user } = res;
@@ -84,7 +84,7 @@ const signUp = (credentials: authCredentials) => {
 	return (dispatch: Dispatch<Action>) => {
 		dispatch(setError(null));
 		dispatch(signUpInProgress());
-		authAPI.post
+		authAPI
 			.signUp(credentials)
 			.then((res: any) => {
 				const { user, token } = res;
