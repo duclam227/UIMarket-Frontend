@@ -18,7 +18,7 @@ const Paginator: FC<PaginatorProps> = (props) => {
 
   const renderButtons = () => {
     if (currentPage < SMALL_LIMIT) {
-      if (totalNumberOfPages >= BIG_LIMIT) {
+      if (totalNumberOfPages > BIG_LIMIT) {
         //render 1 -> 10
         const pagingButtons = [];
         for (let i = 1; i <= 10; i++) {
@@ -44,16 +44,22 @@ const Paginator: FC<PaginatorProps> = (props) => {
         return pagingButtons;
       }
     } else {
-      if (totalNumberOfPages >= BIG_LIMIT) {
+      if (totalNumberOfPages > BIG_LIMIT) {
         //render 1 -> 10
-        const firstNumber = currentPage - SMALL_LIMIT;
-        const lastNumber = currentPage + SMALL_LIMIT - 1;
+        const calculatedFirstNumber = currentPage - SMALL_LIMIT;
+        const calculatedLastNumber = currentPage + SMALL_LIMIT - 1;
+        const firstNumber = calculatedFirstNumber >= 1 ? calculatedFirstNumber : 1;
+        const lastNumber = calculatedLastNumber <= totalNumberOfPages ? calculatedLastNumber : totalNumberOfPages;
+
+        const finalFirstNumber = lastNumber == totalNumberOfPages ? totalNumberOfPages - 9 : firstNumber;
+        const finalLastNumber = firstNumber === 1 ? 10 : lastNumber;
+
         const pagingButtons = [];
-        for (let i = firstNumber; i <= lastNumber; i++) {
+        for (let i = finalFirstNumber; i <= finalLastNumber; i++) {
           pagingButtons.push(
             <Pagination.Item
               active={currentPage === i ? true : false}
-              onClick={(number) => goToPage(i)}
+              onClick={() => goToPage(i)}
             >{i}</Pagination.Item>
           )
         }
