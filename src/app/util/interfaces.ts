@@ -1,14 +1,14 @@
 export interface question {
-  title: string;
-  body: string;
-  tags: string[];
-  bounty: number;
-  question: string;
+	title: string;
+	body: string;
+	tags: string[];
+	bounty: number;
+	question: string;
 }
 
 export interface navigatorTabItem {
-  path: string;
-  label: string;
+	path: string;
+	label: string;
 }
 
 export interface authCredentials {
@@ -33,4 +33,9 @@ export interface customer {
   customer_Status: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface PaginatorProps {
+	totalNumberOfPages: number | string;
+	currentPage: number | string;
 }
