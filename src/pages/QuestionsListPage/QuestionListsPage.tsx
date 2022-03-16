@@ -29,60 +29,45 @@ const QuestionListsPage: FC = () => {
 				console.log(error);
 			})
 	}, [])
-    
-  const tabList = [
-    {
-      path: 'all',
-      label: 'All',
-    },
-    {
-      path: 'bountied',
-      label: 'Bountied',
-    },
-    {
-      path: 'popular',
-      label: 'Popular',
-    },
-  ];
 
-  return (
-    <>
-      <PageWithNavbar>
-        <div className={style.container}>
-          <div className={style.mainContent}>
-            <h1 className={style.title}>
-              <FormattedMessage
-                id="QuestionListsPage.title"
-                defaultMessage="All Questions"
-              />
-            </h1>
-            <QuestionListsPageNavigator tabList={tabList} />
+	const tabList = [
+		{
+			path: 'all',
+			label: 'All',
+		},
+		{
+			path: 'bountied',
+			label: 'Bountied',
+		},
+		{
+			path: 'popular',
+			label: 'Popular',
+		},
+	];
 
 	return (
-		<>
-			<PageWithNavbar>
-				<div className={style.container}>
-					<div className={style.mainContent}>
-						<h1 className={style.title}>
-							<FormattedMessage id="QuestionListsPage.title" defaultMessage="All Questions" />
-						</h1>
-						<QuestionListsPageNavigator tabList={tabList} />
+		<PageWithNavbar>
+			<div className={style.container}>
+				<div className={style.mainContent}>
+					<h1 className={style.title}>
+						<FormattedMessage id="QuestionListsPage.title" defaultMessage="All Questions" />
+					</h1>
+					<QuestionListsPageNavigator tabList={tabList} />
 
-						<div className={style.questionsList}>
-							<Routes>
-								<Route path="all" element={<QuestionList questionsList={questions} />} />
-								<Route path="bountied" element={<p>bountied hey</p>} />
-								<Route path="popular" element={<p>popular yo</p>} />
-								<Route path="/:id" element={<NotFoundPage />} />
-								<Route path="/*" element={<Navigate replace to='all' />} />
-							</Routes>
-						</div>
+					<div className={style.questionsList}>
+						<Routes>
+							<Route path="all" element={<QuestionList questionsList={questions} />} />
+							<Route path="bountied" element={<p>bountied hey</p>} />
+							<Route path="popular" element={<p>popular yo</p>} />
+							<Route path="/:id" element={<NotFoundPage />} />
+							<Route path="/*" element={<Navigate replace to='all' />} />
+						</Routes>
 					</div>
 				</div>
-			</PageWithNavbar>
-
-		</>
+			</div>
+		</PageWithNavbar>
 	);
+
 };
 
 export default QuestionListsPage;
