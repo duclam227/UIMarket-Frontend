@@ -2,8 +2,8 @@ import get from './get';
 import post from './post';
 
 const questionAPI = {
-	get,
-  addNewQuestion: post.add,
+	getQuestionByPageNumber: get.getQuestionByPageNumber,
+	addNewQuestion: post.add,
 };
 
 export default questionAPI;

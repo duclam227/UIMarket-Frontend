@@ -26,7 +26,7 @@ const QuestionListsPage: FC = () => {
 
 	useEffect(() => {
 		setIsLoading(true);
-		questionAPI.get.getQuestionByPageNumber(page, ITEMS_PER_PAGE)
+		questionAPI.getQuestionByPageNumber(page, ITEMS_PER_PAGE)
 			.then((res: any) => {
 				const { totalPages, questions } = res;
 				setQuestions(questions);
