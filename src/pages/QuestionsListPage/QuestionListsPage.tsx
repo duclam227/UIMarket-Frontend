@@ -11,6 +11,7 @@ import { NotFoundPage } from '..';
 import questionAPI from '../../api/question/index';
 
 import style from './QuestionListsPage.module.css';
+import ViewQuestionPage from '../ViewQuestionPage/ViewQuestionPage';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -71,7 +72,6 @@ const QuestionListsPage: FC = () => {
 								<Route path="all" element={<QuestionList questionsList={questions} />} />
 								<Route path="bountied" element={<p>bountied hey</p>} />
 								<Route path="popular" element={<p>popular yo</p>} />
-								<Route path="/:id" element={<NotFoundPage />} />
 								<Route path="/*" element={<Navigate replace to='all' />} />
 							</Routes>
 						}
