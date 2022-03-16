@@ -49,5 +49,7 @@
   "QuestionList.numberOfViews": "{count, plural, =0 {# lượt xem} one {# lượt xem} other {# lượt xem}}",
   "QuestionList.postedBy": "đăng bởi ",
   "QuestionListsPage.title": "Câu hỏi",
+  "QuestionListsPage.titleBountied": "Câu hỏi có treo thưởng",
+  "QuestionListsPage.titlePopular": "Câu hỏi nổi bật",
   "ViewQuestionPage.askedBy": "Được hỏi bởi"
 }
