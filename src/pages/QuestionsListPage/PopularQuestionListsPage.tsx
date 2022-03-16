@@ -61,7 +61,7 @@ const PopularQuestionListsPage: FC = () => {
 			<div className={style.container}>
 				<div className={style.mainContent}>
 					<h1 className={style.title}>
-						<FormattedMessage id="QuestionListsPage.title" defaultMessage="All Questions" />
+						<FormattedMessage id="QuestionListsPage.titlePopular" defaultMessage="Popular Questions" />
 					</h1>
 					<QuestionListsPageNavigator tabList={tabList} active='Popular' />
 
