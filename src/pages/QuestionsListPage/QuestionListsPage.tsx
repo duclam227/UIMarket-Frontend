@@ -1,34 +1,32 @@
 import { FC, useEffect, useState } from 'react';
-import { Routes, Route, Navigate, useSearchParams } from 'react-router-dom';
+import { Routes, Route, Navigate, useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 
 import { getErrorMessage } from '../../app/util/index';
 
 import QuestionListsPageNavigator from './QuestionListsPageNavigator';
 import { QuestionList, PageWithNavbar, Paginator } from '../../components';
-import { NotFoundPage } from '..';
 
 import questionAPI from '../../api/question/index';
 
 import style from './QuestionListsPage.module.css';
-import ViewQuestionPage from '../ViewQuestionPage/ViewQuestionPage';
 
 const ITEMS_PER_PAGE = 10;
 
 const QuestionListsPage: FC = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
-	const [totalPages, setTotalPages] = useState<number | string>(1);
+	const [totalPages, setTotalPages] = useState<number>(1);
+	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [questions, setQuestions] = useState<Array<any>>([]);
-
-	const [searchParams, setSearchParams] = useSearchParams();
-	const page = searchParams.get('page') || 1;
 
 	useEffect(() => {
 		setIsLoading(true);
-		questionAPI.getQuestionByPageNumber(page, ITEMS_PER_PAGE)
+		questionAPI.getQuestionByPageNumber(1, ITEMS_PER_PAGE)
 			.then((res: any) => {
-				const { totalPages, questions } = res;
+
+				const { totalPages, questions, page } = res;
+				setCurrentPage(page);
 				setQuestions(questions);
 				setTotalPages(totalPages);
 				setIsLoading(false);
@@ -55,6 +53,24 @@ const QuestionListsPage: FC = () => {
 		},
 	];
 
+	const goToPage = (pageNumber: number) => {
+		setIsLoading(true);
+		questionAPI.getQuestionByPageNumber(pageNumber, ITEMS_PER_PAGE)
+			.then((res: any) => {
+
+				const { totalPages, questions, page } = res;
+				setCurrentPage(page);
+				setQuestions(questions);
+				setTotalPages(totalPages);
+				setIsLoading(false);
+			})
+			.catch(error => {
+				const errorMsg = getErrorMessage(error);
+				setError(errorMsg);
+				setIsLoading(false);
+			})
+	}
+
 	return (
 		<PageWithNavbar>
 			<div className={style.container}>
@@ -76,7 +92,11 @@ const QuestionListsPage: FC = () => {
 							</Routes>
 						}
 
-						<Paginator totalNumberOfPages={totalPages} currentPage={page} />
+						<Paginator
+							totalNumberOfPages={totalPages}
+							currentPage={currentPage}
+							handleClickGoToPage={(number: number) => goToPage(number)}
+						/>
 					</div>
 				</div>
 			</div>
