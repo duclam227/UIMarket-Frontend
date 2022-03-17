@@ -27,7 +27,7 @@ const SectionQuestion: FC<QuestionProps> = (props) => {
 
   return (
     <div className={style.question}>
-      <SectionVoter numberOfDownvotes={question.totalDownvote} numberOfUpvotes={question.totalUpvote} />
+      <SectionVoter numberOfDownvotes={question.totalDownvote} numberOfUpvotes={question.totalUpvote} questionId={question._id} />
       <div className={style.questionContent}>
         <h1 className={style.title}>{question.questionTitle}</h1>
         <div className={style.moreInfo}>
