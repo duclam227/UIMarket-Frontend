@@ -1,5 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import { getErrorMessage } from '../../app/util/index';
 
@@ -60,9 +62,16 @@ const BountiedQuestionListsPage: FC = () => {
 		<PageWithNavbar>
 			<div className={style.container}>
 				<div className={style.mainContent}>
-					<h1 className={style.title}>
-						<FormattedMessage id="QuestionListsPage.titleBountied" defaultMessage="Bountied Questions" />
-					</h1>
+					<div className={style.header}>
+						<h1 className={style.title}>
+							<FormattedMessage id="QuestionListsPage.title" defaultMessage="All Questions" />
+						</h1>
+						<Link className={style.addQuestionButton} to='/questions/new'>
+							<Button>
+								<FormattedMessage id="QuestionListsPage.addQuestionButton" defaultMessage="Ask a question" />
+							</Button>
+						</Link>
+					</div>
 					<QuestionListsPageNavigator tabList={tabList} active='Bountied' />
 
 					<div className={style.questionsList}>
