@@ -8,29 +8,14 @@
 }
 
 .content {
-	width: 70%;
+	width: 60%;
 }
 
-.question {
-	margin-top: 50px;
-}
-
-.title {
-	font-weight: 600;
-}
-
-.moreInfo {
+.voter {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
 
-	font-size: small;
-	color: var(--gray-600);
-
-	width: 100%;
-}
-
-.authorInfo {
-	display: flex;
-	flex-direction: row;
-	gap: 10px;
+	margin-right: 25px;
 }
