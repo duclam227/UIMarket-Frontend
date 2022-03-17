@@ -5,6 +5,7 @@ import questionAPI from "../../api/question";
 import { getErrorMessage } from "../../app/util";
 
 import { PageWithNavbar } from "../../components";
+import SectionQuestion from "./SectionQuestion";
 
 import style from './ViewQuestionPage.module.css';
 
@@ -37,17 +38,7 @@ const ViewQuestionPage = () => {
         {isLoading
           ? 'loading...'
           : question && <div className={style.content}>
-            <div className={style.question}>
-              <h1 className={style.title}>{question.questionTitle}</h1>
-              <div className={style.moreInfo}>
-                <div className={style.authorInfo}>
-                  <FormattedMessage id="ViewQuestionPage.askedBy" />
-                  <img src="/" alt="avt" />
-                  <span>{question.userId.customerName}</span>
-                </div>
-              </div>
-            </div>
-
+            <SectionQuestion question={question} />
           </div>
         }
       </div>
