@@ -3,7 +3,7 @@ import axiosClient from '..';
 const QUESTIONS_ENDPOINT = 'api/v1/questions';
 
 class Get {
-	getQuestionByPageNumber = (pageNumber: number | string, itemsPerPage: number) => {
+	getAllQuestionsByPageNumber = (pageNumber: number | string, itemsPerPage: number) => {
 		return axiosClient.get(
 			QUESTIONS_ENDPOINT + '?page=' + pageNumber + '&limit=' + itemsPerPage,
 		);

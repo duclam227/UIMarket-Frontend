@@ -2,7 +2,7 @@ import get from './get';
 import post from './post';
 
 const questionAPI = {
-	getQuestionByPageNumber: get.getQuestionByPageNumber,
+	getAllQuestionsByPageNumber: get.getAllQuestionsByPageNumber,
 	getQuestionById: get.getQuestionById,
 
 	addNewQuestion: post.add,
