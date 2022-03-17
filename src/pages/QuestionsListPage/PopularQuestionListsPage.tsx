@@ -22,7 +22,7 @@ const PopularQuestionListsPage: FC = () => {
 
 	useEffect(() => {
 		setIsLoading(true);
-		questionAPI.getAllQuestionsByPageNumber(1, ITEMS_PER_PAGE)
+		questionAPI.getPopularQuestionsByPageNumber(1, ITEMS_PER_PAGE)
 			.then((res: any) => {
 
 				const { totalPages, questions, page } = res;
