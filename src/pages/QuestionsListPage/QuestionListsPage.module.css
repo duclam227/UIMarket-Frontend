@@ -7,9 +7,21 @@
 	grid-template-columns: 1fr 3.5fr 1fr;
 }
 
+.header {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	margin: 60px 0 20px 15px;
+}
+
 .title {
-	margin: 40px 0 30px 15px;
 	font-weight: 600;
+}
+
+.addQuestionButton {
+	height: fit-content;
+	margin-left: auto;
 }
 
 .mainContent {

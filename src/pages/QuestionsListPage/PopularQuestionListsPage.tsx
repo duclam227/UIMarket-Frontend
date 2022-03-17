@@ -1,5 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import { getErrorMessage } from '../../app/util/index';
 
@@ -10,6 +12,7 @@ import questionAPI from '../../api/question/index';
 
 import style from './QuestionListsPage.module.css';
 import { tabList } from './QuestionListsPage';
+
 
 const ITEMS_PER_PAGE = 10;
 
@@ -60,9 +63,16 @@ const PopularQuestionListsPage: FC = () => {
 		<PageWithNavbar>
 			<div className={style.container}>
 				<div className={style.mainContent}>
-					<h1 className={style.title}>
-						<FormattedMessage id="QuestionListsPage.titlePopular" defaultMessage="Popular Questions" />
-					</h1>
+					<div className={style.header}>
+						<h1 className={style.title}>
+							<FormattedMessage id="QuestionListsPage.title" defaultMessage="All Questions" />
+						</h1>
+						<Link className={style.addQuestionButton} to='/questions/new'>
+							<Button>
+								<FormattedMessage id="QuestionListsPage.addQuestionButton" defaultMessage="Ask a question" />
+							</Button>
+						</Link>
+					</div>
 					<QuestionListsPageNavigator tabList={tabList} active='Popular' />
 
 					<div className={style.questionsList}>

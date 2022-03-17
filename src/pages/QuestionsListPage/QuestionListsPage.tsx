@@ -9,6 +9,8 @@ import { QuestionList, PageWithNavbar, Paginator } from '../../components';
 import questionAPI from '../../api/question/index';
 
 import style from './QuestionListsPage.module.css';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -74,9 +76,17 @@ const QuestionListsPage: FC = () => {
 		<PageWithNavbar>
 			<div className={style.container}>
 				<div className={style.mainContent}>
-					<h1 className={style.title}>
-						<FormattedMessage id="QuestionListsPage.title" defaultMessage="All Questions" />
-					</h1>
+
+					<div className={style.header}>
+						<h1 className={style.title}>
+							<FormattedMessage id="QuestionListsPage.title" defaultMessage="All Questions" />
+						</h1>
+						<Link className={style.addQuestionButton} to='/questions/new'>
+							<Button>
+								<FormattedMessage id="QuestionListsPage.addQuestionButton" defaultMessage="Ask a question" />
+							</Button>
+						</Link>
+					</div>
 					<QuestionListsPageNavigator tabList={tabList} active='All' />
 
 					<div className={style.questionsList}>
