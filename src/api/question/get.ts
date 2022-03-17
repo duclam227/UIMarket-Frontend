@@ -9,6 +9,28 @@ class Get {
 		);
 	};
 
+	getPopularQuestionsByPageNumber = (pageNumber: number | string, itemsPerPage: number) => {
+		return axiosClient.get(
+			QUESTIONS_ENDPOINT +
+				'?page=' +
+				pageNumber +
+				'&limit=' +
+				itemsPerPage +
+				'&selectWith=popular',
+		);
+	};
+
+	getBountiedQuestionsByPageNumber = (pageNumber: number | string, itemsPerPage: number) => {
+		return axiosClient.get(
+			QUESTIONS_ENDPOINT +
+				'?page=' +
+				pageNumber +
+				'&limit=' +
+				itemsPerPage +
+				'&selectWith=bountied',
+		);
+	};
+
 	getQuestionById = (id: string) => {
 		return axiosClient.get(QUESTIONS_ENDPOINT + '/' + id);
 	};
