@@ -40,7 +40,7 @@
 	position: absolute;
 	left: 0px;
 	top: calc(50% - 0.5px/2);
-	background-color: var(--gray);
+	background-color: var(--gray-500);
 }
 
 .divider::after {
@@ -50,7 +50,7 @@
 	position: absolute;
 	right: 0px;
 	top: calc(50% - 0.5px/2);
-	background-color: var(--gray);
+	background-color: var(--gray-500);
 }
 
 .forgetPasswordText {
