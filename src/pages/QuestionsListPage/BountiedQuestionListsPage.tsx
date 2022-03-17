@@ -22,7 +22,7 @@ const BountiedQuestionListsPage: FC = () => {
 
 	useEffect(() => {
 		setIsLoading(true);
-		questionAPI.getAllQuestionsByPageNumber(1, ITEMS_PER_PAGE)
+		questionAPI.getBountiedQuestionsByPageNumber(1, ITEMS_PER_PAGE)
 			.then((res: any) => {
 
 				const { totalPages, questions, page } = res;
