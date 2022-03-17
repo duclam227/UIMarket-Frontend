@@ -2,7 +2,7 @@ import { actionTypes } from './authActionTypes';
 import { Action, authState } from './authInterfaces';
 
 const initialState: authState = {
-	user: {},
+	user: null,
 	isInProgress: null,
 	error: null,
 };

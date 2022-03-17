@@ -1,29 +1,30 @@
+import { customer } from '../../app/util/interfaces';
 import { actionTypes } from './authActionTypes';
 
 interface authLoginRequest {
 	type: actionTypes.AUTH_LOGIN_REQUEST;
-	user?: Object | null;
+	user?: customer;
 	error: string | null;
 	isInProgress: boolean;
 }
 
 interface authLoginSuccess {
 	type: actionTypes.AUTH_LOGIN_SUCCESS;
-	user: Object;
+	user: customer;
 	error: null;
 	isInProgress: boolean;
 }
 
 interface authSignUpRequest {
 	type: actionTypes.AUTH_SIGNUP_REQUEST;
-	user?: Object | null;
+	user?: customer;
 	error: string | null;
 	isInProgress: boolean;
 }
 
 interface authSignUpSuccess {
 	type: actionTypes.AUTH_SIGNUP_SUCCESS;
-	user: Object;
+	user: customer;
 	error: null;
 	isInProgress: boolean;
 }
@@ -49,8 +50,9 @@ export type Action =
 	| authSignOut
 	| authSignUpRequest
 	| authSignUpSuccess;
+
 export interface authState {
-	user: Object | null;
+	user: customer | null;
 	error: string | null;
 	isInProgress: boolean | null;
 }
