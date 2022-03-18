@@ -11,6 +11,8 @@ import questionAPI from '../../api/question/index';
 import style from './QuestionListsPage.module.css';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { State } from '../../redux/store';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -35,6 +37,8 @@ const QuestionListsPage: FC = () => {
 	const [totalPages, setTotalPages] = useState<number>(1);
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [questions, setQuestions] = useState<Array<any>>([]);
+
+	const currentUser = useSelector((state: State) => state.auth.user);
 
 	useEffect(() => {
 		setIsLoading(true);
@@ -81,11 +85,14 @@ const QuestionListsPage: FC = () => {
 						<h1 className={style.title}>
 							<FormattedMessage id="QuestionListsPage.title" defaultMessage="All Questions" />
 						</h1>
-						<Link className={style.addQuestionButton} to='/questions/new'>
-							<Button>
-								<FormattedMessage id="QuestionListsPage.addQuestionButton" defaultMessage="Ask a question" />
-							</Button>
-						</Link>
+						{currentUser &&
+							<Link className={style.addQuestionButton} to='/questions/new'>
+								<Button>
+									<FormattedMessage id="QuestionListsPage.addQuestionButton" defaultMessage="Ask a question" />
+								</Button>
+							</Link>
+						}
+
 					</div>
 					<QuestionListsPageNavigator tabList={tabList} active='All' />
 
