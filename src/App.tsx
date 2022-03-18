@@ -13,6 +13,7 @@ import {
   PricingPage,
   AuthenticationPage,
   AskAQuestionPage,
+  ViewQuestionPage,
 } from './pages';
 import { logInWithJWT } from './redux/index';
 
@@ -57,6 +58,7 @@ function App() {
           }
         />
         <Route path="/questions/*" element={<QuestionListsPage />} />
+        <Route path="/question/:id" element={<ViewQuestionPage />} />
         <Route path="/" element={<Navigate replace to="/questions" />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
