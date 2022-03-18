@@ -7,7 +7,7 @@ const initialState: authState = {
 	error: null,
 };
 
-const authReducer = (state: authState = initialState, action: Action) => {
+const authReducer = (state: authState = initialState, action: Action): authState => {
 	switch (action.type) {
 		case actionTypes.AUTH_LOGIN_SUCCESS:
 			return {
