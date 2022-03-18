@@ -14,6 +14,7 @@
   "CommonNavbar.appName": "App Đẹp",
   "CommonNavbar.itemQuestionsLabel": "Questions",
   "CommonNavbar.itemAskAQuestionLabel": "Ask a question",
+  "CommonNavbar.searchBarPlaceholder": "Search",
   "CommonNavbar.itemLoginBtnLabel": "Log In",
   "CommonNavbar.itemSignupBtnLabel": "Sign Up",
   "CommonNavbar.userDropdownProfileLabel": "Profile",
