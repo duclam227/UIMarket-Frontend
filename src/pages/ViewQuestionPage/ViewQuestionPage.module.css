@@ -10,3 +10,20 @@
 .content {
 	width: 60%;
 }
+
+.addCommentWrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 10px;
+
+	margin-top: 50px;
+}
+
+.addCommentForm {
+	width: 100%;
+}
+
+.addCommentButton {
+	margin-top: 20px;
+}

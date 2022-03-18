@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
+import { useSelector } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
 import questionAPI from "../../api/question";
 import { getErrorMessage } from "../../app/util";
 
+import { State } from "../../redux/store";
+
 import { PageWithNavbar } from "../../components";
+import SectionAddComment from "./SectionAddComment";
 import SectionQuestion from "./SectionQuestion";
 
 import style from './ViewQuestionPage.module.css';
@@ -16,6 +20,8 @@ const ViewQuestionPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [question, setQuestion] = useState<any>({});
+
+  const currentUser = useSelector((state: State) => state.auth.user);
 
   useEffect(() => {
     questionAPI.getQuestionById(questionId)
@@ -37,8 +43,10 @@ const ViewQuestionPage = () => {
       <div className={style.container}>
         {isLoading
           ? 'loading...'
-          : question && <div className={style.content}>
+          : question &&
+          <div className={style.content}>
             <SectionQuestion question={question} />
+            <SectionAddComment currentUser={currentUser} />
           </div>
         }
       </div>
