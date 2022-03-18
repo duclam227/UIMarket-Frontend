@@ -6,55 +6,64 @@ import { FormattedMessage } from 'react-intl';
 // import { State } from '../../../redux/store';
 import { State } from '../../../redux/store';
 import { logOut } from '../../../redux';
-import { customer } from '../../../app/util/interfaces';
 
 import style from './Navbar.module.css';
 const NavBar: FC = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((state: State) => state.auth.user);
   const appName = (
     <FormattedMessage id="CommonNavbar.appName" defaultMessage="App Name" />
   );
   const itemQuestionsLabel = (
     <FormattedMessage
-      id="CommonNavbar.itemQuestions"
+      id="CommonNavbar.itemQuestionsLabel"
       defaultMessage="Questions"
     />
   );
   const itemAskAQuestionLabel = (
     <FormattedMessage
-      id="CommonNavbar.itemAskAQuestion"
+      id="CommonNavbar.itemAskAQuestionLabel"
       defaultMessage="Ask a question"
     />
   );
   const itemLoginBtnLabel = (
-    <FormattedMessage id="CommonNavbar.itemLoginBtn" defaultMessage="Sign in" />
+    <FormattedMessage
+      id="CommonNavbar.itemLoginBtnLabel"
+      defaultMessage="Log In"
+    />
   );
   const userDropdownProfileLabel = (
     <FormattedMessage
-      id="CommonNavbar.userDropdownProfile"
+      id="CommonNavbar.userDropdownProfileLabel"
       defaultMessage="Profile"
     />
   );
   const userDropdownLogoutBtnLabel = (
     <FormattedMessage
-      id="CommonNavbar.userDropdownLogoutBtn"
+      id="CommonNavbar.userDropdownLogoutBtnLabel"
       defaultMessage="Logout"
     />
   );
+  const itemSignupBtnLabel = (
+    <FormattedMessage
+      id="CommonNavbar.itemSignupBtnLabel"
+      defaultMessage="Sign Up"
+    />
+  );
+
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state: State) => state.auth.user);
 
   const handleLogout = () => {
     dispatch(logOut());
   };
 
-  const navWrapper = 'navbar navbar-expand-lg navbar-dark bg-dark';
-  const leftSideNavItemWrapper = 'navbar-nav me-auto mb-2 mb-lg-0';
-  const rightSideNavItemWrapper = 'navbar-nav mb-lg-0';
-  const loginButtonStyle = 'btn btn-outline-light';
-  const logoutButtonStyle = 'btn btn-danger';
-
+  const navWrapperBstrapClass = 'navbar navbar-expand-lg navbar-dark bg-dark';
+  const leftSideNavItemBstrapClass = 'navbar-nav me-auto mb-2 mb-lg-0';
+  const rightSideNavItemBstrapClass = 'navbar-nav mb-lg-0';
+  const loginButtonBstrapClass = 'btn btn-outline-light';
+  const signupButtonBstrapClass = 'btn btn-light mx-2';
+  const logoutButtonBstrapClass = 'btn btn-danger';
   return (
-    <nav className={navWrapper}>
+    <nav className={navWrapperBstrapClass}>
       <div className="container-fluid">
         {/* Logo */}
         <a className="navbar-brand">{appName}</a>
@@ -74,7 +83,7 @@ const NavBar: FC = () => {
 
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           {/* Left side nav items */}
-          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          <ul className={leftSideNavItemBstrapClass}>
             <li className="nav-item">
               <Link to="/questions" className="nav-link active">
                 {itemQuestionsLabel}
@@ -88,8 +97,8 @@ const NavBar: FC = () => {
           </ul>
 
           {/* Right side nav items */}
-          <ul className="navbar-nav mb-lg-0">
-            {user ? (
+          <ul className={rightSideNavItemBstrapClass}>
+            {currentUser ? (
               <div className="nav-item dropdown">
                 <a
                   className="nav-link dropdown-toggle p-0"
@@ -104,7 +113,7 @@ const NavBar: FC = () => {
                     className={style.userAvatar}
                     alt="User profile"
                   />
-                  khoakg2013@gmail.com
+                  {currentUser.customerEmail}
                 </a>
                 <ul
                   className="dropdown-menu dropdown-menu-lg-end position-absolute mt-1"
@@ -115,18 +124,28 @@ const NavBar: FC = () => {
                   </li>
                   <hr className="dropdown-divider" />
                   <li className="text-center">
-                    <button className="btn btn-danger" onClick={handleLogout}>
+                    <button
+                      className={logoutButtonBstrapClass}
+                      onClick={handleLogout}
+                    >
                       {userDropdownLogoutBtnLabel}
                     </button>
                   </li>
                 </ul>
               </div>
             ) : (
-              <Link to="/login" className="nav-item ">
-                <button className="btn btn-outline-light">
-                  {itemLoginBtnLabel}
-                </button>
-              </Link>
+              <>
+                <Link to="/signup" className="nav-item ">
+                  <button className={signupButtonBstrapClass}>
+                    {itemSignupBtnLabel}
+                  </button>
+                </Link>
+                <Link to="/login" className="nav-item ">
+                  <button className={loginButtonBstrapClass}>
+                    {itemLoginBtnLabel}
+                  </button>
+                </Link>
+              </>
             )}
           </ul>
         </div>
