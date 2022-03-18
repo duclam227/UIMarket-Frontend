@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { Dispatch } from 'react';
 import authAPI from '../../api/auth';
 import { getErrorMessage } from '../../app/util';
-import { authCredentials } from '../../app/util/interfaces';
+import { authCredentials, customer } from '../../app/util/interfaces';
 import { actionTypes } from './authActionTypes';
 import { Action } from './authInterfaces';
 
@@ -54,7 +54,8 @@ const logIn = (credentials: authCredentials) => {
 			.then((res: any) => {
 				const { user, token } = res;
 				localStorage.setItem('authToken', token);
-				dispatch(loginSuccess({ ...user }));
+				const customer: customer = { ...user };
+				dispatch(loginSuccess({ ...customer }));
 			})
 			.catch(error => {
 				const errorMsg = getErrorMessage(error);
@@ -71,7 +72,8 @@ const logInWithJWT = (jwt: string) => {
 			.getUserFromToken(jwt)
 			.then((res: any) => {
 				const { user } = res;
-				dispatch(loginSuccess({ ...user }));
+				const customer: customer = { ...user };
+				dispatch(loginSuccess({ ...customer }));
 			})
 			.catch(error => {
 				const errorMsg = getErrorMessage(error);
@@ -89,7 +91,8 @@ const signUp = (credentials: authCredentials) => {
 			.then((res: any) => {
 				const { user, token } = res;
 				localStorage.setItem('authToken', token);
-				dispatch(signUpSuccess({ ...user }));
+				const customer: customer = { ...user };
+				dispatch(signUpSuccess({ ...customer }));
 			})
 			.catch(error => {
 				const errorMsg = getErrorMessage(error);

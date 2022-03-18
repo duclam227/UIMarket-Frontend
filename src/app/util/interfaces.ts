@@ -40,3 +40,21 @@ export interface PaginatorProps {
 	currentPage: number;
 	handleClickGoToPage: Function;
 }
+
+export interface customer {
+	customerName: string;
+	customerEmail: string;
+	customerPassword: string;
+	customerPhone: string;
+	customerDOB: string;
+	authToken: {
+		Google: string;
+	};
+	customerWallet: {
+		coin: string;
+		point: string;
+	};
+	customer_Status: string;
+	createdAt: Date;
+	updatedAt: Date;
+}
