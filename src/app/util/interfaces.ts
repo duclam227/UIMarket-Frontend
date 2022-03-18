@@ -58,3 +58,8 @@ export interface customer {
 	createdAt: Date;
 	updatedAt: Date;
 }
+
+export interface voteStatus {
+	upvote: boolean;
+	downvote: boolean;
+}
