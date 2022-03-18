@@ -20,14 +20,16 @@ const ViewQuestionPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [question, setQuestion] = useState<any>({});
+  const [voteStatus, setVoteStatus] = useState(null);
 
   const currentUser = useSelector((state: State) => state.auth.user);
 
   useEffect(() => {
     questionAPI.getQuestionById(questionId)
       .then((res: any) => {
-        setQuestion({ ...res.question })
-        console.log(res.question);
+        setQuestion({ ...res.question });
+        setVoteStatus({ ...res.voteStatus });
+        console.log(res);
 
         setIsLoading(false);
       })
@@ -45,7 +47,7 @@ const ViewQuestionPage = () => {
           ? 'loading...'
           : question &&
           <div className={style.content}>
-            <SectionQuestion question={question} />
+            <SectionQuestion question={question} voteStatus={voteStatus} />
             <SectionAddComment currentUser={currentUser} />
           </div>
         }
