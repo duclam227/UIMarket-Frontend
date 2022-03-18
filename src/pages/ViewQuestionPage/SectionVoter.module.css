@@ -9,9 +9,17 @@
 	cursor: pointer;
 }
 
+.upvote.active {
+	fill: var(--teal-600);
+}
+
 .upvote:hover {
 	fill: var(--teal-600);
 	transition: 100ms;
+}
+
+.downvote.active {
+	fill: var(--red-500);
 }
 
 .downvote:hover {
