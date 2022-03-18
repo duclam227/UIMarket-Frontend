@@ -1,6 +1,8 @@
 import axiosClient from '..';
+import { getJwt } from '../../app/util/authHelpers';
 
 const QUESTIONS_ENDPOINT = 'api/v1/questions';
+const jwt = getJwt();
 
 class Get {
 	getAllQuestionsByPageNumber = (pageNumber: number | string, itemsPerPage: number) => {
@@ -20,7 +22,12 @@ class Get {
 	};
 
 	getQuestionById = (id: string) => {
-		return axiosClient.get(`${QUESTIONS_ENDPOINT}/${id}`);
+		const config = {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		};
+		return axiosClient.get(`${QUESTIONS_ENDPOINT}/${id}`, config);
 	};
 }
 
