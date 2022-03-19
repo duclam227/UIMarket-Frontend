@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Alert } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
@@ -60,6 +61,11 @@ const QuestionList: FC<Props> = (props) => {
             <div><FormattedMessage id="QuestionList.numberOfVotes" values={{ count: q.totalUpvote - q.totalDownvote }} /></div>
             <div className={style.answersCount}><FormattedMessage id="QuestionList.numberOfAnswers" values={{ count: q.totalAnswer }} /></div>
             <div className={style.viewsCount}><FormattedMessage id="QuestionList.numberOfViews" values={{ count: q.totalView }} /></div>
+            {q.questionBounty > 0
+              ? <Alert variant='warning' className={style.bountyTag}>
+                <div><b>{q.questionBounty}</b></div>
+              </Alert>
+              : null}
           </div>
           <div className={style.mainContent}>
             <Link to={qLink} className={style.title}>{q.questionTitle}</Link>

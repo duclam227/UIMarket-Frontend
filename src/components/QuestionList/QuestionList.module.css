@@ -10,7 +10,7 @@
 }
 
 .sideContent {
-	min-width: 50px;
+	min-width: 75px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
@@ -25,6 +25,18 @@
 
 .viewsCount {
 	color: var(--gray-600);
+}
+
+.bountyTag {
+	display: flex;
+	justify-content: center;
+
+	padding: 10px 0;
+
+	margin: 0;
+	min-width: 100%;
+
+	color: var(--orange-600);
 }
 
 .mainContent {
