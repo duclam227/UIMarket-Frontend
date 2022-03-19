@@ -1,3 +1,5 @@
+@import '../../app/util/colors.css';
+
 .question {
 	display: flex;
 	flex-direction: row;
@@ -14,6 +16,28 @@
 	flex-direction: column;
 
 	width: 100%;
+}
+
+.bountyHeader {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 10px;
+
+	color: var(--blue-700);
+}
+
+.bountyContent {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.clock {
+	width: 25px;
+	height: 25px;
+
+	fill: var(--blue-700);
 }
 
 .title {

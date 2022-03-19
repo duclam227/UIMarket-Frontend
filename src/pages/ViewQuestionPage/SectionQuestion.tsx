@@ -6,6 +6,7 @@ import { voteStatus } from "../../app/util/interfaces";
 import SectionVoter from "./SectionVoter";
 
 import style from './SectionQuestion.module.css';
+import SectionBountyHeader from "./SectionBountyHeader";
 
 interface QuestionProps {
   question: any;
@@ -41,6 +42,7 @@ const SectionQuestion: FC<QuestionProps> = (props) => {
         handleVoteStatus={(newVoteStatus: voteStatus) => changeVoteStatus(newVoteStatus)}
       />
       <div className={style.questionContent}>
+        <SectionBountyHeader question={question} />
         <h1 className={style.title}>{question.questionTitle}</h1>
         <div className={style.moreInfo}>
           <div className={style.authorInfo}>
