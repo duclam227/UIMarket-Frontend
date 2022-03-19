@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import JsxParser from "react-jsx-parser";
 
@@ -9,11 +9,11 @@ import style from './SectionQuestion.module.css';
 
 interface QuestionProps {
   question: any;
-  voteStatus: voteStatus | null;
 }
 
 const SectionQuestion: FC<QuestionProps> = (props) => {
-  const { question, voteStatus } = props;
+  const { question } = props;
+  const [voteStatus, setVoteStatus] = useState<voteStatus>(question.voteStatus || null);
 
   const renderTags = (tags: Array<any>) => {
     if (tags.length < 1) {
@@ -27,6 +27,10 @@ const SectionQuestion: FC<QuestionProps> = (props) => {
     return displayTag;
   }
 
+  const changeVoteStatus = (newVoteStatus: voteStatus) => {
+    setVoteStatus({ ...newVoteStatus });
+  }
+
   return (
     <div className={style.question}>
       <SectionVoter
@@ -34,6 +38,7 @@ const SectionQuestion: FC<QuestionProps> = (props) => {
         numberOfUpvotes={question.totalUpvote}
         questionId={question._id}
         voteStatus={voteStatus}
+        handleVoteStatus={(newVoteStatus: voteStatus) => changeVoteStatus(newVoteStatus)}
       />
       <div className={style.questionContent}>
         <h1 className={style.title}>{question.questionTitle}</h1>
