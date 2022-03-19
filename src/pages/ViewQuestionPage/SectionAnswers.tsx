@@ -31,10 +31,9 @@ const SectionAnswers: FC<SectionAnswersProps> = (props) => {
             </div>
             <JsxParser jsx={a.answerContent} />
             <SectionAnswerVoter
-              numberOfDownvotes={a.totalDownvote}
-              numberOfUpvotes={a.totalUpvote}
+              answer={a}
               question={question}
-              voteStatus={{ upvote: false, downvote: true }}
+              voteStatus={a.voteStatus}
               currentUser={currentUser}
               handleVoteStatus={() => { }}
             />

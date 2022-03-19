@@ -8,18 +8,17 @@ import { customer, voteStatus } from "../../app/util/interfaces";
 import { useNavigate } from "react-router-dom";
 
 interface VoterProps {
-  numberOfUpvotes: number;
-  numberOfDownvotes: number;
   question: any;
+  answer: any;
   voteStatus: voteStatus | null;
   currentUser: customer | null;
   handleVoteStatus: Function;
 }
 
 const SectionAnswerVoter: FC<VoterProps> = (props) => {
-  const { numberOfUpvotes, numberOfDownvotes, question, voteStatus, currentUser } = props;
-  const [upvote, setUpvote] = useState(numberOfUpvotes);
-  const [downvote, setDownvote] = useState(numberOfDownvotes);
+  const { answer, question, voteStatus, currentUser } = props;
+  const [upvote, setUpvote] = useState(answer.totalUpvote);
+  const [downvote, setDownvote] = useState(answer.totalDownvote);
   const navigate = useNavigate();
 
   const isAuthenticated = !!currentUser;
@@ -40,7 +39,7 @@ const SectionAnswerVoter: FC<VoterProps> = (props) => {
       return;
     }
 
-    voteAPI.upvote('question', question._id, question._id)
+    voteAPI.upvote('answer', question._id, answer._id)
       .then((res: any) => {
         switch (res) {
           case 'UPVOTED': {
@@ -75,7 +74,7 @@ const SectionAnswerVoter: FC<VoterProps> = (props) => {
       return;
     }
 
-    voteAPI.downvote('question', question._id, question._id)
+    voteAPI.downvote('answer', question._id, answer._id)
       .then((res: any) => {
         switch (res) {
           case 'DOWNVOTED': {
