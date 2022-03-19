@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import JsxParser from "react-jsx-parser";
 
-import { voteStatus } from "../../app/util/interfaces";
+import { customer, voteStatus } from "../../app/util/interfaces";
 import SectionVoter from "./SectionVoter";
 
 import style from './SectionQuestion.module.css';
@@ -10,10 +10,11 @@ import SectionBountyHeader from "./SectionBountyHeader";
 
 interface QuestionProps {
   question: any;
+  currentUser: customer | null;
 }
 
 const SectionQuestion: FC<QuestionProps> = (props) => {
-  const { question } = props;
+  const { question, currentUser } = props;
   const [voteStatus, setVoteStatus] = useState<voteStatus>(question.voteStatus || null);
 
   const renderTags = (tags: Array<any>) => {
@@ -37,8 +38,9 @@ const SectionQuestion: FC<QuestionProps> = (props) => {
       <SectionVoter
         numberOfDownvotes={question.totalDownvote}
         numberOfUpvotes={question.totalUpvote}
-        questionId={question._id}
+        question={question}
         voteStatus={voteStatus}
+        currentUser={currentUser}
         handleVoteStatus={(newVoteStatus: voteStatus) => changeVoteStatus(newVoteStatus)}
       />
       <div className={style.questionContent}>

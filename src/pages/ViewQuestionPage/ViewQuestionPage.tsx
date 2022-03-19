@@ -26,8 +26,9 @@ const ViewQuestionPage = () => {
   useEffect(() => {
     questionAPI.getQuestionById(questionId)
       .then((res: any) => {
-        setQuestion({ ...res._doc });
+        setQuestion({ ...res.question });
         setIsLoading(false);
+
       })
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
@@ -43,7 +44,7 @@ const ViewQuestionPage = () => {
           ? 'loading...'
           : question &&
           <div className={style.content}>
-            <SectionQuestion question={question} />
+            <SectionQuestion question={question} currentUser={currentUser} />
             <SectionAddComment currentUser={currentUser} />
           </div>
         }

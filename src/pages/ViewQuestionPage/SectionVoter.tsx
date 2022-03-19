@@ -4,20 +4,23 @@ import classNames from "classnames";
 import style from './SectionVoter.module.css';
 import voteAPI from "../../api/vote";
 import { getErrorMessage } from "../../app/util";
-import { voteStatus } from "../../app/util/interfaces";
+import { customer, voteStatus } from "../../app/util/interfaces";
 
 interface VoterProps {
   numberOfUpvotes: number;
   numberOfDownvotes: number;
-  questionId: string;
+  question: any;
   voteStatus: voteStatus | null;
+  currentUser: customer | null;
   handleVoteStatus: Function;
 }
 
 const SectionVoter: FC<VoterProps> = (props) => {
-  const { numberOfUpvotes, numberOfDownvotes, questionId, voteStatus } = props;
+  const { numberOfUpvotes, numberOfDownvotes, question, voteStatus, currentUser } = props;
   const [upvote, setUpvote] = useState(numberOfUpvotes);
   const [downvote, setDownvote] = useState(numberOfDownvotes);
+
+  const isCurrentUserAuthor = currentUser && currentUser.customerEmail === question.userId.customerEmail;
 
   const upvoteStyle = classNames(style.voteButton, style.upvote);
   const upvoteActiveStyle = classNames(style.voteButton, style.upvote, style.active);
@@ -25,11 +28,19 @@ const SectionVoter: FC<VoterProps> = (props) => {
   const downvoteActiveStyle = classNames(style.voteButton, style.downvote, style.active);
 
   const handleUpvote = () => {
-    voteAPI.upvote('question', questionId, questionId)
+    if (isCurrentUserAuthor) {
+      return;
+    }
+
+    voteAPI.upvote('question', question._id, question._id)
       .then((res: any) => {
         switch (res) {
           case 'UPVOTED': {
-            setUpvote(upvote + 1);
+            if (voteStatus?.downvote) {
+              setUpvote(upvote + 2);
+            } else {
+              setUpvote(upvote + 1);
+            }
             props.handleVoteStatus({ upvote: true, downvote: false });
             break;
           }
@@ -47,11 +58,19 @@ const SectionVoter: FC<VoterProps> = (props) => {
   }
 
   const handleDownvote = () => {
-    voteAPI.downvote('question', questionId, questionId)
+    if (isCurrentUserAuthor) {
+      return;
+    }
+
+    voteAPI.downvote('question', question._id, question._id)
       .then((res: any) => {
         switch (res) {
           case 'DOWNVOTED': {
-            setDownvote(downvote + 1);
+            if (voteStatus?.upvote) {
+              setDownvote(downvote + 2);
+            } else {
+              setDownvote(downvote + 1);
+            }
             props.handleVoteStatus({ upvote: false, downvote: true });
             break;
           }

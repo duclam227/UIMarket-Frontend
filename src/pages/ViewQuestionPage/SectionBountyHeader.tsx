@@ -10,7 +10,6 @@ interface BountyHeaderProps {
 
 const SectionBountyHeader: FC<BountyHeaderProps> = (props) => {
   const { question } = props;
-  console.log(question);
 
   if (question.questionBounty < 0) {
     return null;
