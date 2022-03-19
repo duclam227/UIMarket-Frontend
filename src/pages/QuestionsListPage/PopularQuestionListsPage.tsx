@@ -69,7 +69,7 @@ const PopularQuestionListsPage: FC = () => {
 				<div className={style.mainContent}>
 					<div className={style.header}>
 						<h1 className={style.title}>
-							<FormattedMessage id="QuestionListsPage.title" defaultMessage="All Questions" />
+							<FormattedMessage id="QuestionListsPage.titlePopular" defaultMessage="All Questions" />
 						</h1>
 						{currentUser &&
 							<Link className={style.addQuestionButton} to='/questions/new'>
