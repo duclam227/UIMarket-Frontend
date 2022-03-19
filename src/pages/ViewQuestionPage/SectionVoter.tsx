@@ -8,8 +8,6 @@ import { customer, voteStatus } from "../../app/util/interfaces";
 import { useNavigate } from "react-router-dom";
 
 interface VoterProps {
-  numberOfUpvotes: number;
-  numberOfDownvotes: number;
   question: any;
   voteStatus: voteStatus | null;
   currentUser: customer | null;
@@ -17,9 +15,9 @@ interface VoterProps {
 }
 
 const SectionVoter: FC<VoterProps> = (props) => {
-  const { numberOfUpvotes, numberOfDownvotes, question, voteStatus, currentUser } = props;
-  const [upvote, setUpvote] = useState(numberOfUpvotes);
-  const [downvote, setDownvote] = useState(numberOfDownvotes);
+  const { question, voteStatus, currentUser } = props;
+  const [upvote, setUpvote] = useState(question.totalUpvote);
+  const [downvote, setDownvote] = useState(question.totalDownvote);
   const navigate = useNavigate();
 
   const isAuthenticated = !!currentUser;
