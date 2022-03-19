@@ -26,7 +26,7 @@ const ViewQuestionPage = () => {
   useEffect(() => {
     questionAPI.getQuestionById(questionId)
       .then((res: any) => {
-        setQuestion({ ...res.question });
+        setQuestion({ ...res._doc });
         setIsLoading(false);
 
       })
@@ -37,6 +37,8 @@ const ViewQuestionPage = () => {
       })
   }, [])
 
+  console.log(question);
+
   return (
     <PageWithNavbar>
       <div className={style.container}>
@@ -45,7 +47,7 @@ const ViewQuestionPage = () => {
           : question &&
           <div className={style.content}>
             <SectionQuestion question={question} currentUser={currentUser} />
-            <SectionAddComment currentUser={currentUser} />
+            <SectionAddComment question={question} currentUser={currentUser} />
           </div>
         }
       </div>
