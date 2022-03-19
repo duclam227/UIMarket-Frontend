@@ -11,6 +11,10 @@
 	width: 60%;
 }
 
+.answersTitle {
+	margin-top: 30px;
+}
+
 .addCommentWrapper {
 	display: flex;
 	flex-direction: row;

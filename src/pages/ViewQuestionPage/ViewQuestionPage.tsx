@@ -7,11 +7,15 @@ import { getErrorMessage } from "../../app/util";
 
 import { State } from "../../redux/store";
 
-import { PageWithNavbar } from "../../components";
+import { PageWithNavbar, Paginator } from "../../components";
 import SectionAddComment from "./SectionAddComment";
 import SectionQuestion from "./SectionQuestion";
 
 import style from './ViewQuestionPage.module.css';
+import SectionAnswers from "./SectionAnswers";
+import answerAPI from "../../api/answer";
+
+const ITEMS_PER_PAGE = 10;
 
 const ViewQuestionPage = () => {
   const { id } = useParams();
@@ -20,15 +24,37 @@ const ViewQuestionPage = () => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [question, setQuestion] = useState<any>({});
+  const [answers, setAnswers] = useState<Array<any>>([]);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const currentUser = useSelector((state: State) => state.auth.user);
 
   useEffect(() => {
+    const getAnswers = async () => {
+      return answerAPI.getAnswersByPageNumber(1, ITEMS_PER_PAGE, id)
+        .then((res: any) => {
+          console.log(res);
+          setAnswers([...res.answers])
+          setTotalPages(res.totalPages);
+          setCurrentPage(res.page);
+        })
+        .catch((error) => {
+          const errorMsg = getErrorMessage(error);
+          setError(errorMsg);
+          setIsLoading(false);
+        })
+    }
+
     questionAPI.getQuestionById(questionId)
       .then((res: any) => {
         setQuestion({ ...res._doc });
         setIsLoading(false);
 
+        getAnswers()
+          .then((res) => {
+
+          })
       })
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
@@ -37,7 +63,20 @@ const ViewQuestionPage = () => {
       })
   }, [])
 
-  console.log(question);
+  const goToPage = (page: number) => {
+    answerAPI.getAnswersByPageNumber(page, ITEMS_PER_PAGE, id)
+      .then((res: any) => {
+        console.log(res);
+        setAnswers([...res.answers])
+        setTotalPages(res.totalPages);
+        setCurrentPage(res.page);
+      })
+      .catch((error) => {
+        const errorMsg = getErrorMessage(error);
+        setError(errorMsg);
+        setIsLoading(false);
+      })
+  }
 
   return (
     <PageWithNavbar>
@@ -47,6 +86,17 @@ const ViewQuestionPage = () => {
           : question &&
           <div className={style.content}>
             <SectionQuestion question={question} currentUser={currentUser} />
+            {answers.length > 0 &&
+              <>
+                <h5 className={style.answersTitle}>Answers</h5>
+                <SectionAnswers answerList={answers} currentUser={currentUser} question={question} />
+                <Paginator
+                  totalNumberOfPages={totalPages}
+                  currentPage={currentPage}
+                  handleClickGoToPage={(number: number) => goToPage(number)}
+                />
+              </>
+            }
             <SectionAddComment question={question} currentUser={currentUser} />
           </div>
         }
