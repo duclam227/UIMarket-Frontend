@@ -5,6 +5,7 @@ import style from './SectionVoter.module.css';
 import voteAPI from "../../api/vote";
 import { getErrorMessage } from "../../app/util";
 import { customer, voteStatus } from "../../app/util/interfaces";
+import { useNavigate } from "react-router-dom";
 
 interface VoterProps {
   numberOfUpvotes: number;
@@ -19,7 +20,9 @@ const SectionVoter: FC<VoterProps> = (props) => {
   const { numberOfUpvotes, numberOfDownvotes, question, voteStatus, currentUser } = props;
   const [upvote, setUpvote] = useState(numberOfUpvotes);
   const [downvote, setDownvote] = useState(numberOfDownvotes);
+  const navigate = useNavigate();
 
+  const isAuthenticated = !!currentUser;
   const isCurrentUserAuthor = currentUser && currentUser.customerEmail === question.userId.customerEmail;
 
   const upvoteStyle = classNames(style.voteButton, style.upvote);
@@ -28,6 +31,11 @@ const SectionVoter: FC<VoterProps> = (props) => {
   const downvoteActiveStyle = classNames(style.voteButton, style.downvote, style.active);
 
   const handleUpvote = () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
     if (isCurrentUserAuthor) {
       return;
     }
@@ -58,6 +66,11 @@ const SectionVoter: FC<VoterProps> = (props) => {
   }
 
   const handleDownvote = () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
     if (isCurrentUserAuthor) {
       return;
     }
