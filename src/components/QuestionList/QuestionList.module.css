@@ -33,7 +33,7 @@
 
 	padding: 10px 0;
 
-	margin: 0;
+	margin-bottom: 0 !important;
 	min-width: 100%;
 
 	color: var(--orange-600);
