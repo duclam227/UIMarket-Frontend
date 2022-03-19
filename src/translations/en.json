@@ -31,6 +31,8 @@
   "LoginForm.signUp": "Sign up.",
   "LoginForm.submit": "Sign in",
   "LoginForm.title": "Sign in",
+  "SectionBountyHeader.bountyAmount": "Answers to this question are eligible for a <b>{amount} bounty.</b>",
+  "SectionBountyHeader.bountyDuration": "<b>{user} placed a bounty that expires in ...</b>",
   "SignupForm.divider": "Or",
   "SignupForm.emailLabel": "Email",
   "SignupForm.emailPlaceholder": "example@email.com",

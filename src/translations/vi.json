@@ -31,6 +31,8 @@
   "LoginForm.signUp": "Đăng ký ngay.",
   "LoginForm.submit": "Đăng nhập",
   "LoginForm.title": "Đăng nhập",
+  "SectionBountyHeader.bountyAmount": "Trả lời đúng có thể nhận được phần thưởng trị giá <b>{amount}.</b>",
+  "SectionBountyHeader.bountyDuration": "<b>Câu hỏi này được treo thưởng trong vòng ...</b>",
   "SignupForm.divider": "Hoặc",
   "SignupForm.emailLabel": "Email",
   "SignupForm.emailPlaceholder": "example@email.com",
