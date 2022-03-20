@@ -10,8 +10,16 @@ class Get {
 		itemsPerPage: number,
 		questionId: string | undefined,
 	) => {
+		const jwt = getJwt();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		};
+
 		return axiosClient.get(
 			`${ANSWERS_ENDPOINT}/${questionId}?page=${pageNumber}&limit=${itemsPerPage}`,
+			config,
 		);
 	};
 }
