@@ -42,9 +42,9 @@ const QuestionListsPage: FC = () => {
 
 	useEffect(() => {
 		setIsLoading(true);
-		questionAPI.getAllQuestionsByPageNumber(1, ITEMS_PER_PAGE)
+		questionAPI
+			.getAllQuestionsByPageNumber(1, ITEMS_PER_PAGE)
 			.then((res: any) => {
-
 				const { totalPages, questions, page } = res;
 				setCurrentPage(page);
 				setQuestions(questions);
@@ -55,14 +55,14 @@ const QuestionListsPage: FC = () => {
 				const errorMsg = getErrorMessage(error);
 				setError(errorMsg);
 				setIsLoading(false);
-			})
-	}, [])
+			});
+	}, []);
 
 	const goToPage = (pageNumber: number) => {
 		setIsLoading(true);
-		questionAPI.getAllQuestionsByPageNumber(pageNumber, ITEMS_PER_PAGE)
+		questionAPI
+			.getAllQuestionsByPageNumber(pageNumber, ITEMS_PER_PAGE)
 			.then((res: any) => {
-
 				const { totalPages, questions, page } = res;
 				setCurrentPage(page);
 				setQuestions(questions);
@@ -73,34 +73,35 @@ const QuestionListsPage: FC = () => {
 				const errorMsg = getErrorMessage(error);
 				setError(errorMsg);
 				setIsLoading(false);
-			})
-	}
+			});
+	};
 
 	return (
 		<PageWithNavbar>
 			<div className={style.container}>
 				<div className={style.mainContent}>
-
 					<div className={style.header}>
 						<h1 className={style.title}>
-							<FormattedMessage id="QuestionListsPage.title" defaultMessage="All Questions" />
+							<FormattedMessage
+								id='QuestionListsPage.title'
+								defaultMessage='All Questions'
+							/>
 						</h1>
-						{currentUser &&
+						{currentUser && (
 							<Link className={style.addQuestionButton} to='/questions/new'>
 								<Button>
-									<FormattedMessage id="QuestionListsPage.addQuestionButton" defaultMessage="Ask a question" />
+									<FormattedMessage
+										id='QuestionListsPage.addQuestionButton'
+										defaultMessage='Ask a question'
+									/>
 								</Button>
 							</Link>
-						}
-
+						)}
 					</div>
 					<QuestionListsPageNavigator tabList={tabList} active='All' />
 
 					<div className={style.questionsList}>
-						{isLoading
-							? <p>loading...</p>
-							: <QuestionList questionsList={questions} />
-						}
+						{isLoading ? <p>loading...</p> : <QuestionList questionsList={questions} />}
 
 						<Paginator
 							totalNumberOfPages={totalPages}
@@ -112,7 +113,6 @@ const QuestionListsPage: FC = () => {
 			</div>
 		</PageWithNavbar>
 	);
-
 };
 
 export default QuestionListsPage;
