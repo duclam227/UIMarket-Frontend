@@ -119,7 +119,7 @@ const AskAQuestionPage = ({ intl }: any) => {
   };
 
   const handleTagsChange = ({ currentTarget: input }: any) => {
-    const tags = input.value.trim().split(',');
+    const tags = input.value.replace(/\s+/g, '').split(',');
     setQuestion({ ...question, tags });
   };
 
