@@ -17,6 +17,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { question } from '../../app/util/interfaces';
 import { PageWithNavbar } from '../../components';
 import { getErrorMessage } from '../../app/util';
+import { getJwt } from '../../app/util/authHelpers';
 
 import './AskAQuestionPage.css';
 import style from './AskAQuestionPage.module.css';
@@ -98,6 +99,7 @@ const AskAQuestionPage = ({ intl }: any) => {
     />
   );
 
+  const jwt = getJwt();
   const navigate = useNavigate();
 
   const [question, setQuestion] = useState<question>({
@@ -118,15 +120,17 @@ const AskAQuestionPage = ({ intl }: any) => {
     });
   };
 
-  const handleTagsChange = ({ currentTarget: input }: any) => {
-    const tags = input.value.trim().split(',');
+  const handleTagsChange = ({
+    currentTarget: input,
+  }: ChangeEvent<HTMLInputElement>) => {
+    const tags = input.value.replace(/\s+/g, '').split(',');
     setQuestion({ ...question, tags });
   };
 
   const handleSubmit = async () => {
     try {
       setPostInProgress(true);
-      const response = await questionAPI.addNewQuestion(question);
+      await questionAPI.addNewQuestion(question);
       navigate('/', { replace: true });
     } catch (error) {
       const errorMessage = getErrorMessage(error);
@@ -163,6 +167,15 @@ const AskAQuestionPage = ({ intl }: any) => {
                   onChange={(event: SyntheticEvent, editor: any): void => {
                     setQuestion({ ...question, body: editor.getData() });
                   }}
+                  config={{
+                    simpleUpload: {
+                      uploadUrl: process.env.REACT_APP_BASE_SERVER_URL,
+                      withCredentials: true,
+                      headers: {
+                        Authorization: `Bearer ${jwt}`,
+                      },
+                    },
+                  }}
                 ></CKEditor>
               </Form.Group>
 
@@ -173,7 +186,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                 <Form.Control
                   type="text"
                   placeholder={questionTagsPlaceholder}
-                  onChange={e => handleTagsChange(e)}
+                  onChange={e => handleTagsChange(e as any)}
                 />
               </Form.Group>
             </Form>
