@@ -172,7 +172,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                       uploadUrl:
                         process.env.REACT_APP_BASE_SERVER_URL +
                         '/api/v1/pictures/avatar',
-                      withCredentials: true,
+                      withCredentials: false,
                       headers: {
                         Authorization: `Bearer ${jwt}`,
                       },
