@@ -169,7 +169,9 @@ const AskAQuestionPage = ({ intl }: any) => {
                   }}
                   config={{
                     simpleUpload: {
-                      uploadUrl: process.env.REACT_APP_BASE_SERVER_URL,
+                      uploadUrl:
+                        process.env.REACT_APP_BASE_SERVER_URL +
+                        '/api/v1/pictures/avatar',
                       withCredentials: true,
                       headers: {
                         Authorization: `Bearer ${jwt}`,
