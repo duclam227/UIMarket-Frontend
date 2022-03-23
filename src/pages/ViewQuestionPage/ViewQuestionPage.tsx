@@ -8,7 +8,7 @@ import { getErrorMessage } from "../../app/util";
 import { State } from "../../redux/store";
 
 import { PageWithNavbar, Paginator } from "../../components";
-import SectionAddComment from "./SectionAddComment";
+import SectionAddAnswer from "./SectionAddAnswer";
 import SectionQuestion from "./SectionQuestion";
 
 import style from './ViewQuestionPage.module.css';
@@ -34,10 +34,10 @@ const ViewQuestionPage = () => {
     const getAnswers = async () => {
       return answerAPI.getAnswersByPageNumber(1, ITEMS_PER_PAGE, id)
         .then((res: any) => {
-          console.log(res);
           setAnswers([...res.answers])
           setTotalPages(res.totalPages);
           setCurrentPage(res.page);
+          console.log(res);
         })
         .catch((error) => {
           const errorMsg = getErrorMessage(error);
@@ -66,7 +66,6 @@ const ViewQuestionPage = () => {
   const goToPage = (page: number) => {
     answerAPI.getAnswersByPageNumber(page, ITEMS_PER_PAGE, id)
       .then((res: any) => {
-        console.log(res);
         setAnswers([...res.answers])
         setTotalPages(res.totalPages);
         setCurrentPage(res.page);
@@ -76,6 +75,17 @@ const ViewQuestionPage = () => {
         setError(errorMsg);
         setIsLoading(false);
       })
+  }
+
+  const addAnswer = (answer: any) => {
+    const customerInfo = [
+      {
+        customerEmail: answer.userId.customerEmail,
+        customerName: answer.userId.customerName,
+      }
+    ]
+    answer.customerInfo = [...customerInfo];
+    setAnswers([...answers, answer]);
   }
 
   return (
@@ -97,7 +107,7 @@ const ViewQuestionPage = () => {
                 />
               </>
             }
-            <SectionAddComment question={question} currentUser={currentUser} />
+            <SectionAddAnswer question={question} currentUser={currentUser} handleAddAnswer={(answer: any) => addAnswer(answer)} />
           </div>
         }
       </div>
