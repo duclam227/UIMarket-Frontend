@@ -38,7 +38,7 @@ const SectionVoter: FC<VoterProps> = (props) => {
       return;
     }
 
-    voteAPI.upvote('question', question._id, question._id)
+    voteAPI.upvote('Question', question._id, question._id)
       .then((res: any) => {
         switch (res) {
           case 'UPVOTED': {
@@ -59,7 +59,7 @@ const SectionVoter: FC<VoterProps> = (props) => {
       })
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
-        console.log(errorMsg);
+        console.log(error);
       })
   }
 
@@ -73,7 +73,7 @@ const SectionVoter: FC<VoterProps> = (props) => {
       return;
     }
 
-    voteAPI.downvote('question', question._id, question._id)
+    voteAPI.downvote('Question', question._id, question._id)
       .then((res: any) => {
         switch (res) {
           case 'DOWNVOTED': {
@@ -94,7 +94,7 @@ const SectionVoter: FC<VoterProps> = (props) => {
       })
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
-        console.log(errorMsg);
+        console.log(error);
 
       })
   }
