@@ -10,19 +10,20 @@ import { useNavigate } from "react-router-dom";
 interface VoterProps {
   question: any;
   answer: any;
-  voteStatus: voteStatus | null;
   currentUser: customer | null;
   handleVoteStatus: Function;
 }
 
 const SectionAnswerVoter: FC<VoterProps> = (props) => {
-  const { answer, question, voteStatus, currentUser } = props;
+  const { answer, question, currentUser } = props;
   const [upvote, setUpvote] = useState(answer.totalUpvote);
   const [downvote, setDownvote] = useState(answer.totalDownvote);
+  const [voteStatus, setVoteStatus] = useState<voteStatus>(answer.voteStatus);
   const navigate = useNavigate();
 
   const isAuthenticated = !!currentUser;
-  const isCurrentUserAuthor = currentUser && currentUser.customerEmail === question.userId.customerEmail;
+  const isCurrentUserAuthor = currentUser && currentUser.customerEmail === answer.customerInfo[0].customerEmail;
+
 
   const upvoteStyle = classNames(style.voteButton, style.upvote);
   const upvoteActiveStyle = classNames(style.voteButton, style.upvote, style.active);
@@ -39,28 +40,29 @@ const SectionAnswerVoter: FC<VoterProps> = (props) => {
       return;
     }
 
-    voteAPI.upvote('answer', question._id, answer._id)
+    voteAPI.upvote('Answer', question._id, answer._id)
       .then((res: any) => {
         switch (res) {
           case 'UPVOTED': {
             if (voteStatus?.downvote) {
-              setUpvote(upvote + 2);
+              setUpvote(upvote + 1);
+              setDownvote(downvote - 1);
             } else {
               setUpvote(upvote + 1);
             }
-            props.handleVoteStatus({ upvote: true, downvote: false });
+            setVoteStatus({ upvote: true, downvote: false });
             break;
           }
           case 'UNVOTED': {
             setUpvote(upvote - 1);
-            props.handleVoteStatus({ upvote: false, downvote: false });
+            setVoteStatus({ upvote: false, downvote: false });
             break;
           }
         }
       })
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
-        console.log(errorMsg);
+        console.log(error);
       })
   }
 
@@ -74,28 +76,29 @@ const SectionAnswerVoter: FC<VoterProps> = (props) => {
       return;
     }
 
-    voteAPI.downvote('answer', question._id, answer._id)
+    voteAPI.downvote('Answer', question._id, answer._id)
       .then((res: any) => {
         switch (res) {
           case 'DOWNVOTED': {
             if (voteStatus?.upvote) {
-              setDownvote(downvote + 2);
+              setDownvote(downvote + 1);
+              setUpvote(upvote - 1);
             } else {
               setDownvote(downvote + 1);
             }
-            props.handleVoteStatus({ upvote: false, downvote: true });
+            setVoteStatus({ upvote: false, downvote: true });
             break;
           }
           case 'UNVOTED': {
             setDownvote(downvote - 1);
-            props.handleVoteStatus({ upvote: false, downvote: false });
+            setVoteStatus({ upvote: false, downvote: false });
             break;
           }
         }
       })
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
-        console.log(errorMsg);
+        console.log(error);
 
       })
   }
