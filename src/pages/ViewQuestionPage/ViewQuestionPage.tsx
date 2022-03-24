@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useSelector } from "react-redux";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import questionAPI from "../../api/question";
 import { getErrorMessage } from "../../app/util";
 
 import { State } from "../../redux/store";
 
-import { PageWithNavbar, Paginator } from "../../components";
+import { PageWithNavbar, Paginator, Question } from "../../components";
 import SectionAddAnswer from "./SectionAddAnswer";
-import SectionQuestion from "./SectionQuestion";
 
 import style from './ViewQuestionPage.module.css';
 import SectionAnswers from "./SectionAnswers";
@@ -95,7 +94,7 @@ const ViewQuestionPage = () => {
           ? 'loading...'
           : question &&
           <div className={style.content}>
-            <SectionQuestion question={question} currentUser={currentUser} />
+            <Question question={question} currentUser={currentUser} />
             {answers.length > 0 &&
               <>
                 <h5 className={style.answersTitle}>Answers</h5>

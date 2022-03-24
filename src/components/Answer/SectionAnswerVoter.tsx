@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import classNames from "classnames";
 
-import style from './SectionAnswerVoter.module.css';
+import style from './Answer.module.css';
 import voteAPI from "../../api/vote";
 import { getErrorMessage } from "../../app/util";
 import { customer, voteStatus } from "../../app/util/interfaces";

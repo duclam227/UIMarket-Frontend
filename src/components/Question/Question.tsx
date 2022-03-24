@@ -3,9 +3,9 @@ import { FormattedMessage } from "react-intl";
 import JsxParser from "react-jsx-parser";
 
 import { customer, voteStatus } from "../../app/util/interfaces";
-import SectionVoter from "./SectionVoter";
+import SectionQuestionVoter from "./SectionQuestionVoter";
 
-import style from './SectionQuestion.module.css';
+import style from './Question.module.css';
 import SectionBountyHeader from "./SectionBountyHeader";
 
 interface QuestionProps {
@@ -13,7 +13,7 @@ interface QuestionProps {
   currentUser: customer | null;
 }
 
-const SectionQuestion: FC<QuestionProps> = (props) => {
+const Question: FC<QuestionProps> = (props) => {
   const { question, currentUser } = props;
   const [voteStatus, setVoteStatus] = useState<voteStatus>(question.voteStatus || null);
 
@@ -35,7 +35,7 @@ const SectionQuestion: FC<QuestionProps> = (props) => {
 
   return (
     <div className={style.question}>
-      <SectionVoter
+      <SectionQuestionVoter
         question={question}
         voteStatus={voteStatus}
         currentUser={currentUser}
@@ -65,4 +65,4 @@ const SectionQuestion: FC<QuestionProps> = (props) => {
   )
 }
 
-export default SectionQuestion;
+export default Question;

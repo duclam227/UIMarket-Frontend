@@ -50,3 +50,50 @@
 .replyButton {
 	cursor: pointer;
 }
+
+@import '../../app/util/colors.css';
+
+.voter {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 10px;
+
+	width: fit-content;
+}
+
+.voter * {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	width: 100%;
+}
+
+.voteButton {
+	fill: var(--gray-400);
+	transition: 100ms;
+	width: 20px;
+	height: 20px;
+
+	cursor: pointer;
+}
+
+.upvote.active {
+	fill: var(--teal-600);
+}
+
+.upvote:hover {
+	fill: var(--teal-600);
+	transition: 100ms;
+}
+
+.downvote.active {
+	fill: var(--red-500);
+}
+
+.downvote:hover {
+	fill: var(--red-500);
+	transition: 100ms;
+}

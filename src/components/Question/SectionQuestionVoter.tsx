@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import classNames from "classnames";
 
-import style from './SectionVoter.module.css';
+import style from './Question.module.css';
 import voteAPI from "../../api/vote";
 import { getErrorMessage } from "../../app/util";
 import { customer, voteStatus } from "../../app/util/interfaces";
@@ -14,7 +14,7 @@ interface VoterProps {
   handleVoteStatus: Function;
 }
 
-const SectionVoter: FC<VoterProps> = (props) => {
+const SectionQuestionVoter: FC<VoterProps> = (props) => {
   const { question, voteStatus, currentUser } = props;
   const [upvote, setUpvote] = useState(question.totalUpvote);
   const [downvote, setDownvote] = useState(question.totalDownvote);
@@ -134,4 +134,4 @@ const SectionVoter: FC<VoterProps> = (props) => {
   )
 }
 
-export default SectionVoter;
+export default SectionQuestionVoter;

@@ -1,4 +1,6 @@
+export { default as Answer } from './Answer/Answer';
 export { default as LanguageWrapper } from './LanguageWrapper/LanguageWrapper';
+export { default as Question } from './Question/Question';
 export { default as QuestionList } from './QuestionList/QuestionList';
 
 /* =============== Common =============== */

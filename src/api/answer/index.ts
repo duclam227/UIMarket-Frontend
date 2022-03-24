@@ -5,6 +5,7 @@ const answerAPI = {
 	getAnswersByPageNumber: get.getAllAnswersByPageNumber,
 
 	addNewAnswer: post.addAnswer,
+	addNewComment: post.addComment,
 };
 
 export default answerAPI;

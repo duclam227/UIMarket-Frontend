@@ -1,11 +1,14 @@
 import { FC, useState } from "react";
+import { Button, Form } from "react-bootstrap";
+import Editor from 'ckeditor5-custom-build/build/ckeditor';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { FormattedMessage } from "react-intl";
 import JsxParser from "react-jsx-parser";
 import { customer, voteStatus } from "../../app/util/interfaces";
-import { Paginator } from "../../components";
+import { Answer, Paginator } from "../../components";
+import SectionAddAnswer from "./SectionAddAnswer";
 
 import style from './SectionAnswers.module.css';
-import SectionAnswerVoter from "./SectionAnswerVoter";
 
 interface SectionAnswersProps {
   answerList: Array<any>;
@@ -23,27 +26,8 @@ const SectionAnswers: FC<SectionAnswersProps> = (props) => {
   const renderAnswers = () => {
     return answerList.map(a => {
       return (
-        <div className={style.answer}>
-          <div className={style.sideContent}>avt</div>
-          <div className={style.content}>
-            <div className={style.authorInfo}>
-              {a.customerInfo[0].customerName}
-            </div>
-            <JsxParser jsx={a.answerContent} />
-            <div className={style.footerContent}>
-              <SectionAnswerVoter
-                answer={a}
-                question={question}
-                currentUser={currentUser}
-                handleVoteStatus={() => { }}
-              />
-              {a.customerInfo[0].customerEmail === currentUser?.customerEmail
-                ? <div>Reply</div>
-                : null
-              }
-            </div>
-          </div>
-        </div>
+        <Answer key={a._id} currentUser={currentUser} question={question} answer={a} />
+        // <SectionAnswer key={a._id} currentUser={currentUser} question={question} answer={a} />
       )
     })
   }

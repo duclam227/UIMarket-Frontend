@@ -2,7 +2,7 @@ import { FC } from "react";
 import { Alert } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
 
-import style from './SectionQuestion.module.css';
+import style from './Question.module.css';
 
 interface BountyHeaderProps {
   question: any;

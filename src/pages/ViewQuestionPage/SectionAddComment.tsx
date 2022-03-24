@@ -10,6 +10,7 @@ import answerAPI from "../../api/answer";
 interface AddCommentProps {
   question: any;
   currentUser: customer | null;
+  handleAddAnswer: Function;
 }
 
 const SectionAddComment: FC<AddCommentProps> = (props) => {
@@ -30,6 +31,7 @@ const SectionAddComment: FC<AddCommentProps> = (props) => {
     answerAPI.addNewAnswer(answer, question._id)
       .then((res: any) => {
         console.log(res);
+        props.handleAddAnswer(res);
       })
       .catch((error) => {
         console.log(error);
