@@ -54,5 +54,7 @@
   "QuestionListsPage.title": "All Questions",
   "QuestionListsPage.titleBountied": "Bountied Questions",
   "QuestionListsPage.titlePopular": "Popular Questions",
-  "ViewQuestionPage.askedBy": "Asked by"
+  "Question.askedBy": "Asked by",
+  "Question.deleteLabel": "Delete",
+  "Question.editLabel": "Edit"
 }

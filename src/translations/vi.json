@@ -54,5 +54,7 @@
   "QuestionListsPage.title": "Câu hỏi",
   "QuestionListsPage.titleBountied": "Câu hỏi có treo thưởng",
   "QuestionListsPage.titlePopular": "Câu hỏi nổi bật",
-  "ViewQuestionPage.askedBy": "Được hỏi bởi"
+  "Question.askedBy": "Được hỏi bởi",
+  "Question.deleteLabel": "Xóa",
+  "Question.editLabel": "Chỉnh sửa"
 }
