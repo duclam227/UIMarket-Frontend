@@ -1,21 +1,14 @@
 @import '../../app/util/colors.css';
 
-.answerContainer {
-	display: flex;
-	flex-direction: column;
-	margin-right: 10px;
-	padding: 40px 20px 20px 20px;
-
-	border-radius: 20px;
-	background-color: white;
-}
-
 .answer {
 	display: flex;
 	flex-direction: row;
+	padding: 20px;
 	margin-bottom: 30px;
 
 	width: 100%;
+	background-color: white;
+	border-radius: 20px;
 }
 
 .sideContent {
