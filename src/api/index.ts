@@ -1,10 +1,9 @@
 import axios from 'axios';
 
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+
 const axiosClient = axios.create({
   baseURL: process.env.REACT_APP_BASE_SERVER_URL,
-  headers: {
-    'content-type': 'application/json',
-  },
 });
 
 axiosClient.interceptors.request.use(async config => {
