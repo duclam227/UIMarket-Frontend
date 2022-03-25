@@ -2,10 +2,10 @@ import { ChangeEvent, FC, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
 import JsxParser from "react-jsx-parser";
 import { customer, voteStatus } from "../../app/util/interfaces";
-import { Paginator } from "../../components";
+import { Paginator, ThreeDotMenu } from "../../components";
 
 import SectionAnswerVoter from "./SectionAnswerVoter";
 
@@ -16,13 +16,17 @@ interface SectionAnswerProps {
   answer: any;
   currentUser: customer | null;
   question: any;
+  intl: IntlShape
 }
 
-const SectionAnswer: FC<SectionAnswerProps> = (props) => {
-  const { answer, currentUser, question } = props;
+const Answer: FC<SectionAnswerProps> = (props) => {
+  const { answer, currentUser, question, intl } = props;
 
   const [isReply, setIsReply] = useState<boolean>(false);
   const [reply, setReply] = useState<string>('');
+
+  const isUserAuthenticated = !!currentUser;
+  const isCurrentUserAuthor = isUserAuthenticated && currentUser.customerEmail === answer.customerInfo[0].customerEmail;
 
   if (!answer) {
     return null;
@@ -46,12 +50,36 @@ const SectionAnswer: FC<SectionAnswerProps> = (props) => {
       })
   }
 
+  const editAnswer = () => {
+    console.log('edit answer');
+  }
+
+  const deleteAnswer = () => {
+    console.log('delete answer');
+  }
+
+  const menuItems = [
+    {
+      key: 'edit',
+      label: intl.formatMessage({ id: 'Answer.editLabel' }),
+      function: editAnswer
+    },
+    {
+      key: 'delete',
+      label: intl.formatMessage({ id: 'Answer.deleteLabel' }),
+      function: deleteAnswer
+    },
+  ]
+
   return (
     <div className={style.answer}>
       <div className={style.sideContent}>avt</div>
       <div className={style.content}>
         <div className={style.authorInfo}>
           {answer.customerInfo[0].customerName}
+          {isCurrentUserAuthor &&
+            <ThreeDotMenu menuItems={menuItems} />
+          }
         </div>
         <JsxParser jsx={answer.answerContent} />
         <div className={style.footerContent}>
@@ -87,4 +115,4 @@ const SectionAnswer: FC<SectionAnswerProps> = (props) => {
   )
 }
 
-export default SectionAnswer;
+export default injectIntl(Answer);
