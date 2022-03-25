@@ -1,4 +1,6 @@
 {
+  "Answer.deleteLabel": "Xóa",
+  "Answer.editLabel": "Chỉnh sửa",
   "AskAQuestionPage.pageTitle": "Đặt câu hỏi",
   "AskAQuestionPage.questionTitle": "Tiêu đề",
   "AskAQuestionPage.questionTitlePlaceholder": "vd: Làm sao để...",

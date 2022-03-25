@@ -1,4 +1,6 @@
 {
+  "Answer.deleteLabel": "Delete",
+  "Answer.editLabel": "Edit",
   "AskAQuestionPage.pageTitle": "Ask a question",
   "AskAQuestionPage.questionTitle": "Title",
   "AskAQuestionPage.questionTitlePlaceholder": "e.g How do I...",
