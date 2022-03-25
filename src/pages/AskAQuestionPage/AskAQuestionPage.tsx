@@ -1,7 +1,5 @@
-import { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import classNames from 'classnames';
-import Editor from 'ckeditor5-custom-build/build/ckeditor';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,11 +15,11 @@ import Spinner from 'react-bootstrap/Spinner';
 import { question } from '../../app/util/interfaces';
 import { PageWithNavbar } from '../../components';
 import { getErrorMessage } from '../../app/util';
-import { getJwt } from '../../app/util/authHelpers';
 
 import './AskAQuestionPage.css';
 import style from './AskAQuestionPage.module.css';
 import questionAPI from '../../api/question';
+import RichTextEditor from '../../components/common/RichTextEditor/RichTextEditor';
 
 const AskAQuestionPage = ({ intl }: any) => {
   const formGroupClassName = 'mb-3';
@@ -99,7 +97,6 @@ const AskAQuestionPage = ({ intl }: any) => {
     />
   );
 
-  const jwt = getJwt();
   const navigate = useNavigate();
 
   const [question, setQuestion] = useState<question>({
@@ -118,6 +115,10 @@ const AskAQuestionPage = ({ intl }: any) => {
       ...question,
       [input.id]: input.value,
     });
+  };
+
+  const handleBodyChange = (text: string) => {
+    setQuestion({ ...question, body: text });
   };
 
   const handleTagsChange = ({
@@ -161,24 +162,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                 <Form.Label htmlFor="body">
                   <h4>{questionBody}</h4>
                 </Form.Label>
-                <CKEditor
-                  editor={Editor}
-                  name="body"
-                  onChange={(event: SyntheticEvent, editor: any): void => {
-                    setQuestion({ ...question, body: editor.getData() });
-                  }}
-                  config={{
-                    simpleUpload: {
-                      uploadUrl:
-                        process.env.REACT_APP_BASE_SERVER_URL +
-                        '/api/v1/pictures/avatar',
-                      withCredentials: false,
-                      headers: {
-                        Authorization: `Bearer ${jwt}`,
-                      },
-                    },
-                  }}
-                ></CKEditor>
+                <RichTextEditor onChange={handleBodyChange} />
               </Form.Group>
 
               <Form.Group className={formGroupClassName}>
