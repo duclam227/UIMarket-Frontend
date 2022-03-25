@@ -7,3 +7,4 @@ export { default as QuestionList } from './QuestionList/QuestionList';
 export { default as Navbar } from './common/Navbar/Navbar';
 export { default as PageWithNavbar } from './common/PageWithNavbar/PageWithNavbar';
 export { default as Paginator } from './common/Paginator/Paginator';
+export { default as ThreeDotMenu } from './common/ThreeDotMenu/ThreeDotMenu';
