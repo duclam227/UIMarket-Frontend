@@ -1,20 +1,24 @@
 import { FC, useState } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
 import JsxParser from "react-jsx-parser";
 
 import { customer, voteStatus } from "../../app/util/interfaces";
+
+import { ThreeDotMenu } from '../../components';
 import SectionQuestionVoter from "./SectionQuestionVoter";
+import SectionBountyHeader from "./SectionBountyHeader";
 
 import style from './Question.module.css';
-import SectionBountyHeader from "./SectionBountyHeader";
+import questionAPI from "../../api/question";
 
 interface QuestionProps {
   question: any;
   currentUser: customer | null;
+  intl: IntlShape;
 }
 
 const Question: FC<QuestionProps> = (props) => {
-  const { question, currentUser } = props;
+  const { question, currentUser, intl } = props;
   const [voteStatus, setVoteStatus] = useState<voteStatus>(question.voteStatus || null);
 
   const renderTags = (tags: Array<any>) => {
@@ -33,6 +37,27 @@ const Question: FC<QuestionProps> = (props) => {
     setVoteStatus({ ...newVoteStatus });
   }
 
+  const editQuestion = () => {
+    console.log('edit question');
+  }
+
+  const deleteQuestion = () => {
+    questionAPI.deleteQuestion(question._id);
+  }
+
+  const menuItems = [
+    {
+      key: 'edit',
+      label: intl.formatMessage({ id: 'Question.editLabel' }),
+      function: editQuestion
+    },
+    {
+      key: 'delete',
+      label: intl.formatMessage({ id: 'Question.deleteLabel' }),
+      function: deleteQuestion
+    },
+  ]
+
   return (
     <div className={style.question}>
       <SectionQuestionVoter
@@ -46,7 +71,7 @@ const Question: FC<QuestionProps> = (props) => {
         <h1 className={style.title}>{question.questionTitle}</h1>
         <div className={style.moreInfo}>
           <div className={style.authorInfo}>
-            <FormattedMessage id="ViewQuestionPage.askedBy" />
+            <FormattedMessage id="Question.askedBy" />
             <img src="/" alt="avt" />
             <span>{question.userId.customerName}</span>
           </div>
@@ -59,10 +84,10 @@ const Question: FC<QuestionProps> = (props) => {
             {renderTags(question.questionTag)}
           </div>
         }
-
+        <ThreeDotMenu menuItems={menuItems} />
       </div>
     </div>
   )
 }
 
-export default Question;
+export default injectIntl(Question);
