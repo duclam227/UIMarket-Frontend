@@ -20,6 +20,8 @@ interface QuestionProps {
 const Question: FC<QuestionProps> = (props) => {
   const { question, currentUser, intl } = props;
   const [voteStatus, setVoteStatus] = useState<voteStatus>(question.voteStatus || null);
+  const isUserAuthenticated = !!currentUser;
+  const isCurrentUserAuthor = isUserAuthenticated && currentUser.customerEmail === question.userId.customerEmail;
 
   const renderTags = (tags: Array<any>) => {
     if (tags.length < 1) {
@@ -84,7 +86,9 @@ const Question: FC<QuestionProps> = (props) => {
             {renderTags(question.questionTag)}
           </div>
         }
-        <ThreeDotMenu menuItems={menuItems} />
+        {isCurrentUserAuthor &&
+          <ThreeDotMenu menuItems={menuItems} />
+        }
       </div>
     </div>
   )
