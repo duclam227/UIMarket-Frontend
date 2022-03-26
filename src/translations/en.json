@@ -57,6 +57,9 @@
   "QuestionListsPage.titleBountied": "Bountied Questions",
   "QuestionListsPage.titlePopular": "Popular Questions",
   "Question.askedBy": "Asked by",
+  "Question.confirmDelete": "Are you sure?",
+  "Question.confirmDeleteContent": "You are deleting a question, are you sure?",
+  "Question.close": "Cancel",
   "Question.deleteLabel": "Delete",
   "Question.editLabel": "Edit"
 }

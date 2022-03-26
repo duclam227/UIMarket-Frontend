@@ -57,6 +57,9 @@
   "QuestionListsPage.titleBountied": "Câu hỏi có treo thưởng",
   "QuestionListsPage.titlePopular": "Câu hỏi nổi bật",
   "Question.askedBy": "Được hỏi bởi",
+  "Question.confirmDelete": "Xác nhận",
+  "Question.confirmDeleteContent": "Bạn muốn xóa câu hỏi này?",
+  "Question.close": "Hủy",
   "Question.deleteLabel": "Xóa",
   "Question.editLabel": "Chỉnh sửa"
 }

@@ -1,15 +1,18 @@
 import { FC, useState } from "react";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
 import JsxParser from "react-jsx-parser";
+import { Button, Modal } from "react-bootstrap";
 
 import { customer, voteStatus } from "../../app/util/interfaces";
+
+import questionAPI from "../../api/question";
 
 import { ThreeDotMenu } from '../../components';
 import SectionQuestionVoter from "./SectionQuestionVoter";
 import SectionBountyHeader from "./SectionBountyHeader";
 
 import style from './Question.module.css';
-import questionAPI from "../../api/question";
+import { useNavigate } from "react-router-dom";
 
 interface QuestionProps {
   question: any;
@@ -19,7 +22,11 @@ interface QuestionProps {
 
 const Question: FC<QuestionProps> = (props) => {
   const { question, currentUser, intl } = props;
+  const navigate = useNavigate();
+
   const [voteStatus, setVoteStatus] = useState<voteStatus>(question.voteStatus || null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
   const isUserAuthenticated = !!currentUser;
   const isCurrentUserAuthor = isUserAuthenticated && currentUser.customerEmail === question.userId.customerEmail;
 
@@ -44,7 +51,7 @@ const Question: FC<QuestionProps> = (props) => {
   }
 
   const deleteQuestion = () => {
-    questionAPI.deleteQuestion(question._id);
+    setIsModalOpen(true);
   }
 
   const menuItems = [
@@ -60,8 +67,37 @@ const Question: FC<QuestionProps> = (props) => {
     },
   ]
 
+  const confirmDeleteModal = (
+    <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)}>
+      <Modal.Header closeButton>
+        <Modal.Title><FormattedMessage id='Question.confirmDelete' /></Modal.Title>
+      </Modal.Header>
+
+      <Modal.Body>
+        <p><FormattedMessage id='Question.confirmDeleteContent' /></p>
+      </Modal.Body>
+
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => setIsModalOpen(false)}><FormattedMessage id='Question.close' /></Button>
+        <Button variant="primary" onClick={() => {
+          questionAPI.deleteQuestion(question._id)
+            .then(res => {
+              navigate('/');
+            })
+            .catch(error => {
+              console.log(error);
+            })
+        }}>
+          <FormattedMessage id='Question.deleteLabel' />
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  )
+
   return (
     <div className={style.question}>
+      {confirmDeleteModal}
+
       <SectionQuestionVoter
         question={question}
         voteStatus={voteStatus}

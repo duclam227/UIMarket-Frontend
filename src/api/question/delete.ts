@@ -12,9 +12,7 @@ class Delete {
 				Authorization: `Bearer ${jwt}`,
 			},
 		};
-		axiosClient.delete(`${API_ENDPOINT}/${questionId}`, config);
-
-		return axiosClient;
+		return axiosClient.delete(`${API_ENDPOINT}/${questionId}`, config);
 	};
 }
 
