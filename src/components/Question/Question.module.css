@@ -1,0 +1,132 @@
+@import '../../app/util/colors.css';
+
+.question {
+	display: flex;
+	flex-direction: row;
+	margin-top: 50px;
+	margin-right: 10px;
+	padding: 20px;
+
+	border-radius: 20px;
+	background-color: white;
+}
+
+.questionContent {
+	display: flex;
+	flex-direction: column;
+
+	width: 100%;
+}
+
+.bountyHeader {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 10px;
+
+	color: var(--blue-700);
+}
+
+.bountyContent {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.clock {
+	width: 25px;
+	height: 25px;
+
+	fill: var(--blue-700);
+}
+
+.title {
+	font-weight: 600;
+}
+
+.moreInfo {
+	display: flex;
+	flex-direction: row;
+
+	font-size: small;
+	color: var(--gray-600);
+
+	width: 100%;
+}
+
+.authorInfo {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+}
+
+.content {
+	margin-top: 20px;
+	padding: 10px 0;
+}
+
+.tagsContainer {
+	display: flex;
+	flex-direction: row;
+	gap: 5px;
+
+	font-size: medium;
+}
+
+.tag {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	padding: 1px 8px;
+
+	color: var(--blue-600);
+	background-color: var(--blue-100);
+
+	border-radius: 4px;
+}
+
+.voteButton {
+	fill: var(--gray-400);
+	transition: 100ms;
+	width: 35px;
+	height: 35px;
+
+	cursor: pointer;
+}
+
+.upvote.active {
+	fill: var(--teal-600);
+}
+
+.upvote:hover {
+	fill: var(--teal-600);
+	transition: 100ms;
+}
+
+.downvote.active {
+	fill: var(--red-500);
+}
+
+.downvote:hover {
+	fill: var(--red-500);
+	transition: 100ms;
+}
+
+.voter {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 10px;
+
+	margin-right: 25px;
+}
+
+.voter * {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	width: 100%;
+}

@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { Alert } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
@@ -10,8 +11,6 @@ interface Props {
 
 const QuestionList: FC<Props> = (props) => {
   const { questionsList } = props;
-
-  console.log(questionsList);
 
   if (!questionsList || questionsList.length < 1) {
     return null;
@@ -34,7 +33,6 @@ const QuestionList: FC<Props> = (props) => {
     const displayTag: Array<any> = [];
     for (let i = 0; i < tags.length; i++) {
       if (i > tags.length) {
-
         break;
       }
       displayTag.push(
@@ -44,7 +42,7 @@ const QuestionList: FC<Props> = (props) => {
       )
     }
 
-    if (displayTag.length > 3) {
+    if (tags.length > 4) {
       displayTag.push(
         (<>
           <div key='seemore' className={style.tag}>...</div>
@@ -63,6 +61,11 @@ const QuestionList: FC<Props> = (props) => {
             <div><FormattedMessage id="QuestionList.numberOfVotes" values={{ count: q.totalUpvote - q.totalDownvote }} /></div>
             <div className={style.answersCount}><FormattedMessage id="QuestionList.numberOfAnswers" values={{ count: q.totalAnswer }} /></div>
             <div className={style.viewsCount}><FormattedMessage id="QuestionList.numberOfViews" values={{ count: q.totalView }} /></div>
+            {q.questionBounty > 0
+              ? <Alert variant='warning' className={style.bountyTag}>
+                <div><b>{q.questionBounty}</b></div>
+              </Alert>
+              : null}
           </div>
           <div className={style.mainContent}>
             <Link to={qLink} className={style.title}>{q.questionTitle}</Link>
