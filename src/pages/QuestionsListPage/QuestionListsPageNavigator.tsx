@@ -8,10 +8,11 @@ import style from './QuestionListsPage.module.css';
 
 interface Props {
   tabList: Array<navigatorTabItem>;
+  active: string;
 }
 
 const QuestionListsPageNavigator: FC<Props> = (props) => {
-  const { tabList } = props;
+  const { tabList, active } = props;
 
   const activeTabItemClassName = classNames(style.tabItem, style.active);
 
@@ -24,7 +25,7 @@ const QuestionListsPageNavigator: FC<Props> = (props) => {
               <NavLink
                 key={item.path}
                 to={item.path}
-                className={({ isActive }) => isActive ? activeTabItemClassName : style.tabItem}
+                className={active === item.label ? activeTabItemClassName : style.tabItem}
               >
                 {item.label}
               </NavLink>

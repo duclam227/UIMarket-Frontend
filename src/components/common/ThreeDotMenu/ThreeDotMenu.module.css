@@ -1,0 +1,48 @@
+@import '../../../app/util/colors.css';
+
+.wrapper {
+	display: flex;
+	justify-content: flex-end;
+	position: relative;
+
+	width: 100%;
+	height: 20px;
+	z-index: 99;
+}
+
+.threeDotIcon {
+	height: 100%;
+	fill: var(--gray-500);
+	transition: 100ms;
+
+	cursor: pointer;
+}
+
+.threeDotIcon:hover {
+	fill: var(--gray-600);
+}
+
+.menuModal {
+	display: flex;
+	flex-direction: column;
+	position: absolute;
+	top: 100%;
+	transform-origin: top right;
+
+	min-width: 10px;
+
+	background-color: white;
+	border: 1px solid var(--gray-400);
+	border-radius: 5px;
+}
+
+.menuItem {
+	width: 100%;
+	padding: 10px 20px;
+
+	cursor: pointer;
+}
+
+.menuItem:hover {
+	background-color: var(--gray-200);
+}

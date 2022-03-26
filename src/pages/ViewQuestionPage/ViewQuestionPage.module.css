@@ -1,0 +1,33 @@
+@import '../../app/util/colors.css';
+
+.container {
+	display: flex;
+	justify-content: center;
+
+	width: 100%;
+}
+
+.content {
+	width: 60%;
+}
+
+.answersTitle {
+	margin-top: 30px;
+}
+
+.addCommentWrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	gap: 10px;
+
+	margin-top: 50px;
+}
+
+.addCommentForm {
+	width: 100%;
+}
+
+.addCommentButton {
+	margin-top: 20px;
+}

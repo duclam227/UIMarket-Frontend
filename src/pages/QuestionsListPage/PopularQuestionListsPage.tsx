@@ -1,5 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 import { getErrorMessage } from '../../app/util/index';
 
@@ -9,29 +11,14 @@ import { QuestionList, PageWithNavbar, Paginator } from '../../components';
 import questionAPI from '../../api/question/index';
 
 import style from './QuestionListsPage.module.css';
-import { Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { tabList } from './QuestionListsPage';
 import { useSelector } from 'react-redux';
 import { State } from '../../redux/store';
 
+
 const ITEMS_PER_PAGE = 10;
 
-export const tabList = [
-	{
-		path: '/questions/all',
-		label: 'All',
-	},
-	{
-		path: '/questions/bountied',
-		label: 'Bountied',
-	},
-	{
-		path: '/questions/popular',
-		label: 'Popular',
-	},
-];
-
-const QuestionListsPage: FC = () => {
+const PopularQuestionListsPage: FC = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [error, setError] = useState<string | null>(null);
 	const [totalPages, setTotalPages] = useState<number>(1);
@@ -42,9 +29,9 @@ const QuestionListsPage: FC = () => {
 
 	useEffect(() => {
 		setIsLoading(true);
-		questionAPI
-			.getAllQuestionsByPageNumber(1, ITEMS_PER_PAGE)
+		questionAPI.getPopularQuestionsByPageNumber(1, ITEMS_PER_PAGE)
 			.then((res: any) => {
+
 				const { totalPages, questions, page } = res;
 				setCurrentPage(page);
 				setQuestions(questions);
@@ -55,14 +42,14 @@ const QuestionListsPage: FC = () => {
 				const errorMsg = getErrorMessage(error);
 				setError(errorMsg);
 				setIsLoading(false);
-			});
-	}, []);
+			})
+	}, [])
 
 	const goToPage = (pageNumber: number) => {
 		setIsLoading(true);
-		questionAPI
-			.getAllQuestionsByPageNumber(pageNumber, ITEMS_PER_PAGE)
+		questionAPI.getPopularQuestionsByPageNumber(pageNumber, ITEMS_PER_PAGE)
 			.then((res: any) => {
+
 				const { totalPages, questions, page } = res;
 				setCurrentPage(page);
 				setQuestions(questions);
@@ -73,8 +60,8 @@ const QuestionListsPage: FC = () => {
 				const errorMsg = getErrorMessage(error);
 				setError(errorMsg);
 				setIsLoading(false);
-			});
-	};
+			})
+	}
 
 	return (
 		<PageWithNavbar>
@@ -82,26 +69,23 @@ const QuestionListsPage: FC = () => {
 				<div className={style.mainContent}>
 					<div className={style.header}>
 						<h1 className={style.title}>
-							<FormattedMessage
-								id='QuestionListsPage.title'
-								defaultMessage='All Questions'
-							/>
+							<FormattedMessage id="QuestionListsPage.titlePopular" defaultMessage="All Questions" />
 						</h1>
-						{currentUser && (
+						{currentUser &&
 							<Link className={style.addQuestionButton} to='/questions/new'>
 								<Button>
-									<FormattedMessage
-										id='QuestionListsPage.addQuestionButton'
-										defaultMessage='Ask a question'
-									/>
+									<FormattedMessage id="QuestionListsPage.addQuestionButton" defaultMessage="Ask a question" />
 								</Button>
 							</Link>
-						)}
+						}
 					</div>
-					<QuestionListsPageNavigator tabList={tabList} active='All' />
+					<QuestionListsPageNavigator tabList={tabList} active='Popular' />
 
 					<div className={style.questionsList}>
-						{isLoading ? <p>loading...</p> : <QuestionList questionsList={questions} />}
+						{isLoading
+							? <p>loading...</p>
+							: <QuestionList questionsList={questions} />
+						}
 
 						<Paginator
 							totalNumberOfPages={totalPages}
@@ -113,6 +97,7 @@ const QuestionListsPage: FC = () => {
 			</div>
 		</PageWithNavbar>
 	);
+
 };
 
-export default QuestionListsPage;
+export default PopularQuestionListsPage;
