@@ -12,9 +12,7 @@ class ClientsideUploadAdapter {
       file =>
         new Promise(async (resolve, reject) => {
           try {
-            const { url: signedUploadUrl } = await s3API.getSignedUrl(
-              'images',
-            );
+            const { url: signedUploadUrl } = await s3API.getSignedUrl('images');
             await s3API.uploadToS3Bucket(signedUploadUrl, file);
             const imageUrl = signedUploadUrl.split('?')[0];
             resolve({
@@ -32,6 +30,7 @@ class ClientsideUploadAdapter {
   }
 
   abort() {
+    console.log('Image upload aborted');
     this.controller.abort();
   }
 }

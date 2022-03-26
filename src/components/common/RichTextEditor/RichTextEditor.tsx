@@ -5,12 +5,14 @@ import ClientsideUploadAdapterPlugin from './ClientsideUploadAdapter';
 
 interface RichTextEditorProp {
   onChange: Function;
+  initialValue?: string;
 }
 
-const RichTextEditor: FC<RichTextEditorProp> = ({ onChange }) => {
+const RichTextEditor: FC<RichTextEditorProp> = ({ onChange, initialValue }) => {
   return (
     <CKEditor
       editor={Editor}
+      data={initialValue ? initialValue : ''}
       onChange={(event: any, editor: any): void => {
         onChange(editor.getData());
       }}
