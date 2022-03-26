@@ -19,7 +19,7 @@ import { getErrorMessage } from '../../app/util';
 import './AskAQuestionPage.css';
 import style from './AskAQuestionPage.module.css';
 import questionAPI from '../../api/question';
-import RichTextEditor from '../../components/common/RichTextEditor/RichTextEditor';
+import { RichTextEditor } from '../../components';
 
 const AskAQuestionPage = ({ intl }: any) => {
   const formGroupClassName = 'mb-3';
@@ -162,7 +162,10 @@ const AskAQuestionPage = ({ intl }: any) => {
                 <Form.Label htmlFor="body">
                   <h4>{questionBody}</h4>
                 </Form.Label>
-                <RichTextEditor onChange={handleBodyChange} />
+                <RichTextEditor
+                  onChange={handleBodyChange}
+                  // initialValue={question.body}
+                />
               </Form.Group>
 
               <Form.Group className={formGroupClassName}>

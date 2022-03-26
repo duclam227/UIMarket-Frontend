@@ -3,8 +3,8 @@ import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css';
-import RequireAnonymous from './components/common/RequireAnonymous/RequireAnonymous';
-import RequireUser from './components/common/RequireUser/RequireUser';
+import { RequireAnonymous, RequireUser } from './components';
+
 import {
   AboutUsPage,
   ContactUsPage,
