@@ -1,7 +1,5 @@
-import { ChangeEvent, SyntheticEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import classNames from 'classnames';
-import Editor from 'ckeditor5-custom-build/build/ckeditor';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 
@@ -21,6 +19,7 @@ import { getErrorMessage } from '../../app/util';
 import './AskAQuestionPage.css';
 import style from './AskAQuestionPage.module.css';
 import questionAPI from '../../api/question';
+import { RichTextEditor } from '../../components';
 
 const AskAQuestionPage = ({ intl }: any) => {
   const formGroupClassName = 'mb-3';
@@ -118,7 +117,13 @@ const AskAQuestionPage = ({ intl }: any) => {
     });
   };
 
-  const handleTagsChange = ({ currentTarget: input }: any) => {
+  const handleBodyChange = (text: string) => {
+    setQuestion({ ...question, body: text });
+  };
+
+  const handleTagsChange = ({
+    currentTarget: input,
+  }: ChangeEvent<HTMLInputElement>) => {
     const tags = input.value.replace(/\s+/g, '').split(',');
     setQuestion({ ...question, tags });
   };
@@ -126,7 +131,7 @@ const AskAQuestionPage = ({ intl }: any) => {
   const handleSubmit = async () => {
     try {
       setPostInProgress(true);
-      const response = await questionAPI.addNewQuestion(question);
+      await questionAPI.addNewQuestion(question);
       navigate('/', { replace: true });
     } catch (error) {
       const errorMessage = getErrorMessage(error);
@@ -157,13 +162,10 @@ const AskAQuestionPage = ({ intl }: any) => {
                 <Form.Label htmlFor="body">
                   <h4>{questionBody}</h4>
                 </Form.Label>
-                <CKEditor
-                  editor={Editor}
-                  name="body"
-                  onChange={(event: SyntheticEvent, editor: any): void => {
-                    setQuestion({ ...question, body: editor.getData() });
-                  }}
-                ></CKEditor>
+                <RichTextEditor
+                  onChange={handleBodyChange}
+                  // initialValue={question.body}
+                />
               </Form.Group>
 
               <Form.Group className={formGroupClassName}>
@@ -173,7 +175,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                 <Form.Control
                   type="text"
                   placeholder={questionTagsPlaceholder}
-                  onChange={e => handleTagsChange(e)}
+                  onChange={e => handleTagsChange(e as any)}
                 />
               </Form.Group>
             </Form>
