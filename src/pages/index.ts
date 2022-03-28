@@ -7,6 +7,7 @@ export {
 	default as BountiedQuestionListsPage,
 } from './QuestionsListPage/BountiedQuestionListsPage';
 export { default as ContactUsPage } from './ContactUsPage/Contact';
+export { default as EditQuestionPage } from './EditQuestionPage/EditQuestionPage';
 export { default as NotFoundPage } from './NotFoundPage/NotFound';
 export { default as PopularQuestionListsPage } from './QuestionsListPage/PopularQuestionListsPage';
 export { default as PricingPage } from './PricingPage/Pricing';
