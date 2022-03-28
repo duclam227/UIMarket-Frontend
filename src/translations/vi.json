@@ -1,4 +1,7 @@
 {
+  "Answer.confirmDelete": "Bạn chắc chứ?",
+  "Answer.confirmDeleteContent": "Bạn muốn xóa câu trả lời này?",
+  "Answer.close": "Hủy",
   "Answer.deleteLabel": "Xóa",
   "Answer.editLabel": "Chỉnh sửa",
   "AskAQuestionPage.pageTitle": "Đặt câu hỏi",
