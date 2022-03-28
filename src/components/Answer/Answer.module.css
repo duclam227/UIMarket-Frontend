@@ -33,6 +33,7 @@
 }
 
 .answerContent {
+	margin-right: 20px;
 }
 
 .footerContent {
@@ -43,8 +44,6 @@
 .replyButton {
 	cursor: pointer;
 }
-
-@import '../../app/util/colors.css';
 
 .voter {
 	display: flex;
@@ -89,4 +88,9 @@
 .downvote:hover {
 	fill: var(--red-500);
 	transition: 100ms;
+}
+
+.sectionEdit {
+	max-width: 95%;
+	margin-top: 10px;
 }
