@@ -10,12 +10,13 @@ interface ThreeDotMenuProps {
     label: string,
     function: Function,
   }> | null;
+  isOpened?: boolean;
 }
 
 const ThreeDotMenu: FC<ThreeDotMenuProps> = (props) => {
-  const { className, menuItems } = props;
+  const { className, menuItems, isOpened } = props;
 
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(isOpened || false);
 
   const wrapperClasses = className || classNames(style.wrapper);
 
@@ -39,7 +40,10 @@ const ThreeDotMenu: FC<ThreeDotMenuProps> = (props) => {
               <div
                 key={item.key}
                 className={style.menuItem}
-                onClick={() => item.function()}
+                onClick={() => {
+                  item.function();
+                  setIsOpen(false);
+                }}
               >
                 {item.label}
               </div>
@@ -54,6 +58,7 @@ const ThreeDotMenu: FC<ThreeDotMenuProps> = (props) => {
 ThreeDotMenu.defaultProps = {
   className: null,
   menuItems: null,
+  isOpened: false,
 }
 
 export default ThreeDotMenu

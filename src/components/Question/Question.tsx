@@ -1,4 +1,5 @@
 import { FC, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
 import JsxParser from "react-jsx-parser";
 import { Button, Modal } from "react-bootstrap";
@@ -12,7 +13,6 @@ import SectionQuestionVoter from "./SectionQuestionVoter";
 import SectionBountyHeader from "./SectionBountyHeader";
 
 import style from './Question.module.css';
-import { useNavigate } from "react-router-dom";
 
 interface QuestionProps {
   question: any;
@@ -47,7 +47,7 @@ const Question: FC<QuestionProps> = (props) => {
   }
 
   const editQuestion = () => {
-    console.log('edit question');
+    navigate('edit');
   }
 
   const deleteQuestion = () => {
@@ -94,39 +94,38 @@ const Question: FC<QuestionProps> = (props) => {
     </Modal>
   )
 
-  return (
-    <div className={style.question}>
-      {confirmDeleteModal}
+  return (<div className={style.question}>
+    {confirmDeleteModal}
 
-      <SectionQuestionVoter
-        question={question}
-        voteStatus={voteStatus}
-        currentUser={currentUser}
-        handleVoteStatus={(newVoteStatus: voteStatus) => changeVoteStatus(newVoteStatus)}
-      />
-      <div className={style.questionContent}>
-        <SectionBountyHeader question={question} />
-        <h1 className={style.title}>{question.questionTitle}</h1>
-        <div className={style.moreInfo}>
-          <div className={style.authorInfo}>
-            <FormattedMessage id="Question.askedBy" />
-            <img src="/" alt="avt" />
-            <span>{question.userId.customerName}</span>
-          </div>
+    <SectionQuestionVoter
+      question={question}
+      voteStatus={voteStatus}
+      currentUser={currentUser}
+      handleVoteStatus={(newVoteStatus: voteStatus) => changeVoteStatus(newVoteStatus)}
+    />
+    <div className={style.questionContent}>
+      <SectionBountyHeader question={question} />
+      <h1 className={style.title}>{question.questionTitle}</h1>
+      <div className={style.moreInfo}>
+        <div className={style.authorInfo}>
+          <FormattedMessage id="Question.askedBy" />
+          <img src="/" alt="avt" />
+          <span>{question.userId.customerName}</span>
         </div>
-        <div className={style.content}>
-          <JsxParser jsx={question.questionContent} />
-        </div>
-        {question.questionTag &&
-          <div className={style.tagsContainer}>
-            {renderTags(question.questionTag)}
-          </div>
-        }
-        {isCurrentUserAuthor &&
-          <ThreeDotMenu menuItems={menuItems} />
-        }
       </div>
+      <div className={style.content}>
+        <JsxParser jsx={question.questionContent} />
+      </div>
+      {question.questionTag &&
+        <div className={style.tagsContainer}>
+          {renderTags(question.questionTag)}
+        </div>
+      }
+      {isCurrentUserAuthor &&
+        <ThreeDotMenu menuItems={menuItems} />
+      }
     </div>
+  </div>
   )
 }
 

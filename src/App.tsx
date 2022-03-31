@@ -15,7 +15,8 @@ import {
   AskAQuestionPage,
   ViewQuestionPage,
   BountiedQuestionListsPage,
-  PopularQuestionListsPage
+  PopularQuestionListsPage,
+  EditQuestionPage
 } from './pages';
 import { logInWithJWT } from './redux/index';
 
@@ -64,6 +65,14 @@ function App() {
         <Route path='/questions/popular' element={<PopularQuestionListsPage />} />
         <Route path='/questions/*' element={<Navigate replace to='/questions/all' />} />
         <Route path="/question/:id" element={<ViewQuestionPage />} />
+        <Route
+          path="/question/:id/edit"
+          element={
+            <RequireUser>
+              <EditQuestionPage />
+            </RequireUser>
+          }
+        />
         <Route path="/" element={<Navigate replace to="/questions" />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

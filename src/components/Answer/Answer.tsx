@@ -1,16 +1,16 @@
 import { ChangeEvent, FC, useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import Editor from 'ckeditor5-custom-build/build/ckeditor';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
+import { Button, Form, Modal } from "react-bootstrap";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
 import JsxParser from "react-jsx-parser";
 import { customer, voteStatus } from "../../app/util/interfaces";
+import answerAPI from "../../api/answer";
+
 import { Paginator, ThreeDotMenu } from "../../components";
 
 import SectionAnswerVoter from "./SectionAnswerVoter";
+import SectionEditAnswer from "./SectionEditAnswer";
 
 import style from './Answer.module.css';
-import answerAPI from "../../api/answer";
 
 interface SectionAnswerProps {
   answer: any;
@@ -22,15 +22,18 @@ interface SectionAnswerProps {
 const Answer: FC<SectionAnswerProps> = (props) => {
   const { answer, currentUser, question, intl } = props;
 
+  const [answerContent, setAnswerContent] = useState<string>(answer.answerContent || '');
   const [isReply, setIsReply] = useState<boolean>(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
   const [reply, setReply] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  if (!answer || !answerContent) {
+    return null;
+  }
 
   const isUserAuthenticated = !!currentUser;
   const isCurrentUserAuthor = isUserAuthenticated && currentUser.customerEmail === answer.customerInfo[0].customerEmail;
-
-  if (!answer) {
-    return null;
-  }
 
   const turnOnReply = () => {
     setIsReply(true);
@@ -51,11 +54,22 @@ const Answer: FC<SectionAnswerProps> = (props) => {
   }
 
   const editAnswer = () => {
-    console.log('edit answer');
+    setIsEdit(true);
+  }
+
+  const handleSaveAnswer = (newContent: string) => {
+    answerAPI.updateAnswer(newContent, answer._id)
+      .then(res => {
+        console.log(res);
+        setAnswerContent(newContent);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 
   const deleteAnswer = () => {
-    console.log('delete answer');
+    setIsModalOpen(true);
   }
 
   const menuItems = [
@@ -71,8 +85,36 @@ const Answer: FC<SectionAnswerProps> = (props) => {
     },
   ]
 
+  const confirmDeleteModal = (
+    <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)}>
+      <Modal.Header closeButton>
+        <Modal.Title><FormattedMessage id='Answer.confirmDelete' /></Modal.Title>
+      </Modal.Header>
+
+      <Modal.Body>
+        <p><FormattedMessage id='Answer.confirmDeleteContent' /></p>
+      </Modal.Body>
+
+      <Modal.Footer>
+        <Button variant="secondary" onClick={() => setIsModalOpen(false)}><FormattedMessage id='Answer.close' /></Button>
+        <Button variant="primary" onClick={() => {
+          answerAPI.deleteAnswer(answer._id)
+            .then((res: any) => {
+              setAnswerContent('');
+            })
+            .catch(error => {
+              console.log(error);
+            })
+        }}>
+          <FormattedMessage id='Answer.deleteLabel' />
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  )
+
   return (
     <div className={style.answer}>
+      {confirmDeleteModal}
       <div className={style.sideContent}>avt</div>
       <div className={style.content}>
         <div className={style.authorInfo}>
@@ -81,19 +123,29 @@ const Answer: FC<SectionAnswerProps> = (props) => {
             <ThreeDotMenu menuItems={menuItems} />
           }
         </div>
-        <JsxParser jsx={answer.answerContent} />
-        <div className={style.footerContent}>
-          <SectionAnswerVoter
-            answer={answer}
-            question={question}
-            currentUser={currentUser}
-            handleVoteStatus={() => { }}
+        {isEdit
+          ? <SectionEditAnswer
+            initialValue={answerContent}
+            onHide={() => setIsEdit(false)}
+            onSave={(content: string) => handleSaveAnswer(content)}
           />
-          {currentUser?.customerEmail
-            ? <div className={style.replyButton} onClick={turnOnReply}>Reply</div>
-            : null
-          }
-        </div>
+          : <>
+            <JsxParser jsx={answerContent} />
+            <div className={style.footerContent}>
+              <SectionAnswerVoter
+                answer={answer}
+                question={question}
+                currentUser={currentUser}
+                handleVoteStatus={() => { }}
+              />
+              {currentUser?.customerEmail
+                ? <div className={style.replyButton} onClick={turnOnReply}>Reply</div>
+                : null
+              }
+            </div>
+          </>
+        }
+
         {isReply &&
           <Form>
             <Form.Group>
