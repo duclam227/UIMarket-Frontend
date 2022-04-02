@@ -11,7 +11,6 @@ const answerAPI = {
 	updateAnswer: put.updateAnswer,
 
 	addNewAnswer: post.addAnswer,
-	addNewComment: post.addComment,
 };
 
 export default answerAPI;

@@ -1,11 +1,15 @@
 import axiosClient from '..';
 import { getJwt } from '../../app/util/authHelpers';
 
-const ANSWERS_ENDPOINT = '/api/v1/answers';
 const COMMENTS_ENDPOINT = '/api/v1/comments';
 
 class Post {
-	addAnswer = (answerContent: string, questionId: string) => {
+	addNewComment = (
+		commentContent: string,
+		questionId: string,
+		rootId: string,
+		rootType: string,
+	) => {
 		const jwt = getJwt();
 		const config = {
 			headers: {
@@ -14,9 +18,12 @@ class Post {
 		};
 
 		const data = {
-			answerContent,
+			commentContent,
+			rootType,
+			rootId,
+			questionId,
 		};
-		return axiosClient.post(`${ANSWERS_ENDPOINT}/${questionId}`, data, config);
+		return axiosClient.post(`${COMMENTS_ENDPOINT}`, data, config);
 	};
 }
 
