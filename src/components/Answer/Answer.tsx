@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
 import JsxParser from "react-jsx-parser";
@@ -11,6 +11,7 @@ import SectionAnswerVoter from "./SectionAnswerVoter";
 import SectionEditAnswer from "./SectionEditAnswer";
 
 import style from './Answer.module.css';
+import commentAPI from "../../api/comment";
 
 interface SectionAnswerProps {
   answer: any;
@@ -28,6 +29,13 @@ const Answer: FC<SectionAnswerProps> = (props) => {
   const [reply, setReply] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
+  useEffect(() => {
+    commentAPI.getAllComments(answer._id)
+      .then((res: any) => {
+        console.log(res);
+      })
+  }, [])
+
   if (!answer || !answerContent) {
     return null;
   }
@@ -44,7 +52,7 @@ const Answer: FC<SectionAnswerProps> = (props) => {
   }
 
   const addReply = () => {
-    answerAPI.addNewComment(reply, answer._id)
+    commentAPI.addNewComment(reply, question._id, answer._id, 'Answer')
       .then(res => {
         console.log(res);
       })
