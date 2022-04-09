@@ -94,3 +94,8 @@
 	max-width: 95%;
 	margin-top: 10px;
 }
+
+.showMoreComments {
+	display: flex;
+	flex-direction: row;
+}

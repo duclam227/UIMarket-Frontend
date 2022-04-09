@@ -2,10 +2,11 @@ import { ChangeEvent, FC, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
 import JsxParser from "react-jsx-parser";
+import parse from 'html-react-parser';
 import { customer, voteStatus } from "../../app/util/interfaces";
 import answerAPI from "../../api/answer";
 
-import { Paginator, ThreeDotMenu } from "../../components";
+import { Paginator, ThreeDotMenu, Comment } from "../../components";
 
 import SectionAnswerVoter from "./SectionAnswerVoter";
 import SectionEditAnswer from "./SectionEditAnswer";
@@ -24,15 +25,20 @@ const Answer: FC<SectionAnswerProps> = (props) => {
   const { answer, currentUser, question, intl } = props;
 
   const [answerContent, setAnswerContent] = useState<string>(answer.answerContent || '');
+  const [comments, setComments] = useState<any>(null);
+  const [commentPage, setCommentPage] = useState<number>(1);
+  const [commentTotalPages, setCommentTotalPages] = useState<number>(1);
   const [isReply, setIsReply] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [reply, setReply] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    commentAPI.getAllComments(answer._id)
+    commentAPI.getCommentsByPageNumber(answer._id, 1, 2)
       .then((res: any) => {
-        console.log(res);
+        setComments(res.comments);
+        setCommentPage(res.page);
+        setCommentTotalPages(res.totalPages);
       })
   }, [])
 
@@ -54,7 +60,10 @@ const Answer: FC<SectionAnswerProps> = (props) => {
   const addReply = () => {
     commentAPI.addNewComment(reply, question._id, answer._id, 'Answer')
       .then(res => {
-        console.log(res);
+        setIsReply(false);
+        if (commentTotalPages === commentPage) {
+          getMoreComments(commentPage + 1);
+        }
       })
       .catch(error => {
         console.log(error);
@@ -120,6 +129,15 @@ const Answer: FC<SectionAnswerProps> = (props) => {
     </Modal>
   )
 
+  const getMoreComments = (pageNumber: number) => {
+    commentAPI.getCommentsByPageNumber(answer._id, pageNumber, 2)
+      .then((res: any) => {
+        setComments([...comments, ...res.comments]);
+        setCommentPage(res.page);
+        setCommentTotalPages(res.totalPages);
+      })
+  }
+
   return (
     <div className={style.answer}>
       {confirmDeleteModal}
@@ -138,7 +156,8 @@ const Answer: FC<SectionAnswerProps> = (props) => {
             onSave={(content: string) => handleSaveAnswer(content)}
           />
           : <>
-            <JsxParser jsx={answerContent} />
+            {parse(answerContent)}
+
             <div className={style.footerContent}>
               <SectionAnswerVoter
                 answer={answer}
@@ -151,6 +170,26 @@ const Answer: FC<SectionAnswerProps> = (props) => {
                 : null
               }
             </div>
+
+            {
+              comments
+                ? <>
+                  {comments.map((c: any) => <Comment
+                    key={c._id}
+                    question={question}
+                    answer={answer}
+                    comment={c}
+                    currentUser={currentUser}
+                  />)}
+                  {commentTotalPages > commentPage ?
+                    <div className={style.showMoreComments}>
+                      <span onClick={() => getMoreComments(commentPage + 1)}>Show more...</span>
+                    </div>
+                    : null
+                  }
+                </>
+                : null
+            }
           </>
         }
 
