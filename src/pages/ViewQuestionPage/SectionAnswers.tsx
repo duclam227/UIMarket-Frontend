@@ -8,8 +8,6 @@ import { customer, voteStatus } from "../../app/util/interfaces";
 import { Answer, Paginator } from "../../components";
 import SectionAddAnswer from "./SectionAddAnswer";
 
-import style from './SectionAnswers.module.css';
-
 interface SectionAnswersProps {
   answerList: Array<any>;
   currentUser: customer | null;
@@ -27,13 +25,12 @@ const SectionAnswers: FC<SectionAnswersProps> = (props) => {
     return answerList.map(a => {
       return (
         <Answer key={a._id} currentUser={currentUser} question={question} answer={a} />
-        // <SectionAnswer key={a._id} currentUser={currentUser} question={question} answer={a} />
       )
     })
   }
 
   return (
-    <div className={style.answerContainer}>
+    <div>
       {renderAnswers()}
     </div>
   )
