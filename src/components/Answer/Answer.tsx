@@ -61,7 +61,6 @@ const Answer: FC<SectionAnswerProps> = (props) => {
     commentAPI.addNewComment(reply, question._id, answer._id, 'Answer')
       .then(res => {
         setIsReply(false);
-        console.log(commentTotalPages, commentPage)
         if (comments.length === 0) {
           getMoreComments(1);
         }
@@ -78,7 +77,6 @@ const Answer: FC<SectionAnswerProps> = (props) => {
   const handleSaveAnswer = (newContent: string) => {
     answerAPI.updateAnswer(newContent, answer._id)
       .then(res => {
-        console.log(res);
         setAnswerContent(newContent);
       })
       .catch(error => {
