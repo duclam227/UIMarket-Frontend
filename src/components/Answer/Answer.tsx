@@ -193,19 +193,28 @@ const Answer: FC<SectionAnswerProps> = (props) => {
         }
 
         {isReply &&
-          <Form>
+          <Form className={style.addCommentWrapper}>
             <Form.Group>
               <Form.Control type='textarea' onChange={(e) => handleChange(e as any)} />
             </Form.Group>
-
-            <Button
-              className={style.addCommentButton}
-              variant="primary"
-              type="button"
-              onClick={addReply}
-            >
-              Reply
-            </Button>
+            <div className={style.editFooter}>
+              <Button
+                className={style.addCommentButton}
+                variant="primary"
+                type="button"
+                onClick={() => setIsReply(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                className={style.addCommentButton}
+                variant="primary"
+                type="button"
+                onClick={addReply}
+              >
+                Reply
+              </Button>
+            </div>
           </Form>
         }
       </div>
