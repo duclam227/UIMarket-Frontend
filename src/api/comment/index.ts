@@ -6,7 +6,7 @@ import get from './get';
 const commentAPI = {
 	deleteComment: deleteAPI.deleteComment,
 
-	getAllComments: get.getAllComments,
+	getCommentsByPageNumber: get.getCommentsByPageNumber,
 
 	addNewComment: post.addNewComment,
 

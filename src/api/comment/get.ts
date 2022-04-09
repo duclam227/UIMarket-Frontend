@@ -5,7 +5,11 @@ const COMMENTS_ENDPOINT = 'api/v1/comments';
 const jwt = getJwt();
 
 class Get {
-	getAllComments = (answerId: string | undefined) => {
+	getCommentsByPageNumber = (
+		answerId: string | undefined,
+		pageNumber: number,
+		itemPerPage: number,
+	) => {
 		const jwt = getJwt();
 		const config = {
 			headers: {
@@ -13,7 +17,10 @@ class Get {
 			},
 		};
 
-		return axiosClient.get(`${COMMENTS_ENDPOINT}/${answerId}`, config);
+		return axiosClient.get(
+			`${COMMENTS_ENDPOINT}/${answerId}?page=${pageNumber}&limit=${itemPerPage}`,
+			config,
+		);
 	};
 }
 
