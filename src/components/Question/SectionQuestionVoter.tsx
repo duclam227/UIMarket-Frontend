@@ -1,11 +1,20 @@
 import { FC, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
 
-import style from './Question.module.css';
-import voteAPI from "../../api/vote";
 import { getErrorMessage } from "../../app/util";
 import { customer, voteStatus } from "../../app/util/interfaces";
-import { useNavigate } from "react-router-dom";
+
+import {
+  BsArrowDownCircle,
+  BsArrowDownCircleFill,
+  BsArrowUpCircle,
+  BsArrowUpCircleFill,
+} from 'react-icons/bs';
+
+import voteAPI from "../../api/vote";
+
+import style from './Question.module.css';
 
 interface VoterProps {
   question: any;
@@ -100,26 +109,12 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
   }
 
   const upvoteIcon = voteStatus && voteStatus.upvote
-    ? <svg xmlns="http://www.w3.org/2000/svg" className={upvoteActiveStyle} viewBox="0 0 16 16"
-      onClick={handleUpvote}>
-      <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z" />
-    </svg>
-    : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" className={upvoteStyle}
-      onClick={handleUpvote}>
-      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11.5z" />
-    </svg>
+    ? <BsArrowUpCircleFill onClick={handleUpvote} className={upvoteActiveStyle} />
+    : <BsArrowUpCircle onClick={handleUpvote} className={upvoteStyle} />
 
   const downvoteIcon = voteStatus && voteStatus.downvote
-    ? <svg xmlns="http://www.w3.org/2000/svg" className={downvoteActiveStyle} viewBox="0 0 16 16"
-      onClick={handleDownvote}>
-      <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
-    </svg>
-    : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" className={downvoteStyle}
-      onClick={handleDownvote}>
-      <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v5.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V4.5z" />
-    </svg>
-
-
+    ? <BsArrowDownCircleFill onClick={handleDownvote} className={downvoteActiveStyle} />
+    : <BsArrowDownCircle onClick={handleDownvote} className={downvoteStyle} />
 
   return (
     <div className={style.voter}>
