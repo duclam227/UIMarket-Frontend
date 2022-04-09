@@ -7,7 +7,6 @@
 
 	width: 100%;
 	height: 20px;
-	z-index: 99;
 }
 
 .threeDotIcon {
@@ -34,6 +33,7 @@
 	background-color: white;
 	border: 1px solid var(--gray-400);
 	border-radius: 5px;
+	z-index: 99;
 }
 
 .menuItem {
@@ -41,6 +41,7 @@
 	padding: 10px 20px;
 
 	cursor: pointer;
+	z-index: 99;
 }
 
 .menuItem:hover {
