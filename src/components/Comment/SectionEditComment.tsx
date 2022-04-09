@@ -32,8 +32,10 @@ const SectionEditComment: React.FC<Props> = (props) => {
           defaultValue={initialValue}
         />
       </Form.Group>
-      <Button onClick={() => props.onHide()}>Cancel</Button>
-      <Button onClick={handleSaveAnswer}>Save</Button>
+      <div className={style.editFooter}>
+        <Button onClick={() => props.onHide()}>Cancel</Button>
+        <Button onClick={handleSaveAnswer}>Save</Button>
+      </div>
     </Form>
   )
 }

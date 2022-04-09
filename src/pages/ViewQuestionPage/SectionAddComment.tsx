@@ -27,10 +27,8 @@ const SectionAddComment: FC<AddCommentProps> = (props) => {
   }
 
   const handleSubmit = () => {
-    console.log(answer);
     answerAPI.addNewAnswer(answer, question._id)
       .then((res: any) => {
-        console.log(res);
         props.handleAddAnswer(res);
       })
       .catch((error) => {
