@@ -36,7 +36,6 @@ const ViewQuestionPage = () => {
           setAnswers([...res.answers])
           setTotalPages(res.totalPages);
           setCurrentPage(res.page);
-          console.log(res);
         })
         .catch((error) => {
           const errorMsg = getErrorMessage(error);
