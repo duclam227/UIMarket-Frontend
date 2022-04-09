@@ -6,6 +6,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import style from './ViewQuestionPage.module.css';
 import { customer } from "../../app/util/interfaces";
 import answerAPI from "../../api/answer";
+import { RichTextEditor } from "../../components";
 
 interface AddCommentProps {
   question: any;
@@ -17,6 +18,7 @@ const SectionAddComment: FC<AddCommentProps> = (props) => {
   const { currentUser, question } = props;
 
   const [answer, setAnswer] = useState<string>('');
+  const [editor, setEditor] = useState<any>(null);
 
   if (currentUser === null) {
     return (
@@ -30,10 +32,15 @@ const SectionAddComment: FC<AddCommentProps> = (props) => {
     answerAPI.addNewAnswer(answer, question._id)
       .then((res: any) => {
         props.handleAddAnswer(res);
+        setAnswer('');
       })
       .catch((error) => {
         console.log(error);
       })
+  }
+
+  const handleChangeContent = (text: string) => {
+    setAnswer(text);
   }
 
   return (
@@ -42,13 +49,9 @@ const SectionAddComment: FC<AddCommentProps> = (props) => {
       <div className={style.addCommentForm}>
         <Form>
           <Form.Group>
-            <CKEditor
-              editor={Editor}
-              name="body"
-              onChange={(event: SyntheticEvent, editor: any): void => {
-                setAnswer(editor.getData());
-              }}
-            ></CKEditor>
+            <RichTextEditor
+              onChange={(text: string) => handleChangeContent(text)}
+            />
           </Form.Group>
 
           <Button
