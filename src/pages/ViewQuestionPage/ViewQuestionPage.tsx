@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import questionAPI from "../../api/question";
 import { getErrorMessage } from "../../app/util";
-
 import { State } from "../../redux/store";
-
 import { PageWithNavbar, Paginator, Question } from "../../components";
+
+import questionAPI from "../../api/question";
+import answerAPI from "../../api/answer";
+
 import SectionAddAnswer from "./SectionAddAnswer";
+import SectionAnswers from "./SectionAnswers";
 
 import style from './ViewQuestionPage.module.css';
-import SectionAnswers from "./SectionAnswers";
-import answerAPI from "../../api/answer";
 
 const ITEMS_PER_PAGE = 10;
 

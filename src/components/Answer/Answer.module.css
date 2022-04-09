@@ -125,3 +125,24 @@
 .addCommentWrapper {
 	margin-top: 20px;
 }
+
+.bestAnswer {
+	height: 1.5em;
+	width: 1.5em;
+
+	cursor: pointer;
+	color: var(--gray-400);
+
+	transition: 100ms;
+}
+
+.bestAnswerActive,
+.bestAnswer:hover {
+	height: 1.5em;
+	width: 1.5em;
+
+	cursor: pointer;
+	transition: 100ms;
+
+	color: var(--teal-600);
+}

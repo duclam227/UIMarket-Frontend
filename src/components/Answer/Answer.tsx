@@ -1,18 +1,23 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
-import JsxParser from "react-jsx-parser";
 import parse from 'html-react-parser';
+
 import { customer, voteStatus } from "../../app/util/interfaces";
-import answerAPI from "../../api/answer";
 
 import { Paginator, ThreeDotMenu, Comment } from "../../components";
+
+import answerAPI from "../../api/answer";
+import commentAPI from "../../api/comment";
+
+import {
+  FaCheck
+} from 'react-icons/fa';
 
 import SectionAnswerVoter from "./SectionAnswerVoter";
 import SectionEditAnswer from "./SectionEditAnswer";
 
 import style from './Answer.module.css';
-import commentAPI from "../../api/comment";
 
 interface SectionAnswerProps {
   answer: any;
@@ -137,13 +142,30 @@ const Answer: FC<SectionAnswerProps> = (props) => {
       })
   }
 
+  const markBestAnswer = () => {
+    answerAPI.markBestAnswer(question._id, answer._id)
+      .then((res: any) => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  const bestAnswerIcon = <FaCheck
+    className={answer.bestAnswer
+      ? style.bestAnswerActive
+      : style.bestAnswer}
+    onClick={markBestAnswer}
+  />
+
   return (
     <div className={style.answer}>
       {confirmDeleteModal}
       <div className={style.sideContent}>
         <div>avt</div>
         <div className={style.markBestAnswer}>
-
+          {bestAnswerIcon}
         </div>
       </div>
       <div className={style.content}>
