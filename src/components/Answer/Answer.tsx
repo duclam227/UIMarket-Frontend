@@ -61,8 +61,9 @@ const Answer: FC<SectionAnswerProps> = (props) => {
     commentAPI.addNewComment(reply, question._id, answer._id, 'Answer')
       .then(res => {
         setIsReply(false);
-        if (commentTotalPages === commentPage) {
-          getMoreComments(commentPage + 1);
+        console.log(commentTotalPages, commentPage)
+        if (comments.length === 0) {
+          getMoreComments(1);
         }
       })
       .catch(error => {
@@ -173,7 +174,7 @@ const Answer: FC<SectionAnswerProps> = (props) => {
 
             {
               comments
-                ? <>
+                ? <div className={style.sectionComments}>
                   {comments.map((c: any) => <Comment
                     key={c._id}
                     question={question}
@@ -187,7 +188,7 @@ const Answer: FC<SectionAnswerProps> = (props) => {
                     </div>
                     : null
                   }
-                </>
+                </div>
                 : null
             }
           </>
@@ -210,7 +211,7 @@ const Answer: FC<SectionAnswerProps> = (props) => {
           </Form>
         }
       </div>
-    </div>
+    </div >
   )
 }
 

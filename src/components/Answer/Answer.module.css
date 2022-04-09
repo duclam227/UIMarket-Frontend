@@ -95,7 +95,27 @@
 	margin-top: 10px;
 }
 
+.sectionComments {
+	margin-left: 40px;
+}
+
 .showMoreComments {
 	display: flex;
 	flex-direction: row;
+
+	font-size: small;
+	color: var(--blue-600);
+
+	cursor: pointer;
+}
+
+.editFooter {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	gap: 10px;
+}
+
+.editFooter button {
+	margin: 10px 0;
 }
