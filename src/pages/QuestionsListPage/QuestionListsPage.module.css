@@ -4,7 +4,7 @@
 	height: 100%;
 
 	display: grid;
-	grid-template-columns: 1fr 3.5fr 1fr;
+	grid-template-columns: 15vw auto;
 }
 
 .header {
@@ -27,6 +27,7 @@
 .mainContent {
 	grid-column: 2;
 	background-color: var(--gray);
+	margin-right: 30px;
 }
 
 .tabContainer {
