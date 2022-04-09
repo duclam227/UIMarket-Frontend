@@ -140,7 +140,12 @@ const Answer: FC<SectionAnswerProps> = (props) => {
   return (
     <div className={style.answer}>
       {confirmDeleteModal}
-      <div className={style.sideContent}>avt</div>
+      <div className={style.sideContent}>
+        <div>avt</div>
+        <div className={style.markBestAnswer}>
+
+        </div>
+      </div>
       <div className={style.content}>
         <div className={style.authorInfo}>
           {answer.customerInfo[0].customerName}

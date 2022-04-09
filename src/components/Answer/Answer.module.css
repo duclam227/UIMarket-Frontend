@@ -12,9 +12,11 @@
 }
 
 .sideContent {
-	min-width: 50px;
+	min-width: 70px;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	gap: 10px;
 }
 
 .content {
