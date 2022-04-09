@@ -26,8 +26,10 @@ const SectionEditAnswer: React.FC<Props> = (props) => {
   return (
     <Form className={style.sectionEdit}>
       <RichTextEditor initialValue={initialValue} onChange={(text: string) => handleChangeContent(text)} />
-      <Button onClick={() => props.onHide()}>Cancel</Button>
-      <Button onClick={handleSaveAnswer}>Save</Button>
+      <div className={style.editFooter}>
+        <Button onClick={() => props.onHide()}>Cancel</Button>
+        <Button onClick={handleSaveAnswer}>Save</Button>
+      </div>
     </Form>
   )
 }
