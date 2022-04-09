@@ -1,0 +1,46 @@
+@import '../../app/util/colors.css';
+
+.comment {
+	display: flex;
+	flex-direction: row;
+	padding: 10px 20px;
+
+	width: 100%;
+	background-color: white;
+	border-radius: 20px;
+}
+
+.sideContent {
+	min-width: 50px;
+	display: flex;
+	flex-direction: column;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+
+	width: 100%;
+}
+
+.authorInfo {
+	display: flex;
+	flex-direction: row;
+	gap: 10px;
+
+	color: var(--gray-600);
+}
+
+.commentContent {
+	margin-right: 20px;
+}
+
+.footerContent {
+	display: flex;
+	gap: 20px;
+}
+
+.sectionEdit {
+	max-width: 95%;
+	margin-top: 10px;
+}
