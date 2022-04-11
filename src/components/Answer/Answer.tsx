@@ -23,6 +23,7 @@ interface SectionAnswerProps {
   answer: any;
   currentUser: customer | null;
   question: any;
+  handleMarkBestAnswer: Function;
   intl: IntlShape
 }
 
@@ -66,9 +67,6 @@ const Answer: FC<SectionAnswerProps> = (props) => {
     commentAPI.addNewComment(reply, question._id, answer._id, 'Answer')
       .then(res => {
         setIsReply(false);
-        if (comments.length === 0) {
-          getMoreComments(1);
-        }
       })
       .catch(error => {
         console.log(error);
@@ -145,7 +143,7 @@ const Answer: FC<SectionAnswerProps> = (props) => {
   const markBestAnswer = () => {
     answerAPI.markBestAnswer(question._id, answer._id)
       .then((res: any) => {
-        console.log(res);
+        props.handleMarkBestAnswer();
       })
       .catch(error => {
         console.log(error);

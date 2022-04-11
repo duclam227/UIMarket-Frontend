@@ -12,6 +12,7 @@ interface SectionAnswersProps {
   answerList: Array<any>;
   currentUser: customer | null;
   question: any;
+  markBestAnswer: Function;
 }
 
 const SectionAnswers: FC<SectionAnswersProps> = (props) => {
@@ -24,7 +25,13 @@ const SectionAnswers: FC<SectionAnswersProps> = (props) => {
   const renderAnswers = () => {
     return answerList.map(a => {
       return (
-        <Answer key={a._id} currentUser={currentUser} question={question} answer={a} />
+        <Answer
+          key={a._id}
+          currentUser={currentUser}
+          question={question}
+          answer={a}
+          handleMarkBestAnswer={props.markBestAnswer}
+        />
       )
     })
   }

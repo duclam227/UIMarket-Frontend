@@ -97,7 +97,14 @@ const ViewQuestionPage = () => {
             {answers.length > 0 &&
               <>
                 <h5 className={style.answersTitle}>Answers</h5>
-                <SectionAnswers answerList={answers} currentUser={currentUser} question={question} />
+                <SectionAnswers
+                  answerList={answers}
+                  currentUser={currentUser}
+                  question={question}
+                  markBestAnswer={() => {
+                    goToPage(currentPage);
+                  }}
+                />
                 <Paginator
                   totalNumberOfPages={totalPages}
                   currentPage={currentPage}
