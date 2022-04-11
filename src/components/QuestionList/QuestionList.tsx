@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Alert } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 import style from './QuestionList.module.css';
 
@@ -11,6 +11,7 @@ interface Props {
 
 const QuestionList: FC<Props> = (props) => {
   const { questionsList } = props;
+  const navigate = useNavigate();
 
   if (!questionsList || questionsList.length < 1) {
     return null;
@@ -25,6 +26,10 @@ const QuestionList: FC<Props> = (props) => {
     )
   }
 
+  const handleClickTag = (id: string) => {
+    navigate(`/questions/tag/${id}`);
+  }
+
   const renderTags = (tags: Array<any>) => {
     if (tags.length < 1) {
       return null;
@@ -37,7 +42,7 @@ const QuestionList: FC<Props> = (props) => {
       }
       displayTag.push(
         (<>
-          <div key={tags[i].tagName} className={style.tag}>{tags[i].tagName}</div>
+          <div onClick={() => handleClickTag(tags[i]._id)} key={tags[i].tagName} className={style.tag}>{tags[i].tagName}</div>
         </>)
       )
     }

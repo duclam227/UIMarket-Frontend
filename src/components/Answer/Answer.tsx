@@ -1,22 +1,29 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
-import JsxParser from "react-jsx-parser";
-import { customer, voteStatus } from "../../app/util/interfaces";
-import answerAPI from "../../api/answer";
+import parse from 'html-react-parser';
 
-import { Paginator, ThreeDotMenu } from "../../components";
+import { customer, voteStatus } from "../../app/util/interfaces";
+
+import { Paginator, ThreeDotMenu, Comment } from "../../components";
+
+import answerAPI from "../../api/answer";
+import commentAPI from "../../api/comment";
+
+import {
+  FaCheck
+} from 'react-icons/fa';
 
 import SectionAnswerVoter from "./SectionAnswerVoter";
 import SectionEditAnswer from "./SectionEditAnswer";
 
 import style from './Answer.module.css';
-import commentAPI from "../../api/comment";
 
 interface SectionAnswerProps {
   answer: any;
   currentUser: customer | null;
   question: any;
+  handleMarkBestAnswer: Function;
   intl: IntlShape
 }
 
@@ -24,15 +31,20 @@ const Answer: FC<SectionAnswerProps> = (props) => {
   const { answer, currentUser, question, intl } = props;
 
   const [answerContent, setAnswerContent] = useState<string>(answer.answerContent || '');
+  const [comments, setComments] = useState<any>(null);
+  const [commentPage, setCommentPage] = useState<number>(1);
+  const [commentTotalPages, setCommentTotalPages] = useState<number>(1);
   const [isReply, setIsReply] = useState<boolean>(false);
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [reply, setReply] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    commentAPI.getAllComments(answer._id)
+    commentAPI.getCommentsByPageNumber(answer._id, 1, 2)
       .then((res: any) => {
-        console.log(res);
+        setComments(res.comments);
+        setCommentPage(res.page);
+        setCommentTotalPages(res.totalPages);
       })
   }, [])
 
@@ -54,7 +66,7 @@ const Answer: FC<SectionAnswerProps> = (props) => {
   const addReply = () => {
     commentAPI.addNewComment(reply, question._id, answer._id, 'Answer')
       .then(res => {
-        console.log(res);
+        setIsReply(false);
       })
       .catch(error => {
         console.log(error);
@@ -68,7 +80,6 @@ const Answer: FC<SectionAnswerProps> = (props) => {
   const handleSaveAnswer = (newContent: string) => {
     answerAPI.updateAnswer(newContent, answer._id)
       .then(res => {
-        console.log(res);
         setAnswerContent(newContent);
       })
       .catch(error => {
@@ -120,10 +131,41 @@ const Answer: FC<SectionAnswerProps> = (props) => {
     </Modal>
   )
 
+  const getMoreComments = (pageNumber: number) => {
+    commentAPI.getCommentsByPageNumber(answer._id, pageNumber, 2)
+      .then((res: any) => {
+        setComments([...comments, ...res.comments]);
+        setCommentPage(res.page);
+        setCommentTotalPages(res.totalPages);
+      })
+  }
+
+  const markBestAnswer = () => {
+    answerAPI.markBestAnswer(question._id, answer._id)
+      .then((res: any) => {
+        props.handleMarkBestAnswer();
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  const bestAnswerIcon = <FaCheck
+    className={answer.bestAnswer
+      ? style.bestAnswerActive
+      : style.bestAnswer}
+    onClick={markBestAnswer}
+  />
+
   return (
     <div className={style.answer}>
       {confirmDeleteModal}
-      <div className={style.sideContent}>avt</div>
+      <div className={style.sideContent}>
+        <div>avt</div>
+        <div className={style.markBestAnswer}>
+          {bestAnswerIcon}
+        </div>
+      </div>
       <div className={style.content}>
         <div className={style.authorInfo}>
           {answer.customerInfo[0].customerName}
@@ -138,7 +180,8 @@ const Answer: FC<SectionAnswerProps> = (props) => {
             onSave={(content: string) => handleSaveAnswer(content)}
           />
           : <>
-            <JsxParser jsx={answerContent} />
+            {parse(answerContent)}
+
             <div className={style.footerContent}>
               <SectionAnswerVoter
                 answer={answer}
@@ -151,27 +194,56 @@ const Answer: FC<SectionAnswerProps> = (props) => {
                 : null
               }
             </div>
+
+            {
+              comments
+                ? <div className={style.sectionComments}>
+                  {comments.map((c: any) => <Comment
+                    key={c._id}
+                    question={question}
+                    answer={answer}
+                    comment={c}
+                    currentUser={currentUser}
+                  />)}
+                  {commentTotalPages > commentPage ?
+                    <div className={style.showMoreComments}>
+                      <span onClick={() => getMoreComments(commentPage + 1)}>Show more...</span>
+                    </div>
+                    : null
+                  }
+                </div>
+                : null
+            }
           </>
         }
 
         {isReply &&
-          <Form>
+          <Form className={style.addCommentWrapper}>
             <Form.Group>
               <Form.Control type='textarea' onChange={(e) => handleChange(e as any)} />
             </Form.Group>
-
-            <Button
-              className={style.addCommentButton}
-              variant="primary"
-              type="button"
-              onClick={addReply}
-            >
-              Reply
-            </Button>
+            <div className={style.editFooter}>
+              <Button
+                className={style.addCommentButton}
+                variant="primary"
+                type="button"
+                onClick={() => setIsReply(false)}
+              >
+                Cancel
+              </Button>
+              <Button
+                className={style.addCommentButton}
+                variant="primary"
+                type="button"
+                onClick={addReply}
+              >
+                Reply
+              </Button>
+            </div>
           </Form>
         }
       </div>
-    </div>
+    </div >
   )
 }
 

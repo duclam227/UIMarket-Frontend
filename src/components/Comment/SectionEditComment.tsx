@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import RichTextEditor from "../common/RichTextEditor/RichTextEditor";
 
-import style from './Answer.module.css';
+import style from './Comment.module.css';
 
 interface Props {
   initialValue: string;
@@ -10,7 +10,7 @@ interface Props {
   onSave: Function;
 }
 
-const SectionEditAnswer: React.FC<Props> = (props) => {
+const SectionEditComment: React.FC<Props> = (props) => {
   const { initialValue } = props;
   const [content, setContent] = useState<string>(initialValue || '');
 
@@ -19,13 +19,19 @@ const SectionEditAnswer: React.FC<Props> = (props) => {
     props.onHide();
   }
 
-  const handleChangeContent = (text: string) => {
-    setContent(text);
-  }
+  const handleChangeContent = ({ target: input }: ChangeEvent<HTMLInputElement>) => {
+    setContent(input.value);
+  };
 
   return (
     <Form className={style.sectionEdit}>
-      <RichTextEditor initialValue={initialValue} onChange={(text: string) => handleChangeContent(text)} />
+      <Form.Group>
+        <Form.Control
+          type='textarea'
+          onChange={(e) => handleChangeContent(e as any)}
+          defaultValue={initialValue}
+        />
+      </Form.Group>
       <div className={style.editFooter}>
         <Button onClick={() => props.onHide()}>Cancel</Button>
         <Button onClick={handleSaveAnswer}>Save</Button>
@@ -34,4 +40,4 @@ const SectionEditAnswer: React.FC<Props> = (props) => {
   )
 }
 
-export default SectionEditAnswer;
+export default SectionEditComment;

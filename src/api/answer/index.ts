@@ -9,6 +9,7 @@ const answerAPI = {
 	getAnswersByPageNumber: get.getAllAnswersByPageNumber,
 
 	updateAnswer: put.updateAnswer,
+	markBestAnswer: put.markBestAnswer,
 
 	addNewAnswer: post.addAnswer,
 };

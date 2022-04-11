@@ -58,7 +58,7 @@ const SectionAddAnswer: FC<AddAnswerProps> = (props) => {
             type="button"
             onClick={handleSubmit}
           >
-            Add comment
+            Add answer
           </Button>
         </Form>
       </div>

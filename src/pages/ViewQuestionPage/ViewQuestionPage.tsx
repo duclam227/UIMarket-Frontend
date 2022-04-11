@@ -2,17 +2,17 @@ import { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import questionAPI from "../../api/question";
 import { getErrorMessage } from "../../app/util";
-
 import { State } from "../../redux/store";
-
 import { PageWithNavbar, Paginator, Question } from "../../components";
+
+import questionAPI from "../../api/question";
+import answerAPI from "../../api/answer";
+
 import SectionAddAnswer from "./SectionAddAnswer";
+import SectionAnswers from "./SectionAnswers";
 
 import style from './ViewQuestionPage.module.css';
-import SectionAnswers from "./SectionAnswers";
-import answerAPI from "../../api/answer";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -36,7 +36,6 @@ const ViewQuestionPage = () => {
           setAnswers([...res.answers])
           setTotalPages(res.totalPages);
           setCurrentPage(res.page);
-          console.log(res);
         })
         .catch((error) => {
           const errorMsg = getErrorMessage(error);
@@ -98,7 +97,14 @@ const ViewQuestionPage = () => {
             {answers.length > 0 &&
               <>
                 <h5 className={style.answersTitle}>Answers</h5>
-                <SectionAnswers answerList={answers} currentUser={currentUser} question={question} />
+                <SectionAnswers
+                  answerList={answers}
+                  currentUser={currentUser}
+                  question={question}
+                  markBestAnswer={() => {
+                    goToPage(currentPage);
+                  }}
+                />
                 <Paginator
                   totalNumberOfPages={totalPages}
                   currentPage={currentPage}

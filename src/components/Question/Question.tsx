@@ -2,6 +2,7 @@ import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
 import JsxParser from "react-jsx-parser";
+import parse from 'html-react-parser';
 import { Button, Modal } from "react-bootstrap";
 
 import { customer, voteStatus } from "../../app/util/interfaces";
@@ -114,7 +115,7 @@ const Question: FC<QuestionProps> = (props) => {
         </div>
       </div>
       <div className={style.content}>
-        <JsxParser jsx={question.questionContent} />
+        {parse(question.questionContent)}
       </div>
       {question.questionTag &&
         <div className={style.tagsContainer}>

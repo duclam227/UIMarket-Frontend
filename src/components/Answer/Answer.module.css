@@ -12,9 +12,11 @@
 }
 
 .sideContent {
-	min-width: 50px;
+	min-width: 70px;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	gap: 10px;
 }
 
 .content {
@@ -93,4 +95,54 @@
 .sectionEdit {
 	max-width: 95%;
 	margin-top: 10px;
+}
+
+.sectionComments {
+	margin-left: 40px;
+}
+
+.showMoreComments {
+	display: flex;
+	flex-direction: row;
+
+	font-size: small;
+	color: var(--blue-600);
+
+	cursor: pointer;
+}
+
+.editFooter {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	gap: 10px;
+}
+
+.editFooter button {
+	margin: 10px 0;
+}
+
+.addCommentWrapper {
+	margin-top: 20px;
+}
+
+.bestAnswer {
+	height: 1.5em;
+	width: 1.5em;
+
+	cursor: pointer;
+	color: var(--gray-400);
+
+	transition: 100ms;
+}
+
+.bestAnswerActive,
+.bestAnswer:hover {
+	height: 1.5em;
+	width: 1.5em;
+
+	cursor: pointer;
+	transition: 100ms;
+
+	color: var(--teal-600);
 }
