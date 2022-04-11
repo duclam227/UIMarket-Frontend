@@ -115,7 +115,6 @@ const Question: FC<QuestionProps> = (props) => {
         </div>
       </div>
       <div className={style.content}>
-        {/* <JsxParser jsx={question.questionContent} /> */}
         {parse(question.questionContent)}
       </div>
       {question.questionTag &&

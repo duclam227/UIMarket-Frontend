@@ -10,6 +10,7 @@ const questionAPI = {
 	getPopularQuestionsByPageNumber: get.getPopularQuestionsByPageNumber,
 	getBountiedQuestionsByPageNumber: get.getBountiedQuestionsByPageNumber,
 	getQuestionById: get.getQuestionById,
+	getQuestionsByTags: get.getQuestionsByTag,
 
 	updateQuestion: put.updateQuestion,
 

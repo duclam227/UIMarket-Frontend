@@ -12,4 +12,5 @@ export { default as NotFoundPage } from './NotFoundPage/NotFound';
 export { default as PopularQuestionListsPage } from './QuestionsListPage/PopularQuestionListsPage';
 export { default as PricingPage } from './PricingPage/Pricing';
 export { default as QuestionListsPage } from './QuestionsListPage/QuestionListsPage';
+export { default as QuestionListsPageByTag } from './QuestionsListPage/QuestionListsByTagPage';
 export { default as ViewQuestionPage } from './ViewQuestionPage/ViewQuestionPage';

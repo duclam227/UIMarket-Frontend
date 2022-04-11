@@ -29,6 +29,23 @@ class Get {
 		};
 		return axiosClient.get(`${QUESTIONS_ENDPOINT}/${id}`, config);
 	};
+
+	getQuestionsByTag = (
+		tagIds: Array<string | undefined>,
+		pageNumber: number | string,
+		itemsPerPage: number,
+	) => {
+		const data = {
+			tag: [ ...tagIds ],
+		};
+
+		return axiosClient.get(
+			`${QUESTIONS_ENDPOINT}?tag=true&page=${pageNumber}&limit=${itemsPerPage}`,
+			{
+				params: { ...data },
+			},
+		);
+	};
 }
 
 export default new Get();

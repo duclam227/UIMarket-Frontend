@@ -9,6 +9,7 @@ import {
   AboutUsPage,
   ContactUsPage,
   QuestionListsPage,
+  QuestionListsPageByTag,
   NotFoundPage,
   PricingPage,
   AuthenticationPage,
@@ -64,6 +65,7 @@ function App() {
         <Route path='/questions/bountied' element={<BountiedQuestionListsPage />} />
         <Route path='/questions/popular' element={<PopularQuestionListsPage />} />
         <Route path='/questions/*' element={<Navigate replace to='/questions/all' />} />
+        <Route path="/questions/tag/:id" element={<QuestionListsPageByTag />} />
         <Route path="/question/:id" element={<ViewQuestionPage />} />
         <Route
           path="/question/:id/edit"
