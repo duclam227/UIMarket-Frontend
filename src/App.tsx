@@ -17,7 +17,8 @@ import {
   ViewQuestionPage,
   BountiedQuestionListsPage,
   PopularQuestionListsPage,
-  EditQuestionPage
+  EditQuestionPage,
+  UserProfilePage
 } from './pages';
 import { logInWithJWT } from './redux/index';
 
@@ -50,6 +51,7 @@ function App() {
           path="/signup"
           element={<AuthenticationPage destination="signup" />}
         />
+        <Route path="/user/:id/*" element={<UserProfilePage />} />
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactUsPage />} />
         <Route path="/pricing" element={<PricingPage />} />
