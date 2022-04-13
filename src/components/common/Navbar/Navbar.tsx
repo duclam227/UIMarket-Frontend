@@ -59,7 +59,7 @@ const NavBar: FC = ({ intl }: any) => {
     />
   );
 
-  const navVisualBstrapClass = 'navbar navbar-expand-lg navbar-dark bg-dark';
+  const navVisualBstrapClass = 'navbar navbar-expand-md navbar-dark bg-dark';
   const navItemsWrapperBstrapClass =
     'collapse navbar-collapse justify-content-between';
   const leftSideNavItemBstrapClass = 'navbar-nav mb-2 mb-lg-0';
@@ -115,9 +115,16 @@ const NavBar: FC = ({ intl }: any) => {
 
           {/* Right side nav items */}
           <ul className={rightSideNavItemBstrapClass}>
+            <Form className="mb-2 me-2 mb-lg-0">
+              <Form.Control
+                type="text"
+                placeholder={searchBarPlaceholder}
+                onChange={e => handleChange(e as any)}
+              />
+            </Form>
             {currentUser ? (
               //Render if logged in
-              <div className="nav-item dropdown">
+              <div className="nav-item dropdown p-1">
                 <a
                   className="nav-link dropdown-toggle p-0"
                   href="#"
@@ -138,7 +145,12 @@ const NavBar: FC = ({ intl }: any) => {
                   aria-labelledby="navbarDropdown"
                 >
                   <li>
-                    <a className="dropdown-item">{userDropdownProfileLabel}</a>
+                    <Link
+                      to={`/user/${currentUser._id}`}
+                      className="dropdown-item"
+                    >
+                      {userDropdownProfileLabel}
+                    </Link>
                   </li>
                   <hr className="dropdown-divider" />
                   <li className="text-center">
@@ -154,13 +166,6 @@ const NavBar: FC = ({ intl }: any) => {
             ) : (
               // Render if not logged in
               <>
-                <Form className="mb-2 me-2 mb-lg-0">
-                  <Form.Control
-                    type="text"
-                    placeholder={searchBarPlaceholder}
-                    onChange={e => handleChange(e as any)}
-                  />
-                </Form>
                 <Link to="/signup" className="nav-item">
                   <button className={signupButtonBstrapClass}>
                     {itemSignupBtnLabel}

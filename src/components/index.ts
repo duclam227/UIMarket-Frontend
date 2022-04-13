@@ -12,3 +12,4 @@ export { default as RichTextEditor } from './common/RichTextEditor/RichTextEdito
 export { default as RequireAnonymous } from './common/RequireAnonymous/RequireAnonymous';
 export { default as RequireUser } from './common/RequireUser/RequireUser';
 export { default as ThreeDotMenu } from './common/ThreeDotMenu/ThreeDotMenu';
+export { default as InfoCardContainer } from './common/InfoCardContainer/InfoCardContainer';
