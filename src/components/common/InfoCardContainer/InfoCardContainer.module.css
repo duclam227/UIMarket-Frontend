@@ -1,0 +1,7 @@
+@import '../../../app/util/colors.css';
+
+.cardContainer {
+  overflow-y: auto;
+  border: 1px solid var(--gray-400);
+  border-radius: 10px;
+}
