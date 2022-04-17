@@ -1,0 +1,33 @@
+.profilePictureWrapper {
+  height: 10em;
+  width: 10em;
+}
+
+.profilePicture {
+  width: 100%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 3px;
+}
+
+.profileBio {
+  max-width: 85%;
+}
+
+.tabContainer {
+  background-color: white;
+  min-height: 30em;
+  width: 100%;
+  border-right: 1px solid var(--gray-400);
+  border-bottom: 1px solid var(--gray-400);
+  border-left: 1px solid var(--gray-400);
+  border-radius: 4px;
+}
+
+.text-underline-hover {
+  text-decoration: none;
+}
+
+.text-underline-hover:hover {
+  text-decoration: underline;
+}

@@ -1,14 +1,14 @@
 export interface question {
-	title: string;
-	body: string;
-	tags: string[];
-	bounty: number;
-	question: string;
+  title: string;
+  body: string;
+  tags: string[];
+  bounty: number;
+  question: string;
 }
 
 export interface navigatorTabItem {
-	path: string;
-	label: string;
+  path: string;
+  label: string;
 }
 
 export interface authCredentials {
@@ -17,13 +17,31 @@ export interface authCredentials {
   customerName?: string;
 }
 
+export interface PaginatorProps {
+  totalNumberOfPages: number;
+  currentPage: number;
+  handleClickGoToPage: Function;
+}
+
+export interface voteStatus {
+  upvote: boolean;
+  downvote: boolean;
+}
+
+export interface PaginatorProps {
+  totalNumberOfPages: number;
+  currentPage: number;
+  handleClickGoToPage: Function;
+}
+
 export interface customer {
+  _id: string;
   customerName: string;
   customerEmail: string;
   customerPassword: string;
   customerPhone: string;
   customerDOB: string;
-  authenToken: {
+  authToken: {
     Google: string;
   };
   customerWallet: {
@@ -35,60 +53,7 @@ export interface customer {
   updatedAt: Date;
 }
 
-export interface PaginatorProps {
-	totalNumberOfPages: number;
-	currentPage: number;
-	handleClickGoToPage: Function;
-}
-
-export interface customer {
-	customerName: string;
-	customerEmail: string;
-	customerPassword: string;
-	customerPhone: string;
-	customerDOB: string;
-	authToken: {
-		Google: string;
-	};
-	customerWallet: {
-		coin: string;
-		point: string;
-	};
-	customer_Status: string;
-	createdAt: Date;
-	updatedAt: Date;
-}
-
 export interface voteStatus {
-	upvote: boolean;
-	downvote: boolean;
-}
-
-export interface PaginatorProps {
-	totalNumberOfPages: number;
-	currentPage: number;
-	handleClickGoToPage: Function;
-}
-
-export interface customer {
-	customerName: string;
-	customerEmail: string;
-	customerPassword: string;
-	customerPhone: string;
-	customerDOB: string;
-	authToken: {
-		Google: string;
-	};
-	customerWallet: {
-		coin: string;
-		point: string;
-	};
-	customer_Status: string;
-	createdAt: Date;
-	updatedAt: Date;
-}
-
-export interface voteStatus {
-	upvote: boolean;
-	downvote: boolean;
+  upvote: boolean;
+  downvote: boolean;
 }

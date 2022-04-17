@@ -1,0 +1,36 @@
+@import '../../../app/util/colors.css';
+
+.questionItemContainer {
+  min-height: 5em;
+  padding: 0em 1em;
+  display: flex;
+  gap: 1em;
+  align-items: center;
+
+  border-bottom: 1px solid var(--gray-400);
+}
+
+.questionItemContainer:last-child {
+  border-bottom: none;
+}
+.questionBadge {
+  /* flex-basis: 4em;
+	flex-shrink: 4rem; */
+  height: 3em;
+  min-width: 3.5em;
+
+  border-radius: 7px;
+
+  display: grid;
+  place-content: center;
+}
+
+.questionPointBadge {
+  background-color: #d2f4ea;
+  color: #20c997;
+}
+
+.questionBountyBadge {
+  background-color: var(--orange-100);
+  color: var(--orange-600);
+}
