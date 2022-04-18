@@ -59,13 +59,13 @@ const NavBar: FC = ({ intl }: any) => {
     />
   );
 
-  const navVisualBstrapClass = 'navbar navbar-expand-md navbar-dark bg-dark';
+  const navVisualBstrapClass = 'navbar navbar-expand-md navbar-dark bg-dark ';
   const navItemsWrapperBstrapClass =
     'collapse navbar-collapse justify-content-between';
-  const leftSideNavItemBstrapClass = 'navbar-nav mb-2 mb-lg-0';
-  const rightSideNavItemBstrapClass = 'navbar-nav mb-lg-0';
+  const leftSideNavItemBstrapClass = 'navbar-nav mb-2 mb-md-0';
+  const rightSideNavItemBstrapClass = 'navbar-nav mb-md-0';
   const loginButtonBstrapClass = 'btn btn-outline-light';
-  const signupButtonBstrapClass = 'btn btn-light me-2 mb-2 mb-lg-0';
+  const signupButtonBstrapClass = 'btn btn-light me-2 mb-2 mb-md-0';
   const logoutButtonBstrapClass = 'btn btn-danger';
 
   const dispatch = useDispatch();
@@ -115,7 +115,7 @@ const NavBar: FC = ({ intl }: any) => {
 
           {/* Right side nav items */}
           <ul className={rightSideNavItemBstrapClass}>
-            <Form className="mb-2 me-2 mb-lg-0">
+            <Form className="mb-2 me-2 mb-md-0">
               <Form.Control
                 type="text"
                 placeholder={searchBarPlaceholder}
