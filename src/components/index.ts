@@ -13,3 +13,5 @@ export { default as RequireAnonymous } from './common/RequireAnonymous/RequireAn
 export { default as RequireUser } from './common/RequireUser/RequireUser';
 export { default as ThreeDotMenu } from './common/ThreeDotMenu/ThreeDotMenu';
 export { default as InfoCardContainer } from './common/InfoCardContainer/InfoCardContainer';
+export { default as SideNav } from './common/SideNav/SideNav';
+export { default as OneToFivePage } from './common/OneToFivePage/OneToFivePage';
