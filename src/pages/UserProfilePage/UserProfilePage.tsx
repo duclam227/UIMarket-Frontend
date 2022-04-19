@@ -13,10 +13,9 @@ import style from './UserProfilePage.module.css';
 import { useSelector } from 'react-redux';
 
 import { State } from '../../redux/store';
-import { PageWithNavbar } from '../../components';
+import { OneToFivePage } from '../../components';
 import UserActivityTab from './UserActivityTab/UserActivityTab';
 import profileAPI from '../../api/profile';
-import { customer } from '../../app/util/interfaces';
 import AllTopAnswers from './SeeAllTab/AllTopAnswers';
 import AllTopQuestions from './SeeAllTab/AllTopQuestions';
 import AllTags from './SeeAllTab/AllTags';
@@ -137,7 +136,7 @@ const UserProfilePage = () => {
   const tabNavRowClassname = 'mt-5 p-0';
   const tabContentContainer = style.tabContainer + ' ' + 'p-3';
   return (
-    <PageWithNavbar>
+    <OneToFivePage>
       <Container>
         {/* General info */}
         <Row className={generalInfoRowClassname}>
@@ -239,7 +238,7 @@ const UserProfilePage = () => {
           </div>
         </Row>
       </Container>
-    </PageWithNavbar>
+    </OneToFivePage>
   );
 };
 
