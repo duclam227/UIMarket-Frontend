@@ -19,6 +19,7 @@ import {
   PopularQuestionListsPage,
   EditQuestionPage,
   UserProfilePage,
+  AddAProductPage
 } from './pages';
 import { logInWithJWT } from './redux/index';
 
@@ -55,6 +56,7 @@ function App() {
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactUsPage />} />
         <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/products/add" element={<AddAProductPage />} />
         <Route
           path="/questions/new"
           element={
