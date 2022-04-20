@@ -24,7 +24,12 @@ const PageWithSideNav: FC = props => {
           <div className={`${style.pageContainer} container-fluid p-0`}>
             <Row>
               <Col lg={3} xl={2} className={`p-0 position-sticky top-0`}>
-                <Navbar collapseOnSelect expand="lg" sticky="top">
+                <Navbar
+                  collapseOnSelect
+                  expand="lg"
+                  sticky="top"
+                  className={`p-0`}
+                >
                   <Navbar.Toggle
                     aria-controls="offcanvasNavbar"
                     className={`${style.hamburgerOffcanvasToggler}`}
