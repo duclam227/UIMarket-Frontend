@@ -1,18 +1,25 @@
 import axiosClient from '..';
 import { getJwt } from '../../app/util/authHelpers';
 
-class Get {
-  getSignedUrl = (folder: string) => {
-    const imageUploadApiEndpoint = `/api/v1/pictures/${folder}/upload`;
-    const jwt = getJwt();
-    const config = {
-      headers: {
-        Authorization: `Bearer ${jwt}`,
-      },
-    };
+const API_ENDPOINT = '/api/v1/file/upload';
 
-    return axiosClient.get(imageUploadApiEndpoint, config);
-  };
+class Get {
+	getSignedUrl = (folder: string) => {
+		let isPrivate: boolean = false;
+		if (folder === 'products') {
+			isPrivate = true;
+		}
+
+		const imageUploadApiEndpoint = `${API_ENDPOINT}?folder=${folder}&isPrivate=${isPrivate}`;
+		const jwt = getJwt();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		};
+
+		return axiosClient.get(imageUploadApiEndpoint, config);
+	};
 }
 
 export default new Get();
