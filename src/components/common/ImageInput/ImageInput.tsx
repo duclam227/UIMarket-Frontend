@@ -57,10 +57,8 @@ const ImageInput: React.FC<Props> = (props) => {
     <>
       <div className={style.dropzone}>
         <label className={style.dropzoneButton}>
-          <div className={style.title}>
-            <FormattedMessage id='ImageInput.uploadTitle' />
-          </div>
           <RiUpload2Line className={style.uploadIcon} />
+          <div className={style.title}><FormattedMessage id='ImageInput.uploadTitle' /></div>
           <FormattedMessage id='ImageInput.uploadSubtitle' />
           <input id='image' name='image' type="file"
             onChange={(e) => handleChange(e)}
