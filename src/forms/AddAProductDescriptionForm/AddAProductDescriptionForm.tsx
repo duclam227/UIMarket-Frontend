@@ -1,5 +1,5 @@
 import React from "react";
-import { IntlShape, injectIntl } from "react-intl";
+import { IntlShape, injectIntl, FormattedMessage } from "react-intl";
 
 import Form from "react-bootstrap/Form";
 
@@ -16,16 +16,16 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
     intl
   } = props;
 
-  const productNameLabel = intl.formatMessage({ id: 'AddAProduct.ProductNameLabel' })
+  const productNameLabel = intl.formatMessage({ id: 'AddAProduct.ProductNameLabel' });
   const productNamePlaceholder = intl.formatMessage({ id: 'AddAProduct.ProductNamePlaceholder' });
 
-  const productPriceLabel = intl.formatMessage({ id: 'AddAProduct.ProductPriceLabel' })
+  const productPriceLabel = intl.formatMessage({ id: 'AddAProduct.ProductPriceLabel' });
   const productPricePlaceholder = intl.formatMessage({ id: 'AddAProduct.ProductPricePlaceholder' });
 
-  const productCategoryLabel = intl.formatMessage({ id: 'AddAProduct.ProductCategoryLabel' })
+  const productCategoryLabel = intl.formatMessage({ id: 'AddAProduct.ProductCategoryLabel' });
   const productCategoryPlaceholder = intl.formatMessage({ id: 'AddAProduct.ProductCategoryPlaceholder' });
 
-  const productDescriptionLabel = intl.formatMessage({ id: 'AddAProduct.ProductDescriptionLabel' })
+  const productDescriptionLabel = intl.formatMessage({ id: 'AddAProduct.ProductDescriptionLabel' });
   const productDescriptionPlaceholder = intl.formatMessage({ id: 'AddAProduct.ProductDescriptionPlaceholder' });
 
   return (
@@ -38,6 +38,8 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
       }}
       className={style.form}
     >
+      <div className={style.formTitle}><FormattedMessage id='AddAProduct.TabDescriptionTitle' /></div>
+
       <Form.Group className="mb-3">
         <Form.Label className={style.label}>{productNameLabel}</Form.Label>
         <Form.Control

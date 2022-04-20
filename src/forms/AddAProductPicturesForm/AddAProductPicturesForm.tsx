@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IntlShape, injectIntl } from "react-intl";
+import { IntlShape, injectIntl, FormattedMessage } from "react-intl";
 import Form from "react-bootstrap/Form";
 
 import s3API from "../../api/amazonS3";
@@ -53,6 +53,8 @@ const AddAProductPicturesForm: React.FC<Props> = (props) => {
       name='AddAProductPicturesForm'
       className={style.form}
     >
+      <div className={style.formTitle}><FormattedMessage id='AddAProduct.TabImagesTitle' /></div>
+
       <ImageInput
         images={images}
         handleUploadImage={(image: File) => uploadImage(image)}
