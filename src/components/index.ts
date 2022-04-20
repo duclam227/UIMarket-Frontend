@@ -5,6 +5,8 @@ export { default as Question } from './Question/Question';
 export { default as QuestionList } from './QuestionList/QuestionList';
 
 /* =============== Common =============== */
+export { default as ImageInput } from './common/ImageInput/ImageInput';
+export { default as InfoCardContainer } from './common/InfoCardContainer/InfoCardContainer';
 export { default as Navbar } from './common/Navbar/Navbar';
 export { default as Paginator } from './common/Paginator/Paginator';
 export { default as PageWithNavbar } from './common/PageWithNavbar/PageWithNavbar';
@@ -12,6 +14,5 @@ export { default as RichTextEditor } from './common/RichTextEditor/RichTextEdito
 export { default as RequireAnonymous } from './common/RequireAnonymous/RequireAnonymous';
 export { default as RequireUser } from './common/RequireUser/RequireUser';
 export { default as ThreeDotMenu } from './common/ThreeDotMenu/ThreeDotMenu';
-export { default as InfoCardContainer } from './common/InfoCardContainer/InfoCardContainer';
 export { default as SideNav } from './common/SideNav/SideNav';
 export { default as OneToFivePage } from './common/OneToFivePage/OneToFivePage';

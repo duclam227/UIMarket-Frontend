@@ -1,0 +1,106 @@
+@import '../../../app/util/colors.css';
+
+.dropzone {
+	display: flex;
+	flex-direction: column;
+
+	border-radius: 2px;
+	overflow: hidden;
+}
+
+.dropzoneButton {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	padding: 20px 10px;
+
+	min-height: 7rem;
+
+	border-radius: 5px;
+	background-color: var(--gray-100);
+	border: var(--gray-500) solid 1px;
+	cursor: pointer;
+}
+
+.title {
+	font-weight: 600;
+	font-size: large;
+}
+
+.subtitle {
+	font-weight: 400;
+	color: var(--gray-600);
+}
+
+.uploadIcon {
+	height: 40px;
+	width: 40px;
+	color: var(--blue-400);
+	margin: 7px;
+}
+
+.dropzone input {
+	display: none;
+}
+
+.images {
+	margin-top: 30px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.imageContainer {
+	display: grid;
+	grid-template-columns: 2.5fr 3fr .7fr;
+	grid-template-rows: 250px;
+	padding: 2px;
+
+	position: relative;
+	height: fit-content;
+	width: 100%;
+
+	border: 1px solid var(--gray-400);
+	border-radius: 2px;
+}
+
+.previewImage {
+	grid-column: 1;
+}
+
+.previewImage img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.imageName {
+	grid-column: 2;
+	display: flex;
+	align-items: center;
+
+	padding-left: 15px;
+}
+
+.removeImageButton {
+	grid-column: 3;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	width: 100%;
+	height: 100%;
+	padding: 10px;
+
+	cursor: pointer;
+	transition: 300ms;
+}
+
+.removeImageIcon {
+	width: 30px;
+	height: 30px;
+
+	color: black;
+}
