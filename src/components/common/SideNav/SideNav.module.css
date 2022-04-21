@@ -35,6 +35,9 @@
 }
 .username {
   font-weight: 500;
+  word-break: break-word;
+  /* Flex children are automatically set min-width auto so you have to set it to 0 for it to not overflow */
+  min-width: 0;
 }
 
 .navGroup {
