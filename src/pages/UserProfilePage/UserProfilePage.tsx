@@ -164,7 +164,7 @@ const UserProfilePage = () => {
               <span>
                 <Button className="d-flex align-items-center">
                   <BsPencil className="me-1" />
-                  <span>{editProfileBtnLabel}</span>
+                  <span className={`text-nowrap`}>{editProfileBtnLabel}</span>
                 </Button>
               </span>
             </Col>
