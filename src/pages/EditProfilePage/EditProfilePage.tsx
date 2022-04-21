@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import Container from 'react-bootstrap/Container';
@@ -8,32 +9,54 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 import { PageWithNavbar } from '../../components';
-import { State } from '../../redux/store';
+import profileAPI from '../../api/profile';
 import style from './EditProfilePage.module.css';
-interface UserProfile {
+export interface ProfileInfo {
   name: string | undefined;
   bio: string | undefined;
 }
 
 const EditProfilePage = () => {
-  const currentUser = useSelector((state: State) => state.auth.user);
-
-  const [userProfile, setUserProfile] = useState<UserProfile>({
+  const navigate = useNavigate();
+  const params = useParams();
+  const [profileInfo, setProfileInfo] = useState<ProfileInfo>({
     name: '',
     bio: '',
   });
 
   useEffect(() => {
-    const user = {
-      name: currentUser?.customerName,
-      bio: currentUser?.customerBio,
+    const { id } = params;
+    if (!id) {
+      return;
+    }
+    const getUserProfile = async (id: string) => {
+      try {
+        const res: any = await profileAPI.getUserProfileInfoById(id);
+        const { user } = res;
+        console.log(user);
+        setProfileInfo({ name: user.customerName, bio: user.customerBio });
+      } catch (error) {
+        console.log('Get user profile error: ', error);
+      }
     };
-    setUserProfile({
-      name: currentUser?.customerName,
-      bio: currentUser?.customerBio,
-    });
+    getUserProfile(id);
   }, []);
 
+  const handleChange = ({ target: input }: ChangeEvent<HTMLInputElement>) => {
+    setProfileInfo({
+      ...profileInfo,
+      [input.id]: input.value,
+    });
+  };
+
+  const handleSubmit = async () => {
+    try {
+      await profileAPI.updateUserProfileInfo(profileInfo);
+      navigate(-1);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <PageWithNavbar>
       <Container className={`p-5 mt-5 min-vh-100 bg-white`}>
@@ -49,25 +72,25 @@ const EditProfilePage = () => {
           {/* Edit form */}
           <Col>
             <Form>
-              <Form.Group className="mb-3" id="inputName">
+              <Form.Group className="mb-3" controlId="name">
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                   type="text"
-                  defaultValue={userProfile.name}
-                  id="inputName"
+                  defaultValue={profileInfo.name}
+                  onChange={e => handleChange(e as any)}
                 />
               </Form.Group>
-              {/* <Form.Group className="mb-3" id="inputBio">
+              <Form.Group className="mb-3" controlId="bio">
                 <Form.Label>Bio</Form.Label>
                 <Form.Control
                   as="textarea"
                   rows={3}
-                  value={userProfile.bio}
-                  id="inputBio"
+                  defaultValue={profileInfo.bio}
+                  onChange={e => handleChange(e as any)}
                 />
-              </Form.Group> */}
+              </Form.Group>
             </Form>
-            <Button>Save changes</Button>
+            <Button onClick={handleSubmit}>Save changes</Button>
           </Col>
           {/* Edit avatar */}
           <Col className={`d-flex flex-column align-items-center`}>
