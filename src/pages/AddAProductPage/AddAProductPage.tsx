@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Nav, Tab, TabContainer, Tabs } from "react-bootstrap";
 import { FormattedMessage } from "react-intl";
+import categoryAPI from "../../api/category";
+import productAPI from "../../api/product";
 import { product } from "../../app/util/interfaces";
 
 import { PageWithNavbar } from "../../components";
@@ -21,6 +23,16 @@ const AddAProductPage: React.FC = () => {
       ...product,
       ...input,
     })
+  }
+
+  const handleSubmit = () => {
+    productAPI.addNewProduct(product)
+      .then((res: any) => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 
   return (
@@ -64,8 +76,8 @@ const AddAProductPage: React.FC = () => {
           </TabContainer>
 
           <Button
-            disabled={false}
-            onClick={() => { console.log(product) }}
+            disabled={!isImagesFilled || !isDescriptionFilled}
+            onClick={handleSubmit}
           >Add product</Button>
         </div>
       </div>

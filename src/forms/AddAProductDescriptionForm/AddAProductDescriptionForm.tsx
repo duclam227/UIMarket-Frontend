@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IntlShape, injectIntl, FormattedMessage } from "react-intl";
-
 import Form from "react-bootstrap/Form";
 
-import style from './AddAProductDescriptionForm.module.css';
 import { RichTextEditor } from "../../components";
+
+import categoryAPI from "../../api/category";
+
+import style from './AddAProductDescriptionForm.module.css';
 
 interface Props {
   updateProductInfo: Function;
@@ -15,6 +17,15 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
   const {
     intl
   } = props;
+
+  const [categories, setCategories] = useState<Array<any> | null>(null);
+
+  useEffect(() => {
+    categoryAPI.getAllCategories()
+      .then((res: any) => {
+        setCategories(res.categories);
+      })
+  }, [])
 
   const productNameLabel = intl.formatMessage({ id: 'AddAProduct.ProductNameLabel' });
   const productNamePlaceholder = intl.formatMessage({ id: 'AddAProduct.ProductNamePlaceholder' });
@@ -67,9 +78,11 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
           aria-label="Default select example"
         >
           <option disabled={true} selected={true}>{productCategoryPlaceholder}</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+          {categories && categories.map(cat => (
+            <option value={cat._id}>{cat.categoryName}</option>
+          ))
+          }
+
         </Form.Select>
       </Form.Group>
 
@@ -84,7 +97,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
         />
       </Form.Group>
 
-    </Form>
+    </Form >
   )
 }
 
