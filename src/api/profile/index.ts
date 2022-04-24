@@ -6,6 +6,7 @@ const profileAPI = {
   getUserProfileInfoById: get.getUserProfileInfoById,
   updateUserProfile: post.updateUserProfile,
   updateUserInfo: post.updateUserInfo,
+  updateUserAvatar: post.updateUserAvatar,
 };
 
 export default profileAPI;

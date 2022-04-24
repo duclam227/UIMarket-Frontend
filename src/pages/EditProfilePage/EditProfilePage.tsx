@@ -1,6 +1,5 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useRef, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -11,6 +10,7 @@ import Form from 'react-bootstrap/Form';
 import { OneToFivePage } from '../../components';
 import profileAPI from '../../api/profile';
 import style from './EditProfilePage.module.css';
+import s3API from '../../api/amazonS3';
 export interface ProfileInfo {
   name: string | undefined;
   bio: string | undefined;
@@ -19,11 +19,12 @@ export interface ProfileInfo {
 const EditProfilePage = () => {
   const navigate = useNavigate();
   const params = useParams();
+  const imageInput = useRef<HTMLInputElement>(null);
   const [profileInfo, setProfileInfo] = useState<ProfileInfo>({
     name: '',
     bio: '',
   });
-
+  const [avatarUrl, setAvatarUrl] = useState('');
   useEffect(() => {
     const { id } = params;
     if (!id) {
@@ -57,6 +58,25 @@ const EditProfilePage = () => {
       console.log(e);
     }
   };
+
+  const handleChangeAvatar = async ({
+    target: input,
+  }: ChangeEvent<HTMLInputElement>) => {
+    if (!input.files) return;
+    const selectedFile = input.files[0];
+    const previousAvatar = avatarUrl;
+    try {
+      const res: any = await s3API.getSignedUrl('avatar');
+      const { url: signedUploadUrl } = res;
+      const imageUrl = signedUploadUrl.split('?')[0];
+      await s3API.uploadToS3Bucket(signedUploadUrl, selectedFile);
+      setAvatarUrl(imageUrl);
+      await profileAPI.updateUserAvatar(imageUrl);
+    } catch (error) {
+      setAvatarUrl(previousAvatar);
+      console.log('Upload image handler error:', error);
+    }
+  };
   return (
     <OneToFivePage>
       <Container className={`w-75 p-5 mt-5 min-vh-100 bg-white`}>
@@ -69,7 +89,7 @@ const EditProfilePage = () => {
         </Row>
 
         <Row className={`mt-5`}>
-          {/* Edit form */}
+          {/* Edit Profile */}
           <Col>
             <Form>
               <Form.Group className="mb-3" controlId="name">
@@ -97,15 +117,32 @@ const EditProfilePage = () => {
             <div className={style.editAvatarWrapper}>
               <div className={style.avatarWrapper}>
                 <img
-                  src="https://i.pinimg.com/originals/dc/fa/f9/dcfaf90445559ec3997517ad7a34f8ee.jpg"
+                  src={
+                    avatarUrl ||
+                    'https://i.pinimg.com/originals/dc/fa/f9/dcfaf90445559ec3997517ad7a34f8ee.jpg'
+                  }
                   alt=""
                   className={style.avatar}
                 />
               </div>
             </div>
-            <Button className={`mt-3`} variant="dark">
+            <Button
+              className={`mt-3`}
+              variant="dark"
+              onClick={() => {
+                imageInput.current?.click();
+              }}
+            >
               Change Avatar
             </Button>
+            <Form>
+              <Form.Control
+                className={`d-none`}
+                onChange={e => handleChangeAvatar(e as any)}
+                ref={imageInput}
+                type="file"
+              ></Form.Control>
+            </Form>
           </Col>
         </Row>
       </Container>

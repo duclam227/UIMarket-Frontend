@@ -35,6 +35,18 @@ class Post {
     };
     return axiosClient.post(API_ENDPOINT, data, config);
   };
+  updateUserAvatar = (avatarUrl: string) => {
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    const data = {
+      customerAvatar: avatarUrl,
+    };
+    return axiosClient.post(API_ENDPOINT, data, config);
+  };
 }
 
 export default new Post();
