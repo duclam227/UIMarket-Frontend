@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import { State } from "../../redux/store";
@@ -10,32 +10,32 @@ import noProductsImage from '../../app/assets/error-not-found.png';
 import shopAPI from "../../api/shop";
 
 import { OneToFivePage } from "../../components";
+import Product from "./Product";
 
 import style from './ManageProductsPage.module.css';
-import Product from "./Product";
 
 const ManageProductsPage: React.FC = () => {
   const currentUser = useSelector((state: State) => state.auth.user);
   const shopId = currentUser?.shopId;
 
   const [products, setProducts] = useState<Array<product> | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     shopId && shopAPI.getAllProductsOfShop(shopId)
       .then((res: any) => {
         setProducts(res.products);
+        setIsLoading(false);
       })
       .catch(error => {
         console.log(error);
       })
   }, [])
 
-  return !shopId ? (
+  return isLoading ? (
     <OneToFivePage>
-      <div className={style.wrapper}>
-        <div className={style.content}>
-          later
-        </div>
+      <div className={style.loadingWrapper}>
+        <Spinner animation="border" variant="primary" />
       </div>
     </OneToFivePage>
   ) : (
