@@ -23,6 +23,7 @@ import {
   EditProfilePage,
   EditPersonalInfoPage,
   ShopHomePage,
+  ManageProductsPage
 } from './pages';
 import { logInWithJWT } from './redux/index';
 
@@ -57,6 +58,7 @@ function App() {
         />
         <Route path="/user/:id/edit/profile" element={<EditProfilePage />} />
         <Route path="/user/:id/edit/info" element={<EditPersonalInfoPage />} />
+        <Route path="/user/:id/products" element={<ManageProductsPage />} />
         <Route path="/user/:id/shop" element={<ShopHomePage />} />
         <Route path="/user/:id/*" element={<UserProfilePage />} />
         <Route path="/about" element={<AboutUsPage />} />
