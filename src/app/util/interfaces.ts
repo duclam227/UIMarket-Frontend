@@ -35,21 +35,24 @@ export interface PaginatorProps {
 }
 
 export interface customer {
-  createdAt: Date;
-  customerBio: string;
-  customerDOB: string;
-  customerEmail: string;
-  customerName: string;
-  customerPhone: string;
-  customerStatus: boolean;
-  customerAvatar: string;
-  authToken: {
-    Google: string;
-  };
-  customerWallet: {
-    coin: string;
-    point: string;
-  };
+	_id: string;
+	customerName: string;
+	customerEmail: string;
+	customerPassword: string;
+	customerPhone: string;
+	customerDOB: string;
+	authToken: {
+		Google: string;
+	};
+	customerWallet: {
+		coin: string;
+		point: string;
+	};
+	customer_Status: string;
+	createdAt: Date;
+	updatedAt: Date;
+	shopId: string;
+}
 
   refreshtoken: string;
   shopId: null;
