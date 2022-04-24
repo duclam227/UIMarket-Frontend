@@ -2,7 +2,7 @@ import get from './get';
 import post from './post';
 
 const shopAPI = {
-	getAllProductOfShop: get.getAllProductsOfShop,
+	getAllProductsOfShop: get.getAllProductsOfShop,
 };
 
 export default shopAPI;
