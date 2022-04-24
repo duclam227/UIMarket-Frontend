@@ -100,8 +100,10 @@ const SideNav: FC<Props> = props => {
             {myProfileNavGroupLabel}
           </span>
         </div>
-        <li className={style.navLinkItem}>{editProfileNavLinkLabel}</li>
-        <Link to={`/user/${currentUser?._id}`}>
+        <Link to={`/user/${currentUser?._id}/edit/profile`}>
+          <li className={style.navLinkItem}>{editProfileNavLinkLabel}</li>
+        </Link>
+        <Link to={`/user/${currentUser?._id}/edit/info`}>
           <li className={style.navLinkItem}>{personalInfoNavLinkLabel}</li>
         </Link>
       </ul>

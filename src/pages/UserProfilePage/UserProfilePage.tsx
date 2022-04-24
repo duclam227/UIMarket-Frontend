@@ -173,7 +173,9 @@ const UserProfilePage = () => {
               <span>
                 <Button
                   className="d-flex align-items-center"
-                  onClick={() => navigate('edit')}
+                  onClick={() =>
+                    navigate(`/user/${currentUser?._id}/edit/profile`)
+                  }
                 >
                   <BsPencil className="me-1" />
                   <span className={`text-nowrap`}>{editProfileBtnLabel}</span>

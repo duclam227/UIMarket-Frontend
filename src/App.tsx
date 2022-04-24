@@ -21,6 +21,7 @@ import {
   UserProfilePage,
   AddAProductPage,
   EditProfilePage,
+  EditPersonalInfoPage,
 } from './pages';
 import { logInWithJWT } from './redux/index';
 
@@ -53,7 +54,8 @@ function App() {
           path="/signup"
           element={<AuthenticationPage destination="signup" />}
         />
-        <Route path="/user/:id/edit" element={<EditProfilePage />} />
+        <Route path="/user/:id/edit/profile" element={<EditProfilePage />} />
+        <Route path="/user/:id/edit/info" element={<EditPersonalInfoPage />} />
         <Route path="/user/:id/*" element={<UserProfilePage />} />
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactUsPage />} />
