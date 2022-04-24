@@ -4,7 +4,8 @@ import post from './post';
 const profileAPI = {
   getUserActivityById: get.getUserActivityById,
   getUserProfileInfoById: get.getUserProfileInfoById,
-  updateUserProfileInfo: post.updateUserProfileInfo,
+  updateUserProfile: post.updateUserProfile,
+  updateUserInfo: post.updateUserInfo,
 };
 
 export default profileAPI;
