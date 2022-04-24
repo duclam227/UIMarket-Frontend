@@ -60,11 +60,12 @@ export interface customer {
   _id: string;
 }
 export interface product {
-  productName: string;
-  productPrice: number;
-  productCategory: string;
-  productDescription: string;
-  productPicture: Array<string>;
+	_id?: string;
+	productName: string;
+	productPrice: number;
+	productCategory: string;
+	productDescription: string;
+	productPicture: Array<string>;
 }
 
 export interface voteStatus {
