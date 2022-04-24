@@ -137,7 +137,9 @@ const SideNav: FC<Props> = props => {
             {myStoreNavGroupLabel}
           </Link>
         </div>
-        <li className={style.navLinkItem}>{productsNavLinkLabel}</li>
+        <Link to={`/user/${currentUser?._id}/products`}>
+          <li className={style.navLinkItem}>{productsNavLinkLabel}</li>
+        </Link>
         <li className={style.navLinkItem}>{bankDetailsNavLinkLabel}</li>
       </ul>
     </div>
