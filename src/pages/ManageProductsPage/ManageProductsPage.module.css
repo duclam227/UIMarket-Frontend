@@ -16,7 +16,7 @@
 }
 
 .noProductsImage {
-	max-width: 40%;
+	max-width: 30%;
 	margin-top: 2rem;
 	margin-bottom: 2rem;
 }
@@ -43,4 +43,21 @@
 
 .title {
 	font-weight: 600;
+}
+
+.productList {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	margin-top: 2rem;
+	padding-left: 1rem;
+	padding-right: 1rem;
+}
+
+.productInList {
+	display: flex;
+	flex-direction: row;
+	gap: 1em;
+
+	width: 100%;
 }

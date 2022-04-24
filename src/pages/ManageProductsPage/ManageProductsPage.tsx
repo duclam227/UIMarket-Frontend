@@ -12,28 +12,29 @@ import shopAPI from "../../api/shop";
 import { OneToFivePage } from "../../components";
 
 import style from './ManageProductsPage.module.css';
+import Product from "./Product";
 
 const ManageProductsPage: React.FC = () => {
   const currentUser = useSelector((state: State) => state.auth.user);
   const shopId = currentUser?.shopId;
 
-  const [products, setProducts] = useState<product | null>(null);
+  const [products, setProducts] = useState<Array<product> | null>(null);
 
   useEffect(() => {
     shopId && shopAPI.getAllProductsOfShop(shopId)
       .then((res: any) => {
-        console.log(res);
+        setProducts(res.products);
       })
       .catch(error => {
         console.log(error);
       })
   }, [])
 
-  return !!(shopId && products) ? (
+  return !shopId ? (
     <OneToFivePage>
       <div className={style.wrapper}>
         <div className={style.content}>
-          list
+          later
         </div>
       </div>
     </OneToFivePage>
@@ -56,15 +57,24 @@ const ManageProductsPage: React.FC = () => {
               </Button>
             </Link>
           </div>
-          <div className={style.noProductsImage}>
-            <img src={noProductsImage} alt="A picture telling there are no products" />
-          </div>
-          <h4 className={style.title}>
-            <FormattedMessage id='ManageProductsPage.noProductsTitle' />
-          </h4>
-          <h6>
-            <FormattedMessage id='ManageProductsPage.noProductsSubtitle' />
-          </h6>
+          {
+            !!(shopId && products)
+              ? <div className={style.productList}>
+                {products.map((product: product) => <Product product={product} />)}
+              </div>
+              : <>
+                <div className={style.noProductsImage}>
+                  <img src={noProductsImage} alt="A picture telling there are no products" />
+                </div>
+                <h4 className={style.title}>
+                  <FormattedMessage id='ManageProductsPage.noProductsTitle' />
+                </h4>
+                <h6>
+                  <FormattedMessage id='ManageProductsPage.noProductsSubtitle' />
+                </h6>
+              </>
+          }
+
         </div>
       </div>
     </OneToFivePage>
