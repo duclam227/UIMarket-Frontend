@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-import { PageWithNavbar } from '../../components';
+import { OneToFivePage } from '../../components';
 import profileAPI from '../../api/profile';
 import style from './EditProfilePage.module.css';
 export interface ProfileInfo {
@@ -51,15 +51,15 @@ const EditProfilePage = () => {
 
   const handleSubmit = async () => {
     try {
-      await profileAPI.updateUserProfileInfo(profileInfo);
+      await profileAPI.updateUserProfile(profileInfo);
       navigate(-1);
     } catch (e) {
       console.log(e);
     }
   };
   return (
-    <PageWithNavbar>
-      <Container className={`p-5 mt-5 min-vh-100 bg-white`}>
+    <OneToFivePage>
+      <Container className={`w-75 p-5 mt-5 min-vh-100 bg-white`}>
         {/* Page title */}
         <Row>
           <h1>Edit Profile</h1>
@@ -109,7 +109,7 @@ const EditProfilePage = () => {
           </Col>
         </Row>
       </Container>
-    </PageWithNavbar>
+    </OneToFivePage>
   );
 };
 
