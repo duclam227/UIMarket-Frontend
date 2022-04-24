@@ -46,7 +46,7 @@ const PageWithSideNav: FC = props => {
                   <SideNav className={`d-none d-lg-block`} />
                 </Navbar>
               </Col>
-              <Col lg={9} xl={10} className={`p-2`}>
+              <Col lg={9} xl={10} className={`p-0`}>
                 {children}
               </Col>
             </Row>
