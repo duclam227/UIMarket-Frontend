@@ -27,6 +27,7 @@ import AllTopAnswers from './SeeAllTab/AllTopAnswers';
 import AllTopQuestions from './SeeAllTab/AllTopQuestions';
 import AllTags from './SeeAllTab/AllTags';
 import { FormattedMessage } from 'react-intl';
+import { genericAvatarUrl } from '../../app/util/const';
 
 export interface ProfileStats {
   questions: number;
@@ -65,6 +66,7 @@ export interface UserProfileInfo {
   customerName: string;
   customerPhone: string | null;
   customerStatus: boolean;
+  customerAvatar: string;
   _id: string;
 }
 const UserProfilePage = () => {
@@ -153,7 +155,7 @@ const UserProfilePage = () => {
             <div className={style.profilePictureWrapper}>
               <img
                 className={style.profilePicture}
-                src="https://i.pinimg.com/originals/dc/fa/f9/dcfaf90445559ec3997517ad7a34f8ee.jpg"
+                src={userProfileInfo?.customerAvatar || genericAvatarUrl}
               />
             </div>
           </Col>

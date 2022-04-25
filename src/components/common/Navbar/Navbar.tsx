@@ -10,6 +10,7 @@ import { State } from '../../../redux/store';
 import { logOut } from '../../../redux';
 
 import style from './Navbar.module.css';
+import { genericAvatarUrl } from '../../../app/util/const';
 
 const NavBar: FC = ({ intl }: any) => {
   // Left side nav items
@@ -126,18 +127,20 @@ const NavBar: FC = ({ intl }: any) => {
               //Render if logged in
               <div className="nav-item dropdown p-1">
                 <a
-                  className="nav-link dropdown-toggle p-0"
+                  className="nav-link dropdown-toggle p-0 d-flex align-items-center"
                   href="#"
                   id="navbarDropdown"
                   role="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  <img
-                    src="https://images.nightcafe.studio//assets/profile.png?tr=w-1600,c-at_max"
+                  <div className={style.avatarWrapper}>
+                    <img
+                    src={currentUser.customerAvatar || genericAvatarUrl}
                     className={style.userAvatar}
                     alt="User profile"
                   />
+                  </div>
                   {currentUser.customerEmail}
                 </a>
                 <ul

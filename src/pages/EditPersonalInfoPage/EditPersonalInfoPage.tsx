@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -10,6 +11,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import { BsPencil } from 'react-icons/bs';
 
+import { logInWithJWT } from '../../redux/index';
 import { OneToFivePage } from '../../components';
 import profileAPI from '../../api/profile';
 
@@ -20,7 +22,7 @@ export interface UserInfo {
 }
 const EditPersonalInfoPage = () => {
   const params = useParams();
-
+  const dispatch = useDispatch();
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
   const [readOnlyInfo, setReadOnlyInfo] = useState<UserInfo>({
@@ -65,6 +67,13 @@ const EditPersonalInfoPage = () => {
     getUserProfile(id);
   }, []);
 
+  const syncChangesToReduxStore = () => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) {
+      dispatch(logInWithJWT(authToken));
+    }
+  };
+
   const handleEnableEditMode = () => {
     setIsEditMode(true);
     setEditableInfo({ ...readOnlyInfo });
@@ -82,6 +91,7 @@ const EditPersonalInfoPage = () => {
       setReadOnlyInfo({ ...editableInfo });
       await profileAPI.updateUserInfo(editableInfo);
       setIsSavingChanges(false);
+      syncChangesToReduxStore();
     } catch (e) {
       setReadOnlyInfo({ ...previousInfo });
       console.log('Update user info error: ', e);

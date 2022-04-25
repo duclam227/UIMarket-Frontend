@@ -42,9 +42,10 @@ export interface customer {
   customerName: string;
   customerPhone: string;
   customerStatus: boolean;
-	authToken: {
-		Google: string;
-	};
+  customerAvatar: string;
+  authToken: {
+    Google: string;
+  };
   customerWallet: {
     coin: string;
     point: string;
