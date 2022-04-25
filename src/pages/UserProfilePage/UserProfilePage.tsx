@@ -8,7 +8,14 @@ import Nav from 'react-bootstrap/Nav';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { BsPencil } from 'react-icons/bs';
-import { Link, Routes, Route, useParams, Navigate } from 'react-router-dom';
+import {
+  Link,
+  Routes,
+  Route,
+  useParams,
+  Navigate,
+  useNavigate,
+} from 'react-router-dom';
 import style from './UserProfilePage.module.css';
 import { useSelector } from 'react-redux';
 
@@ -20,6 +27,7 @@ import AllTopAnswers from './SeeAllTab/AllTopAnswers';
 import AllTopQuestions from './SeeAllTab/AllTopQuestions';
 import AllTags from './SeeAllTab/AllTags';
 import { FormattedMessage } from 'react-intl';
+import { genericAvatarUrl } from '../../app/util/const';
 
 export interface ProfileStats {
   questions: number;
@@ -58,6 +66,7 @@ export interface UserProfileInfo {
   customerName: string;
   customerPhone: string | null;
   customerStatus: boolean;
+  customerAvatar: string;
   _id: string;
 }
 const UserProfilePage = () => {
@@ -81,6 +90,7 @@ const UserProfilePage = () => {
   );
 
   const params = useParams();
+  const navigate = useNavigate();
   const currentUser = useSelector((state: State) => state.auth.user);
   const [userProfileInfo, setUserProfileInfo] =
     useState<UserProfileInfo | null>(null);
@@ -114,6 +124,7 @@ const UserProfilePage = () => {
         const res2: any = await profileAPI.getUserProfileInfoById(id);
         const { user } = res2;
         console.log(user);
+        console.log(res);
         setUserProfileInfo({ ...user });
         setProfileStats({ ...stat });
         setProfileTagStats([...tagStats]);
@@ -144,7 +155,7 @@ const UserProfilePage = () => {
             <div className={style.profilePictureWrapper}>
               <img
                 className={style.profilePicture}
-                src="https://i.pinimg.com/originals/dc/fa/f9/dcfaf90445559ec3997517ad7a34f8ee.jpg"
+                src={userProfileInfo?.customerAvatar || genericAvatarUrl}
               />
             </div>
           </Col>
@@ -162,7 +173,12 @@ const UserProfilePage = () => {
           {currentUser?._id === params.id && (
             <Col lg={2} md={4} className="d-flex justify-content-center">
               <span>
-                <Button className="d-flex align-items-center">
+                <Button
+                  className="d-flex align-items-center"
+                  onClick={() =>
+                    navigate(`/user/${currentUser?._id}/edit/profile`)
+                  }
+                >
                   <BsPencil className="me-1" />
                   <span className={`text-nowrap`}>{editProfileBtnLabel}</span>
                 </Button>

@@ -7,6 +7,7 @@ import { BsGear, BsWallet, BsBag, BsShop } from 'react-icons/bs';
 
 import { State } from '../../../redux/store';
 import style from './SideNav.module.css';
+import { genericAvatarUrl } from '../../../app/util/const';
 
 interface Props {
   className?: string;
@@ -85,7 +86,7 @@ const SideNav: FC<Props> = props => {
           <div className={style.profilePictureWrapper}>
             <img
               className={style.profilePicture}
-              src="https://i.pinimg.com/originals/dc/fa/f9/dcfaf90445559ec3997517ad7a34f8ee.jpg"
+              src={currentUser?.customerAvatar || genericAvatarUrl}
               alt="Current user"
             />
           </div>
@@ -100,8 +101,10 @@ const SideNav: FC<Props> = props => {
             {myProfileNavGroupLabel}
           </span>
         </div>
-        <li className={style.navLinkItem}>{editProfileNavLinkLabel}</li>
-        <Link to={`/user/${currentUser?._id}`}>
+        <Link to={`/user/${currentUser?._id}/edit/profile`}>
+          <li className={style.navLinkItem}>{editProfileNavLinkLabel}</li>
+        </Link>
+        <Link to={`/user/${currentUser?._id}/edit/info`}>
           <li className={style.navLinkItem}>{personalInfoNavLinkLabel}</li>
         </Link>
       </ul>
