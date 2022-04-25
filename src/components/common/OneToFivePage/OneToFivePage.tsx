@@ -22,7 +22,7 @@ const PageWithSideNav: FC = props => {
         {currentUser ? (
           //Render side nav
           <div className={`${style.pageContainer} container-fluid p-0`}>
-            <Row>
+            <Row className={`m-0`}>
               <Col lg={3} xl={2} className={`p-0 position-sticky top-0`}>
                 <Navbar
                   collapseOnSelect
