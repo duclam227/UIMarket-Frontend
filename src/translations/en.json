@@ -92,6 +92,8 @@
   "QuestionList.numberOfVotes": "{count, plural, =0 {# vote} one {# vote} other {# votes}}",
   "QuestionList.numberOfViews": "{count, plural, =0 {# view} one {# view} other {# views}}",
   "QuestionList.postedBy": "posted by ",
+  "QuestionListsByTagPage.addQuestionButton": "Ask a question",
+  "QuestionListsByTagPage.title": "Questions",
   "QuestionListsPage.addQuestionButton": "Ask a question",
   "QuestionListsPage.title": "All Questions",
   "QuestionListsPage.titleBountied": "Bountied Questions",
