@@ -1,6 +1,7 @@
 import { ChangeEvent, useRef, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -21,6 +22,43 @@ export interface ProfileInfo {
 }
 
 const EditProfilePage = () => {
+  const pageTitle = (
+    <FormattedMessage
+      id="EditProfilePage.pageTitle"
+      defaultMessage="Edit Profile"
+    />
+  );
+  const pageSubTitle = (
+    <FormattedMessage
+      id="EditProfilePage.pageSubTitle"
+      defaultMessage="Manage how others see your profile"
+    />
+  );
+  const nameFormInputLabel = (
+    <FormattedMessage
+      id="EditProfilePage.nameFormInputLabel"
+      defaultMessage="Name"
+    />
+  );
+  const bioFormInputLabel = (
+    <FormattedMessage
+      id="EditProfilePage.bioFormInputLabel"
+      defaultMessage="Bio"
+    />
+  );
+  const saveBtnLabel = (
+    <FormattedMessage
+      id="EditProfilePage.saveBtnLabel"
+      defaultMessage="Save changes"
+    />
+  );
+  const changeAvatarBtnLabel = (
+    <FormattedMessage
+      id="EditProfilePage.changeAvatarBtnLabel"
+      defaultMessage="Change Avatar"
+    />
+  );
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
@@ -111,18 +149,18 @@ const EditProfilePage = () => {
         {/* Page title */}
 
         <Row>
-          <h1>Edit Profile</h1>
+          <h1>{pageTitle}</h1>
           <h4 className="text-muted" style={{}}>
-            Manage how others see your profile
+            {pageSubTitle}
           </h4>
         </Row>
 
         <Row className={`mt-5`}>
           {/* Edit Profile */}
-          <Col>
+          <Col className={`order-1`}>
             <Form>
               <Form.Group className="mb-3" controlId="name">
-                <Form.Label>Name</Form.Label>
+                <Form.Label>{nameFormInputLabel}</Form.Label>
                 <Form.Control
                   type="text"
                   defaultValue={profileInfo.name}
@@ -130,7 +168,7 @@ const EditProfilePage = () => {
                 />
               </Form.Group>
               <Form.Group className="mb-3" controlId="bio">
-                <Form.Label>Bio</Form.Label>
+                <Form.Label>{bioFormInputLabel}</Form.Label>
                 <Form.Control
                   as="textarea"
                   rows={3}
@@ -139,10 +177,14 @@ const EditProfilePage = () => {
                 />
               </Form.Group>
             </Form>
-            <Button onClick={handleSubmit}>Save changes</Button>
+            <Button onClick={handleSubmit}>{saveBtnLabel}</Button>
           </Col>
           {/* Edit avatar */}
-          <Col className={`d-flex flex-column align-items-center`}>
+          <Col
+            sm={12}
+            md={6}
+            className={`d-flex flex-column align-items-center mb-3 mb-md-0 order-0 order-md-1`}
+          >
             <div className={style.editAvatarWrapper}>
               <div className={style.avatarWrapper}>
                 <img
@@ -162,7 +204,7 @@ const EditProfilePage = () => {
                 imageInput.current?.click();
               }}
             >
-              Change Avatar
+              {changeAvatarBtnLabel}
             </Button>
             <Form>
               <Form.Control

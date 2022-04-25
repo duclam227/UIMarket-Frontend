@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
 
 import Container from 'react-bootstrap/Container';
@@ -21,6 +22,54 @@ export interface UserInfo {
   phone: string;
 }
 const EditPersonalInfoPage = () => {
+  const pageTitle = (
+    <FormattedMessage
+      id="EditPersonalInfoPage.pageTitle"
+      defaultMessage="Personal Information"
+    />
+  );
+  const pageSubTitle = (
+    <FormattedMessage
+      id="EditPersonalInfoPage.pageSubTitle"
+      defaultMessage="Provide information to protect your account"
+    />
+  );
+  const emailLabel = (
+    <FormattedMessage
+      id="EditPersonalInfoPage.emailLabel"
+      defaultMessage="Email"
+    />
+  );
+  const dobLabel = (
+    <FormattedMessage
+      id="EditPersonalInfoPage.dobLabel"
+      defaultMessage="Birthday"
+    />
+  );
+  const phoneLabel = (
+    <FormattedMessage
+      id="EditPersonalInfoPage.phoneLabel"
+      defaultMessage="Phone number"
+    />
+  );
+  const editBtnLabel = (
+    <FormattedMessage
+      id="EditPersonalInfoPage.editBtnLabel"
+      defaultMessage="Edit"
+    />
+  );
+  const saveBtnLabel = (
+    <FormattedMessage
+      id="EditPersonalInfoPage.saveBtnLabel"
+      defaultMessage="Save changes"
+    />
+  );
+  const cancelBtnLabel = (
+    <FormattedMessage
+      id="EditPersonalInfoPage.cancelBtnLabel"
+      defaultMessage="Cancel"
+    />
+  );
   const params = useParams();
   const dispatch = useDispatch();
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
@@ -36,11 +85,13 @@ const EditPersonalInfoPage = () => {
     phone: '',
   });
 
+ //Function to format Date object into DD/MM/YYYY
   const dateToDDMMYYYY = (date: Date | null) =>
     date
       ? `${date.getDate()}/${date.getUTCMonth() + 1}/${date.getFullYear()}`
       : '';
 
+  //Function to format Date object into YYYY-MM-DD
   const dateToYYYYMMDD = (date: Date | null) =>
     date ? date.toISOString().split('T')[0] : '';
 
@@ -119,17 +170,19 @@ const EditPersonalInfoPage = () => {
   return (
     <OneToFivePage>
       <Container className={`w-75 p-5 mt-5 min-vh-100 bg-white`}>
+        {/* Title and subtitle */}
         <Row>
-          <h1>Personal Information</h1>
+          <h1>{pageTitle}</h1>
           <h4 className="text-muted" style={{}}>
-            Provide information to protect your account
+            {pageSubTitle}
           </h4>
         </Row>
+        {/* Form */}
         <Row className={`mt-5 d-flex`}>
           <Form className={`w-50 mx-auto`}>
             <Form.Group as={Row} className="mb-3" controlId="email">
               <Form.Label className={`fw-bolder`} column sm={5}>
-                Email
+                {emailLabel}
               </Form.Label>
               <Col sm={7}>
                 {isEditMode ? (
@@ -148,7 +201,7 @@ const EditPersonalInfoPage = () => {
 
             <Form.Group as={Row} className="mb-3" controlId="dob">
               <Form.Label className={`fw-bolder`} column sm={5}>
-                Birthday
+                {dobLabel}
               </Form.Label>
               <Col sm={7}>
                 {isEditMode ? (
@@ -168,7 +221,7 @@ const EditPersonalInfoPage = () => {
 
             <Form.Group as={Row} className="" controlId="phone">
               <Form.Label className={`fw-bolder`} column sm={5}>
-                Phone number
+                {phoneLabel}
               </Form.Label>
               <Col sm={7}>
                 {isEditMode ? (
@@ -185,6 +238,7 @@ const EditPersonalInfoPage = () => {
               </Col>
             </Form.Group>
             {isEditMode ? (
+              // Render Save and Cancel
               <div>
                 <Form.Group as={Row} className="mt-3">
                   <Col sm={{ span: 2, offset: 5 }}>
@@ -192,7 +246,7 @@ const EditPersonalInfoPage = () => {
                       className={`d-flex align-items-center text-nowrap`}
                       onClick={handleSaveChanges}
                     >
-                      Save changes
+                      {saveBtnLabel}
                     </Button>
                   </Col>
                 </Form.Group>
@@ -203,12 +257,13 @@ const EditPersonalInfoPage = () => {
                       onClick={handleCancelEdit}
                       variant="secondary"
                     >
-                      Cancel
+                      {cancelBtnLabel}
                     </Button>
                   </Col>
                 </Form.Group>
               </div>
             ) : (
+              //Render Edit button
               <Form.Group as={Row} className="mt-3">
                 <Col sm={{ span: 1, offset: 5 }}>
                   <Button
@@ -221,7 +276,7 @@ const EditPersonalInfoPage = () => {
                     ) : (
                       <>
                         <BsPencil className="me-1" />
-                        <span className={`text-nowrap`}>Edit</span>
+                        <span className={`text-nowrap`}>{editBtnLabel}</span>
                       </>
                     )}
                   </Button>
