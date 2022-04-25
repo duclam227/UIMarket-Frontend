@@ -26,8 +26,8 @@ const QuestionList: FC<Props> = (props) => {
     )
   }
 
-  const handleClickTag = (id: string) => {
-    navigate(`/questions/tag/${id}`);
+  const handleClickTag = (tagName: string) => {
+    navigate(`/questions/tag/${tagName}`);
   }
 
   const renderTags = (tags: Array<any>) => {
@@ -42,7 +42,7 @@ const QuestionList: FC<Props> = (props) => {
       }
       displayTag.push(
         (<>
-          <div onClick={() => handleClickTag(tags[i]._id)} key={tags[i].tagName} className={style.tag}>{tags[i].tagName}</div>
+          <div onClick={() => handleClickTag(tags[i].tagName)} key={tags[i].tagName} className={style.tag}>{tags[i].tagName}</div>
         </>)
       )
     }

@@ -78,6 +78,7 @@
 	background-color: var(--blue-100);
 
 	border-radius: 4px;
+	cursor: pointer;
 }
 
 .authorName {
