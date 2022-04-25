@@ -1,3 +1,6 @@
+.pageContainer {
+  min-height: 75vh;
+}
 .avatarWrapper {
   height: 9em;
   width: 9em;

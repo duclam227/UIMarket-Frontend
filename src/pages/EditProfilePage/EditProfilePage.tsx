@@ -145,7 +145,7 @@ const EditProfilePage = () => {
   };
   return (
     <OneToFivePage>
-      <Container className={`w-75 p-5 mt-5 min-vh-100 bg-white`}>
+      <Container className={`w-75 p-5 mt-5 bg-white ${style.pageContainer}`}>
         {/* Page title */}
 
         <Row>
