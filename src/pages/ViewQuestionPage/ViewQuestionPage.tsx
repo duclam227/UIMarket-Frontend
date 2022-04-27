@@ -46,13 +46,8 @@ const ViewQuestionPage = () => {
 
     questionAPI.getQuestionById(questionId)
       .then((res: any) => {
-        setQuestion({ ...res._doc });
+        setQuestion({ ...res.question });
         setIsLoading(false);
-
-        getAnswers()
-          .then((res) => {
-
-          })
       })
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
