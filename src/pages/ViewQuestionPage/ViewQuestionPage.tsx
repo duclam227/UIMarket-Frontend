@@ -48,6 +48,8 @@ const ViewQuestionPage = () => {
       .then((res: any) => {
         setQuestion({ ...res.question });
         setIsLoading(false);
+
+        getAnswers();
       })
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
