@@ -1,37 +1,37 @@
 export interface question {
-  title: string;
-  body: string;
-  tags: string[];
-  bounty: number;
-  question: string;
+	title: string;
+	body: string;
+	tags: string[];
+	bounty: number;
+	question: string;
 }
 
 export interface navigatorTabItem {
-  path: string;
-  label: string;
+	path: string;
+	label: string;
 }
 
 export interface authCredentials {
-  customerEmail: string;
-  customerPassword: string;
-  customerName?: string;
+	customerEmail: string;
+	customerPassword: string;
+	customerName?: string;
 }
 
 export interface PaginatorProps {
-  totalNumberOfPages: number;
-  currentPage: number;
-  handleClickGoToPage: Function;
+	totalNumberOfPages: number;
+	currentPage: number;
+	handleClickGoToPage: Function;
 }
 
 export interface voteStatus {
-  upvote: boolean;
-  downvote: boolean;
+	upvote: boolean;
+	downvote: boolean;
 }
 
 export interface PaginatorProps {
-  totalNumberOfPages: number;
-  currentPage: number;
-  handleClickGoToPage: Function;
+	totalNumberOfPages: number;
+	currentPage: number;
+	handleClickGoToPage: Function;
 }
 
 export interface customer {
@@ -52,12 +52,8 @@ export interface customer {
 	createdAt: Date;
 	updatedAt: Date;
 	shopId: string;
-}
-
-  refreshtoken: string;
-  shopId: null;
-  updatedAt: Date;
-  _id: string;
+	refreshtoken: string;
+	customerAvatar: string;
 }
 export interface product {
 	_id?: string;
@@ -69,6 +65,6 @@ export interface product {
 }
 
 export interface voteStatus {
-  upvote: boolean;
-  downvote: boolean;
+	upvote: boolean;
+	downvote: boolean;
 }
