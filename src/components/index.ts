@@ -16,3 +16,4 @@ export { default as RequireUser } from './common/RequireUser/RequireUser';
 export { default as ThreeDotMenu } from './common/ThreeDotMenu/ThreeDotMenu';
 export { default as SideNav } from './common/SideNav/SideNav';
 export { default as OneToFivePage } from './common/OneToFivePage/OneToFivePage';
+export { default as FormInput } from './common/FormInput/FormInput';
