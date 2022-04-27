@@ -156,16 +156,16 @@ const EditQuestionPage: FC<Props> = (props) => {
   useEffect(() => {
     questionAPI.getQuestionById(id)
       .then((res: any) => {
-        const { _doc } = res;
+        const { question } = res;
         const questionFromAPI: question = {
-          title: _doc.questionTitle,
+          title: question.questionTitle,
           body: '',
-          tags: [..._doc.questionTag],
-          bounty: _doc.questionBounty === -1 ? 0 : _doc.questionBounty,
+          tags: [...question.questionTag],
+          bounty: question.questionBounty === -1 ? 0 : question.questionBounty,
           question: ''
         }
         setQuestion(questionFromAPI);
-        setBody(_doc.questionContent);
+        setBody(question.questionContent);
       })
       .catch(error => {
         console.log(error);
