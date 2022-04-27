@@ -1,7 +1,10 @@
 import { ChangeEvent, useRef, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,9 +12,10 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import Alert from 'react-bootstrap/Alert';
 
 import { logInWithJWT } from '../../redux/index';
-import { OneToFivePage } from '../../components';
+import { FormInput, OneToFivePage } from '../../components';
 import profileAPI from '../../api/profile';
 import style from './EditProfilePage.module.css';
 import s3API from '../../api/amazonS3';
@@ -59,15 +63,34 @@ const EditProfilePage = () => {
     />
   );
 
+  const schema = Joi.object({
+    name: Joi.string().max(20).required().label('Name'),
+    bio: Joi.string().max(100).label('Bio'),
+  });
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
   const imageInput = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [profileInfo, setProfileInfo] = useState<ProfileInfo>({
-    name: '',
-    bio: '',
+  // const [profileInfo, setProfileInfo] = useState<ProfileInfo>({
+  //   name: '',
+  //   bio: '',
+  // });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty, isValid },
+    reset,
+    control,
+  } = useForm<ProfileInfo>({
+    resolver: joiResolver(schema),
+    mode: 'onChange',
+    defaultValues: {
+      name: '',
+      bio: '',
+    },
   });
   const [avatarUrl, setAvatarUrl] = useState('');
 
@@ -82,7 +105,8 @@ const EditProfilePage = () => {
         const { user } = res;
         console.log(user);
         setAvatarUrl(user.customerAvatar);
-        setProfileInfo({ name: user.customerName, bio: user.customerBio });
+        // setProfileInfo({ name: user.customerName, bio: user.customerBio });
+        reset({ name: user.customerName, bio: user.customerBio });
       } catch (error) {
         console.log('Get user profile error: ', error);
       }
@@ -97,15 +121,16 @@ const EditProfilePage = () => {
     }
   };
 
-  const handleChange = ({ target: input }: ChangeEvent<HTMLInputElement>) => {
-    setProfileInfo({
-      ...profileInfo,
-      [input.id]: input.value,
-    });
-  };
-  const handleSubmit = async () => {
+  // const handleChange = ({ target: input }: ChangeEvent<HTMLInputElement>) => {
+  //   setProfileInfo({
+  //     ...profileInfo,
+  //     [input.id]: input.value,
+  //   });
+  // };
+
+  const handleSave: SubmitHandler<ProfileInfo> = async data => {
     try {
-      await profileAPI.updateUserProfile(profileInfo);
+      await profileAPI.updateUserProfile(data);
       const { id } = params;
       if (id) navigate(`/user/${id}/activity`);
       else navigate(-1);
@@ -158,26 +183,27 @@ const EditProfilePage = () => {
         <Row className={`mt-5`}>
           {/* Edit Profile */}
           <Col className={`order-1`}>
-            <Form>
-              <Form.Group className="mb-3" controlId="name">
-                <Form.Label>{nameFormInputLabel}</Form.Label>
-                <Form.Control
-                  type="text"
-                  defaultValue={profileInfo.name}
-                  onChange={e => handleChange(e as any)}
-                />
-              </Form.Group>
+            <Form onSubmit={handleSubmit(handleSave)}>
+              <FormInput
+                label="Name"
+                name="name"
+                control={control}
+                className={`mb-3`}
+              />
+
               <Form.Group className="mb-3" controlId="bio">
                 <Form.Label>{bioFormInputLabel}</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  defaultValue={profileInfo.bio}
-                  onChange={e => handleChange(e as any)}
-                />
+                <Form.Control as="textarea" rows={3} {...register('bio')} />
+                {errors.bio && (
+                  <Alert variant="danger" className="mt-2">
+                    {errors.bio.message}
+                  </Alert>
+                )}
               </Form.Group>
+              <Button type="submit" disabled={!isDirty || !isValid}>
+                {saveBtnLabel}
+              </Button>
             </Form>
-            <Button onClick={handleSubmit}>{saveBtnLabel}</Button>
           </Col>
           {/* Edit avatar */}
           <Col
