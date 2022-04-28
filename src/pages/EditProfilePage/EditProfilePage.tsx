@@ -1,10 +1,10 @@
-import { ChangeEvent, useRef, useEffect, useState } from 'react';
+import { ChangeEvent, useRef, useEffect, useState, FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -25,8 +25,11 @@ export interface UserProfile {
   name: string | undefined;
   bio: string | undefined;
 }
+interface EditProfilePageProps {
+  intl: IntlShape;
+}
 
-const EditProfilePage = () => {
+const EditProfilePage: FC<EditProfilePageProps> = ({ intl }) => {
   const pageTitle = (
     <FormattedMessage
       id="EditProfilePage.pageTitle"
@@ -39,12 +42,16 @@ const EditProfilePage = () => {
       defaultMessage="Manage how others see your profile"
     />
   );
-  const nameFormInputLabel = (
-    <FormattedMessage
-      id="EditProfilePage.nameFormInputLabel"
-      defaultMessage="Name"
-    />
-  );
+  // const nameFormInputLabel = (
+  //   <FormattedMessage
+  //     id="EditProfilePage.nameFormInputLabel"
+  //     defaultMessage="Name"
+  //   />
+  // );
+  const nameFormInputLabel = intl.formatMessage({
+    id: 'EditProfilePage.nameFormInputLabel',
+    defaultMessage: 'Name',
+  });
   const bioFormInputLabel = (
     <FormattedMessage
       id="EditProfilePage.bioFormInputLabel"
@@ -99,7 +106,6 @@ const EditProfilePage = () => {
       try {
         const res: any = await profileAPI.getUserProfileInfoById(id);
         const { user } = res;
-        console.log(user);
         setAvatarUrl(user.customerAvatar);
         reset({ name: user.customerName, bio: user.customerBio });
       } catch (error) {
@@ -172,7 +178,7 @@ const EditProfilePage = () => {
           <Col className={`order-1`}>
             <Form onSubmit={handleSubmit(handleSave)}>
               <FormInput
-                label="Name"
+                label={nameFormInputLabel}
                 name="name"
                 control={control}
                 className={`mb-3`}
@@ -237,4 +243,4 @@ const EditProfilePage = () => {
   );
 };
 
-export default EditProfilePage;
+export default injectIntl(EditProfilePage);

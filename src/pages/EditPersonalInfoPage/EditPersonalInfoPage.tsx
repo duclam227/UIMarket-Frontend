@@ -139,7 +139,9 @@ const EditPersonalInfoPage = () => {
         reset({
           email: user.customerEmail,
           dob: date,
-          phone: user.customerPhone,
+          phone: user.customerPhone
+            ? user.customerPhone
+            : 'No phone number added yet',
         });
       } catch (error) {
         console.log('Get user info error: ', error);
