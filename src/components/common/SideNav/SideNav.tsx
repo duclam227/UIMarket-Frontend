@@ -101,12 +101,10 @@ const SideNav: FC<Props> = props => {
             {myProfileNavGroupLabel}
           </span>
         </div>
-        <Link to={`/user/${currentUser?._id}/edit/profile`}>
+        <Link to={`/user/${currentUser?._id}/edit`}>
           <li className={style.navLinkItem}>{editProfileNavLinkLabel}</li>
         </Link>
-        <Link to={`/user/${currentUser?._id}/edit/info`}>
-          <li className={style.navLinkItem}>{personalInfoNavLinkLabel}</li>
-        </Link>
+        <li className={style.navLinkItem}>{personalInfoNavLinkLabel}</li>
       </ul>
 
       {/* Payment nav group */}

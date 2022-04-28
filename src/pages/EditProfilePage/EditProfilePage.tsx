@@ -1,10 +1,10 @@
 import { ChangeEvent, useRef, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import { useParams, useNavigate } from 'react-router-dom';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { FormattedMessage } from 'react-intl';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -17,10 +17,11 @@ import Alert from 'react-bootstrap/Alert';
 import { logInWithJWT } from '../../redux/index';
 import { FormInput, OneToFivePage } from '../../components';
 import profileAPI from '../../api/profile';
-import style from './EditProfilePage.module.css';
 import s3API from '../../api/amazonS3';
 import { genericAvatarUrl } from '../../app/util/const';
-export interface ProfileInfo {
+import style from './EditProfilePage.module.css';
+import EditPersonalInfoPage from '../EditPersonalInfoPage/EditPersonalInfoPage';
+export interface UserProfile {
   name: string | undefined;
   bio: string | undefined;
 }
@@ -62,10 +63,9 @@ const EditProfilePage = () => {
       defaultMessage="Change Avatar"
     />
   );
-
   const schema = Joi.object({
-    name: Joi.string().max(20).required().label('Name'),
-    bio: Joi.string().max(100).label('Bio'),
+    name: Joi.string().max(20).trim().required().label('Name'),
+    bio: Joi.string().max(100).trim().label('Bio'),
   });
 
   const dispatch = useDispatch();
@@ -73,26 +73,22 @@ const EditProfilePage = () => {
   const params = useParams();
   const imageInput = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [avatarUrl, setAvatarUrl] = useState('');
   const [uploadProgress, setUploadProgress] = useState(0);
-  // const [profileInfo, setProfileInfo] = useState<ProfileInfo>({
-  //   name: '',
-  //   bio: '',
-  // });
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
     reset,
     control,
-  } = useForm<ProfileInfo>({
+  } = useForm<UserProfile>({
     resolver: joiResolver(schema),
-    mode: 'onChange',
+    mode: 'onTouched',
     defaultValues: {
       name: '',
       bio: '',
     },
   });
-  const [avatarUrl, setAvatarUrl] = useState('');
 
   useEffect(() => {
     const { id } = params;
@@ -105,7 +101,6 @@ const EditProfilePage = () => {
         const { user } = res;
         console.log(user);
         setAvatarUrl(user.customerAvatar);
-        // setProfileInfo({ name: user.customerName, bio: user.customerBio });
         reset({ name: user.customerName, bio: user.customerBio });
       } catch (error) {
         console.log('Get user profile error: ', error);
@@ -121,14 +116,7 @@ const EditProfilePage = () => {
     }
   };
 
-  // const handleChange = ({ target: input }: ChangeEvent<HTMLInputElement>) => {
-  //   setProfileInfo({
-  //     ...profileInfo,
-  //     [input.id]: input.value,
-  //   });
-  // };
-
-  const handleSave: SubmitHandler<ProfileInfo> = async data => {
+  const handleSave: SubmitHandler<UserProfile> = async data => {
     try {
       await profileAPI.updateUserProfile(data);
       const { id } = params;
@@ -171,8 +159,7 @@ const EditProfilePage = () => {
   return (
     <OneToFivePage>
       <Container className={`w-75 p-5 mt-5 bg-white ${style.pageContainer}`}>
-        {/* Page title */}
-
+        {/*Edit Profile title */}
         <Row>
           <h1>{pageTitle}</h1>
           <h4 className="text-muted" style={{}}>
@@ -180,8 +167,8 @@ const EditProfilePage = () => {
           </h4>
         </Row>
 
-        <Row className={`mt-5`}>
-          {/* Edit Profile */}
+        {/* Edit Profile */}
+        <Row className={`mt-2 mb-5`}>
           <Col className={`order-1`}>
             <Form onSubmit={handleSubmit(handleSave)}>
               <FormInput
@@ -242,6 +229,9 @@ const EditProfilePage = () => {
             </Form>
           </Col>
         </Row>
+
+        {/* Edit Personal Info */}
+        <EditPersonalInfoPage />
       </Container>
     </OneToFivePage>
   );
