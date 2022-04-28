@@ -3,6 +3,7 @@ import { Alert, Button, Form } from "react-bootstrap";
 import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { GoogleLogin } from 'react-google-login';
 import { authCredentials } from "../../app/util/interfaces";
 import { logIn } from "../../redux";
 import { State } from "../../redux/store";
@@ -30,10 +31,9 @@ const LoginForm: FC<loginFormProps> = (props) => {
   //button labels
   const submitMessage = <FormattedMessage
     id="LoginForm.submit" defaultMessage="Sign in" />
-  const continueWithGoogleLabel = <FormattedMessage
-    id="LoginForm.continueWithGoogleLabel" defaultMessage="Continue with Google" />
-  const continueWithFacebookLabel = <FormattedMessage
-    id="LoginForm.continueWithFacebookLabel" defaultMessage="Continue with Facebook" />
+  const continueWithGoogleLabel = intl.formatMessage({
+    id: "LoginForm.continueWithGoogleLabel"
+  });
 
   //email
   const loginFormEmailLabel = <FormattedMessage
@@ -67,13 +67,20 @@ const LoginForm: FC<loginFormProps> = (props) => {
     dispatch(logIn(credentials));
   }
 
+  const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
   return (
     <>
       <div className={style.loginFormContainer}>
         <h2 className={style.title}>{title}</h2>
         <div className={style.otherIdpButtonRow}>
-          <Button>{continueWithGoogleLabel}</Button>
-          <Button>{continueWithFacebookLabel}</Button>
+          <GoogleLogin
+            clientId={CLIENT_ID!}
+            buttonText={continueWithGoogleLabel}
+            onSuccess={(res: any) => console.log(res)}
+            onFailure={(res: any) => console.log(res)}
+            cookiePolicy={'single_host_origin'}
+          />
         </div>
         <div className={style.divider}>
           <span>{dividerMesage}</span>
