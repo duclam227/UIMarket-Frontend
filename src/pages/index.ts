@@ -4,8 +4,11 @@ export { default as AboutUsPage } from './AboutUsPage/About';
 export { default as AddAProductPage } from './AddAProductPage/AddAProductPage';
 export { default as AskAQuestionPage } from './AskAQuestionPage/AskAQuestionPage';
 export { default as AuthenticationPage } from './AuthenticationPage/AuthenticationPage';
-export { default as BountiedQuestionListsPage } from './QuestionsListPage/BountiedQuestionListsPage';
+export {
+	default as BountiedQuestionListsPage,
+} from './QuestionsListPage/BountiedQuestionListsPage';
 export { default as ContactUsPage } from './ContactUsPage/Contact';
+export { default as CreateAShopPage } from './CreateAShopPage/CreateAShopPage';
 export { default as EditQuestionPage } from './EditQuestionPage/EditQuestionPage';
 export { default as ManageProductsPage } from './ManageProductsPage/ManageProductsPage';
 export { default as NotFoundPage } from './NotFoundPage/NotFound';
