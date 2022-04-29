@@ -186,7 +186,12 @@ const EditProfilePage: FC<EditProfilePageProps> = ({ intl }) => {
 
               <Form.Group className="mb-3" controlId="bio">
                 <Form.Label>{bioFormInputLabel}</Form.Label>
-                <Form.Control as="textarea" rows={3} {...register('bio')} />
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  {...register('bio')}
+                  isInvalid={errors.bio ? true : false}
+                />
                 {errors.bio && (
                   <Alert variant="danger" className="mt-2">
                     {errors.bio.message}

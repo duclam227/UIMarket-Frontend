@@ -159,7 +159,7 @@ const EditPersonalInfoPage = () => {
 
   const handleEnableEditMode = () => {
     setIsEditMode(true);
-    // setEditableInfo({ ...readOnlyInfo });
+    reset({ phone: '' });
   };
 
   const handleCancelEdit = () => {
