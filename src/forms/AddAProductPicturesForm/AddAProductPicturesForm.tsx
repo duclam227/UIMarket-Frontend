@@ -56,6 +56,7 @@ const AddAProductPicturesForm: React.FC<Props> = (props) => {
       <div className={style.formTitle}><FormattedMessage id='AddAProduct.TabImagesTitle' /></div>
 
       <ImageInput
+        multiple={true}
         images={images}
         handleUploadImage={(image: File) => uploadImage(image)}
         handleDeleteImage={(index: number) => deleteImage(index)}
