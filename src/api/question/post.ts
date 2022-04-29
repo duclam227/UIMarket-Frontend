@@ -1,11 +1,15 @@
 import axiosClient from '..';
-import { question } from '../../app/util/interfaces';
 import { getJwt } from '../../app/util/authHelpers';
 
 const API_ENDPOINT = '/api/v1/questions';
-
+export interface Question {
+  title: string;
+  body: string;
+  tags: string[];
+  bounty: number;
+}
 class Post {
-  add = (question: question) => {
+  add = (question: Question) => {
     const jwt = getJwt();
     const config = {
       headers: {
