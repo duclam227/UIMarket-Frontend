@@ -8,6 +8,7 @@ import noShopImage from '../../app/assets/error-nothing.png';
 import style from './ShopHomePage.module.css';
 import { FormattedMessage } from "react-intl";
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const ShopHomePage: React.FC = () => {
   const currentUser = useSelector((state: State) => state.auth.user);
@@ -34,9 +35,11 @@ const ShopHomePage: React.FC = () => {
           <h6>
             <FormattedMessage id='ShopHomePage.noShopSubtitle' />
           </h6>
-          <Button>
-            <FormattedMessage id='ShopHomePage.openShopButtonLabel' />
-          </Button>
+          <Link to='/create-shop'>
+            <Button>
+              <FormattedMessage id='ShopHomePage.openShopButtonLabel' />
+            </Button>
+          </Link>
         </div>
       </div>
     </OneToFivePage>
