@@ -37,14 +37,14 @@ const FormInput = <T extends FieldValues>(props: InputProps<T>) => {
   const { label, className, name, ...rest } = props;
   const {
     field,
-    fieldState: { invalid, error },
+    fieldState: { error },
   } = useController(props);
   return (
     <Form.Group className={className} controlId={name}>
       <Form.Label>{label}</Form.Label>
-      <Form.Control isInvalid={invalid} {...field} {...rest} />
+      <Form.Control isInvalid={error ? true : false} {...field} {...rest} />
       {error?.message && (
-        <Alert variant="danger" className="mt-1">
+        <Alert variant="danger" className="mt-2">
           {error.message}
         </Alert>
       )}
