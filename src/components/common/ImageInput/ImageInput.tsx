@@ -7,12 +7,14 @@ import { FormattedMessage } from 'react-intl';
 import style from './ImageInput.module.css';
 
 interface Props {
+  multiple: boolean;
   images: Array<string>;
   handleUploadImage: Function;
   handleDeleteImage: Function;
 }
 
 const ImageInput: React.FC<Props> = (props) => {
+  const { multiple } = props;
   const [images, setImages] = useState<Array<any>>(props.images || []);
   const [prevImages, setPrevImages] = useState<Array<any>>(props.images || []);
   const [previewImages, setPreviewImages] = useState<Array<any>>(props.images || []);
@@ -63,6 +65,7 @@ const ImageInput: React.FC<Props> = (props) => {
           <input id='image' name='image' type="file"
             onChange={(e) => handleChange(e)}
             accept='image/*'
+            multiple={multiple}
           />
         </label>
         {error && <div>{error}</div>}
