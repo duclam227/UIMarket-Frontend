@@ -1,76 +1,76 @@
 @import '../../app/util/colors.css';
 
 .loginFormContainer {
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-	margin-top: 60px;
+  margin-top: 60px;
 
-	width: 50%;
+  width: 50%;
 }
 
 .title {
-	margin: 40px 0 25px 0;
-	font-weight: 600;
+  margin: 40px 0 25px 0;
+  font-weight: 600;
 }
 
 .label {
-	font-weight: 600;
+  font-weight: 400;
 }
 
 .otherIdpButtonRow {
-	display: flex;
-	flex-direction: row;
-	gap: 15px;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
 }
 
 .divider {
-	display: flex;
-	justify-content: center;
-	position: relative;
+  display: flex;
+  justify-content: center;
+  position: relative;
 
-	margin: 10px 0;
-	color: var(--gray-600);
+  margin: 10px 0;
+  color: var(--gray-600);
 }
 
 .divider::before {
-	content: '';
-	width: 45%;
-	height: 0.5px;
-	position: absolute;
-	left: 0px;
-	top: calc(50% - 0.5px/2);
-	background-color: var(--gray-500);
+  content: '';
+  width: 45%;
+  height: 0.5px;
+  position: absolute;
+  left: 0px;
+  top: calc(50% - 0.5px / 2);
+  background-color: var(--gray-500);
 }
 
 .divider::after {
-	content: '';
-	width: 45%;
-	height: 0.5px;
-	position: absolute;
-	right: 0px;
-	top: calc(50% - 0.5px/2);
-	background-color: var(--gray-500);
+  content: '';
+  width: 45%;
+  height: 0.5px;
+  position: absolute;
+  right: 0px;
+  top: calc(50% - 0.5px / 2);
+  background-color: var(--gray-500);
 }
 
 .forgetPasswordText {
-	display: flex;
-	justify-content: end;
-	text-decoration: none;
+  display: flex;
+  justify-content: end;
+  text-decoration: none;
 }
 
 .submitButton {
-	margin-top: 40px;
+  margin-top: 40px;
 }
 
 .bottomWrapper {
-	display: flex;
-	flex-direction: row;
-	gap: 10px;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
 
-	margin-top: 20px;
+  margin-top: 20px;
 }
 
 .bottomWrapper a {
-	text-decoration: none;
+  text-decoration: none;
 }

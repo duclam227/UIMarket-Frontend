@@ -2,6 +2,9 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { useDispatch } from 'react-redux';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,12 +12,14 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Spinner from 'react-bootstrap/Spinner';
+import Alert from 'react-bootstrap/Alert';
 
 import { BsPencil } from 'react-icons/bs';
 
 import { logInWithJWT } from '../../redux/index';
 import { OneToFivePage } from '../../components';
 import profileAPI from '../../api/profile';
+import style from './EditPersonalInfoPage.module.css';
 
 export interface UserInfo {
   email: string;
@@ -70,30 +75,51 @@ const EditPersonalInfoPage = () => {
       defaultMessage="Cancel"
     />
   );
-  const params = useParams();
-  const dispatch = useDispatch();
-  const [isEditMode, setIsEditMode] = useState<boolean>(false);
-  const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
-  const [readOnlyInfo, setReadOnlyInfo] = useState<UserInfo>({
-    email: '',
-    dob: new Date(),
-    phone: '',
-  });
-  const [editableInfo, setEditableInfo] = useState<UserInfo>({
-    email: '',
-    dob: new Date(),
-    phone: '',
-  });
-
   //Function to format Date object into DD/MM/YYYY
   const dateToDDMMYYYY = (date: Date | null) =>
     date
       ? `${date.getDate()}/${date.getUTCMonth() + 1}/${date.getFullYear()}`
       : '';
-
   //Function to format Date object into YYYY-MM-DD
   const dateToYYYYMMDD = (date: Date | null) =>
     date ? date.toISOString().split('T')[0] : '';
+
+  const params = useParams();
+  const dispatch = useDispatch();
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
+  const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
+  const [originalInfo, setOriginalInfo] = useState<UserInfo>({
+    email: '',
+    dob: new Date(),
+    phone: '',
+  });
+  const schema = Joi.object({
+    email: Joi.string()
+      .email({ tlds: { allow: false } })
+      //tlds: Top-Level Domain Something, set this to false because it said that built-in TLD is disabled, idk :\
+      .required()
+      .label('Email'),
+    dob: Joi.date().iso().label('Birthday'),
+    phone: Joi.string()
+      .max(10)
+      .pattern(/^[0-9]+$/, { name: 'phone numbers' }) // phone number pattern
+      .label('Phone number'),
+  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty, isValid },
+    reset,
+    control,
+  } = useForm<UserInfo>({
+    resolver: joiResolver(schema),
+    mode: 'onTouched',
+    defaultValues: {
+      email: '',
+      dob: new Date(),
+      phone: '',
+    },
+  });
 
   useEffect(() => {
     const { id } = params;
@@ -105,11 +131,17 @@ const EditPersonalInfoPage = () => {
         const res: any = await profileAPI.getUserProfileInfoById(id);
         const { user } = res;
         const date = new Date(user.customerDOB);
-        console.log(dateToDDMMYYYY(date));
-        setReadOnlyInfo({
+        setOriginalInfo({
           email: user.customerEmail,
           dob: user.customerDOB ? date : null,
           phone: user.customerPhone ? user.customerPhone : '',
+        });
+        reset({
+          email: user.customerEmail,
+          dob: date,
+          phone: user.customerPhone
+            ? user.customerPhone
+            : 'No phone number added yet',
         });
       } catch (error) {
         console.log('Get user info error: ', error);
@@ -127,169 +159,222 @@ const EditPersonalInfoPage = () => {
 
   const handleEnableEditMode = () => {
     setIsEditMode(true);
-    setEditableInfo({ ...readOnlyInfo });
+    reset({ phone: '' });
   };
 
   const handleCancelEdit = () => {
+    reset(originalInfo);
     setIsEditMode(false);
   };
 
-  const handleSaveChanges = async () => {
-    const previousInfo = { ...readOnlyInfo };
+  const handleSaveChanges: SubmitHandler<UserInfo> = async data => {
+    setIsEditMode(false);
     try {
       setIsSavingChanges(true);
-      setIsEditMode(false);
-      setReadOnlyInfo({ ...editableInfo });
-      await profileAPI.updateUserInfo(editableInfo);
+      await profileAPI.updateUserInfo(data);
       setIsSavingChanges(false);
       syncChangesToReduxStore();
+      setOriginalInfo({ ...data });
     } catch (e) {
-      setReadOnlyInfo({ ...previousInfo });
+      reset({ ...originalInfo });
       console.log('Update user info error: ', e);
       setIsSavingChanges(false);
     }
   };
 
-  const handleChange = ({ target: input }: ChangeEvent<HTMLInputElement>) => {
-    setEditableInfo({
-      ...editableInfo,
-      [input.id]: input.value,
-    });
-  };
-
-  const handleDateChange = ({
-    target: input,
-  }: ChangeEvent<HTMLInputElement>) => {
-    const date = new Date(input.value);
-    setEditableInfo({
-      ...editableInfo,
-      dob: date,
-    });
-  };
-
   return (
-    <OneToFivePage>
-      <Container
-        className={`w-75 p-5 mt-5 bg-white`}
-        style={{ minHeight: '75vh' }}
-      >
-        {/* Title and subtitle */}
-        <Row>
-          <h1>{pageTitle}</h1>
-          <h4 className="text-muted" style={{}}>
-            {pageSubTitle}
-          </h4>
-        </Row>
-        {/* Form */}
-        <Row className={`mt-5 d-flex`}>
-          <Form className={`w-50 mx-auto`}>
-            <Form.Group as={Row} className="mb-3" controlId="email">
-              <Form.Label className={`fw-bolder`} column sm={5}>
+    <>
+      {/* Title and subtitle */}
+      <Row className={``}>
+        <h1>{pageTitle}</h1>
+        <h4 className="text-muted" style={{}}>
+          {pageSubTitle}
+        </h4>
+      </Row>
+      {/* Form */}
+      <Row className={`mt-2`}>
+        <Form
+          className={`mx-auto p-0`}
+          onSubmit={handleSubmit(handleSaveChanges)}
+        >
+          <div className={`border`}>
+            <Form.Group
+              as={Row}
+              className={`m-0 ${style.infoItem} py-1`}
+              controlId="email"
+            >
+              <Form.Label
+                className={`fw-bolder pe-0 d-flex align-items-center`}
+                column
+                sm={12}
+                md={3}
+                lg={2}
+              >
                 {emailLabel}
               </Form.Label>
-              <Col sm={7}>
-                {isEditMode ? (
-                  <Form.Control
-                    value={editableInfo.email}
-                    type="email"
-                    onChange={handleChange}
-                  />
-                ) : (
-                  <Form.Label className={``} column>
-                    {readOnlyInfo.email}
-                  </Form.Label>
-                )}
+              <Col sm={12} md={4} lg={5} className="d-flex align-items-center">
+                <Form.Control
+                  type="email"
+                  plaintext={!isEditMode}
+                  readOnly={!isEditMode}
+                  {...register('email')}
+                />
               </Col>
+              {errors.email && (
+                <Col sm={12} md={5} lg={5}>
+                  <Alert variant="danger" className="my-1">
+                    {errors.email.message}
+                  </Alert>
+                </Col>
+              )}
+              {!isEditMode && (
+                <Form.Label
+                  className={`${style.textUnderlineHover} text-primary d-md-flex justify-content-end text-nowrap`}
+                  column
+                  sm={12}
+                  md={{ span: 2, offset: 3 }}
+                  lg={{ span: 2, offset: 3 }}
+                  onClick={handleEnableEditMode}
+                >
+                  {editBtnLabel}
+                </Form.Label>
+              )}
             </Form.Group>
 
-            <Form.Group as={Row} className="mb-3" controlId="dob">
-              <Form.Label className={`fw-bolder`} column sm={5}>
+            <Form.Group
+              as={Row}
+              className={`m-0 ${style.infoItem} py-1`}
+              controlId="dob"
+            >
+              <Form.Label
+                className={`fw-bolder pe-0 d-flex align-items-center`}
+                column
+                sm={12}
+                md={3}
+                lg={2}
+              >
                 {dobLabel}
               </Form.Label>
-              <Col sm={7}>
-                {isEditMode ? (
-                  <Form.Control
-                    value={dateToYYYYMMDD(editableInfo.dob)}
-                    type="date"
-                    onChange={handleDateChange}
-                  />
-                ) : (
-                  <Form.Label className={``} column>
-                    {dateToDDMMYYYY(readOnlyInfo.dob) ||
-                      'No birthday added yet'}
-                  </Form.Label>
-                )}
+              <Col sm={12} md={4} lg={5} className="d-flex align-items-center">
+                <Controller
+                  control={control}
+                  name="dob"
+                  render={({ field: { onChange, onBlur, value, ref } }) => (
+                    <Form.Control
+                      value={dateToYYYYMMDD(value)}
+                      type="date"
+                      onChange={e => onChange(new Date(e.target.value))}
+                      onBlur={onBlur}
+                      ref={ref}
+                      plaintext={!isEditMode}
+                      readOnly={!isEditMode}
+                    />
+                  )}
+                />
               </Col>
+              {errors.dob && (
+                <Col sm={12} md={5} lg={5}>
+                  <Alert variant="danger" className="my-1">
+                    {errors.dob.message}
+                  </Alert>
+                </Col>
+              )}
+              {!isEditMode && (
+                <Form.Label
+                  className={`${style.textUnderlineHover} text-primary d-md-flex justify-content-end text-nowrap`}
+                  column
+                  sm={12}
+                  md={{ span: 2, offset: 3 }}
+                  lg={{ span: 2, offset: 3 }}
+                  onClick={handleEnableEditMode}
+                >
+                  {editBtnLabel}
+                </Form.Label>
+              )}
             </Form.Group>
 
-            <Form.Group as={Row} className="" controlId="phone">
-              <Form.Label className={`fw-bolder`} column sm={5}>
+            <Form.Group
+              as={Row}
+              className={`m-0 ${style.infoItem} py-1`}
+              controlId="phone"
+            >
+              <Form.Label
+                className={`fw-bolder pe-0 d-flex align-items-center`}
+                column
+                sm={12}
+                md={3}
+                lg={2}
+              >
                 {phoneLabel}
               </Form.Label>
-              <Col sm={7}>
-                {isEditMode ? (
-                  <Form.Control
-                    value={editableInfo.phone}
-                    type="text"
-                    onChange={handleChange}
-                  />
-                ) : (
-                  <Form.Label className={``} column>
-                    {readOnlyInfo.phone || 'No phone number added yet'}
-                  </Form.Label>
-                )}
+              <Col sm={12} md={4} lg={5} className="d-flex align-items-center">
+                <Form.Control
+                  type="text"
+                  plaintext={!isEditMode}
+                  readOnly={!isEditMode}
+                  {...register('phone')}
+                />
               </Col>
+              {errors.phone && (
+                <Col sm={12} md={5} lg={5}>
+                  <Alert variant="danger" className="my-1">
+                    {errors.phone.message}
+                  </Alert>
+                </Col>
+              )}
+              {!isEditMode && (
+                <Form.Label
+                  className={`${style.textUnderlineHover} text-primary d-md-flex justify-content-end text-nowrap`}
+                  column
+                  sm={12}
+                  md={{ span: 2, offset: 3 }}
+                  lg={{ span: 2, offset: 3 }}
+                  onClick={handleEnableEditMode}
+                >
+                  {editBtnLabel}
+                </Form.Label>
+              )}
             </Form.Group>
-            {isEditMode ? (
-              // Render Save and Cancel
-              <div>
-                <Form.Group as={Row} className="mt-3">
-                  <Col sm={{ span: 2, offset: 5 }}>
-                    <Button
-                      className={`d-flex align-items-center text-nowrap`}
-                      onClick={handleSaveChanges}
-                    >
-                      {saveBtnLabel}
-                    </Button>
-                  </Col>
-                </Form.Group>
-                <Form.Group as={Row} className="mt-3">
-                  <Col sm={{ span: 1, offset: 5 }}>
-                    <Button
-                      className={`d-flex align-items-center text-nowrap`}
-                      onClick={handleCancelEdit}
-                      variant="secondary"
-                    >
-                      {cancelBtnLabel}
-                    </Button>
-                  </Col>
-                </Form.Group>
-              </div>
-            ) : (
-              //Render Edit button
+          </div>
+
+          {isEditMode && (
+            // Render Save and Cancel
+            <div>
               <Form.Group as={Row} className="mt-3">
-                <Col sm={{ span: 1, offset: 5 }}>
+                <Col
+                  sm={{ span: 2, offset: 5 }}
+                  md={{ span: 2, offset: 3 }}
+                  lg={{ span: 2, offset: 2 }}
+                >
                   <Button
-                    className={`d-flex align-items-center mx-auto`}
-                    onClick={handleEnableEditMode}
-                    disabled={isSavingChanges}
+                    className={`d-flex align-items-center text-nowrap`}
+                    type="submit"
+                    disabled={!isDirty || !isValid}
                   >
-                    {isSavingChanges ? (
-                      <Spinner animation="border" size="sm" />
-                    ) : (
-                      <>
-                        <BsPencil className="me-1" />
-                        <span className={`text-nowrap`}>{editBtnLabel}</span>
-                      </>
-                    )}
+                    {saveBtnLabel}
                   </Button>
                 </Col>
               </Form.Group>
-            )}
-          </Form>
-        </Row>
-      </Container>
-    </OneToFivePage>
+              <Form.Group as={Row} className="mt-3">
+                <Col
+                  sm={{ span: 2, offset: 5 }}
+                  md={{ span: 2, offset: 3 }}
+                  lg={{ span: 2, offset: 2 }}
+                >
+                  <Button
+                    className={`d-flex align-items-center text-nowrap`}
+                    onClick={handleCancelEdit}
+                    variant="secondary"
+                  >
+                    {cancelBtnLabel}
+                  </Button>
+                </Col>
+              </Form.Group>
+            </div>
+          )}
+        </Form>
+      </Row>
+    </>
   );
 };
 

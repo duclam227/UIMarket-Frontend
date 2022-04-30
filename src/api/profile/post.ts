@@ -1,5 +1,5 @@
 import axiosClient from '..';
-import { ProfileInfo } from '../../pages/EditProfilePage/EditProfilePage';
+import { UserProfile } from '../../pages/EditProfilePage/EditProfilePage';
 import { UserInfo } from '../../pages/EditPersonalInfoPage/EditPersonalInfoPage';
 import { getJwt } from '../../app/util/authHelpers';
 
@@ -7,7 +7,7 @@ const API_ENDPOINT = 'api/v1/profile/info';
 
 class Post {
   //I don't postfix with ById because you can only update your own profile so ById would be redundant
-  updateUserProfile = (profileInfo: ProfileInfo) => {
+  updateUserProfile = (profileInfo: UserProfile) => {
     const jwt = getJwt();
     const config = {
       headers: {
