@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
+import { useForm, SubmitHandler } from 'react-hook-form';
+import Joi from 'joi';
+import { joiResolver } from '@hookform/resolvers/joi';
 
+import { FormInput, ImageInput } from "../../components";
 import { logInWithJWT } from '../../redux/index';
-import shopAPI from "../../api/shop";
 import { setJwt } from "../../app/util/authHelpers";
+
+import shopAPI from "../../api/shop";
+import s3API from "../../api/amazonS3";
 
 import style from './CreateAShopForm.module.css';
 
@@ -19,12 +25,47 @@ const CreateAShopForm: React.FC<Props> = (props) => {
   } = props;
 
   const [shopInfo, setShopInfo] = useState<any>(null);
+  const [images, setImages] = useState<Array<string>>([]);
   const dispatch = useDispatch();
 
-  const shopNameLabel = <FormattedMessage id='CreateAShopForm.shopNameLabel' />
+  const uploadImage = (image: File) => {
+    s3API.getSignedUrl('images')
+      .then((res: any) => {
+        const signedUploadUrl: string = res.url;
+        s3API.uploadToS3Bucket(signedUploadUrl, image)
+          .then((res: any) => {
+            const imageUrl = signedUploadUrl.split('?')[0];
+            setImages([...images, imageUrl]);
+          })
+          .catch(error => {
+            throw error;
+          })
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
+
+  const deleteImage = (indexToDelete: number) => {
+    setImages(images.filter((img, index) => index !== indexToDelete));
+  }
+
+  const shopNameLabel = intl.formatMessage({ id: 'CreateAShopForm.shopNameLabel' });
   const shopNamePlaceholder = intl.formatMessage({
     id: 'CreateAShopForm.shopNamePlaceholder'
   })
+
+  const shopDescriptionLabel = intl.formatMessage({ id: 'CreateAShopForm.shopDescriptionLabel' });
+  const shopDescriptionPlaceholder = intl.formatMessage({
+    id: 'CreateAShopForm.shopDescriptionPlaceholder'
+  })
+
+  const shopEmailLabel = intl.formatMessage({ id: 'CreateAShopForm.shopEmailLabel' });
+  const shopEmailPlaceholder = intl.formatMessage({
+    id: 'CreateAShopForm.shopEmailPlaceholder'
+  })
+
+  const shopBannerLabel = intl.formatMessage({ id: 'CreateAShopForm.shopBannerLabel' });
 
   const updateShopInfo = (input: any) => {
     setShopInfo({
@@ -34,7 +75,11 @@ const CreateAShopForm: React.FC<Props> = (props) => {
   }
 
   const handleCreateShop = () => {
-    shopAPI.createShop(shopInfo)
+    const banner = images.length && images[0];
+    shopAPI.createShop({
+      ...shopInfo,
+      shopBanner: banner,
+    })
       .then((res: any) => {
         console.log(res);
         const { token }: { token: string } = res;
@@ -47,6 +92,30 @@ const CreateAShopForm: React.FC<Props> = (props) => {
       })
   }
 
+  const schema = Joi.object({
+    shopEmail: Joi.string()
+      .email({ tlds: { allow: false } }).required().label('Email'),
+    shopName: Joi.string().required().label('Name'),
+    shopDescription: Joi.string().required().label('Description'),
+    shopBanner: Joi.string().label('Banner'),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    control,
+    getFieldState,
+  } = useForm<any>({
+    resolver: joiResolver(schema),
+    mode: 'onTouched',
+    defaultValues: {
+      shopEmail: '',
+      shopName: '',
+      shopDescription: '',
+    },
+  });
+
   return (
     <Form
       name='CreateAShopForm'
@@ -57,33 +126,44 @@ const CreateAShopForm: React.FC<Props> = (props) => {
         })
       }}
     >
-      <Form.Group className="mb-3">
-        <Form.Label className={style.label}>{shopNameLabel}</Form.Label>
-        <Form.Control
-          id="shopName"
-          type="text"
-          placeholder={shopNamePlaceholder}
-          required={true}
-        />
-      </Form.Group>
 
-      <Form.Group className="mb-3">
-        <Form.Label className={style.label}>{shopNameLabel}</Form.Label>
-        <Form.Control
-          id="shopDescription"
-          type="textarea"
-          placeholder={shopNamePlaceholder}
-          required={true}
-        />
-      </Form.Group>
+      <FormInput
+        label={shopNameLabel}
+        placeholder={shopNamePlaceholder}
+        name="shopName"
+        control={control}
+        className={`mb-3`}
+        labelClassName={style.label}
+      />
 
-      <Form.Group className="mb-3">
-        <Form.Label className={style.label}>{shopNameLabel}</Form.Label>
-        <Form.Control
-          id="shopEmail"
-          type="email"
-          placeholder={shopNamePlaceholder}
-          required={true}
+      <FormInput
+        label={shopEmailLabel}
+        placeholder={shopEmailPlaceholder}
+        name="shopEmail"
+        control={control}
+        className={`mb-3`}
+        labelClassName={style.label}
+      />
+
+      <FormInput
+        label={shopDescriptionLabel}
+        placeholder={shopDescriptionPlaceholder}
+        name="shopDescription"
+        control={control}
+        className={`mb-3`}
+        labelClassName={style.label}
+        type="textarea"
+      />
+
+      <Form.Group>
+        <Form.Label className={style.label}>{shopBannerLabel}</Form.Label>
+        <br />
+        <Form.Text><FormattedMessage id='CreateAShopForm.shopBannerSubtext' /></Form.Text>
+        <ImageInput
+          images={images}
+          multiple={false}
+          handleUploadImage={(image: File) => uploadImage(image)}
+          handleDeleteImage={(index: number) => deleteImage(index)}
         />
       </Form.Group>
 
