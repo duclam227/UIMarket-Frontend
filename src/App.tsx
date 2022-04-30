@@ -58,8 +58,8 @@ function App() {
           element={<AuthenticationPage destination="signup" />}
         />
         <Route path="/create-shop" element={<CreateAShopPage />} />
-        <Route path="/user/:id/edit/profile" element={<EditProfilePage />} />
-        <Route path="/user/:id/edit/info" element={<EditPersonalInfoPage />} />
+        <Route path="/user/:id/edit" element={<EditProfilePage />} />
+        <Route path="/user/:id/*" element={<UserProfilePage />} />
         <Route path="/user/:id/products" element={<ManageProductsPage />} />
         <Route path="/user/:id/shop" element={<ShopHomePage />} />
         <Route path="/user/:id/*" element={<UserProfilePage />} />
