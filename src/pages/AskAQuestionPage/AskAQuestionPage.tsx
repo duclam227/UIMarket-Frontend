@@ -39,8 +39,8 @@ const AskAQuestionPage = ({ intl }: any) => {
     />
   );
   const questionTitle = intl.formatMessage({
-    id: "AskAQuestionPage.questionTitle",
-    defaultMessage: "Title"
+    id: 'AskAQuestionPage.questionTitle',
+    defaultMessage: 'Title',
   });
   const questionTitlePlaceholder = intl.formatMessage({
     id: 'AskAQuestionPage.questionTitlePlaceholder',
@@ -53,8 +53,8 @@ const AskAQuestionPage = ({ intl }: any) => {
     />
   );
   const questionTags = intl.formatMessage({
-    id: "AskAQuestionPage.questionTags",
-    defaultMessage: "Tags"
+    id: 'AskAQuestionPage.questionTags',
+    defaultMessage: 'Tags',
   });
 
   const questionTagsPlaceholder = intl.formatMessage({
@@ -104,8 +104,8 @@ const AskAQuestionPage = ({ intl }: any) => {
   const navigate = useNavigate();
   const schema = Joi.object({
     title: Joi.string().min(10).max(100).required().label('Title'),
-    body: Joi.string().min(10).required().label('Body'),
-    tags: Joi.string().label('Tags'),
+    body: Joi.string().min(20).required().label('Body'),
+    tags: Joi.string().allow('', null).label('Tags'),
     bounty: Joi.number().min(0).label('Bounty amount'),
   });
 
@@ -168,10 +168,11 @@ const AskAQuestionPage = ({ intl }: any) => {
                 <Controller
                   control={control}
                   name="body"
-                  render={({ field: { onChange } }) => (
+                  render={({ field: { onChange, onBlur } }) => (
                     <RichTextEditor
                       onChange={onChange}
-                    // initialValue={question.body}
+                      onBlur={onBlur}
+                      // initialValue={question.body}
                     />
                   )}
                 />
@@ -220,7 +221,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                   placeholder={addBountyInputPlaceholder}
                   name="bounty"
                   control={control}
-                  type='number'
+                  type="number"
                 />
                 {/* <Form.Group controlId="bounty">
                   <Form.Control

@@ -5,10 +5,15 @@ import ClientsideUploadAdapterPlugin from './ClientsideUploadAdapter';
 
 interface RichTextEditorProp {
   onChange: Function;
+  onBlur?: Function;
   initialValue?: string;
 }
 
-const RichTextEditor: FC<RichTextEditorProp> = ({ onChange, initialValue }) => {
+const RichTextEditor: FC<RichTextEditorProp> = ({
+  onChange,
+  initialValue,
+  onBlur,
+}) => {
   return (
     <CKEditor
       editor={Editor}
@@ -16,6 +21,7 @@ const RichTextEditor: FC<RichTextEditorProp> = ({ onChange, initialValue }) => {
       onChange={(event: any, editor: any): void => {
         onChange(editor.getData());
       }}
+      onBlur={onBlur ? (e: any) => onBlur(e) : null}
       config={{
         extraPlugins: [ClientsideUploadAdapterPlugin],
       }}
