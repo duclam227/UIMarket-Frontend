@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useDispatch } from "react-redux";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
+
+import { logInWithJWT } from '../../redux/index';
 import shopAPI from "../../api/shop";
 import { setJwt } from "../../app/util/authHelpers";
 
@@ -16,6 +19,7 @@ const CreateAShopForm: React.FC<Props> = (props) => {
   } = props;
 
   const [shopInfo, setShopInfo] = useState<any>(null);
+  const dispatch = useDispatch();
 
   const shopNameLabel = <FormattedMessage id='CreateAShopForm.shopNameLabel' />
   const shopNamePlaceholder = intl.formatMessage({
@@ -35,6 +39,8 @@ const CreateAShopForm: React.FC<Props> = (props) => {
         console.log(res);
         const { token }: { token: string } = res;
         setJwt(token);
+
+        dispatch(logInWithJWT(token));
       })
       .catch(error => {
         console.log(error);
