@@ -23,7 +23,7 @@ const CreateAShopPage: React.FC = () => {
     <OneToFivePage>
       <div className={style.wrapper}>
         <div className={style.content}>
-          <div className={style.title}><FormattedMessage id='CreateAShopPage.Tite' /></div>
+          <div className={style.title}><FormattedMessage id='CreateAShopPage.title' /></div>
 
           <CreateAShopForm />
         </div>
