@@ -113,7 +113,7 @@ const EditPersonalInfoPage = () => {
     control,
   } = useForm<UserInfo>({
     resolver: joiResolver(schema),
-    mode: 'onChange',
+    mode: 'onTouched',
     defaultValues: {
       email: '',
       dob: new Date(),

@@ -116,7 +116,7 @@ const AskAQuestionPage = ({ intl }: any) => {
     control,
   } = useForm<Question>({
     resolver: joiResolver(schema),
-    mode: 'onChange',
+    mode: 'onTouched',
     defaultValues: {
       title: '',
       body: '',
