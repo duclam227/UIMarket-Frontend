@@ -15,7 +15,7 @@ import Button from 'react-bootstrap/Button';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 
-import { PageWithNavbar } from '../../components';
+import { FormInput, PageWithNavbar } from '../../components';
 import { getErrorMessage } from '../../app/util';
 
 import './AskAQuestionPage.css';
@@ -38,12 +38,10 @@ const AskAQuestionPage = ({ intl }: any) => {
       defaultMessage="Ask a question"
     />
   );
-  const questionTitle = (
-    <FormattedMessage
-      id="AskAQuestionPage.questionTitle"
-      defaultMessage="Title"
-    />
-  );
+  const questionTitle = intl.formatMessage({
+    id: "AskAQuestionPage.questionTitle",
+    defaultMessage: "Title"
+  });
   const questionTitlePlaceholder = intl.formatMessage({
     id: 'AskAQuestionPage.questionTitlePlaceholder',
     defaultMessage: 'e.g How do I...',
@@ -54,12 +52,11 @@ const AskAQuestionPage = ({ intl }: any) => {
       defaultMessage="Body"
     />
   );
-  const questionTags = (
-    <FormattedMessage
-      id="AskAQuestionPage.questionTags"
-      defaultMessage="Tags"
-    />
-  );
+  const questionTags = intl.formatMessage({
+    id: "AskAQuestionPage.questionTags",
+    defaultMessage: "Tags"
+  });
+
   const questionTagsPlaceholder = intl.formatMessage({
     id: 'AskAQuestionPage.questionTagsPlaceholder',
     defaultMessage: 'e.g UI, color, alignment, ...',
@@ -155,22 +152,14 @@ const AskAQuestionPage = ({ intl }: any) => {
         <Form onSubmit={handleSubmit(handlePostQuestion)}>
           <Card className={cardClassName}>
             <Card.Body>
-              <Form.Group className={formGroupClassName} controlId="title">
-                <Form.Label>
-                  <h4>{questionTitle}</h4>
-                </Form.Label>
-                <Form.Control
-                  placeholder={questionTitlePlaceholder}
-                  type="text"
-                  {...register('title')}
-                  isInvalid={errors.title ? true : false}
-                />
-                {errors.title && (
-                  <Alert variant="danger" className="mt-2">
-                    {errors.title.message}
-                  </Alert>
-                )}
-              </Form.Group>
+              <FormInput
+                label={questionTitle}
+                placeholder={questionTitlePlaceholder}
+                name="title"
+                control={control}
+                className={formGroupClassName}
+                labelClassName={style.label}
+              />
 
               <Form.Group className={formGroupClassName}>
                 <Form.Label htmlFor="body">
@@ -182,7 +171,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                   render={({ field: { onChange } }) => (
                     <RichTextEditor
                       onChange={onChange}
-                      // initialValue={question.body}
+                    // initialValue={question.body}
                     />
                   )}
                 />
@@ -193,20 +182,18 @@ const AskAQuestionPage = ({ intl }: any) => {
                 )}
               </Form.Group>
 
-              <Form.Group className={formGroupClassName}>
-                <Form.Label>
-                  <h4>{questionTags}</h4>
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder={questionTagsPlaceholder}
-                  {...register('tags')}
-                />
-                <Form.Text muted>
-                  Each tag should only be a word, multiple tags should be
-                  separated by a comma
-                </Form.Text>
-              </Form.Group>
+              <FormInput
+                label={questionTags}
+                placeholder={questionTagsPlaceholder}
+                name="tags"
+                control={control}
+                className={formGroupClassName}
+                labelClassName={style.label}
+              />
+              <Form.Text muted>
+                Each tag should only be a word, multiple tags should be
+                separated by a comma
+              </Form.Text>
             </Card.Body>
           </Card>
 
@@ -229,7 +216,13 @@ const AskAQuestionPage = ({ intl }: any) => {
               </Row>
 
               <Row>
-                <Form.Group controlId="bounty">
+                <FormInput
+                  placeholder={addBountyInputPlaceholder}
+                  name="bounty"
+                  control={control}
+                  type='number'
+                />
+                {/* <Form.Group controlId="bounty">
                   <Form.Control
                     type="number"
                     placeholder={addBountyInputPlaceholder}
@@ -241,7 +234,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                       {errors.bounty.message}
                     </Alert>
                   )}
-                </Form.Group>
+                </Form.Group> */}
               </Row>
             </Card.Body>
           </Card>
