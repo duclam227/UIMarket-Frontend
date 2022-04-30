@@ -21,8 +21,9 @@ interface InputProps<T extends FieldValues> extends UseControllerProps<T> {
 
   // UseControllerProps must take in a FieldValues types in order to work. If not it will give error <MyDefinedFormFields> | any> is not assignable to <FieldValues | any>
 
-  label: string;
+  label?: string;
   className?: string;
+  labelClassName?: string;
   placeholder?: string;
   disabled?: boolean;
   isInvalid?: boolean;
@@ -34,14 +35,14 @@ interface InputProps<T extends FieldValues> extends UseControllerProps<T> {
 }
 
 const FormInput = <T extends FieldValues>(props: InputProps<T>) => {
-  const { label, className, name, ...rest } = props;
+  const { label, className, labelClassName, name, ...rest } = props;
   const {
     field,
     fieldState: { error },
   } = useController(props);
   return (
     <Form.Group className={className} controlId={name}>
-      <Form.Label>{label}</Form.Label>
+      {label && <Form.Label className={labelClassName}>{label}</Form.Label>}
       <Form.Control isInvalid={error ? true : false} {...field} {...rest} />
       {error?.message && (
         <Alert variant="danger" className="mt-2">
