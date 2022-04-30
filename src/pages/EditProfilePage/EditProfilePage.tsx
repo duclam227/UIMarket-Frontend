@@ -1,7 +1,10 @@
-import { ChangeEvent, useRef, useEffect, useState } from 'react';
+import { ChangeEvent, useRef, useEffect, useState, FC } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,19 +12,24 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import Alert from 'react-bootstrap/Alert';
 
 import { logInWithJWT } from '../../redux/index';
-import { OneToFivePage } from '../../components';
+import { FormInput, OneToFivePage } from '../../components';
 import profileAPI from '../../api/profile';
-import style from './EditProfilePage.module.css';
 import s3API from '../../api/amazonS3';
 import { genericAvatarUrl } from '../../app/util/const';
-export interface ProfileInfo {
+import style from './EditProfilePage.module.css';
+import EditPersonalInfoPage from '../EditPersonalInfoPage/EditPersonalInfoPage';
+export interface UserProfile {
   name: string | undefined;
   bio: string | undefined;
 }
+interface EditProfilePageProps {
+  intl: IntlShape;
+}
 
-const EditProfilePage = () => {
+const EditProfilePage: FC<EditProfilePageProps> = ({ intl }) => {
   const pageTitle = (
     <FormattedMessage
       id="EditProfilePage.pageTitle"
@@ -34,12 +42,16 @@ const EditProfilePage = () => {
       defaultMessage="Manage how others see your profile"
     />
   );
-  const nameFormInputLabel = (
-    <FormattedMessage
-      id="EditProfilePage.nameFormInputLabel"
-      defaultMessage="Name"
-    />
-  );
+  // const nameFormInputLabel = (
+  //   <FormattedMessage
+  //     id="EditProfilePage.nameFormInputLabel"
+  //     defaultMessage="Name"
+  //   />
+  // );
+  const nameFormInputLabel = intl.formatMessage({
+    id: 'EditProfilePage.nameFormInputLabel',
+    defaultMessage: 'Name',
+  });
   const bioFormInputLabel = (
     <FormattedMessage
       id="EditProfilePage.bioFormInputLabel"
@@ -58,18 +70,32 @@ const EditProfilePage = () => {
       defaultMessage="Change Avatar"
     />
   );
+  const schema = Joi.object({
+    name: Joi.string().max(20).trim().required().label('Name'),
+    bio: Joi.string().max(100).trim().label('Bio'),
+  });
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const params = useParams();
   const imageInput = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [profileInfo, setProfileInfo] = useState<ProfileInfo>({
-    name: '',
-    bio: '',
-  });
   const [avatarUrl, setAvatarUrl] = useState('');
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty, isValid },
+    reset,
+    control,
+  } = useForm<UserProfile>({
+    resolver: joiResolver(schema),
+    mode: 'onTouched',
+    defaultValues: {
+      name: '',
+      bio: '',
+    },
+  });
 
   useEffect(() => {
     const { id } = params;
@@ -80,9 +106,8 @@ const EditProfilePage = () => {
       try {
         const res: any = await profileAPI.getUserProfileInfoById(id);
         const { user } = res;
-        console.log(user);
         setAvatarUrl(user.customerAvatar);
-        setProfileInfo({ name: user.customerName, bio: user.customerBio });
+        reset({ name: user.customerName, bio: user.customerBio });
       } catch (error) {
         console.log('Get user profile error: ', error);
       }
@@ -97,15 +122,9 @@ const EditProfilePage = () => {
     }
   };
 
-  const handleChange = ({ target: input }: ChangeEvent<HTMLInputElement>) => {
-    setProfileInfo({
-      ...profileInfo,
-      [input.id]: input.value,
-    });
-  };
-  const handleSubmit = async () => {
+  const handleSave: SubmitHandler<UserProfile> = async data => {
     try {
-      await profileAPI.updateUserProfile(profileInfo);
+      await profileAPI.updateUserProfile(data);
       const { id } = params;
       if (id) navigate(`/user/${id}/activity`);
       else navigate(-1);
@@ -146,8 +165,7 @@ const EditProfilePage = () => {
   return (
     <OneToFivePage>
       <Container className={`w-75 p-5 mt-5 bg-white ${style.pageContainer}`}>
-        {/* Page title */}
-
+        {/*Edit Profile title */}
         <Row>
           <h1>{pageTitle}</h1>
           <h4 className="text-muted" style={{}}>
@@ -155,29 +173,35 @@ const EditProfilePage = () => {
           </h4>
         </Row>
 
-        <Row className={`mt-5`}>
-          {/* Edit Profile */}
+        {/* Edit Profile */}
+        <Row className={`mt-2 mb-5`}>
           <Col className={`order-1`}>
-            <Form>
-              <Form.Group className="mb-3" controlId="name">
-                <Form.Label>{nameFormInputLabel}</Form.Label>
-                <Form.Control
-                  type="text"
-                  defaultValue={profileInfo.name}
-                  onChange={e => handleChange(e as any)}
-                />
-              </Form.Group>
+            <Form onSubmit={handleSubmit(handleSave)}>
+              <FormInput
+                label={nameFormInputLabel}
+                name="name"
+                control={control}
+                className={`mb-3`}
+              />
+
               <Form.Group className="mb-3" controlId="bio">
                 <Form.Label>{bioFormInputLabel}</Form.Label>
                 <Form.Control
                   as="textarea"
                   rows={3}
-                  defaultValue={profileInfo.bio}
-                  onChange={e => handleChange(e as any)}
+                  {...register('bio')}
+                  isInvalid={errors.bio ? true : false}
                 />
+                {errors.bio && (
+                  <Alert variant="danger" className="mt-2">
+                    {errors.bio.message}
+                  </Alert>
+                )}
               </Form.Group>
+              <Button type="submit" disabled={!isDirty || !isValid}>
+                {saveBtnLabel}
+              </Button>
             </Form>
-            <Button onClick={handleSubmit}>{saveBtnLabel}</Button>
           </Col>
           {/* Edit avatar */}
           <Col
@@ -216,9 +240,12 @@ const EditProfilePage = () => {
             </Form>
           </Col>
         </Row>
+
+        {/* Edit Personal Info */}
+        <EditPersonalInfoPage />
       </Container>
     </OneToFivePage>
   );
 };
 
-export default EditProfilePage;
+export default injectIntl(EditProfilePage);

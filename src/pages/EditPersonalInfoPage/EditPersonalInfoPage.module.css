@@ -1,0 +1,15 @@
+@import '../../app/util/colors.css' .textUnderlineHover {
+  text-decoration: none;
+}
+
+.textUnderlineHover:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.infoItem {
+  border-bottom: 1px solid var(--gray-300);
+}
+.infoItem:last-child {
+  border-bottom: none;
+}

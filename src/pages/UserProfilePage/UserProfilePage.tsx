@@ -169,15 +169,14 @@ const UserProfilePage = () => {
               </p>
             )}
           </Col>
-
+          
+          {/* Render Edit button */}
           {currentUser?._id === params.id && (
             <Col lg={2} md={4} className="d-flex justify-content-center">
               <span>
                 <Button
                   className="d-flex align-items-center"
-                  onClick={() =>
-                    navigate(`/user/${currentUser?._id}/edit/profile`)
-                  }
+                  onClick={() => navigate(`/user/${currentUser?._id}/edit`)}
                 >
                   <BsPencil className="me-1" />
                   <span className={`text-nowrap`}>{editProfileBtnLabel}</span>
