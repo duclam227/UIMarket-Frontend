@@ -24,7 +24,8 @@ import {
   EditPersonalInfoPage,
   ShopHomePage,
   ManageProductsPage,
-  CreateAShopPage
+  CreateAShopPage,
+  ViewProductPage
 } from './pages';
 import { logInWithJWT } from './redux/index';
 
@@ -67,6 +68,7 @@ function App() {
         <Route path="/contact" element={<ContactUsPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/products/add" element={<AddAProductPage />} />
+        <Route path="/product/:id" element={<ViewProductPage />} />
         <Route
           path="/questions/new"
           element={

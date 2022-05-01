@@ -17,6 +17,7 @@ export { default as PricingPage } from './PricingPage/Pricing';
 export { default as QuestionListsPage } from './QuestionsListPage/QuestionListsPage';
 export { default as QuestionListsPageByTag } from './QuestionsListPage/QuestionListsByTagPage';
 export { default as ShopHomePage } from './ShopHomePage/ShopHomePage';
+export { default as ViewProductPage } from './ViewProductPage/ViewProductPage';
 export { default as ViewQuestionPage } from './ViewQuestionPage/ViewQuestionPage';
 export { default as UserProfilePage } from './UserProfilePage/UserProfilePage';
 export { default as EditProfilePage } from './EditProfilePage/EditProfilePage';

@@ -1,0 +1,72 @@
+.wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 100%;
+	height: 100%;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+
+	margin-top: 4rem;
+
+	min-height: 100%;
+	width: 60%;
+}
+
+.title {
+	font-size: xx-large;
+	font-weight: 600;
+}
+
+.buttonRow {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+
+	width: 100%;
+}
+
+.button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 5px;
+}
+
+.section {
+	margin-bottom: 3rem;
+}
+
+.header {
+	composes: section;
+}
+
+.images {
+	composes: section;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.image {
+	flex: 0 1 40%;
+}
+
+.image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.body {
+	composes: section;
+	min-height: 10vh;
+	padding: 20px 40px;
+	background-color: white;
+	border-radius: 20px;
+}
