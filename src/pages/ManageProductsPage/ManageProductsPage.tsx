@@ -58,7 +58,7 @@ const ManageProductsPage: React.FC = () => {
             </Link>
           </div>
           {
-            !!(shopId && products)
+            !!(shopId && products && products.length > 0)
               ? <div className={style.productList}>
                 {products.map((product: product) => <Product product={product} />)}
               </div>
