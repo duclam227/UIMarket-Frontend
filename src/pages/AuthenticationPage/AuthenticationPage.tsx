@@ -1,7 +1,12 @@
 import { FC } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import { LoginForm, SignupForm, RecoverPasswordForm } from '../../forms';
+import {
+  LoginForm,
+  SignupForm,
+  RecoverPasswordForm,
+  ResetForgetPasswordForm,
+} from '../../forms';
 import { PageWithNavbar } from '../../components';
 
 import loginImage from '../../app/assets/illust-sign-in.png';
@@ -13,9 +18,10 @@ const Forms = {
   login: <LoginForm />,
   recover: <RecoverPasswordForm />,
   signup: <SignupForm />,
+  reset: <ResetForgetPasswordForm />,
 };
 interface AuthenticationPageProps {
-  destination: 'login' | 'recover' | 'signup';
+  destination: 'login' | 'recover' | 'signup' | 'reset';
 }
 
 const AuthenticationPage: FC<AuthenticationPageProps> = props => {

@@ -8,3 +8,4 @@ export { default as CreateAShopForm } from './CreateAShopForm/CreateAShopForm';
 export { default as LoginForm } from './LoginForm/LoginForm';
 export { default as SignupForm } from './SignupForm/SignupForm';
 export { default as RecoverPasswordForm } from './RecoverPasswordForm/RecoverPasswordForm';
+export { default as ResetForgetPasswordForm } from './ResetForgetPasswordForm/ResetForgetPasswordForm';
