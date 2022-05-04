@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { Link } from 'react-router-dom';
 import Joi from 'joi';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 import Container from 'react-bootstrap/Container';
@@ -14,23 +15,60 @@ import { BsChevronLeft } from 'react-icons/bs';
 
 import NoMessage from '../../app/assets/NoMessage.svg';
 import { FormInput } from '../../components';
+import authAPI from '../../api/auth';
 
-interface RecoverCredentials {
+export interface RecoverCredentials {
   email: string;
 }
 
-const RecoverPasswordForm = () => {
+const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
+  // Navigate to Sign In
+  const backSignInNavLabel = (
+    <FormattedMessage
+      id="RecoverPasswordForm.backSignInNavLabel"
+      defaultMessage="Back to Sign In"
+    />
+  );
+
+  //Page title
+  const title = (
+    <FormattedMessage
+      id="RecoverPasswordForm.title"
+      defaultMessage="Forgot Password"
+    />
+  );
+
+  //Email form
+  const emailLabel = intl.formatMessage({
+    id: 'LoginForm.emailLabel',
+    defaultMessage: 'Email',
+  });
+  const emailPlaceholder = intl.formatMessage({
+    id: 'LoginForm.emailPlaceholder',
+    defaultMessage: 'example@email.com',
+  });
+  const emailSmallText = (
+    <FormattedMessage
+      id="RecoverPasswordForm.emailSmallText"
+      defaultMessage="Tell us the email address associated with your account, and we’ll send you an email with a link to reset your password."
+    />
+  );
+
+  //Reset button
+  const resetPasswordBtnLabel = (
+    <FormattedMessage
+      id="RecoverPasswordForm.resetPasswordBtnLabel"
+      defaultMessage="Recover password"
+    />
+  );
+
   const schema = Joi.object({
     email: Joi.string()
       .email({ tlds: { allow: false } })
       .required()
       .label('Email'),
   });
-  const {
-    handleSubmit,
-    formState: { isSubmitted },
-    control,
-  } = useForm<RecoverCredentials>({
+  const { handleSubmit, control } = useForm<RecoverCredentials>({
     resolver: joiResolver(schema),
     mode: 'onSubmit',
     defaultValues: {
@@ -43,65 +81,79 @@ const RecoverPasswordForm = () => {
       email: '',
     });
   const [resendCountdown, setResendCountdown] = useState(0);
+
   useEffect(() => {
     if (resendCountdown > 0) setTimeout(tick, 1000);
   }, [resendCountdown]);
-
   const tick = () => {
     setResendCountdown(resendCountdown - 1);
   };
-  const onSendRecoverLink: SubmitHandler<RecoverCredentials> = data => {
+
+  const onSubmitEmail: SubmitHandler<RecoverCredentials> = data => {
     setSubmittedRecoverCredenttials(data);
+    sendRecoverPasswordRequest();
+  };
+  const sendRecoverPasswordRequest = async () => {
     setResendCountdown(60);
+    try {
+      await authAPI.sendRecoverPasswordRequest(submittedRecoverCredentials);
+    } catch (e) {
+      console.log('Send recover request failed ', e);
+    }
   };
   return (
     <Container className={`pt-5`}>
       <Col sm={{ span: 7, offset: 3 }}>
+        {/* Navigate to Sign In */}
         <Row className="mt-5">
           <Link to="/login" className="d-flex align-items-center">
             <div className="d-flex align-items-center justify-content center me-2">
               <BsChevronLeft />
             </div>
-            <span>Back to Sign In</span>
+            <span>{backSignInNavLabel}</span>
           </Link>
         </Row>
+
+        {/* Title */}
         <Row className="mt-4">
-          <h2>Forgot Password</h2>
+          <h2>{title}</h2>
         </Row>
         {!submittedRecoverCredentials.email ? (
-          <Form onSubmit={handleSubmit(onSendRecoverLink)}>
-            <Row>
+          // Email form
+          <Form onSubmit={handleSubmit(onSubmitEmail)}>
+            <Row className={`mt-4`}>
               <FormInput
                 type="email"
                 name="email"
-                label="Email"
+                label={emailLabel}
                 control={control}
-                className={`mt-4`}
-                placeholder={`John@gmail.com`}
+                placeholder={emailPlaceholder}
               />
-              <Form.Text></Form.Text>
+              <Form.Text>{emailSmallText}</Form.Text>
             </Row>
-            <Row className="mt-1">
+            <Row className="mt-4">
               <span>
-                <Button type="submit">Recover password</Button>
+                <Button type="submit">{resetPasswordBtnLabel}</Button>
               </span>
             </Row>
           </Form>
         ) : (
+          // Resend link UI
           <Row
             className={'flex-column justify-content-center align-items-center'}
           >
-            <img src={NoMessage} height={250}></img>
+            <img src={NoMessage} alt="Check email" height={250}></img>
             <span className="text-center">
               We've just sent a link to reset your password to
             </span>
             <p className={`text-center fw-bold text-primary`}>
-              thisisaverylongemailname@gmail.com
+              {submittedRecoverCredentials.email}
             </p>
             <span className={`text-center`}>
               <Button
                 variant={!!resendCountdown ? 'secondary' : 'primary'}
                 disabled={!!resendCountdown}
+                onClick={sendRecoverPasswordRequest}
               >
                 Resend link{!!resendCountdown ? ` - ${resendCountdown}s` : ''}
               </Button>
@@ -113,4 +165,4 @@ const RecoverPasswordForm = () => {
   );
 };
 
-export default RecoverPasswordForm;
+export default injectIntl(RecoverPasswordForm);
