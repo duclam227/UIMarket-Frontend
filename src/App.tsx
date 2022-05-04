@@ -59,6 +59,10 @@ function App() {
           element={<AuthenticationPage destination="signup" />}
         />
         <Route path="/create-shop" element={<CreateAShopPage />} />
+        <Route
+          path="/recover"
+          element={<AuthenticationPage destination="recover" />}
+        />
         <Route path="/user/:id/edit" element={<EditProfilePage />} />
         <Route path="/user/:id/*" element={<UserProfilePage />} />
         <Route path="/user/:id/products" element={<ManageProductsPage />} />
