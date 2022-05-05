@@ -43,11 +43,11 @@ const ViewProductPage: React.FC = () => {
     : (
       <PageWithNavbar>
         <div className={style.wrapper}>
-          <div className={style.content}>
+          {/* <div className={style.content}> */}
             <SectionHeader title={product?.productName!} />
             <SectionImages images={product?.productPicture!} />
             <SectionDescription body={product?.productDescription!} />
-          </div>
+          {/* </div> */}
         </div>
       </PageWithNavbar >
     )
