@@ -1,0 +1,36 @@
+.wrapper {
+  max-height: 60vh;
+  width: 100vw;
+}
+
+.imageWrapper {
+  height: 100%;
+  width: 100%;
+}
+
+.img {
+  max-height: 60vh;
+  width: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+.activeImageWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+
+  cursor: pointer;
+  z-index: 99;
+}
+
+.activeImage {
+  max-height: 80vh;
+}
