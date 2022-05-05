@@ -8,7 +8,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { Link } from "react-router-dom";
 import { GoogleLogin } from 'react-google-login';
 import { authCredentials } from "../../app/util/interfaces";
-import { logIn } from "../../redux";
+import { logIn, logInWithGoogle } from "../../redux";
 import { State } from "../../redux/store";
 
 import style from './LoginForm.module.css';
@@ -105,9 +105,13 @@ const LoginForm: FC<loginFormProps> = props => {
   // };
 
   const handleLogin: SubmitHandler<authCredentials> = data => {
-    console.log(data);
     dispatch(logIn(data));
   };
+
+  const handleGoogleLogin = (data: any) => {
+    const { tokenId } = data;
+    dispatch(logInWithGoogle(tokenId));
+  }
 
   const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -119,7 +123,7 @@ const LoginForm: FC<loginFormProps> = props => {
           <GoogleLogin
             clientId={CLIENT_ID!}
             buttonText={continueWithGoogleLabel}
-            onSuccess={(res: any) => console.log(res)}
+            onSuccess={(res: any) => handleGoogleLogin(res)}
             onFailure={(res: any) => console.log(res)}
             cookiePolicy={'single_host_origin'}
           />

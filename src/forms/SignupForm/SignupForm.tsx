@@ -8,11 +8,12 @@ import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { authCredentials } from '../../app/util/interfaces';
-import { signUp } from '../../redux';
+import { logInWithGoogle, signUp } from '../../redux';
 import { State } from '../../redux/store';
 
 import style from './SignupForm.module.css';
 import { FormInput } from '../../components';
+import GoogleLogin from 'react-google-login';
 
 interface SignupFormProps {
   intl: IntlShape;
@@ -42,12 +43,9 @@ const SignupForm: FC<SignupFormProps> = props => {
   const submitMessage = (
     <FormattedMessage id="SignupForm.submit" defaultMessage="Sign in" />
   );
-  const continueWithGoogleLabel = (
-    <FormattedMessage
-      id="SignupForm.continueWithGoogleLabel"
-      defaultMessage="Continue with Google"
-    />
-  );
+  const continueWithGoogleLabel = intl.formatMessage({
+    id: "LoginForm.continueWithGoogleLabel"
+  });
   const continueWithFacebookLabel = (
     <FormattedMessage
       id="SignupForm.continueWithFacebookLabel"
@@ -136,13 +134,25 @@ const SignupForm: FC<SignupFormProps> = props => {
     dispatch(signUp(data));
   };
 
+  const handleGoogleLogin = (data: any) => {
+    const { tokenId } = data;
+    dispatch(logInWithGoogle(tokenId));
+  }
+
+  const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
   return (
     <>
       <div className={style.signupFormContainer}>
         <h2 className={style.title}>{title}</h2>
         <div className={style.otherIdpButtonRow}>
-          <Button>{continueWithGoogleLabel}</Button>
-          <Button>{continueWithFacebookLabel}</Button>
+          <GoogleLogin
+            clientId={CLIENT_ID!}
+            buttonText={continueWithGoogleLabel}
+            onSuccess={(res: any) => handleGoogleLogin(res)}
+            onFailure={(res: any) => console.log(res)}
+            cookiePolicy={'single_host_origin'}
+          />
         </div>
         <div className={style.divider}>
           <span>{dividerMesage}</span>
