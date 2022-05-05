@@ -5,7 +5,7 @@ import categoryAPI from "../../api/category";
 import productAPI from "../../api/product";
 import { product } from "../../app/util/interfaces";
 
-import { PageWithNavbar } from "../../components";
+import { OneToFivePage, PageWithNavbar } from "../../components";
 import { AddAProductDescriptionForm, AddAProductPicturesForm } from "../../forms";
 
 // import './AddAProductPage.css'
@@ -36,7 +36,7 @@ const AddAProductPage: React.FC = () => {
   }
 
   return (
-    <PageWithNavbar>
+    <OneToFivePage>
       <div className={style.wrapper}>
         <div className={style.container}>
           <TabContainer defaultActiveKey="description">
@@ -81,7 +81,7 @@ const AddAProductPage: React.FC = () => {
           >Add product</Button>
         </div>
       </div>
-    </PageWithNavbar>
+    </OneToFivePage>
   )
 }
 

@@ -1,0 +1,32 @@
+.wrapper {
+	display: flex;
+	justify-content: center;
+
+	width: 100%;
+	height: 100%;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	width: 78%;
+	background-color: white;
+}
+
+.noShopImage {
+	max-width: 40%;
+	margin-top: 3.5rem;
+	margin-bottom: 1rem;
+}
+
+.noShopImage img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.title {
+	font-weight: 600;
+}

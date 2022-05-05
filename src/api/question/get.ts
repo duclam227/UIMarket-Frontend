@@ -31,19 +31,14 @@ class Get {
 	};
 
 	getQuestionsByTag = (
-		tagIds: Array<string | undefined>,
+		tagNames: Array<string | undefined>,
 		pageNumber: number | string,
 		itemsPerPage: number,
 	) => {
-		const data = {
-			tag: [ ...tagIds ],
-		};
+		const tags = tagNames.join(',');
 
 		return axiosClient.get(
-			`${QUESTIONS_ENDPOINT}?tag=true&page=${pageNumber}&limit=${itemsPerPage}`,
-			{
-				params: { ...data },
-			},
+			`${QUESTIONS_ENDPOINT}?page=${pageNumber}&limit=${itemsPerPage}&tag=${tags}`,
 		);
 	};
 }

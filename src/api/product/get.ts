@@ -1,14 +1,11 @@
 import axiosClient from '..';
 
-const PROFILE_ENDPOINT = 'api/v1/profile';
+const PRODUCT_ENDPOINT = 'api/v1/products';
 
 class Get {
-  getUserActivityById = (id: string) => {
-    return axiosClient.get(`${PROFILE_ENDPOINT}/activity/${id}`);
-  };
-  getUserProfileInfoById = (id: string) => {
-    return axiosClient.get(`${PROFILE_ENDPOINT}/info/${id}`);
-  };
+	getProductById = (id: string) => {
+		return axiosClient.get(`${PRODUCT_ENDPOINT}/info/${id}`);
+	};
 }
 
 export default new Get();

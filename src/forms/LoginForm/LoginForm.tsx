@@ -1,15 +1,15 @@
-import { FC, useState } from 'react';
-import { Alert, Button, Form } from 'react-bootstrap';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { FC, useState } from "react";
+import { Alert, Button, Form } from "react-bootstrap";
+import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
-
-import { authCredentials } from '../../app/util/interfaces';
-import { logIn } from '../../redux';
-import { State } from '../../redux/store';
+import { Link } from "react-router-dom";
+import { GoogleLogin } from 'react-google-login';
+import { authCredentials } from "../../app/util/interfaces";
+import { logIn } from "../../redux";
+import { State } from "../../redux/store";
 
 import style from './LoginForm.module.css';
 import { FormInput } from '../../components';
@@ -42,21 +42,11 @@ const LoginForm: FC<loginFormProps> = props => {
   );
 
   //button labels
-  const submitMessage = (
-    <FormattedMessage id="LoginForm.submit" defaultMessage="Sign in" />
-  );
-  const continueWithGoogleLabel = (
-    <FormattedMessage
-      id="LoginForm.continueWithGoogleLabel"
-      defaultMessage="Continue with Google"
-    />
-  );
-  const continueWithFacebookLabel = (
-    <FormattedMessage
-      id="LoginForm.continueWithFacebookLabel"
-      defaultMessage="Continue with Facebook"
-    />
-  );
+  const submitMessage = <FormattedMessage
+    id="LoginForm.submit" defaultMessage="Sign in" />
+  const continueWithGoogleLabel = intl.formatMessage({
+    id: "LoginForm.continueWithGoogleLabel"
+  });
 
   //email
   // const loginFormEmailLabel = (
@@ -119,13 +109,20 @@ const LoginForm: FC<loginFormProps> = props => {
     dispatch(logIn(data));
   };
 
+  const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
   return (
     <>
       <div className={style.loginFormContainer}>
         <h2 className={style.title}>{title}</h2>
         <div className={style.otherIdpButtonRow}>
-          <Button>{continueWithGoogleLabel}</Button>
-          <Button>{continueWithFacebookLabel}</Button>
+          <GoogleLogin
+            clientId={CLIENT_ID!}
+            buttonText={continueWithGoogleLabel}
+            onSuccess={(res: any) => console.log(res)}
+            onFailure={(res: any) => console.log(res)}
+            cookiePolicy={'single_host_origin'}
+          />
         </div>
         <div className={style.divider}>
           <span>{dividerMesage}</span>
