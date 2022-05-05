@@ -82,6 +82,24 @@ const logInWithJWT = (jwt: string) => {
 	};
 };
 
+const logInWithGoogle = (tokenId: string) => {
+	return (dispatch: Dispatch<Action>) => {
+		dispatch(setError(null));
+		dispatch(loginInProgress());
+		authAPI
+			.logInWithGoogle(tokenId)
+			.then((res: any) => {
+				const { user } = res;
+				const customer: customer = { ...user };
+				dispatch(loginSuccess({ ...customer }));
+			})
+			.catch(error => {
+				const errorMsg = getErrorMessage(error);
+				dispatch(setError(errorMsg));
+			});
+	};
+};
+
 const signUp = (credentials: authCredentials) => {
 	return (dispatch: Dispatch<Action>) => {
 		dispatch(setError(null));
@@ -108,4 +126,4 @@ const logOut = () => {
 	};
 };
 
-export { signUp, logIn, logInWithJWT, logOut };
+export { signUp, logIn, logInWithJWT, logInWithGoogle, logOut };

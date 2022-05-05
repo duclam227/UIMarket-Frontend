@@ -1,1 +1,1 @@
-export { signUp, logIn, logInWithJWT, logOut } from './auth/authActions';
+export { signUp, logIn, logInWithJWT, logInWithGoogle, logOut } from './auth/authActions';
