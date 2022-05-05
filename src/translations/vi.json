@@ -155,5 +155,6 @@
   "UserActivityTab.earnedBountyNavBtnLabel": "Đã nhận thưởng",
   "UserProfilePage.editProfileBtnLabel": "Chỉnh sửa thông tin",
   "UserProfilePage.activityTabNavBtnLabel": "Hoạt động",
-  "UserProfilePage.productTabNavBtnLabel": "Sản phẩm"
+  "UserProfilePage.productTabNavBtnLabel": "Sản phẩm",
+  "ViewProductPage.AddToCart": "Thêm vào giỏ hàng"
 }

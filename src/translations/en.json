@@ -155,5 +155,6 @@
   "UserActivityTab.earnedBountyNavBtnLabel": "Earned",
   "UserProfilePage.editProfileBtnLabel": "Edit profile",
   "UserProfilePage.activityTabNavBtnLabel": "Activity",
-  "UserProfilePage.productTabNavBtnLabel": "Products"
+  "UserProfilePage.productTabNavBtnLabel": "Products",
+  "ViewProductPage.AddToCart": "Add to cart"
 }
