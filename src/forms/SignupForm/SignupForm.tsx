@@ -6,7 +6,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { authCredentials } from '../../app/util/interfaces';
 import { logInWithGoogle, signUp } from '../../redux';
 import { State } from '../../redux/store';
@@ -93,6 +93,7 @@ const SignupForm: FC<SignupFormProps> = props => {
   });
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const authError = useSelector((state: State) => state.auth.error);
 
   const schema = Joi.object({
@@ -137,6 +138,7 @@ const SignupForm: FC<SignupFormProps> = props => {
   const handleGoogleLogin = (data: any) => {
     const { tokenId } = data;
     dispatch(logInWithGoogle(tokenId));
+    navigate('/');
   }
 
   const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
