@@ -63,6 +63,10 @@ function App() {
           path="/recover"
           element={<AuthenticationPage destination="recover" />}
         />
+        <Route
+          path="/resetForgetPassword"
+          element={<AuthenticationPage destination="reset" />}
+        />
         <Route path="/user/:id/edit" element={<EditProfilePage />} />
         <Route path="/user/:id/*" element={<UserProfilePage />} />
         <Route path="/user/:id/products" element={<ManageProductsPage />} />

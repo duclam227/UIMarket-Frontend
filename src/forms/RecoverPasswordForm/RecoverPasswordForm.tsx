@@ -106,7 +106,11 @@ const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
       <Col sm={{ span: 7, offset: 3 }}>
         {/* Navigate to Sign In */}
         <Row className="mt-5">
-          <Link to="/login" className="d-flex align-items-center">
+          <Link
+            to="/login"
+            className="d-flex align-items-center"
+            style={{ width: 'fit-content' }}
+          >
             <div className="d-flex align-items-center justify-content center me-2">
               <BsChevronLeft />
             </div>

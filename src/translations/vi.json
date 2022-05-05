@@ -115,7 +115,7 @@
   "Question.editLabel": "Chỉnh sửa",
   "RecoverPasswordForm.backSignInNavLabel": "Trở về trang đăng nhập",
   "RecoverPasswordForm.title": "Quên mật khẩu",
-  "RecoverPasswordForm.emailSmallText": "Nhập email mà bạn đã dùng để đăng ký tài khoản, chúng tôi sẽ gửi email kèm link để bạn đặt lại mật khẩu",
+  "RecoverPasswordForm.emailSmallText": "Nhập email mà bạn đã dùng để đăng ký tài khoản, chúng tôi sẽ gửi email kèm link để bạn đặt lại mật khẩu.",
   "RecoverPasswordForm.resetPasswordBtnLabel": "Đặt lại mật khẩu",
   "ResetForgetPasswordForm.title": "Đặt lại mật khẩu",
   "ResetForgetPasswordForm.newPasswordLabel": "Mật khẩu mới",
