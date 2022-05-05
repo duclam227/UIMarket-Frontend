@@ -7,6 +7,7 @@ const authAPI = {
 
 	//post
 	logIn: post.logIn,
+	logInWithGoogle: post.logInWithGoogle,
 	signUp: post.signUp,
 };
 
