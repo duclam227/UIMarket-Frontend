@@ -45,7 +45,7 @@ const FormInput = <T extends FieldValues>(props: InputProps<T>) => {
       {label && <Form.Label className={labelClassName}>{label}</Form.Label>}
       <Form.Control isInvalid={error ? true : false} {...field} {...rest} />
       {error?.message && (
-        <Alert variant="danger" className="mt-2">
+        <Alert variant="danger" className="mt-2 mb-0">
           {error.message}
         </Alert>
       )}
