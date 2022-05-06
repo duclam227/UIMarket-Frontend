@@ -1,37 +1,53 @@
-import { FC } from "react";
-import { LoginForm, SignupForm } from "../../forms";
-import { PageWithNavbar } from "../../components";
+import { FC } from 'react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+
+import {
+  LoginForm,
+  SignupForm,
+  RecoverPasswordForm,
+  ResetForgetPasswordForm,
+} from '../../forms';
+import { PageWithNavbar } from '../../components';
 
 import loginImage from '../../app/assets/illust-sign-in.png';
 import signupImage from '../../app/assets/illust-sign-up.png';
 
 import style from './AuthenticationPage.module.css';
 
+const Forms = {
+  login: <LoginForm />,
+  recover: <RecoverPasswordForm />,
+  signup: <SignupForm />,
+  reset: <ResetForgetPasswordForm />,
+};
 interface AuthenticationPageProps {
-  destination: string
+  destination: 'login' | 'recover' | 'signup' | 'reset';
 }
 
-const AuthenticationPage: FC<AuthenticationPageProps> = (props) => {
+const AuthenticationPage: FC<AuthenticationPageProps> = props => {
   const { destination } = props;
 
-  const sideImage = destination === 'login'
-    ? loginImage
-    : signupImage;
+  const sideImage = destination === 'login' ? loginImage : signupImage;
 
+  const renderForm = (formType: string): JSX.Element => {
+    return Forms[formType as keyof typeof Forms];
+  };
   return (
     <>
       <PageWithNavbar>
         <div className={style.loginPageContainer}>
           <div className={style.loginPageCover}>
-            <img className={style.sideImage} alt='Illustration for authentication' src={sideImage} />
+            <img
+              className={style.sideImage}
+              alt="Illustration for authentication"
+              src={sideImage}
+            />
           </div>
-          <div className={style.loginForm}>
-            {destination === 'login' ? <LoginForm /> : <SignupForm />}
-          </div>
+          <div className={style.loginForm}>{renderForm(destination)}</div>
         </div>
       </PageWithNavbar>
     </>
-  )
-}
+  );
+};
 
 export default AuthenticationPage;

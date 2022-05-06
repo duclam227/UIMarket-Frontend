@@ -163,7 +163,7 @@ const LoginForm: FC<loginFormProps> = props => {
               {...register('customerPassword')}
             />
             <Form.Text>
-              <Link to="/" className={style.forgetPasswordText}>
+              <Link to="/recover" className={style.forgetPasswordText}>
                 {forgotPasswordMessage}
               </Link>
             </Form.Text>
