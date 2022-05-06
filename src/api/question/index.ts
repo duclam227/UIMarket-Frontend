@@ -11,6 +11,7 @@ const questionAPI = {
 	getBountiedQuestionsByPageNumber: get.getBountiedQuestionsByPageNumber,
 	getQuestionById: get.getQuestionById,
 	getQuestionsByTags: get.getQuestionsByTag,
+	getQuestionsByTitle: get.getQuestionsByTitle,
 
 	updateQuestion: put.updateQuestion,
 

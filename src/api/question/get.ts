@@ -41,6 +41,12 @@ class Get {
 			`${QUESTIONS_ENDPOINT}?page=${pageNumber}&limit=${itemsPerPage}&tag=${tags}`,
 		);
 	};
+
+	getQuestionsByTitle = (title: string, pageNumber: number | string, itemsPerPage: number) => {
+		return axiosClient.get(
+			`${QUESTIONS_ENDPOINT}?title=${title}&page=${pageNumber}&limit=${itemsPerPage}`,
+		);
+	};
 }
 
 export default new Get();

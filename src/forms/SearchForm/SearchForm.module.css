@@ -1,0 +1,7 @@
+.searchWrapper {
+	display: grid;
+	grid-template-columns: auto 150px;
+	gap: 10px;
+
+	margin: 2rem;
+}

@@ -2,11 +2,12 @@ import { FC } from 'react';
 import { Alert } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { question } from '../../app/util/interfaces';
 
 import style from './QuestionList.module.css';
 
 interface Props {
-  questionsList: Array<any>
+  questionsList: Array<question> | null;
 }
 
 const QuestionList: FC<Props> = (props) => {
