@@ -43,9 +43,6 @@ class Get {
 	};
 
 	getQuestionsByTitle = (title: string, pageNumber: number | string, itemsPerPage: number) => {
-		console.log(
-			`${QUESTIONS_ENDPOINT}?title=${title}&page=${pageNumber}&limit=${itemsPerPage}`,
-		);
 		return axiosClient.get(
 			`${QUESTIONS_ENDPOINT}?title=${title}&page=${pageNumber}&limit=${itemsPerPage}`,
 		);
