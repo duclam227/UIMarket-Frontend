@@ -21,15 +21,16 @@ const ViewProductPage: React.FC = () => {
   const [product, setProduct] = useState<product | null>(null);
 
   useEffect(() => {
-    productAPI.getProductById(id!)
+    productAPI
+      .getProductById(id!)
       .then((res: any) => {
         setProduct(res.product[0]);
         setIsLoading(false);
       })
       .catch(error => {
         console.log(error);
-      })
-  }, [])
+      });
+  }, []);
 
   console.log(product);
 
@@ -39,18 +40,17 @@ const ViewProductPage: React.FC = () => {
         <Spinner animation="border" />
       </div>
     </PageWithNavbar>
-  )
-    : (
-      <PageWithNavbar>
-        <div className={style.wrapper}>
-          {/* <div className={style.content}> */}
-            <SectionHeader title={product?.productName!} />
-            <SectionImages images={product?.productPicture!} />
-            <SectionDescription body={product?.productDescription!} />
-          {/* </div> */}
-        </div>
-      </PageWithNavbar >
-    )
-}
+  ) : (
+    <PageWithNavbar>
+      <div className={style.wrapper}>
+        {/* <div className={style.content}> */}
+        <SectionHeader title={product?.productName!} />
+        <SectionImages images={product?.productPictures!} />
+        <SectionDescription body={product?.productDescription!} />
+        {/* </div> */}
+      </div>
+    </PageWithNavbar>
+  );
+};
 
 export default ViewProductPage;

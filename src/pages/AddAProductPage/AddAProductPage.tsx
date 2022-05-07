@@ -1,39 +1,108 @@
-import React, { useEffect, useState } from "react";
-import { Button, Nav, Tab, TabContainer, Tabs } from "react-bootstrap";
-import { FormattedMessage } from "react-intl";
-import categoryAPI from "../../api/category";
-import productAPI from "../../api/product";
-import { product } from "../../app/util/interfaces";
+import JSZip from 'jszip';
+import React, { useEffect, useState } from 'react';
+import { Button, Nav, Tab, TabContainer, Tabs } from 'react-bootstrap';
+import { FormattedMessage } from 'react-intl';
+import { useSelector } from 'react-redux';
+import s3API from '../../api/amazonS3';
+import categoryAPI from '../../api/category';
+import productAPI from '../../api/product';
+import { createCommonLicenseFile } from '../../app/util';
+import { product } from '../../app/util/interfaces';
 
-import { OneToFivePage, PageWithNavbar } from "../../components";
-import { AddAProductDescriptionForm, AddAProductPicturesForm } from "../../forms";
+import { OneToFivePage, PageWithNavbar } from '../../components';
+import {
+  AddAProductDescriptionForm,
+  AddAProductFilesForm,
+  AddAProductPicturesForm,
+} from '../../forms';
+import { State } from '../../redux/store';
 
 // import './AddAProductPage.css'
 import style from './AddAProductPage.module.css';
 
 const AddAProductPage: React.FC = () => {
-
+  const currentUser = useSelector((state: State) => state.auth.user);
   const [product, setProduct] = useState<product | null>(null);
+  const [productFiles, setProductFiles] = useState<Array<File>>([]);
 
-  const isDescriptionFilled = !!(product && product.productName && product.productPrice && product.productCategory && product.productDescription);
-  const isImagesFilled = !!(product && product.productPicture && product.productPicture.length > 0);
+  const isDescriptionFilled = !!(
+    product &&
+    product.productName &&
+    product.productPrice &&
+    product.productCategory &&
+    product.productDescription
+  );
+  const isImagesFilled = !!(
+    product &&
+    product.productPictures &&
+    product.productPictures.length > 0
+  );
 
   const updateProduct = (input: any) => {
     setProduct({
       ...product,
       ...input,
-    })
-  }
+    });
+  };
 
-  const handleSubmit = () => {
-    productAPI.addNewProduct(product)
+  const updateFile = (input: any) => {
+    console.log(input);
+    setProductFiles([...productFiles, ...input.productFiles]);
+  };
+
+  const zipFiles = async () => {
+    const license = createCommonLicenseFile(
+      product?.productName!,
+      currentUser?.customerName!,
+      'Example License',
+    );
+
+    const files = [...productFiles, license];
+    const zip = JSZip();
+    for (let i = 0; i < files!.length; i++) {
+      const file = files![i];
+      zip.file(file.name, file);
+    }
+
+    return zip.generateAsync({ type: 'blob' }).then(content => {
+      return content;
+    });
+  };
+
+  const handleSubmit = async () => {
+    const zippedFile = await zipFiles();
+
+    s3API
+      .getSignedUrl('products')
       .then((res: any) => {
-        console.log(res);
+        const signedUploadUrl: string = res.url;
+        s3API
+          .uploadToS3Bucket(signedUploadUrl, zippedFile)
+          .then((res: any) => {
+            const fileUrl = signedUploadUrl.split('?')[0];
+
+            console.log(fileUrl);
+
+            productAPI
+              .addNewProduct({
+                ...product!,
+                productFile: fileUrl,
+              })
+              .then((res: any) => {
+                console.log(res);
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          })
+          .catch(error => {
+            throw error;
+          });
       })
       .catch(error => {
         console.log(error);
-      })
-  }
+      });
+  };
 
   return (
     <OneToFivePage>
@@ -43,17 +112,20 @@ const AddAProductPage: React.FC = () => {
             <Nav variant="pills" className={style.tabButtons}>
               <Nav.Item className={style.tabItem}>
                 <Nav.Link eventKey="description">
-                  <FormattedMessage id='AddAProductPage.DescriptionTabTitle' />
+                  <FormattedMessage id="AddAProductPage.DescriptionTabTitle" />
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item className={style.tabItem}>
                 <Nav.Link disabled={!isDescriptionFilled} eventKey="images">
-                  <FormattedMessage id='AddAProductPage.ImagesTabTitle' />
+                  <FormattedMessage id="AddAProductPage.ImagesTabTitle" />
                 </Nav.Link>
               </Nav.Item>
               <Nav.Item className={style.tabItem}>
-                <Nav.Link disabled={!isDescriptionFilled || !isImagesFilled} eventKey="product">
-                  <FormattedMessage id='AddAProductPage.ProductTabTitle' />
+                <Nav.Link
+                  disabled={!isDescriptionFilled || !isImagesFilled}
+                  eventKey="product"
+                >
+                  <FormattedMessage id="AddAProductPage.ProductTabTitle" />
                 </Nav.Link>
               </Nav.Item>
             </Nav>
@@ -70,7 +142,9 @@ const AddAProductPage: React.FC = () => {
                 />
               </Tab.Pane>
               <Tab.Pane eventKey="product">
-                sdfsd
+                <AddAProductFilesForm
+                  updateProductInfo={(input: any) => updateFile(input)}
+                />
               </Tab.Pane>
             </Tab.Content>
           </TabContainer>
@@ -78,11 +152,13 @@ const AddAProductPage: React.FC = () => {
           <Button
             disabled={!isImagesFilled || !isDescriptionFilled}
             onClick={handleSubmit}
-          >Add product</Button>
+          >
+            Add product
+          </Button>
         </div>
       </div>
     </OneToFivePage>
-  )
-}
+  );
+};
 
 export default AddAProductPage;
