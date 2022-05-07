@@ -79,8 +79,6 @@ const ImageInput: React.FC<Props> = props => {
     setPrevImages([...previewImages]);
   }, [previewImages]);
 
-  console.log(previewImages);
-
   return (
     <>
       <div className={style.dropzone}>
