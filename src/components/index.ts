@@ -5,6 +5,7 @@ export { default as Question } from './Question/Question';
 export { default as QuestionList } from './QuestionList/QuestionList';
 
 /* =============== Common =============== */
+export { default as AuthenticationLayout } from './common/AuthenticationLayout/AuthenticationLayout';
 export { default as FormInput } from './common/FormInput/FormInput';
 export { default as FileInput } from './common/FileInput/FileInput';
 export { default as ImageCarousel } from './common/ImageCarousel/ImageCarousel';
