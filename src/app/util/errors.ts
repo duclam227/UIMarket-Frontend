@@ -1,7 +1,7 @@
 export const errors = {
 	auth: {
 		'account-inactivated': 'accountInactive',
-		'email-existed': 'emailExisted',
+		'duplicate-key': 'emailExisted',
 		'invalid-authentication': 'invalidAuthentication',
 		'missing-req-body': 'actionFailed',
 		'validation-failed': 'actionFailed',
