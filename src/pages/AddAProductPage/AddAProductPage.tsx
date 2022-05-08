@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Button, Nav, Tab, TabContainer, Tabs } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import s3API from '../../api/amazonS3';
 import categoryAPI from '../../api/category';
 import productAPI from '../../api/product';
@@ -25,6 +26,8 @@ const AddAProductPage: React.FC = () => {
   const [product, setProduct] = useState<product | null>(null);
   const [productFiles, setProductFiles] = useState<Array<File>>([]);
 
+  const navigate = useNavigate();
+
   const isDescriptionFilled = !!(
     product &&
     product.productName &&
@@ -37,6 +40,10 @@ const AddAProductPage: React.FC = () => {
     product.productPictures &&
     product.productPictures.length > 0
   );
+  const isFilesFilled = !!(
+    productFiles &&
+    productFiles.length > 0
+  )
 
   const updateProduct = (input: any) => {
     setProduct({
@@ -46,8 +53,7 @@ const AddAProductPage: React.FC = () => {
   };
 
   const updateFile = (input: any) => {
-    console.log(input);
-    setProductFiles([...productFiles, ...input.productFiles]);
+    setProductFiles([...input.productFiles]);
   };
 
   const zipFiles = async () => {
@@ -81,15 +87,14 @@ const AddAProductPage: React.FC = () => {
           .then((res: any) => {
             const fileUrl = signedUploadUrl.split('?')[0];
 
-            console.log(fileUrl);
-
             productAPI
               .addNewProduct({
                 ...product!,
                 productFile: fileUrl,
               })
               .then((res: any) => {
-                console.log(res);
+                const { _id } = res.product;
+                navigate(`/product/${_id}`)
               })
               .catch(error => {
                 console.log(error);
@@ -150,7 +155,7 @@ const AddAProductPage: React.FC = () => {
           </TabContainer>
 
           <Button
-            disabled={!isImagesFilled || !isDescriptionFilled}
+            disabled={!isImagesFilled || !isDescriptionFilled || !isFilesFilled}
             onClick={handleSubmit}
           >
             Add product
