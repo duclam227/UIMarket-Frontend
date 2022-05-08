@@ -24,15 +24,13 @@ const ViewProductPage: React.FC = () => {
     productAPI
       .getProductById(id!)
       .then((res: any) => {
-        setProduct(res.product[0]);
+        setProduct(res.product);
         setIsLoading(false);
       })
       .catch(error => {
         console.log(error);
       });
-  }, []);
-
-  console.log(product);
+  }, [id]);
 
   return isLoading ? (
     <PageWithNavbar>
