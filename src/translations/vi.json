@@ -1,4 +1,9 @@
 {
+  "AccountNotVerifiedPage.title":"Tài khoản chưa được kích hoạt",
+  "AccountNotVerifiedPage.notVerifiedMessage":"Tài khoản cần phải được kích hoạt trước khi đăng nhập!",
+  "AccountNotVerifiedPage.sentEmailMessage":"Chúng tôi đã gửi link để kích hoạt tài khoản tới email của bạn.",
+  "AccountNotVerifiedPage.checkSpamMessage":"Vui lòng kiểm tra hộp thư spam.",
+  "AccountNotVerifiedPage.resendBtnLabel":"Gửi lại",
   "AddAProductPage.DescriptionTabTitle": "Thông tin",
   "AddAProductPage.ImagesTabTitle": "Hình ảnh",
   "AddAProductPage.ProductTabTitle": "Sản phẩm",
@@ -119,6 +124,8 @@
   "RecoverPasswordForm.title": "Quên mật khẩu",
   "RecoverPasswordForm.emailSmallText": "Nhập email mà bạn đã dùng để đăng ký tài khoản, chúng tôi sẽ gửi email kèm link để bạn đặt lại mật khẩu.",
   "RecoverPasswordForm.resetPasswordBtnLabel": "Đặt lại mật khẩu",
+  "RecoverPasswordForm.resetEmailMessage": "Chúng tôi đã gửi mail để đặt lại mật khẩu tới",
+  "RecoverPasswordForm.resendBtnLabel": "Gửi lại",
   "ResetForgetPasswordForm.title": "Đặt lại mật khẩu",
   "ResetForgetPasswordForm.newPasswordLabel": "Mật khẩu mới",
   "ResetForgetPasswordForm.newPasswordPlaceholder": "Mật khẩu mới",
@@ -170,5 +177,9 @@
   "UserProfilePage.editProfileBtnLabel": "Chỉnh sửa thông tin",
   "UserProfilePage.activityTabNavBtnLabel": "Hoạt động",
   "UserProfilePage.productTabNavBtnLabel": "Sản phẩm",
+  "VerifyPromptPage.title": "Kích hoạt tài khoản",
+  "VerifyPromptPage.verifyMessage": "Tài khoản cần phải được kích hoạt trước khi đăng nhập!",
+  "VerifyPromptPage.sentEmailMessage": "Chúng tôi đã gửi link kích hoạt tài khoản của bạn tới",
+  "VerifyPromptPage.checkSpamMessage": "Vui lòng kiểm tra hộp thư spam.",
   "ViewProductPage.AddToCart": "Thêm vào giỏ hàng"
 }

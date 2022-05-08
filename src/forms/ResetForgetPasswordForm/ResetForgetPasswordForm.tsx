@@ -20,7 +20,6 @@ interface UpdatePasswordRHFProps {
   password: string;
   confirmPassword: string;
 }
-//Comment
 const ResetForgetPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
   // Navigate to Sign In
   const backSignInNavLabel = (
