@@ -18,24 +18,29 @@ const AddAProductPicturesForm: React.FC<Props> = props => {
 
   const [images, setImages] = useState<Array<string>>([]);
 
-  const uploadImage = (image: File) => {
-    s3API
-      .getSignedUrl('images')
-      .then((res: any) => {
-        const signedUploadUrl: string = res.url;
-        s3API
-          .uploadToS3Bucket(signedUploadUrl, image)
-          .then((res: any) => {
-            const imageUrl = signedUploadUrl.split('?')[0];
-            setImages([...images, imageUrl]);
-          })
-          .catch(error => {
-            throw error;
-          });
-      })
-      .catch(error => {
+  const uploadImagesToStorage = async (imagesFromInput: Array<File>) => {
+    const imageUrls: Array<string> = [];
+    for (let i = 0; i < imagesFromInput.length; i++) {
+      try {
+        const response: any = await s3API.getSignedUrl('images');
+        const signedUploadUrl: string = response.url;
+
+        const responseUpload: any = await s3API.uploadToS3Bucket(signedUploadUrl, imagesFromInput[i]);
+        const imageUrl = signedUploadUrl.split('?')[0];
+        imageUrls.push(imageUrl);
+
+      }
+      catch (error) {
         console.log(error);
-      });
+      }
+    }
+
+    return imageUrls;
+  }
+
+  const uploadImage = async (imagesFromInput: Array<File>) => {
+    const imageUrls: Array<string> = await uploadImagesToStorage(imagesFromInput);
+    setImages([...images, ...imageUrls]);
   };
 
   const deleteImage = (indexToDelete: number) => {
@@ -57,7 +62,7 @@ const AddAProductPicturesForm: React.FC<Props> = props => {
       <ImageInput
         multiple={true}
         images={images}
-        handleUploadImage={(image: File) => uploadImage(image)}
+        handleUploadImage={(image: Array<File>) => uploadImage(image)}
         handleDeleteImage={(index: number) => deleteImage(index)}
       />
     </Form>

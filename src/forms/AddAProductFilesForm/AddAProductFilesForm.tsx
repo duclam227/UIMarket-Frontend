@@ -19,12 +19,12 @@ const AddAProductFilesForm: React.FC<Props> = props => {
   const [files, setFiles] = useState<Array<string>>([]);
   const [fileList, setFileList] = useState<Array<File>>([]);
 
-  const uploadFile = (file: File) => {
-    setFileList([...fileList, file]);
+  const uploadFile = (file: Array<File>) => {
+    setFileList([...fileList, ...file]);
   };
 
   const deleteFile = (indexToDelete: number) => {
-    setFiles(files.filter((file, index) => index !== indexToDelete));
+    setFileList(fileList.filter((file, index) => index !== indexToDelete));
   };
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const AddAProductFilesForm: React.FC<Props> = props => {
       <FileInput
         multiple={true}
         files={files}
-        handleUpload={(file: File) => uploadFile(file)}
+        handleUpload={(file: Array<File>) => uploadFile(file)}
         handleDelete={(index: number) => deleteFile(index)}
       />
     </Form>

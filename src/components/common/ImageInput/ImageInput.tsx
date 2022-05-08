@@ -54,9 +54,9 @@ const ImageInput: React.FC<Props> = props => {
       const imageURL = await readFileAsURL(image);
       imagesAfterUpload.push(image);
       previewImagesAfterUpload.push(imageURL);
-      props.handleUploadImage(image);
     }
 
+    props.handleUploadImage(imagesAfterUpload);
     setImages([...images, ...imagesAfterUpload]);
     setPreviewImages([...previewImages, ...previewImagesAfterUpload]);
     setPrevImages([...previewImages, ...previewImagesAfterUpload]);
