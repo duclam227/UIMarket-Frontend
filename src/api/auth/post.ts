@@ -25,12 +25,12 @@ class Post {
     });
   };
 
-	logInWithGoogle = (tokenId: string) => {
-		return axiosClient.post('/api/v1/auth/login-google', {
-			tokenId,
-		});
-	};
-  
+  logInWithGoogle = (tokenId: string) => {
+    return axiosClient.post('/api/v1/auth/login-google', {
+      tokenId,
+    });
+  };
+
   resetPassword = (credentials: ResetPasswordCredentials) => {
     return axiosClient.post('/api/v1/verify/resetForgetPassword', {
       ...credentials,
