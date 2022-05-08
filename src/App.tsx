@@ -26,7 +26,9 @@ import {
   ManageProductsPage,
   CreateAShopPage,
   ViewProductPage,
-  SearchQuestionsPage
+  SearchQuestionsPage,
+  VerifyPromptPage,
+  AccountNotVerifiedPage,
 } from './pages';
 import { logInWithJWT } from './redux/index';
 
@@ -55,6 +57,8 @@ function App() {
             </RequireAnonymous>
           }
         />
+        <Route path="/login/not-verified" element={<AccountNotVerifiedPage />} />
+        <Route path="/signup/verify-prompt" element={<VerifyPromptPage />} />
         <Route
           path="/signup"
           element={<AuthenticationPage destination="signup" />}
