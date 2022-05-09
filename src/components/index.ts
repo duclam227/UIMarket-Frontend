@@ -3,6 +3,7 @@ export { default as Comment } from './Comment/Comment';
 export { default as LanguageWrapper } from './LanguageWrapper/LanguageWrapper';
 export { default as Question } from './Question/Question';
 export { default as QuestionList } from './QuestionList/QuestionList';
+export { default as ProductList } from './ProductList/ProductList';
 
 /* =============== Common =============== */
 export { default as ImageCarousel } from './common/ImageCarousel/ImageCarousel';
