@@ -6,7 +6,7 @@
   "AccountNotVerifiedPage.resendBtnLabel": "Resend link",
   "AccountVerifiedPage.verifedTitle": "Verify successful",
   "AccountVerifiedPage.welcomeMessage": "Your account has been activated. Welcome to DeeX!",
-  "AccountVerifiedPage.redirectMessage": "You will be automatically redirect to Sign In page in",
+  "AccountVerifiedPage.redirectMessage": "You will be automatically redirected to Sign In page in",
   "AccountVerifiedPage.failedTitle": "Something went wrong!",
   "AccountVerifiedPage.failedMessage": "Your account has not been activated.",
   "AccountVerifiedPage.instructionMessage": "Please login with the registered account for us to resend your activation link.",
