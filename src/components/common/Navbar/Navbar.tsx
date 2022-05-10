@@ -87,8 +87,6 @@ const NavBar: FC<IProps> = (props) => {
     dispatch(logOut());
   };
 
-  console.log(branch)
-
   return (
     <>
       <nav className={style.mainNavbar}>
@@ -111,10 +109,59 @@ const NavBar: FC<IProps> = (props) => {
 
           <div className={style.buttonRow}>
             <button className={style.sellButton}>Sell your art</button>
-            <button className={style.authButton}>{itemLoginBtnLabel}</button>
-            <button className={style.authButton}>{itemSignupBtnLabel}</button>
+
+            {currentUser
+              ? <>
+                <div className="nav-item dropdown p-1">
+                  <a
+                    className="nav-link dropdown-toggle p-0 d-flex align-items-center"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <div className={style.avatarWrapper}>
+                      <img
+                        src={currentUser.customerAvatar || genericAvatarUrl}
+                        className={style.userAvatar}
+                        alt="User profile"
+                      />
+                    </div>
+                    {currentUser.customerName}
+                  </a>
+                  <ul
+                    className="dropdown-menu dropdown-menu-lg-end position-absolute mt-1"
+                    aria-labelledby="navbarDropdown"
+                  >
+                    <li>
+                      <Link
+                        to={`/user/${currentUser._id}`}
+                        className="dropdown-item"
+                      >
+                        {userDropdownProfileLabel}
+                      </Link>
+                    </li>
+                    <hr className="dropdown-divider" />
+                    <li className="text-center">
+                      <button
+                        className={style.authButton}
+                        onClick={handleLogout}
+                      >
+                        {userDropdownLogoutBtnLabel}
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </>
+              : <>
+                <Link to='/login'><button className={style.authButton}>{itemLoginBtnLabel}</button></Link>
+                <Link to='/signup'><button className={style.authButton}>{itemSignupBtnLabel}</button></Link>
+              </>
+            }
+
             <div className={style.separator}></div>
-            <button className={style.authButton}><BsCart className={style.cartIcon} /></button>
+            <Link to='/cart'><button className={style.authButton}><BsCart className={style.cartIcon} /></button></Link>
           </div>
         </section>
 

@@ -37,7 +37,7 @@
 }
 
 .leftSideNav {
-	flex: 2.5;
+	flex: 1;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
@@ -46,7 +46,6 @@
 }
 
 .rightSideNav {
-	flex: 1;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
