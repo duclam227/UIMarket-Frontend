@@ -13,6 +13,7 @@ const authAPI = {
   signUp: post.signUp,
   sendRecoverPasswordRequest: post.recoverPassword,
   resetPassword: post.resetPassword,
+  changePassword: post.changePassword,
 };
 
 export default authAPI;
