@@ -5,6 +5,7 @@ const authAPI = {
   //get
   getUserFromToken: get.getUserFromToken,
   resendVerifyEmail: get.resendVerifyEmail,
+  verifyEmailCode: get.verifyEmailCode,
 
   //post
   logIn: post.logIn,

@@ -10,6 +10,12 @@ class Get {
   resendVerifyEmail = (userId: string) => {
     return axiosClient.get(`api/v1/verify/resend?userId=${userId}`);
   };
+
+  verifyEmailCode = (userId: string, verifyCode: string) => {
+    return axiosClient.get(
+      `api/v1/verify/?userId=${userId}&verifyCode=${verifyCode}`,
+    );
+  };
 }
 
 export default new Get();
