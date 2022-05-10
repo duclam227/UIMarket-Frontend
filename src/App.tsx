@@ -29,6 +29,7 @@ import {
   SearchQuestionsPage,
   VerifyPromptPage,
   AccountNotVerifiedPage,
+  AccountVerifiedPage,
 } from './pages';
 import { logInWithJWT } from './redux/index';
 
@@ -57,7 +58,11 @@ function App() {
             </RequireAnonymous>
           }
         />
-        <Route path="/login/not-verified" element={<AccountNotVerifiedPage />} />
+        <Route path="/verify" element={<AccountVerifiedPage />} />
+        <Route
+          path="/login/not-verified"
+          element={<AccountNotVerifiedPage />}
+        />
         <Route path="/signup/verify-prompt" element={<VerifyPromptPage />} />
         <Route
           path="/signup"
@@ -91,11 +96,20 @@ function App() {
           }
         />
         <Route path="/questions/all" element={<QuestionListsPage />} />
-        <Route path="/questions/bountied" element={<BountiedQuestionListsPage />} />
-        <Route path="/questions/popular" element={<PopularQuestionListsPage />} />
+        <Route
+          path="/questions/bountied"
+          element={<BountiedQuestionListsPage />}
+        />
+        <Route
+          path="/questions/popular"
+          element={<PopularQuestionListsPage />}
+        />
         <Route path="/questions/search/*" element={<SearchQuestionsPage />} />
         <Route path="/questions/tag/:id" element={<QuestionListsPageByTag />} />
-        <Route path="/questions/*" element={<Navigate replace to="/questions/all" />} />
+        <Route
+          path="/questions/*"
+          element={<Navigate replace to="/questions/all" />}
+        />
         <Route path="/question/:id" element={<ViewQuestionPage />} />
         <Route
           path="/question/:id/edit"

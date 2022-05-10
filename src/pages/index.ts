@@ -2,6 +2,7 @@
 
 export { default as AboutUsPage } from './AboutUsPage/About';
 export { default as AccountNotVerifiedPage } from './AccountNotVerifiedPage/AccountNotVerifiedPage';
+export { default as AccountVerifiedPage } from './AccountVerifiedPage/AccountVerifiedPage';
 export { default as AddAProductPage } from './AddAProductPage/AddAProductPage';
 export { default as AskAQuestionPage } from './AskAQuestionPage/AskAQuestionPage';
 export { default as AuthenticationPage } from './AuthenticationPage/AuthenticationPage';
