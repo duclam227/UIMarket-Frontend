@@ -17,6 +17,7 @@ export { default as PageWithNavbar } from './common/PageWithNavbar/PageWithNavba
 export { default as RichTextEditor } from './common/RichTextEditor/RichTextEditor';
 export { default as RequireAnonymous } from './common/RequireAnonymous/RequireAnonymous';
 export { default as RequireUser } from './common/RequireUser/RequireUser';
+export { default as RequireAuthenticated } from './common/RequireAuthenticated/RequireAuthenticated';
 export { default as ThreeDotMenu } from './common/ThreeDotMenu/ThreeDotMenu';
 export { default as SideNav } from './common/SideNav/SideNav';
 export { default as OneToFivePage } from './common/OneToFivePage/OneToFivePage';
