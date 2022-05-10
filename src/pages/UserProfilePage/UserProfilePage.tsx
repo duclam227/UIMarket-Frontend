@@ -123,8 +123,6 @@ const UserProfilePage = () => {
         const { stat, tagStats, questions, questionBounty, answers } = res;
         const res2: any = await profileAPI.getUserProfileInfoById(id);
         const { user } = res2;
-        console.log(user);
-        console.log(res);
         setUserProfileInfo({ ...user });
         setProfileStats({ ...stat });
         setProfileTagStats([...tagStats]);

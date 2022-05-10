@@ -1,0 +1,25 @@
+@import '../../../app/util/colors.css';
+
+.loginPageContainer {
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 3.5fr;
+}
+
+.loginPageCover {
+  grid-column: 1;
+  background-color: var(--blue-200);
+}
+
+.loginForm {
+  grid-column: 2;
+  display: flex;
+  justify-content: center;
+}
+
+.sideImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
