@@ -3,7 +3,11 @@ import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css';
-import { RequireAnonymous, RequireUser } from './components';
+import {
+  RequireAnonymous,
+  RequireUser,
+  RequireAuthenticated,
+} from './components';
 
 import {
   AboutUsPage,
@@ -30,6 +34,8 @@ import {
   VerifyPromptPage,
   AccountNotVerifiedPage,
   AccountVerifiedPage,
+  ChangePasswordPage,
+  ForbiddenPage,
 } from './pages';
 import { logInWithJWT } from './redux/index';
 
@@ -77,8 +83,22 @@ function App() {
           path="/resetForgetPassword"
           element={<AuthenticationPage destination="reset" />}
         />
-        <Route path="/user/:id/edit" element={<EditProfilePage />} />
-        <Route path="/user/:id/*" element={<UserProfilePage />} />
+        <Route
+          path="/user/:id/edit"
+          element={
+            <RequireAuthenticated>
+              <EditProfilePage />
+            </RequireAuthenticated>
+          }
+        />
+        <Route
+          path="/user/:id/change-password"
+          element={
+            <RequireAuthenticated>
+              <ChangePasswordPage />
+            </RequireAuthenticated>
+          }
+        />
         <Route path="/user/:id/products" element={<ManageProductsPage />} />
         <Route path="/user/:id/shop" element={<ShopHomePage />} />
         <Route path="/user/:id/*" element={<UserProfilePage />} />
@@ -119,6 +139,7 @@ function App() {
             </RequireUser>
           }
         />
+        <Route path="/forbidden" element={<ForbiddenPage />} />
         <Route path="/" element={<Navigate replace to="/questions" />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
