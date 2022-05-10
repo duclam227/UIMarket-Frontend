@@ -1,0 +1,12 @@
+.cardImg {
+  object-fit: cover;
+}
+
+.grayStar {
+  font-size: 20px;
+}
+
+.yellowStar {
+  font-size: 20px;
+  color: yellow;
+}
