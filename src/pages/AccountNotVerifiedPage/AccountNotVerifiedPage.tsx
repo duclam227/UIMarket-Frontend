@@ -1,9 +1,8 @@
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
@@ -12,7 +11,7 @@ import { BsChevronLeft } from 'react-icons/bs';
 import NoMessage from '../../app/assets/NoMessage.svg';
 import authAPI from '../../api/auth';
 import { AuthenticationLayout } from '../../components';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 
 const AccountNotVerifiedPage = () => {
   const backSignInNavLabel = (
