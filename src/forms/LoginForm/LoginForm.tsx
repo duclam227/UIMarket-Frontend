@@ -118,7 +118,7 @@ const LoginForm: FC<loginFormProps> = props => {
       const customer: customer = { ...user };
       dispatch(loginSuccess({ ...customer }));
     } catch (e: any) {
-      if (e.response && e.response.status === 401) {
+      if (e.response && e.response.data.msg === 'account-inactived') {
         const { userId } = e.response.data;
         navigate(`/login/not-verified?userId=${userId}`);
       } else {
