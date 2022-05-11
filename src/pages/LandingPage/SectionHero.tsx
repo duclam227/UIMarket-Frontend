@@ -1,3 +1,4 @@
+import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { customer } from '../../app/util/interfaces';
 import cover from './images/heroImage.png';
@@ -12,14 +13,20 @@ const SectionHero: React.FC<IProps> = (props) => {
   const { currentUser } = props;
 
   const heroButton = currentUser
-    ? <Link to='/products'><button className={style.sectionHeroButton}>Explore</button></Link>
-    : <Link to='/signup'><button className={style.sectionHeroButton}>Create an account</button></Link>;
+    ? <Link to='/products'><button className={style.sectionHeroButton}>
+      <FormattedMessage id='LandingPage.ExploreLabel' />
+    </button></Link>
+    : <Link to='/signup'><button className={style.sectionHeroButton}>
+      <FormattedMessage id='LandingPage.SignUpLabel' />
+    </button></Link>;
 
   return (
     <section className={style.sectionHero}>
       <div className={style.sectionHeroLeft}>
-        <h1 className={style.sectionHeroTitle}>Accelerate your workflow with ready-to-use design resources.</h1>
-        <h3 className={style.sectionHeroSubtitle}>Find creative works that you’ll love and use.</h3>
+        <h1 className={style.sectionHeroTitle}>
+          <FormattedMessage id='LandingPage.SectionHeroTitle' />
+        </h1>
+        <h3 className={style.sectionHeroSubtitle}><FormattedMessage id='LandingPage.SectionHeroSubtitle' /></h3>
         {heroButton}
       </div>
       <div className={style.sectionHeroRight}>

@@ -1,6 +1,15 @@
 @import url('../../app/util/colors.css');
 @import url('../../app/util/propertySet.css');
 
+:root {
+	--sideMargins: 150px;
+}
+
+.sectionWrapper {
+	margin-top: 50px;
+	padding: 10px var(--sideMargins);
+}
+
 .sectionHero {
 	display: flex;
 	flex-direction: row;
@@ -14,8 +23,9 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	align-items: flex-start;
 
-	margin-left: 150px;
+	margin-left: var(--sideMargins);
 	margin-right: 100px;
 }
 
@@ -54,10 +64,184 @@
 	align-items: center;
 
 	margin-left: auto;
-	margin-right: 150px;
+	margin-right: var(--sideMargins);
 }
 
 .sectionHeroRight img {
+	width: 25vw;
+	object-fit: cover;
+}
+
+.sectionFeaturedProducts {
+	display: flex;
+	flex-direction: column;
+}
+
+.sectionFeaturedProductsHeader {
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
+}
+
+.sectionFeaturedProductsTitle {
+	display: flex;
+	flex-direction: column;
+}
+
+.sectionFeaturedProductsTitle h4 {
+	font-weight: 600;
+}
+
+.sectionFeaturedProductsExploreButton {
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	gap: 10px;
+
+	margin-left: auto;
+
+	color: var(--themeColor);
+	font-weight: 550;
+}
+
+.sectionExploreForum {
+	display: flex;
+	flex-direction: row;
+
+	min-height: 60vh;
+}
+
+.sectionExploreForumLeft {
+	margin-right: 100px;
+}
+
+.sectionExploreForumLeft img {
+	width: 25vw;
+	object-fit: cover;
+}
+
+.sectionExploreForumRight {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-end;
+	text-align: right;
+
+	margin-left: auto;
+}
+
+.sectionExploreForumTitle {
+	font-weight: 650;
+	font-size: 35px;
+}
+
+.sectionExploreForumSubtitle {
+	margin-top: 15px;
+	font-weight: 550;
+	font-size: 20px;
+}
+
+.sectionExploreForumButton {
+	margin-top: 20px;
+
+	width: 250px;
+	height: fit-content;
+
+	padding: 15px 0px;
+	color: white;
+	background-color: var(--pink-600);
+	border: none;
+	border-radius: 4px;
+}
+
+.sectionExploreForumButton:hover {
+	background-color: var(--pink-500);
+}
+
+.sectionTrendingCategoriesList {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	gap: 40px;
+	width: 100%;
+
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.categoryCard {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.categoryCardCover {
+	width: 100%;
+	object-fit: cover;
+}
+
+.categoryCardTitle {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	font-weight: 550;
+}
+
+.sectionStartEarning {
+	display: flex;
+	flex-direction: row;
+
+	min-height: 60vh;
+}
+
+.sectionStartEarningLeft {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+
+	margin-right: 100px;
+}
+
+.sectionStartEarningTitle {
+	font-weight: 650;
+	font-size: 40px;
+}
+
+.sectionStartEarningSubtitle {
+	margin-top: 15px;
+	font-weight: 550;
+	font-size: 20px;
+}
+
+.sectionStartEarningButton {
+	margin-top: 20px;
+
+	width: 250px;
+	height: fit-content;
+
+	padding: 15px 0px;
+	color: white;
+	background-color: var(--pink-600);
+	border: none;
+	border-radius: 4px;
+}
+
+.sectionStartEarningButton:hover {
+	background-color: var(--pink-400);
+}
+
+.sectionStartEarningRight {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	margin-left: auto;
+}
+
+.sectionStartEarningRight img {
 	width: 25vw;
 	object-fit: cover;
 }
