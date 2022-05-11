@@ -31,6 +31,7 @@ import {
   CreateAShopPage,
   ViewProductPage,
   SearchQuestionsPage,
+  ProductListPage,
   VerifyPromptPage,
   AccountNotVerifiedPage,
   AccountVerifiedPage,
@@ -105,6 +106,7 @@ function App() {
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactUsPage />} />
         <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/products" element={<ProductListPage />} />
         <Route path="/products/add" element={<AddAProductPage />} />
         <Route path="/product/:id" element={<ViewProductPage />} />
         <Route
