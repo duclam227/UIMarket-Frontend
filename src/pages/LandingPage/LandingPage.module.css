@@ -1,0 +1,63 @@
+@import url('../../app/util/colors.css');
+@import url('../../app/util/propertySet.css');
+
+.sectionHero {
+	display: flex;
+	flex-direction: row;
+
+	min-height: 60vh;
+
+	background-color: #ffeff7;
+}
+
+.sectionHeroLeft {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+
+	margin-left: 150px;
+	margin-right: 100px;
+}
+
+.sectionHeroTitle {
+	color: var(--themeColor);
+	font-weight: 650;
+	font-size: 45px;
+}
+
+.sectionHeroSubtitle {
+	margin-top: 15px;
+	font-weight: 600;
+	font-size: 25px;
+}
+
+.sectionHeroButton {
+	margin-top: 20px;
+
+	width: 250px;
+	height: fit-content;
+
+	padding: 15px 0px;
+	color: white;
+	background-color: var(--pink-500);
+	border: none;
+	border-radius: 40px;
+}
+
+.sectionHeroButton:hover {
+	background-color: var(--pink-400);
+}
+
+.sectionHeroRight {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	margin-left: auto;
+	margin-right: 150px;
+}
+
+.sectionHeroRight img {
+	width: 25vw;
+	object-fit: cover;
+}
