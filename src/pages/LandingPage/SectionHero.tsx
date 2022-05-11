@@ -12,7 +12,7 @@ const SectionHero: React.FC<IProps> = (props) => {
   const { currentUser } = props;
 
   const heroButton = currentUser
-    ? <button className={style.sectionHeroButton}>Explore</button>
+    ? <Link to='/products'><button className={style.sectionHeroButton}>Explore</button></Link>
     : <Link to='/signup'><button className={style.sectionHeroButton}>Create an account</button></Link>;
 
   return (
