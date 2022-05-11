@@ -2,9 +2,10 @@ import get from './get';
 import post from './post';
 
 const productAPI = {
-	getProductById: get.getProductById,
+  getProductById: get.getProductById,
+  getAllProductsByPageNumber: get.getAllProductsByPageNumber,
 
-	addNewProduct: post.addNewProduct,
+  addNewProduct: post.addNewProduct,
 };
 
 export default productAPI;
