@@ -3,7 +3,11 @@ import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css';
-import { RequireAnonymous, RequireUser } from './components';
+import {
+  RequireAnonymous,
+  RequireUser,
+  RequireAuthenticated,
+} from './components';
 
 import {
   AboutUsPage,
@@ -28,6 +32,11 @@ import {
   ViewProductPage,
   SearchQuestionsPage,
   ProductListPage,
+  VerifyPromptPage,
+  AccountNotVerifiedPage,
+  AccountVerifiedPage,
+  ChangePasswordPage,
+  ForbiddenPage,
 } from './pages';
 import { logInWithJWT } from './redux/index';
 
@@ -56,6 +65,12 @@ function App() {
             </RequireAnonymous>
           }
         />
+        <Route path="/verify" element={<AccountVerifiedPage />} />
+        <Route
+          path="/login/not-verified"
+          element={<AccountNotVerifiedPage />}
+        />
+        <Route path="/signup/verify-prompt" element={<VerifyPromptPage />} />
         <Route
           path="/signup"
           element={<AuthenticationPage destination="signup" />}
@@ -69,14 +84,29 @@ function App() {
           path="/resetForgetPassword"
           element={<AuthenticationPage destination="reset" />}
         />
-        <Route path="/user/:id/edit" element={<EditProfilePage />} />
-        <Route path="/user/:id/*" element={<UserProfilePage />} />
+        <Route
+          path="/user/:id/edit"
+          element={
+            <RequireAuthenticated>
+              <EditProfilePage />
+            </RequireAuthenticated>
+          }
+        />
+        <Route
+          path="/user/:id/change-password"
+          element={
+            <RequireAuthenticated>
+              <ChangePasswordPage />
+            </RequireAuthenticated>
+          }
+        />
         <Route path="/user/:id/products" element={<ManageProductsPage />} />
         <Route path="/user/:id/shop" element={<ShopHomePage />} />
         <Route path="/user/:id/*" element={<UserProfilePage />} />
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactUsPage />} />
         <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/products" element={<ProductListPage />} />
         <Route path="/products/add" element={<AddAProductPage />} />
         <Route path="/product/:id" element={<ViewProductPage />} />
         <Route
@@ -111,9 +141,9 @@ function App() {
             </RequireUser>
           }
         />
+        <Route path="/forbidden" element={<ForbiddenPage />} />
         <Route path="/" element={<Navigate replace to="/questions" />} />
         <Route path="*" element={<NotFoundPage />} />
-        <Route path="/products" element={<ProductListPage />} />
       </Routes>
     </div>
   );

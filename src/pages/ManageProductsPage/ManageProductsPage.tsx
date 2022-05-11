@@ -30,7 +30,7 @@ const ManageProductsPage: React.FC = () => {
       .catch(error => {
         console.log(error);
       })
-  }, [])
+  }, [shopId])
 
   return isLoading ? (
     <OneToFivePage>
