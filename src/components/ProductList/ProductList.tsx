@@ -17,7 +17,7 @@ const ProductList: FC<Props> = props => {
 
   const renderProduct = () => {
     return productList.map((p: any, i: number) => {
-      return <ProductCard key={i} {...p}></ProductCard>;
+      return <ProductCard key={i} product={p}></ProductCard>;
     });
   };
 

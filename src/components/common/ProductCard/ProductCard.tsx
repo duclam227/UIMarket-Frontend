@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import style from './ProductCard.module.css';
 
-interface ProductCardProps {
+interface ProductCard {
   _id?: string;
   coverPicture: string;
   shopId: any;
@@ -13,7 +13,13 @@ interface ProductCardProps {
   productRating: number;
 }
 
+interface ProductCardProps {
+  product: ProductCard
+}
+
 const ProductCard: FunctionComponent<ProductCardProps> = props => {
+  const { product } = props;
+
   const {
     _id,
     coverPicture,
@@ -21,7 +27,7 @@ const ProductCard: FunctionComponent<ProductCardProps> = props => {
     productName,
     productPrice,
     productRating,
-  } = props;
+  } = product;
 
   const renderStars = (productRating: number) => {
     const starArray: Array<any> = [];
