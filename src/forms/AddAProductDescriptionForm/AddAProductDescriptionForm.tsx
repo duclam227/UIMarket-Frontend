@@ -10,11 +10,15 @@ import style from './AddAProductDescriptionForm.module.css';
 
 interface Props {
   updateProductInfo: Function;
+  initialValue?: any;
+  isEdit?: boolean;
   intl: IntlShape;
 }
 
 const AddAProductDescriptionForm: React.FC<Props> = (props) => {
   const {
+    initialValue,
+    isEdit,
     intl
   } = props;
 
@@ -49,7 +53,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
       }}
       className={style.form}
     >
-      <div className={style.formTitle}><FormattedMessage id='AddAProduct.TabDescriptionTitle' /></div>
+      <div className={style.formTitle}><FormattedMessage id={isEdit ? 'EditProduct.TabDescriptionTitle' : 'AddAProduct.TabDescriptionTitle'} /></div>
 
       <Form.Group className="mb-3">
         <Form.Label className={style.label}>{productNameLabel}</Form.Label>
@@ -58,6 +62,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
           type="text"
           placeholder={productNamePlaceholder}
           required={true}
+          defaultValue={initialValue.productName}
         />
       </Form.Group>
 
@@ -68,6 +73,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
           type="number"
           placeholder={productPricePlaceholder}
           required={true}
+          defaultValue={initialValue.productPrice}
         />
       </Form.Group>
 
@@ -76,13 +82,12 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
         <Form.Select
           id="productCategory"
           aria-label="Default select example"
+          defaultValue={initialValue.productCategory}
         >
-          <option disabled={true} selected={true}>{productCategoryPlaceholder}</option>
           {categories && categories.map(cat => (
             <option value={cat._id}>{cat.categoryName}</option>
           ))
           }
-
         </Form.Select>
       </Form.Group>
 
@@ -94,6 +99,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
               productDescription: e
             })
           }}
+          initialValue={initialValue.productDescription}
         />
       </Form.Group>
 
