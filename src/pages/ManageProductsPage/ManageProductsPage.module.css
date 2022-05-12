@@ -1,4 +1,6 @@
-@import '../../app/util/colors.css' .loadingWrapper {
+@import '../../app/util/colors.css';
+
+.loadingWrapper {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,6 +78,7 @@
 .wrapperK {
   display: flex;
   justify-content: center;
+  padding-bottom: 5em;
 }
 
 .contentK {
@@ -86,9 +89,39 @@
   max-width: fit-content !important;
 }
 
-.statusBadgeActive {
-  background-color: var(--teal-500);
-  padding: 0 0.8em;
+/* Product */
+.productWrapper {
+  border-bottom: 1px solid var(--gray-200);
+}
+.productWrapper:last-child {
+  border-bottom: none;
+}
+
+.productThumbnailWrapper {
+  height: 6.5em;
+  width: 6.5em;
+}
+.productThumbnail {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.productName {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.statusBadge {
+  padding: 0.06em 0.8em;
   border-radius: 5em;
   color: white;
+}
+
+.active {
+  background-color: var(--teal-500);
+}
+.inactive {
+  background-color: var(--gray-600);
 }
