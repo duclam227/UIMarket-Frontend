@@ -1,5 +1,6 @@
 import get from './get';
 import post from './post';
+import put from './put';
 
 const productAPI = {
 	getProductById: get.getProductById,
@@ -8,6 +9,8 @@ const productAPI = {
 	searchProducts: get.searchProduct,
 
 	addNewProduct: post.addNewProduct,
+
+	editProduct: put.editProduct,
 };
 
 export default productAPI;
