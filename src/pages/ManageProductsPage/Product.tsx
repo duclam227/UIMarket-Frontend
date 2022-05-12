@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -16,13 +17,59 @@ interface Props {
   product: product;
   onSelectProduct: Function;
   onDeleteProduct: Function;
+  onDeactivateProduct: Function;
+  onActivateProduct: Function;
 }
 
 const Product: React.FC<Props> = props => {
+  const activeBadgeLabel = (
+    <FormattedMessage id="ManageProductsPage.Product.activeBadgeLabel" />
+  );
+  const inactiveBadgeLabel = (
+    <FormattedMessage id="ManageProductsPage.Product.inactiveBadgeLabel" />
+  );
+  const editMenuItemLabel = (
+    <FormattedMessage id="ManageProductsPage.Product.editMenuItemLabel" />
+  );
+  const hideMenuItemLabel = (
+    <FormattedMessage id="ManageProductsPage.Product.hideMenuItemLabel" />
+  );
+  const unHideMenuItemLabel = (
+    <FormattedMessage id="ManageProductsPage.Product.unHideMenuItemLabel" />
+  );
+  const deleteMenuItemLabel = (
+    <FormattedMessage id="ManageProductsPage.Product.deleteMenuItemLabel" />
+  );
+  const last30DaysLabel = (
+    <FormattedMessage id="ManageProductsPage.Product.last30DaysLabel" />
+  );
+  const allTimeLabel = (
+    <FormattedMessage id="ManageProductsPage.Product.allTimeLabel" />
+  );
+  const viewsLabel = (
+    <FormattedMessage id="ManageProductsPage.Product.viewsLabel" />
+  );
+  const saleLabel = (
+    <FormattedMessage id="ManageProductsPage.Product.saleLabel" />
+  );
+  const revenueLabel = (
+    <FormattedMessage id="ManageProductsPage.Product.revenueLabel" />
+  );
+
   const notAvailableImg =
     'https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101031/112815934-no-image-available-icon-flat-vector-illustration.jpg?ver=6';
 
-  const { product, isSelected, onSelectProduct, onDeleteProduct } = props;
+  const {
+    product,
+    isSelected,
+    onSelectProduct,
+    onDeleteProduct,
+    onDeactivateProduct,
+    onActivateProduct,
+  } = props;
+
+  useEffect(() => {
+  });
 
   return (
     <div className={`px-4 pt-1 pb-3 ${style.productWrapper}`}>
@@ -62,21 +109,23 @@ const Product: React.FC<Props> = props => {
           </Link>
         </Col>
         {/* Product price */}
-        <Col lg={2} className={`d-flex align-items-center border-bottom `}>
+        <Col lg={1} className={`d-flex align-items-center border-bottom `}>
           ${product.productPrice}
         </Col>
-        {/* Settings dropdown menu */}
         <Col
-          lg={2}
+          lg={3}
           className={`d-flex align-items-center border-bottom  justify-content-around`}
         >
+          {/* {Product status} */}
           <span
             className={`border d-flex align-items-center ${style.statusBadge} ${
               product.productStatus ? style.active : style.inactive
             }`}
           >
-            {product.productStatus ? 'Active' : 'Inactive'}
+            {product.productStatus ? activeBadgeLabel : inactiveBadgeLabel}
           </span>
+          {/* Settings dropdown menu */}
+
           <div>
             <div className="dropdown">
               <div
@@ -94,20 +143,32 @@ const Product: React.FC<Props> = props => {
               >
                 <li>
                   <Link to={`#`} className="dropdown-item">
-                    Edit
+                    {editMenuItemLabel}
                   </Link>
                 </li>
                 <li>
-                  <Link to={`#`} className="dropdown-item">
-                    Hide
-                  </Link>
+                  {product.productStatus ? (
+                    <span
+                      onClick={() => onDeactivateProduct(product._id)}
+                      className="dropdown-item"
+                    >
+                      {hideMenuItemLabel}
+                    </span>
+                  ) : (
+                    <span
+                      onClick={() => onActivateProduct(product._id)}
+                      className="dropdown-item"
+                    >
+                      {unHideMenuItemLabel}
+                    </span>
+                  )}
                 </li>
                 <li>
                   <span
                     onClick={() => onDeleteProduct(product._id)}
                     className="dropdown-item text-danger"
                   >
-                    Delete
+                    {deleteMenuItemLabel}
                   </span>
                 </li>
               </ul>
@@ -121,34 +182,34 @@ const Product: React.FC<Props> = props => {
         {/* Last 30 days */}
         <Col lg={{ offset: 3, span: 3 }}>
           <Row>
-            <p className={``}>LAST 30 DAYS</p>
+            <p className={``}>{last30DaysLabel}</p>
           </Row>
           <Row>
             <Col className={`d-flex flex-column`}>
               <span className={`text-muted`}>0</span>
-              <span className={`text-muted`}>views</span>
+              <span className={`text-muted`}>{viewsLabel}</span>
             </Col>
             <Col className={`d-flex flex-column`}>
               <span className={`text-muted`}>0</span>
-              <span className={`text-muted`}>sale</span>
+              <span className={`text-muted`}>{saleLabel}</span>
             </Col>
           </Row>
         </Col>
         {/* All time */}
         <Col lg={{ span: 3 }}>
           <Row>
-            <p className={``}>ALL TIME</p>
+            <p className={``}>{allTimeLabel}</p>
           </Row>
           <Row>
             <Col className={`d-flex flex-column`}>
               <span className={`text-muted`}>{product.totalSold}</span>
-              <span className={`text-muted`}>sale</span>
+              <span className={`text-muted`}>{saleLabel}</span>
             </Col>
             <Col className={`d-flex flex-column`}>
               <span className={`text-muted`}>
                 ${product.totalSold * product.productPrice}
               </span>
-              <span className={`text-muted`}>revenue</span>
+              <span className={`text-muted`}>{revenueLabel}</span>
             </Col>
           </Row>
         </Col>

@@ -10,7 +10,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 
 import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { State } from '../../redux/store';
 import { product } from '../../app/util/interfaces';
 import noProductsImage from '../../app/assets/error-not-found.png';
@@ -31,10 +31,7 @@ interface ProductListItem {
   product: product;
 }
 
-const ManageProductsPage: React.FC = () => {
-  const oneToOnePlaceholderImg =
-    'https://kccnma.github.io/sitebase/examples/productsite/img/placeholder-1x1.gif';
-
+const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
   const currentUser = useSelector((state: State) => state.auth.user);
   const shopId = currentUser?.shopId;
 
@@ -86,13 +83,14 @@ const ManageProductsPage: React.FC = () => {
   };
 
   const handleDeleteProduct = async (id: string) => {
-    const prevProducts = products && products.map(product => ({ ...product }));
+    const prevProducts = products;
     try {
       const newProducts =
         products && products.filter(product => product.product._id !== id);
       setProducts(newProducts);
       await productAPI.deleteProduct(id);
     } catch (error) {
+      console.log('Delete failed');
       console.log(getErrorMessage(error));
       setProducts(prevProducts);
     }
@@ -103,6 +101,50 @@ const ManageProductsPage: React.FC = () => {
     products.forEach(product => {
       if (product.isSelected) handleDeleteProduct(product.product._id!);
     });
+  };
+
+  const handleActivateProduct = async (id: string) => {
+    const prevProducts = products ? JSON.parse(JSON.stringify(products)) : null;
+    const newProducts = products ? JSON.parse(JSON.stringify(products)) : null;
+
+    const selectedProduct = _.find(
+      newProducts,
+      product => product.product._id === id,
+    );
+    if (!selectedProduct) return;
+    selectedProduct.product.productStatus = 1;
+
+    try {
+      setProducts(newProducts);
+      await productAPI.activateProduct(id);
+    } catch (error) {
+      setProducts(prevProducts);
+      console.log(getErrorMessage(error));
+    }
+  };
+  const handleDeactivateProduct = async (id: string) => {
+    console.log('Activated product', products);
+    //Save previous Products
+    const prevProducts = products && JSON.parse(JSON.stringify(products));
+
+    //Create new Products
+    const newProducts = products ? JSON.parse(JSON.stringify(products)) : null;
+    //Find product need to be updated
+    const selectedProduct = _.find(
+      newProducts,
+      product => product.product._id === id,
+    );
+    //Update product
+    if (!selectedProduct) return;
+    selectedProduct.product.productStatus = 0;
+
+    try {
+      await productAPI.deactivateProduct(id);
+      setProducts(newProducts);
+    } catch (error) {
+      setProducts(prevProducts);
+      console.log(getErrorMessage(error));
+    }
   };
   return isLoading ? (
     //Loading
@@ -166,7 +208,12 @@ const ManageProductsPage: React.FC = () => {
                 </Col>
                 <Col lg={3}>
                   <Form>
-                    <Form.Control placeholder="Search by title or ID..."></Form.Control>
+                    <Form.Control
+                      placeholder={intl.formatMessage({
+                        id: 'ManageProductsPage.searchPlaceholder',
+                        defaultMessage: 'Search by title or ID',
+                      })}
+                    ></Form.Control>
                   </Form>
                 </Col>
                 <Col lg={3} className={`d-flex justify-content-end`}>
@@ -193,7 +240,7 @@ const ManageProductsPage: React.FC = () => {
                   />
                   <span>
                     <Button variant="danger" onClick={handleDeleteSelected}>
-                      Delete selected
+                      <FormattedMessage id="ManageProductsPage.deleteSelectedBtnLabel" />
                     </Button>
                   </span>
                 </div>
@@ -208,6 +255,8 @@ const ManageProductsPage: React.FC = () => {
                     product={productItem.product}
                     onSelectProduct={handleSelectProduct}
                     onDeleteProduct={handleDeleteProduct}
+                    onActivateProduct={handleActivateProduct}
+                    onDeactivateProduct={handleDeactivateProduct}
                   />
                 ))}
               </Row>
@@ -219,4 +268,4 @@ const ManageProductsPage: React.FC = () => {
   );
 };
 
-export default ManageProductsPage;
+export default injectIntl(ManageProductsPage);
