@@ -25,8 +25,8 @@ const CartPage: FunctionComponent = () => {
       .getAllCartProducts()
       .then((res: any) => {
         console.log(res);
-        const { product } = res;
-        setProducts(product);
+        const { cart } = res;
+        setProducts(cart);
         setIsLoading(false);
       })
       .catch(error => {
@@ -36,23 +36,32 @@ const CartPage: FunctionComponent = () => {
       });
   }, []);
 
-  const renderItems = (items: Array<product>) => {
-    const productName =
-      'The Ultimate Guide to Designing, Prototyping and Mass Manufacturing your Product Idea...';
-    return (
-      <div className="d-flex flex-wrap flex-lg-nowrap align-items-center py-4 border-bottom border-1 mb-4">
-        <a className={styles.productimg} href="#">
-          <img src="https://picsum.photos/500/600" alt=".." />
-        </a>
-        <div className={'mw-100 text-truncate m-2'}>
-          {productName}
-          <div className="flex-fill text-end m-2">
-            <strong>$100</strong>
+  const renderItems = (cart: Array<any>) => {
+    return cart.map((item: any, i: number) => {
+      const { product } = item;
+      return (
+        <div
+          key={i}
+          className="d-flex flex-wrap flex-lg-nowrap align-items-stretch py-4 border-bottom border-1 mb-4"
+        >
+          <a className={styles.productimg} href="#">
+            <img src="https://picsum.photos/500/600" alt=".." />
+          </a>
+          <div
+            className={'mw-50 text-truncate m-2 flex-fill'}
+            style={{ maxWidth: '60%' }}
+          >
+            {product.productName}
           </div>
-          <div className="text-end text-primary m-2">Remove</div>
+          <div className="flex-fill">
+            <div className="text-end m-2">
+              <strong>${product.productPrice}</strong>
+            </div>
+            <div className="text-end text-primary m-2">Remove</div>
+          </div>
         </div>
-      </div>
-    );
+      );
+    });
   };
 
   const renderSummary = (summary: any) => {
