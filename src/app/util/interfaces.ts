@@ -1,74 +1,77 @@
 export interface question {
-	title: string;
-	body: string;
-	tags: string[];
-	bounty: number;
-	question: string;
+  title: string;
+  body: string;
+  tags: string[];
+  bounty: number;
+  question: string;
 }
 
 export interface navigatorTabItem {
-	path: string;
-	label: string;
+  path: string;
+  label: string;
 }
 
 export interface authCredentials {
-	customerEmail: string;
-	customerPassword: string;
-	customerName?: string;
+  customerEmail: string;
+  customerPassword: string;
+  customerName?: string;
 }
 
 export interface PaginatorProps {
-	totalNumberOfPages: number;
-	currentPage: number;
-	handleClickGoToPage: Function;
+  totalNumberOfPages: number;
+  currentPage: number;
+  handleClickGoToPage: Function;
 }
 
 export interface voteStatus {
-	upvote: boolean;
-	downvote: boolean;
+  upvote: boolean;
+  downvote: boolean;
 }
 
 export interface PaginatorProps {
-	totalNumberOfPages: number;
-	currentPage: number;
-	handleClickGoToPage: Function;
+  totalNumberOfPages: number;
+  currentPage: number;
+  handleClickGoToPage: Function;
 }
 
 export interface customer {
-	_id: string;
-	customerName: string;
-	customerEmail: string;
-	customerPassword: string;
-	customerPhone: string;
-	customerDOB: string;
-	authToken: {
-		Google: string;
-	};
-	customerWallet: {
-		coin: string;
-		point: string;
-	};
-	customer_Status: string;
-	createdAt: Date;
-	updatedAt: Date;
-	shopId: string;
-	refreshtoken: string;
-	customerAvatar: string;
+  _id: string;
+  customerName: string;
+  customerEmail: string;
+  customerPassword: string;
+  customerPhone: string;
+  customerDOB: string;
+  authToken: {
+    Google: string;
+  };
+  customerWallet: {
+    coin: string;
+    point: string;
+  };
+  customer_Status: string;
+  createdAt: Date;
+  updatedAt: Date;
+  shopId: string;
+  refreshtoken: string;
+  customerAvatar: string;
 }
 export interface product {
-	_id?: string;
-	coverPicture?: string;
-	productName: string;
-	productPrice: number;
-	productCategory: string;
-	productDescription: string;
-	productPictures?: Array<string>;
-	productFile?: string;
-	productRating?: number;
-	shopId?: any;
+  _id?: string;
+  coverPicture?: string;
+  productName: string;
+  productPrice: number;
+  productCategory: string;
+  productDescription: string;
+  productPictures?: Array<string>;
+  productFile?: string;
+  productStatus?: number;
+  totalSold?: number;
+  totalReview?: number;
+  productRating?: number;
+  shopId?: any;
 }
 
 export interface voteStatus {
-	upvote: boolean;
-	downvote: boolean;
+  upvote: boolean;
+  downvote: boolean;
 }

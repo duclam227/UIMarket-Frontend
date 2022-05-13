@@ -15,6 +15,34 @@ class Put {
 
 		return axiosClient.put(`${SHOP_ENDPOINT}/product/${product?._id}`, product, config);
 	};
+
+  activateProduct = (id: string) => {
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    return axiosClient.put(
+      `${SHOP_ENDPOINT}/product/active/${id}`,
+      null,
+      config,
+    );
+  };
+  
+  deactivateProduct = (id: string) => {
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    return axiosClient.put(
+      `${SHOP_ENDPOINT}/product/deactive/${id}`,
+      null,
+      config,
+    );
+  };
 }
 
 export default new Put();
