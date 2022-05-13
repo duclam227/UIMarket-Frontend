@@ -1,72 +1,127 @@
-.loadingWrapper {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+@import '../../app/util/colors.css';
 
-	width: 100%;
-	height: 100%;
+.loadingWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
 }
 
 .wrapper {
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 
-	width: 100%;
-	height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .content {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-	width: 78%;
-	background-color: white;
+  width: 78%;
+  background-color: white;
 }
 
 .noProductsImage {
-	max-width: 30%;
-	margin-top: 2rem;
-	margin-bottom: 2rem;
+  max-width: 30%;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .noProductsImage img {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .header {
-	display: flex;
-	flex-direction: row;
-	padding-left: 1rem;
-	padding-right: 1rem;
-	margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  padding-left: 3rem;
+  padding-right: 3rem;
+  margin-top: 3rem;
 
-	width: 100%;
+  width: 100%;
 }
 .addProductButton {
-	margin-left: auto;
-	height: fit-content;
+  margin-left: auto;
+  height: fit-content;
 }
 
 .title {
-	font-weight: 600;
+  font-weight: 600;
 }
 
 .productList {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	margin-top: 2rem;
-	padding-left: 1rem;
-	padding-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .productInList {
-	display: flex;
-	flex-direction: row;
-	gap: 1em;
+  display: flex;
+  flex-direction: row;
+  gap: 1em;
 
-	width: 100%;
+  width: 100%;
+}
+
+/* Khoa Lam */
+
+.wrapperK {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 5em;
+}
+
+.contentK {
+  width: 90%;
+}
+
+.controlPanelContainer {
+  max-width: fit-content !important;
+}
+
+/* Product */
+.productWrapper {
+  border-bottom: 1px solid var(--gray-200);
+}
+.productWrapper:last-child {
+  border-bottom: none;
+}
+
+.productThumbnailWrapper {
+  height: 6.5em;
+  width: 6.5em;
+}
+.productThumbnail {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+.productName {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.statusBadge {
+  padding: 0.06em 0.8em;
+  border-radius: 5em;
+  color: white;
+}
+
+.active {
+  background-color: var(--teal-500);
+}
+.inactive {
+  background-color: var(--gray-600);
 }
