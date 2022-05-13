@@ -25,6 +25,7 @@ const ViewProductPage: React.FC = () => {
   const [product, setProduct] = useState<product | null>(null);
 
   useEffect(() => {
+    setIsLoading(true);
     productAPI
       .getProductById(id!)
       .then((res: any) => {
