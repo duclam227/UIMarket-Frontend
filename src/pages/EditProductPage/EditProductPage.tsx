@@ -1,6 +1,6 @@
 import JSZip from 'jszip';
 import React, { useEffect, useState } from 'react';
-import { Button, Nav, Tab, TabContainer, Tabs } from 'react-bootstrap';
+import { Button, Nav, Spinner, Tab, TabContainer, Tabs } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -22,6 +22,7 @@ import style from './EditProductPage.module.css';
 
 const EditProductPage: React.FC = () => {
   const currentUser = useSelector((state: State) => state.auth.user);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [product, setProduct] = useState<product | null>(null);
   const [productDescription, setProductDescription] = useState<string | null>(null);
   const [productFiles, setProductFiles] = useState<Array<File>>([]);
@@ -128,80 +129,90 @@ const EditProductPage: React.FC = () => {
   };
 
   useEffect(() => {
-    productAPI.getProductById(id || '')
-      .then((res: any) => {
+    const getProduct = async () => {
+      setIsLoading(true);
+      try {
+        const res: any = await productAPI.getProductById(id!);
         const { product } = res;
         const { productDescription, ...rest } = product;
-        setProduct({ ...rest, productDescription });
         setProductDescription(productDescription);
-      })
-      .catch(error => {
+        setProduct({ ...rest, productDescription });
+        setIsLoading(false);
+      } catch (error) {
         console.log(error);
-      })
+      }
+    };
+
+    getProduct();
   }, [id])
+
 
   return (
     <OneToFivePage>
       <div className={style.wrapper}>
-        <div className={style.container}>
-          <TabContainer defaultActiveKey="description">
-            <Nav variant="pills" className={style.tabButtons}>
-              <Nav.Item className={style.tabItem}>
-                <Nav.Link eventKey="description">
-                  <FormattedMessage id="EditProductPage.DescriptionTabTitle" />
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item className={style.tabItem}>
-                <Nav.Link disabled={!isDescriptionFilled} eventKey="images">
-                  <FormattedMessage id="EditProductPage.ImagesTabTitle" />
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item className={style.tabItem}>
-                <Nav.Link
-                  disabled={!isDescriptionFilled || !isImagesFilled}
-                  eventKey="product"
-                >
-                  <FormattedMessage id="EditProductPage.ProductTabTitle" />
-                </Nav.Link>
-              </Nav.Item>
-            </Nav>
+        {isLoading
+          ? <Spinner animation="border" />
+          : <div className={style.container}>
+            <TabContainer defaultActiveKey="description">
+              <Nav variant="pills" className={style.tabButtons}>
+                <Nav.Item className={style.tabItem}>
+                  <Nav.Link eventKey="description">
+                    <FormattedMessage id="EditProductPage.DescriptionTabTitle" />
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item className={style.tabItem}>
+                  <Nav.Link disabled={!isDescriptionFilled} eventKey="images">
+                    <FormattedMessage id="EditProductPage.ImagesTabTitle" />
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item className={style.tabItem}>
+                  <Nav.Link
+                    disabled={!isDescriptionFilled || !isImagesFilled}
+                    eventKey="product"
+                  >
+                    <FormattedMessage id="EditProductPage.ProductTabTitle" />
+                  </Nav.Link>
+                </Nav.Item>
+              </Nav>
 
-            <Tab.Content>
-              <Tab.Pane eventKey="description">
-                <AddAProductDescriptionForm
-                  updateProductInfo={(input: any) => updateProduct(input)}
-                  initialValue={{
-                    productName: product?.productName,
-                    productDescription: productDescription,
-                    productCategory: product?.productCategory,
-                    productPrice: product?.productPrice,
-                  }}
-                  isEdit={true}
-                />
-              </Tab.Pane>
-              <Tab.Pane eventKey="images">
-                <AddAProductPicturesForm
-                  updateProductInfo={(input: any) => updateProduct(input)}
-                  images={product?.productPictures}
-                  isEdit={true}
-                />
-              </Tab.Pane>
-              <Tab.Pane eventKey="product">
-                <AddAProductFilesForm
-                  updateProductInfo={(input: any) => updateFile(input)}
-                  isEdit={true}
-                />
-              </Tab.Pane>
-            </Tab.Content>
-          </TabContainer>
+              <Tab.Content>
+                <Tab.Pane eventKey="description">
+                  <AddAProductDescriptionForm
+                    updateProductInfo={(input: any) => updateProduct(input)}
+                    initialValue={{
+                      productName: product?.productName,
+                      productDescription: productDescription,
+                      productCategory: product?.productCategory,
+                      productPrice: product?.productPrice,
+                    }}
+                    isEdit={true}
+                  />
+                </Tab.Pane>
+                <Tab.Pane eventKey="images">
+                  <AddAProductPicturesForm
+                    updateProductInfo={(input: any) => updateProduct(input)}
+                    images={product?.productPictures}
+                    isEdit={true}
+                  />
+                </Tab.Pane>
+                <Tab.Pane eventKey="product">
+                  <AddAProductFilesForm
+                    updateProductInfo={(input: any) => updateFile(input)}
+                    isEdit={true}
+                  />
+                </Tab.Pane>
+              </Tab.Content>
+            </TabContainer>
 
-          <Button
-            disabled={!isImagesFilled || !isDescriptionFilled}
-            onClick={handleSubmit}
-          >
-            Edit product
-          </Button>
-        </div>
+            <Button
+              disabled={!isImagesFilled || !isDescriptionFilled}
+              onClick={handleSubmit}
+            >
+              Edit product
+            </Button>
+          </div>
+        }
+
       </div>
     </OneToFivePage>
   );
