@@ -28,7 +28,7 @@ const ProductNavbar = () => {
           Trending
         </button>
         <div className={style.categoryList}>
-          {categories.map(category => <button key={category._id} className={style.button}>{category.categoryName}</button>)}
+          {categories.map((category: any) => <button key={category._id} className={style.button}>{category.categoryName}</button>)}
         </div>
       </section>
 
