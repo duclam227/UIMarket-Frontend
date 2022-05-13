@@ -5,7 +5,7 @@ import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-// import Row from 'react-bootstrap/row';
+import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -89,7 +89,7 @@ const ChangePasswordPage: FC<{ intl: IntlShape }> = ({ intl }) => {
             <h1>Change password</h1>
           </div>
           <Form onSubmit={handleSubmit(onChangePassword)}>
-            <div className={`row mt-4`}>
+            <Row className={`mt-4`}>
               <FormInput
                 type="password"
                 name="newPassword"
@@ -97,8 +97,8 @@ const ChangePasswordPage: FC<{ intl: IntlShape }> = ({ intl }) => {
                 control={control}
                 placeholder={newPasswordPlaceholder}
               />
-            </div>
-            <div className={`row mt-4`}>
+            </Row>
+            <Row className={`mt-4`}>
               <FormInput
                 type="password"
                 name="confirmPassword"
@@ -106,12 +106,12 @@ const ChangePasswordPage: FC<{ intl: IntlShape }> = ({ intl }) => {
                 control={control}
                 placeholder={confirmPasswordPlaceholder}
               />
-            </div>
-            <div className={`row mt-4`}>
+            </Row>
+            <Row className={`mt-4`}>
               <span>
                 <Button type="submit">{changePasswordBtnLabel}</Button>
               </span>
-            </div>
+            </Row>
           </Form>
         </Col>
       </Container>

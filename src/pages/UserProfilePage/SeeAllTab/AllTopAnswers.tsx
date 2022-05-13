@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { GeneralAnswerInfo } from '../UserProfilePage';
 
 import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/row';
+import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { InfoCardContainer } from '../../../components';

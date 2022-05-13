@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import Row from 'react-bootstrap/row';
+import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -167,7 +167,7 @@ const UserProfilePage = () => {
               </p>
             )}
           </Col>
-          
+
           {/* Render Edit button */}
           {currentUser?._id === params.id && (
             <Col lg={2} md={4} className="d-flex justify-content-center">
