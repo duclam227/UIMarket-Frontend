@@ -7,7 +7,9 @@ const productAPI = {
   //get
   getProductById: get.getProductById,
   getAllProductsByPageNumber: get.getAllProductsByPageNumber,
-
+  getTrendingProducts: get.getTrendingProducts,
+	searchProducts: get.searchProduct,
+  
   //post
   addNewProduct: post.addNewProduct,
 

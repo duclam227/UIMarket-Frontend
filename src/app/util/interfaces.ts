@@ -57,16 +57,17 @@ export interface customer {
 }
 export interface product {
   _id?: string;
+  coverPicture?: string;
   productName: string;
   productPrice: number;
   productCategory: string;
   productDescription: string;
-  productPictures: Array<string>;
-  productFile: string;
+  productPictures?: Array<string>;
+  productFile?: string;
   productStatus: number;
   totalSold: number;
   totalReview: number;
-  productRating: number;
+  productRating?: number;
 }
 
 export interface voteStatus {

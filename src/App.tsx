@@ -37,6 +37,7 @@ import {
   AccountVerifiedPage,
   ChangePasswordPage,
   ForbiddenPage,
+  LandingPage,
 } from './pages';
 import { logInWithJWT } from './redux/index';
 
@@ -142,7 +143,7 @@ function App() {
           }
         />
         <Route path="/forbidden" element={<ForbiddenPage />} />
-        <Route path="/" element={<Navigate replace to="/questions" />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </div>
