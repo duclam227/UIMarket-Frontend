@@ -209,5 +209,6 @@
   "VerifyPromptPage.verifyMessage": "Your account need to be activated before you can login!",
   "VerifyPromptPage.sentEmailMessage": "We've just sent a link to activate your account to",
   "VerifyPromptPage.checkSpamMessage": "Please check the spam folder.",
-  "ViewProductPage.AddToCart": "Add to cart"
+  "ViewProductPage.AddToCart": "Add to cart",
+  "ViewProductPage.EditProduct": "Edit"
 }

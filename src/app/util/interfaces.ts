@@ -65,6 +65,7 @@ export interface product {
 	productPictures?: Array<string>;
 	productFile?: string;
 	productRating?: number;
+	shopId?: any;
 }
 
 export interface voteStatus {

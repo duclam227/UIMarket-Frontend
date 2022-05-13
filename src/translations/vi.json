@@ -203,5 +203,6 @@
   "VerifyPromptPage.verifyMessage": "Tài khoản cần phải được kích hoạt trước khi đăng nhập!",
   "VerifyPromptPage.sentEmailMessage": "Chúng tôi đã gửi link kích hoạt tài khoản của bạn tới",
   "VerifyPromptPage.checkSpamMessage": "Vui lòng kiểm tra hộp thư spam.",
-  "ViewProductPage.AddToCart": "Thêm vào giỏ hàng"
+  "ViewProductPage.AddToCart": "Thêm vào giỏ hàng",
+  "ViewProductPage.EditProduct": "Chỉnh sửa"
 }
