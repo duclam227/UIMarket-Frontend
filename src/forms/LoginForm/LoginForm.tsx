@@ -1,7 +1,7 @@
-import { FC, useState } from 'react';
-import { Alert, Button, Form } from 'react-bootstrap';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, useEffect, useState } from "react";
+import { Alert, Button, Form } from "react-bootstrap";
+import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -9,8 +9,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { Link } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
+import { errors as errorCodes } from '../../app/util/errors';
 import { authCredentials, customer } from '../../app/util/interfaces';
-import { logIn, logInWithGoogle, loginSuccess } from '../../redux';
+import { logIn, logInWithGoogle, loginSuccess, setError } from '../../redux';
 import { State } from '../../redux/store';
 
 import style from './LoginForm.module.css';
@@ -54,10 +55,6 @@ const LoginForm: FC<loginFormProps> = props => {
     id: 'LoginForm.continueWithGoogleLabel',
   });
 
-  //email
-  // const loginFormEmailLabel = (
-  //   <FormattedMessage id="LoginForm.emailLabel" defaultMessage="Email" />
-  // );
   const loginFormEmailLabel = intl.formatMessage({
     id: 'LoginForm.emailLabel',
     defaultMessage: 'Email',
@@ -78,6 +75,8 @@ const LoginForm: FC<loginFormProps> = props => {
 
   const dispatch = useDispatch();
   const authError = useSelector((state: State) => state.auth.error);
+  const authErrorCode: any = authError && errorCodes.auth[authError as keyof typeof errorCodes.auth];
+  const authErrorMsg = authErrorCode && <FormattedMessage id={`LoginForm.${authErrorCode}`} />
 
   const schema = Joi.object({
     customerEmail: Joi.string()
@@ -87,10 +86,7 @@ const LoginForm: FC<loginFormProps> = props => {
       .label('Email'),
     customerPassword: Joi.string().required().label('Password'), //Remember to add min(8) rule
   });
-  // const [credentials, setCredentials] = useState<authCredentials>({
-  //   customerEmail: '',
-  //   customerPassword: '',
-  // });
+
   const {
     register,
     handleSubmit,
@@ -134,6 +130,10 @@ const LoginForm: FC<loginFormProps> = props => {
 
   const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
+  useEffect(() => {
+    dispatch(setError(null));
+  }, [])
+
   return (
     <>
       <div className={style.loginFormContainer}>
@@ -152,18 +152,6 @@ const LoginForm: FC<loginFormProps> = props => {
         </div>
 
         <Form onSubmit={handleSubmit(handleLogin)}>
-          {/* <Form.Group className="mb-3">
-            <Form.Label className={style.label}>
-              {loginFormEmailLabel}
-            </Form.Label>
-            <Form.Control
-              id="customerEmail"
-              type="email"
-              placeholder={loginFormEmailPlaceholder}
-              required={true}
-              onChange={e => onChange(e)}
-            />
-          </Form.Group> */}
           <FormInput
             label={loginFormEmailLabel}
             placeholder={loginFormEmailPlaceholder}
@@ -195,7 +183,7 @@ const LoginForm: FC<loginFormProps> = props => {
 
           {authError ? (
             <Form.Text>
-              <Alert variant="danger">{authError}</Alert>
+              <Alert variant="danger">{authErrorMsg}</Alert>
             </Form.Text>
           ) : null}
 

@@ -1,5 +1,6 @@
 export {
   signUp,
+  setError,
   logIn,
   logInWithJWT,
   logInWithGoogle,

@@ -127,4 +127,4 @@ const logOut = () => {
   };
 };
 
-export { signUp, logIn, logInWithJWT, logInWithGoogle, logOut, loginSuccess };
+export { signUp, logIn, logInWithJWT, logInWithGoogle, logOut, loginSuccess, setError };
