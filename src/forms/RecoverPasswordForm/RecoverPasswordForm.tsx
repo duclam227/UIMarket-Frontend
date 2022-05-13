@@ -62,6 +62,19 @@ const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
     />
   );
 
+  //Reset email
+  const resetEmailMessage = (
+    <FormattedMessage
+      id="RecoverPasswordForm.resetEmailMessage"
+      defaultMessage="We've just sent a link to reset your password to"
+    />
+  );
+  const resendBtnLabel = (
+    <FormattedMessage
+      id="RecoverPasswordForm.resendBtnLabel"
+      defaultMessage="Resend link"
+    />
+  );
   const schema = Joi.object({
     email: Joi.string()
       .email({ tlds: { allow: false } })
@@ -147,9 +160,7 @@ const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
             className={'flex-column justify-content-center align-items-center'}
           >
             <img src={NoMessage} alt="Check email" height={250}></img>
-            <span className="text-center">
-              We've just sent a link to reset your password to
-            </span>
+            <span className="text-center">{resetEmailMessage}</span>
             <p className={`text-center fw-bold text-primary`}>
               {submittedRecoverCredentials.email}
             </p>
@@ -159,7 +170,8 @@ const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
                 disabled={!!resendCountdown}
                 onClick={sendRecoverPasswordRequest}
               >
-                Resend link{!!resendCountdown ? ` - ${resendCountdown}s` : ''}
+                {resendBtnLabel}
+                {!!resendCountdown ? ` - ${resendCountdown}s` : ''}
               </Button>
             </span>
           </Row>

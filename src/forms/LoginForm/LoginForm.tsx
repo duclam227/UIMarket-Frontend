@@ -5,15 +5,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
+import { Link } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
-import { authCredentials } from "../../app/util/interfaces";
-import { logIn, logInWithGoogle, setError } from "../../redux";
-import { State } from "../../redux/store";
 import { errors as errorCodes } from '../../app/util/errors';
+import { authCredentials, customer } from '../../app/util/interfaces';
+import { logIn, logInWithGoogle, loginSuccess, setError } from '../../redux';
+import { State } from '../../redux/store';
 
 import style from './LoginForm.module.css';
 import { FormInput } from '../../components';
+import authAPI from '../../api/auth';
+import { getErrorMessage } from '../../app/util';
 
 interface loginFormProps {
   intl: IntlShape;
@@ -21,6 +25,7 @@ interface loginFormProps {
 
 const LoginForm: FC<loginFormProps> = props => {
   const { intl } = props;
+  const navigate = useNavigate();
 
   //general login form labels
   const title = (
@@ -43,10 +48,11 @@ const LoginForm: FC<loginFormProps> = props => {
   );
 
   //button labels
-  const submitMessage = <FormattedMessage
-    id="LoginForm.submit" defaultMessage="Sign in" />
+  const submitMessage = (
+    <FormattedMessage id="LoginForm.submit" defaultMessage="Sign in" />
+  );
   const continueWithGoogleLabel = intl.formatMessage({
-    id: "LoginForm.continueWithGoogleLabel"
+    id: 'LoginForm.continueWithGoogleLabel',
   });
 
   const loginFormEmailLabel = intl.formatMessage({
@@ -96,14 +102,31 @@ const LoginForm: FC<loginFormProps> = props => {
     },
   });
 
-  const handleLogin: SubmitHandler<authCredentials> = data => {
-    dispatch(logIn(data));
+  // const onChange = ({ currentTarget: input }: any) => {
+  //   setCredentials({ ...credentials, [input.id]: input.value });
+  // };
+
+  const handleLogin: SubmitHandler<authCredentials> = async data => {
+    try {
+      const res: any = await authAPI.logIn(data);
+      const { user, token } = res;
+      localStorage.setItem('authToken', token);
+      const customer: customer = { ...user };
+      dispatch(loginSuccess({ ...customer }));
+    } catch (e: any) {
+      if (e.response && e.response.data.msg === 'account-inactived') {
+        const { userId } = e.response.data;
+        navigate(`/login/not-verified?userId=${userId}`);
+      } else {
+        console.log('Login failed: ', getErrorMessage(e));
+      }
+    }
   };
 
   const handleGoogleLogin = (data: any) => {
     const { tokenId } = data;
     dispatch(logInWithGoogle(tokenId));
-  }
+  };
 
   const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 

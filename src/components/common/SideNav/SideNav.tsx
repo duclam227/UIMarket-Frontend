@@ -25,9 +25,9 @@ const SideNav: FC<Props> = props => {
       defaultMessage="Edit Profile"
     />
   );
-  const personalInfoNavLinkLabel = (
+  const changePasswordNavLinkLabel = (
     <FormattedMessage
-      id="SideNav.personalInfoNavLinkLabel"
+      id="SideNav.changePasswordNavLinkLabel"
       defaultMessage="Personal Information"
     />
   );
@@ -104,7 +104,9 @@ const SideNav: FC<Props> = props => {
         <Link to={`/user/${currentUser?._id}/edit`}>
           <li className={style.navLinkItem}>{editProfileNavLinkLabel}</li>
         </Link>
-        <li className={style.navLinkItem}>{personalInfoNavLinkLabel}</li>
+        <Link to={`/user/${currentUser?._id}/change-password`}>
+          <li className={style.navLinkItem}>{changePasswordNavLinkLabel}</li>
+        </Link>
       </ul>
 
       {/* Payment nav group */}
@@ -133,7 +135,10 @@ const SideNav: FC<Props> = props => {
       <ul className={style.navGroup}>
         <div className={style.navGroupName}>
           <BsShop className={style.navGroupNameIcon} />
-          <Link to={`/user/${currentUser?._id}/shop`} className={style.navGroupNameLabel}>
+          <Link
+            to={`/user/${currentUser?._id}/shop`}
+            className={style.navGroupNameLabel}
+          >
             {myStoreNavGroupLabel}
           </Link>
         </div>

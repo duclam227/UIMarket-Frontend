@@ -1,0 +1,15 @@
+@import '../../app/util/colors.css';
+
+.form {
+	margin: 20px 0px;
+}
+
+.label {
+	font-weight: 600;
+}
+
+.formTitle {
+	font-size: x-large;
+	margin-bottom: 25px;
+	color: var(--gray-600);
+}

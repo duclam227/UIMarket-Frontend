@@ -4,7 +4,7 @@ import axiosClient from '..';
 class Put {
   uploadToS3Bucket = (
     signedURL: string,
-    file: File,
+    file: File | Blob,
     extraConfig?: AxiosRequestConfig<File>,
   ) => {
     const config: AxiosRequestConfig<File> = {

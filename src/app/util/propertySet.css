@@ -1,0 +1,6 @@
+@import url('./colors.css');
+
+:root {
+	--themeColor: var(--pink-600);
+	--themeColorAccent: #ffeff7;
+}

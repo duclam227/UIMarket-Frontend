@@ -14,6 +14,7 @@ import { State } from '../../redux/store';
 import style from './SignupForm.module.css';
 import { FormInput } from '../../components';
 import GoogleLogin from 'react-google-login';
+import authAPI from '../../api/auth';
 
 interface SignupFormProps {
   intl: IntlShape;
@@ -44,7 +45,7 @@ const SignupForm: FC<SignupFormProps> = props => {
     <FormattedMessage id="SignupForm.submit" defaultMessage="Sign in" />
   );
   const continueWithGoogleLabel = intl.formatMessage({
-    id: "LoginForm.continueWithGoogleLabel"
+    id: 'LoginForm.continueWithGoogleLabel',
   });
   const continueWithFacebookLabel = (
     <FormattedMessage
@@ -131,15 +132,21 @@ const SignupForm: FC<SignupFormProps> = props => {
   // };
 
   const handleSignup: SubmitHandler<authCredentials> = async data => {
-    console.log(data);
-    dispatch(signUp(data));
+    try {
+      const res: any = await authAPI.signUp(data);
+      navigate(
+        `/signup/verify-prompt?email=${data.customerEmail}&userId=${res.userId}`,
+      );
+    } catch (e) {
+      console.log('Sign up error');
+    }
   };
 
   const handleGoogleLogin = (data: any) => {
     const { tokenId } = data;
     dispatch(logInWithGoogle(tokenId));
     navigate('/');
-  }
+  };
 
   const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 

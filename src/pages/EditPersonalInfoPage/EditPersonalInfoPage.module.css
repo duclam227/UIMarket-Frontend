@@ -1,4 +1,6 @@
-@import '../../app/util/colors.css' .textUnderlineHover {
+@import '../../app/util/colors.css'; 
+
+.textUnderlineHover {
   text-decoration: none;
 }
 
