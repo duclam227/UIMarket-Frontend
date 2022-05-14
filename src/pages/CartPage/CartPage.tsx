@@ -37,6 +37,18 @@ const CartPage: FunctionComponent = () => {
   }, []);
 
   const renderItems = (cart: Array<any>) => {
+    const handleRemoveItem = (item: any) => {
+      cartAPI
+        .removeSingleProduct(item._id)
+        .then((res: any) => {
+          console.log(res);
+        })
+        .catch(error => {
+          const errorMsg = getErrorMessage(error);
+          setError(errorMsg);
+        });
+    };
+
     return cart.map((item: any, i: number) => {
       const { product } = item;
       return (
@@ -57,7 +69,15 @@ const CartPage: FunctionComponent = () => {
             <div className="text-end m-2">
               <strong>${product.productPrice}</strong>
             </div>
-            <div className="text-end text-primary m-2">Remove</div>
+            <div className="text-end">
+              <a
+                className="text-primary m-2"
+                href=""
+                onClick={() => handleRemoveItem(product)}
+              >
+                Remove
+              </a>
+            </div>
           </div>
         </div>
       );
