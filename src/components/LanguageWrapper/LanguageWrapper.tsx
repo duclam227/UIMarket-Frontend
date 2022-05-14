@@ -17,7 +17,7 @@ switch (defaultLocale) {
     break;
   }
   default: {
-    defaultLanguage = vi;
+    defaultLanguage = en;
     break;
   }
 }
