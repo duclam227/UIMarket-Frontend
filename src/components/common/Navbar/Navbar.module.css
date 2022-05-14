@@ -20,7 +20,7 @@
 }
 
 .separator {
-	width: .5px;
+	width: 0.5px;
 	height: 70%;
 	border-left: 1px black solid;
 }
@@ -126,12 +126,17 @@
 }
 
 .authButton {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	height: 100%;
-	margin: 0 5px;
+	display: block;
+	width: 100%;
+	padding: 0.25rem 1rem;
+	clear: both;
+	font-weight: 400;
+	color: #212529;
+	text-align: inherit;
+	text-decoration: none;
+	white-space: nowrap;
+	background-color: transparent;
+	border: 0;
 
 	background-color: transparent;
 	border: none;

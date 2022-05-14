@@ -143,9 +143,9 @@ const NavBar: FC<IProps> = (props) => {
                       </Link>
                     </li>
                     <hr className="dropdown-divider" />
-                    <li className="text-center">
+                    <li className="">
                       <button
-                        className={style.authButton}
+                        className={`${style.authButton}`}
                         onClick={handleLogout}
                       >
                         {userDropdownLogoutBtnLabel}
