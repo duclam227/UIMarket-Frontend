@@ -12,17 +12,19 @@ interface Props {
 
 const SectionHeader: React.FC<Props> = (props) => {
   const { title } = props;
-  return (
-    <section className={style.header}>
-      <h1 className={style.title}>{title}</h1>
-      <div className={style.buttonRow}>
-        <Button className={style.button}>
-          <AiOutlineShoppingCart />
-          <FormattedMessage id='ViewProductPage.AddToCart' />
-        </Button>
-      </div>
-    </section>
-  )
+  return title
+    ? (
+      <section className={style.header}>
+        <h1 className={style.title}>{title}</h1>
+        <div className={style.buttonRow}>
+          <Button className={style.button}>
+            <AiOutlineShoppingCart />
+            <FormattedMessage id='ViewProductPage.AddToCart' />
+          </Button>
+        </div>
+      </section>
+    )
+    : null
 }
 
 export default SectionHeader;
