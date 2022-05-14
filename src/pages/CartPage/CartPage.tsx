@@ -24,7 +24,6 @@ const CartPage: FunctionComponent = () => {
     cartAPI
       .getAllCartProducts()
       .then((res: any) => {
-        console.log(res);
         const { cart } = res;
         setProducts(cart);
         setIsLoading(false);
@@ -57,7 +56,7 @@ const CartPage: FunctionComponent = () => {
           className="d-flex flex-wrap flex-lg-nowrap align-items-stretch py-4 border-bottom border-1 mb-4"
         >
           <a className={styles.productimg} href="#">
-            <img src="https://picsum.photos/500/600" alt=".." />
+            <img src={product.productPictures[0]} alt=".." />
           </a>
           <div
             className={'mw-50 text-truncate m-2 flex-fill'}
