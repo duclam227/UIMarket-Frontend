@@ -84,15 +84,23 @@ const CartPage: FunctionComponent = () => {
     });
   };
 
-  const renderSummary = (summary: any) => {
+  const totalPrice = (cart: any) => {
+    let price = 0;
+    for (let i = 0; i < cart.length; i++) {
+      price += cart[i].product.productPrice;
+    }
+    return price;
+  };
+
+  const renderSummary = (cart: any) => {
     return (
       <div className="d-flex flex-column p-4 bg-white border rounded">
         <h4 className="m-2">Summary</h4>
         <div className="d-flex justify-content-between m-2">
-          <span>3 items</span>
-          <strong>200$</strong>
+          <span>{cart.length} items</span>
+          <strong>{totalPrice(cart)}$</strong>
         </div>
-        <Button className="m-2">Continue to Checkout</Button>
+        <Button className="m-2">Checkout with PayPal</Button>
       </div>
     );
   };
@@ -109,7 +117,7 @@ const CartPage: FunctionComponent = () => {
               {renderItems(cartProducts)}
             </Col>
             <Col lg="1"></Col>
-            <Col lg="4">{renderSummary(summary)}</Col>
+            <Col lg="4">{renderSummary(cartProducts)}</Col>
           </Row>
         )}
       </Container>
