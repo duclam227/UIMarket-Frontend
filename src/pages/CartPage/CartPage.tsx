@@ -31,14 +31,14 @@ const CartPage: FunctionComponent = () => {
 
   const renderItems = (cart: Array<any>) => {
     const handleRemoveItem = (removedItem: any) => {
-      const newList = cartProducts.filter(item => {
-        return item.product._id !== removedItem._id;
-      });
-      setProducts(newList);
-
       cartAPI
         .removeSingleProduct(removedItem._id)
-        .then((res: any) => {})
+        .then((res: any) => {
+          const newList = cartProducts.filter(item => {
+            return item.product._id !== removedItem._id;
+          });
+          setProducts(newList);
+        })
         .catch(error => {
           const errorMsg = getErrorMessage(error);
           setError(errorMsg);
