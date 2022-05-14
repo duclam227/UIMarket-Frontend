@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
+import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Navbar from 'react-bootstrap/Navbar';
@@ -30,20 +31,21 @@ const PageWithSideNav: FC = props => {
                   sticky="top"
                   className={`p-0`}
                 >
-                  <Navbar.Toggle
-                    aria-controls="offcanvasNavbar"
-                    className={`${style.hamburgerOffcanvasToggler}`}
-                  />
-                  <Navbar.Offcanvas
-                    id="offcanvasNavbar"
-                    aria-labelledby="offcanvasNavbarLabel"
-                    placement="start"
-                  >
-                    <Offcanvas.Body className={`p-0`}>
-                      <SideNav />
-                    </Offcanvas.Body>
-                  </Navbar.Offcanvas>
-                  <SideNav className={`d-none d-lg-block`} />
+                  <Container fluid className={`p-0`}>
+                    <Navbar.Toggle
+                      aria-controls={`offcanvasNavbar-expand-lg`}
+                      className={`offcanvasNavbar-expand-lg ${style.hamburgerOffcanvasToggler}`}
+                    />
+                    <Navbar.Offcanvas
+                      id={`offcanvasNavbar-expand-lg`}
+                      aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
+                      placement="start"
+                    >
+                      <Offcanvas.Body className={`p-0`}>
+                        <SideNav />
+                      </Offcanvas.Body>
+                    </Navbar.Offcanvas>
+                  </Container>
                 </Navbar>
               </Col>
               <Col lg={9} xl={10} className={`p-0`}>
