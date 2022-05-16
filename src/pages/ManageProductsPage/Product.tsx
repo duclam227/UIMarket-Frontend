@@ -118,9 +118,8 @@ const Product: React.FC<Props> = props => {
         >
           {/* {Product status} */}
           <span
-            className={`border d-flex align-items-center ${style.statusBadge} ${
-              product.productStatus ? style.active : style.inactive
-            }`}
+            className={`border d-flex align-items-center ${style.statusBadge} ${product.productStatus ? style.active : style.inactive
+              }`}
           >
             {product.productStatus ? activeBadgeLabel : inactiveBadgeLabel}
           </span>
@@ -207,7 +206,7 @@ const Product: React.FC<Props> = props => {
             </Col>
             <Col className={`d-flex flex-column`}>
               <span className={`text-muted`}>
-                ${product.totalSold * product.productPrice}
+                ${product.totalSold! * product.productPrice!}
               </span>
               <span className={`text-muted`}>{revenueLabel}</span>
             </Col>
