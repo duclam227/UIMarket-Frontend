@@ -17,7 +17,7 @@ interface Props {
 const SectionHeader: React.FC<Props> = (props) => {
   const { product, currentUser } = props;
 
-  const isCurrentUserSeller = currentUser.customerEmail === product.shopId.customerEmail;
+  const isCurrentUserSeller = currentUser?.customerEmail === product.shopId.customerEmail;
 
   return (
     <section className={style.header}>
