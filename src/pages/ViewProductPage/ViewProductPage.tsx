@@ -9,9 +9,6 @@ import { State } from '../../redux/store';
 import { product } from '../../app/util/interfaces';
 import { getErrorMessage } from '../../app/util';
 import { PageWithNavbar } from '../../components';
-import SectionDescription from './SectionDescription';
-import SectionHeader from './SectionHeader';
-import SectionImages from './SectionImages';
 
 import productAPI from '../../api/product';
 import reviewAPI from '../../api/review';
