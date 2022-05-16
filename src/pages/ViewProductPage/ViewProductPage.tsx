@@ -7,14 +7,23 @@ import { AiOutlineShoppingCart } from 'react-icons/ai';
 
 import { State } from '../../redux/store';
 import { product } from '../../app/util/interfaces';
+import { getErrorMessage } from '../../app/util';
 import { PageWithNavbar } from '../../components';
 import SectionDescription from './SectionDescription';
 import SectionHeader from './SectionHeader';
 import SectionImages from './SectionImages';
 
 import productAPI from '../../api/product';
+import reviewAPI from '../../api/review';
+
+import SectionDescription from './SectionDescription';
+import SectionHeader from './SectionHeader';
+import SectionImages from './SectionImages';
+import SectionReviews from './SectionReviews';
 
 import style from './ViewProductPage.module.css';
+
+const ITEMS_PER_PAGE = 10;
 
 const ViewProductPage: React.FC = () => {
   const { id } = useParams();
@@ -23,6 +32,27 @@ const ViewProductPage: React.FC = () => {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [product, setProduct] = useState<product | null>(null);
+  const [reviews, setReviews] = useState<Array<any> | null>(null);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
+  const goToPage = (pageNumber: number) => {
+    setIsLoading(true);
+    reviewAPI
+      .getReviewsOfProductByPage(id!, pageNumber, ITEMS_PER_PAGE)
+      .then((res: any) => {
+        const { totalPages, reviews, page } = res;
+        setCurrentPage(page);
+        setReviews(reviews);
+        setTotalPages(totalPages);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        const errorMsg = getErrorMessage(error);
+        console.log(errorMsg);
+        setIsLoading(false);
+      });
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -30,6 +60,15 @@ const ViewProductPage: React.FC = () => {
       .getProductById(id!)
       .then((res: any) => {
         setProduct(res.product);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    reviewAPI
+      .getReviewsOfProductByPage(id!, 1, 10)
+      .then((res: any) => {
+        setReviews(res.reviews);
         setIsLoading(false);
       })
       .catch(error => {
@@ -50,7 +89,12 @@ const ViewProductPage: React.FC = () => {
         <SectionHeader product={product!} currentUser={currentUser!} />
         <SectionImages images={product?.productPictures!} />
         <SectionDescription body={product?.productDescription!} />
-        {/* </div> */}
+        <SectionReviews
+          reviews={reviews!}
+          totalPages={totalPages}
+          currentPage={currentPage}
+          handleGoToPage={(page: number) => goToPage(page)}
+        />
       </div>
     </PageWithNavbar>
   );

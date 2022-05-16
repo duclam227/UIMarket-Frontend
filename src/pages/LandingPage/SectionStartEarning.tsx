@@ -17,7 +17,7 @@ const SectionStartEarning = () => {
         <h3 className={style.sectionStartEarningSubtitle}>
           <FormattedMessage id='LandingPage.SectionStartEarningSubtitle' />
         </h3>
-        <Link to='/questions'><button className={style.sectionStartEarningButton}>
+        <Link to='/signup'><button className={style.sectionStartEarningButton}>
           <FormattedMessage id='LandingPage.OpenShopLabel' />
         </button></Link>
       </div>
