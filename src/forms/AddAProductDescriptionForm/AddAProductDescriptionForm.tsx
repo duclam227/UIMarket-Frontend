@@ -62,7 +62,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
           type="text"
           placeholder={productNamePlaceholder}
           required={true}
-          defaultValue={initialValue.productName}
+          defaultValue={initialValue?.productName || null}
         />
       </Form.Group>
 
@@ -73,7 +73,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
           type="number"
           placeholder={productPricePlaceholder}
           required={true}
-          defaultValue={initialValue.productPrice}
+          defaultValue={initialValue?.productPrice || null}
         />
       </Form.Group>
 
@@ -82,7 +82,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
         <Form.Select
           id="productCategory"
           aria-label="Default select example"
-          defaultValue={initialValue.productCategory}
+          defaultValue={initialValue?.productCategory || null}
         >
           {categories && categories.map(cat => (
             <option value={cat._id}>{cat.categoryName}</option>
@@ -99,7 +99,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
               productDescription: e
             })
           }}
-          initialValue={initialValue.productDescription}
+          initialValue={initialValue?.productDescription || null}
         />
       </Form.Group>
 
