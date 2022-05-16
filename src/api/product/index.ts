@@ -13,7 +13,7 @@ const productAPI = {
   //post
   addNewProduct: post.addNewProduct,
 
-  //put
+	editProduct: put.editProduct,
   activateProduct: put.activateProduct,
   deactivateProduct: put.deactivateProduct,
 

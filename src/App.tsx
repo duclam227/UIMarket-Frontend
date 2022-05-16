@@ -38,6 +38,7 @@ import {
   ChangePasswordPage,
   ForbiddenPage,
   LandingPage,
+  EditProductPage,
 } from './pages';
 import { logInWithJWT } from './redux/index';
 
@@ -110,6 +111,7 @@ function App() {
         <Route path="/products" element={<ProductListPage />} />
         <Route path="/products/add" element={<AddAProductPage />} />
         <Route path="/product/:id" element={<ViewProductPage />} />
+        <Route path="/product/:id/edit" element={<EditProductPage />} />
         <Route
           path="/questions/new"
           element={
