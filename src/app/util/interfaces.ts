@@ -64,10 +64,11 @@ export interface product {
   productDescription: string;
   productPictures?: Array<string>;
   productFile?: string;
-  productStatus: number;
-  totalSold: number;
-  totalReview: number;
+  productStatus?: number;
+  totalSold?: number;
+  totalReview?: number;
   productRating?: number;
+  shopId?: any;
 }
 
 export interface voteStatus {

@@ -72,6 +72,12 @@
   "EditPersonalInfoPage.editBtnLabel": "Chỉnh sửa",
   "EditPersonalInfoPage.saveBtnLabel": "Lưu thay đổi",
   "EditPersonalInfoPage.cancelBtnLabel": "Hủy",
+  "EditProductPage.DescriptionTabTitle": "Thông tin",
+  "EditProductPage.ImagesTabTitle": "Hình ảnh",
+  "EditProductPage.ProductTabTitle": "Sản phẩm",
+  "EditProduct.TabDescriptionTitle": "Bước 1: Xác nhận thông tn cơ bản của sản phẩm",
+  "EditProduct.TabImagesTitle": "Bước 2: Quản lý hình ảnh của sản phẩm",
+  "EditProduct.TabFilesTitle": "Bước 3: Nếu muốn, bạn có thể thay đổi toàn bộ nội dung của sản phẩm",
   "EditProfilePage.pageTitle": "Chỉnh sửa hồ sơ",
   "EditProfilePage.pageSubTitle": "Chỉnh sửa hồ sơ của bạn",
   "EditProfilePage.nameFormInputLabel": "Tên",
@@ -216,5 +222,6 @@
   "VerifyPromptPage.verifyMessage": "Tài khoản cần phải được kích hoạt trước khi đăng nhập!",
   "VerifyPromptPage.sentEmailMessage": "Chúng tôi đã gửi link kích hoạt tài khoản của bạn tới",
   "VerifyPromptPage.checkSpamMessage": "Vui lòng kiểm tra hộp thư spam.",
-  "ViewProductPage.AddToCart": "Thêm vào giỏ hàng"
+  "ViewProductPage.AddToCart": "Thêm vào giỏ hàng",
+  "ViewProductPage.EditProduct": "Chỉnh sửa"
 }

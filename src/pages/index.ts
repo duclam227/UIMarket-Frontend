@@ -14,6 +14,7 @@ export { default as ContactUsPage } from './ContactUsPage/Contact';
 export { default as CreateAShopPage } from './CreateAShopPage/CreateAShopPage';
 export { default as EditPersonalInfoPage } from './EditPersonalInfoPage/EditPersonalInfoPage';
 export { default as EditProfilePage } from './EditProfilePage/EditProfilePage';
+export { default as EditProductPage } from './EditProductPage/EditProductPage';
 export { default as EditQuestionPage } from './EditQuestionPage/EditQuestionPage';
 export { default as ForbiddenPage } from './ForbiddenPage/ForbiddenPage';
 export { default as LandingPage } from './LandingPage/LandingPage';
