@@ -73,7 +73,7 @@ const ViewProductPage: React.FC = () => {
       });
   }, [id]);
 
-  return isLoading ? (
+  return isLoading || !product ? (
     <PageWithNavbar>
       <div className={style.wrapper}>
         <Spinner animation="border" />
