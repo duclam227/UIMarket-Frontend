@@ -1,5 +1,5 @@
-import { FC, useState, createContext } from "react";
-import { IntlProvider, MessageFormatElement } from "react-intl";
+import { FC, useState, createContext } from 'react';
+import { IntlProvider, MessageFormatElement } from 'react-intl';
 
 import vi from '../../translations/vi.json';
 import en from '../../translations/en.json';
@@ -7,7 +7,10 @@ import en from '../../translations/en.json';
 export const LanguageContext = createContext({});
 
 const defaultLocale = navigator.language;
-let defaultLanguage: Record<string, string> | Record<string, MessageFormatElement[]> | undefined;
+let defaultLanguage:
+  | Record<string, string>
+  | Record<string, MessageFormatElement[]>
+  | undefined;
 switch (defaultLocale) {
   case 'vi-VN': {
     defaultLanguage = vi;
@@ -19,7 +22,7 @@ switch (defaultLocale) {
   }
 }
 
-const LanguageWrapper: FC = (props) => {
+const LanguageWrapper: FC = props => {
   const [language, setLanguage] = useState(defaultLanguage);
   const [locale, setLocale] = useState(defaultLocale);
 
@@ -35,7 +38,7 @@ const LanguageWrapper: FC = (props) => {
         break;
       }
     }
-  }
+  };
 
   return (
     <>
@@ -45,7 +48,7 @@ const LanguageWrapper: FC = (props) => {
         </IntlProvider>
       </LanguageContext.Provider>
     </>
-  )
-}
+  );
+};
 
 export default LanguageWrapper;

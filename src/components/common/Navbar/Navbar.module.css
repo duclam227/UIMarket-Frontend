@@ -1,17 +1,152 @@
+@import url('../../../app/util/propertySet.css');
+@import url('../../../app/util/colors.css');
+
 .avatarWrapper {
-  display: inline-block;
-  height: 2em;
-  width: 2em;
-  border-radius: 100%;
-  margin: 0em 0.7em;
+	display: inline-block;
+	height: 2em;
+	width: 2em;
+	border-radius: 100%;
+	margin: 0em 0.7em;
 }
 .userAvatar {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 10em;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 10em;
 }
 
 #navbarDropdown::after {
-  vertical-align: 0.1em;
+	vertical-align: 0.1em;
+}
+
+.separator {
+	width: 0.5px;
+	height: 70%;
+	border-left: 1px black solid;
+}
+
+.mainNavbar {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	width: 100%;
+	height: 70px;
+	box-sizing: border-box;
+	background-color: white;
+}
+
+.leftSideNav {
+	flex: 1;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	height: 100%;
+}
+
+.rightSideNav {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+
+	height: 100%;
+	margin-left: auto;
+	margin-right: 30px;
+}
+
+.searchBarWrapper {
+	display: flex;
+	align-items: center;
+	padding: 5px 0;
+
+	width: 60%;
+	height: 100%;
+}
+
+.searchBar {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+
+	position: relative;
+
+	height: 100%;
+	width: 100%;
+}
+
+.searchIcon {
+	width: 20px;
+	height: 20px;
+	left: 15px;
+	position: absolute;
+}
+
+.searchBar input {
+	padding-left: 45px;
+	border: none;
+	background-color: #f7f7f8;
+	border-radius: 4px;
+	height: 100%;
+}
+
+.searchBar input:focus {
+	background-color: #f7f7f8;
+}
+
+.buttonRow {
+	height: 40px;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 15px;
+}
+
+.sellButton {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	padding: 5px 15px;
+	height: 100%;
+
+	font-weight: 600;
+	color: var(--pink-800);
+	background-color: var(--themeColorAccent);
+	border-radius: 40px;
+	border: none;
+	transition: 300ms;
+}
+
+.sellButton:hover {
+	color: var(--pink-600);
+	background-color: var(--pink-100);
+}
+
+.authButton {
+	display: block;
+	width: 100%;
+	padding: 0.25rem 1rem;
+	clear: both;
+	font-weight: 400;
+	color: #212529;
+	text-align: inherit;
+	text-decoration: none;
+	white-space: nowrap;
+	background-color: transparent;
+	border: 0;
+
+	background-color: transparent;
+	border: none;
+}
+
+.authButton:hover {
+	color: var(--themeColor);
+}
+
+.cartIcon {
+	height: 20px;
+	width: 20px;
 }

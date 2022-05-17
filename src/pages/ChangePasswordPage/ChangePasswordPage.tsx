@@ -5,7 +5,7 @@ import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import Row from 'react-bootstrap/row';
+import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
@@ -85,9 +85,9 @@ const ChangePasswordPage: FC<{ intl: IntlShape }> = ({ intl }) => {
     <OneToFivePage>
       <Container className={`w-75 p-5 mt-5 bg-white ${style.pageContainer}`}>
         <Col lg={{ span: 9, offset: 1 }}>
-          <Row className={`mt-5`}>
+          <div className={`mt-5`}>
             <h1>Change password</h1>
-          </Row>
+          </div>
           <Form onSubmit={handleSubmit(onChangePassword)}>
             <Row className={`mt-4`}>
               <FormInput

@@ -24,6 +24,14 @@
 	--orange-100: #ffe5d0;
 	--orange-600: #ca6510;
 
+	--pink-100: #f7d6e6;
+	--pink-200: #efadce;
+	--pink-300: #e685b5;
+	--pink-400: #de5c9d;
+	--pink-500: #d63384;
+	--pink-600: #ab296a;
+	--pink-800: #561435;
+
 	--red: #dc3545;
 	--red-100: #f8d7da;
 	--red-200: #f1aeb5;
@@ -35,5 +43,6 @@
 	--red-800: #58151c;
 	--red-900: #2c0b0e;
 
+	--teal-500: #20c997;
 	--teal-600: #1aa179;
 }

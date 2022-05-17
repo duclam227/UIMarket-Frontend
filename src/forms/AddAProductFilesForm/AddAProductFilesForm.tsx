@@ -10,11 +10,12 @@ import style from './AddAProductFilesForm.module.css';
 
 interface Props {
   updateProductInfo: Function;
+  isEdit?: boolean;
   intl: IntlShape;
 }
 
 const AddAProductFilesForm: React.FC<Props> = props => {
-  const { intl } = props;
+  const { isEdit, intl } = props;
 
   const [files, setFiles] = useState<Array<string>>([]);
   const [fileList, setFileList] = useState<Array<File>>([]);
@@ -36,7 +37,7 @@ const AddAProductFilesForm: React.FC<Props> = props => {
   return (
     <Form name="AddAProductFilesForm" className={style.form}>
       <div className={style.formTitle}>
-        <FormattedMessage id="AddAProduct.TabFilesTitle" />
+        <FormattedMessage id={isEdit ? "EditProduct.TabFilesTitle" : "AddAProduct.TabFilesTitle"} />
       </div>
 
       <FileInput

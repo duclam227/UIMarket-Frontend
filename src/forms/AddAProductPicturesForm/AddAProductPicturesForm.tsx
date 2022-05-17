@@ -10,13 +10,15 @@ import style from './AddAProductPicturesForm.module.css';
 
 interface Props {
   updateProductInfo: Function;
+  images?: Array<string>;
+  isEdit?: boolean;
   intl: IntlShape;
 }
 
 const AddAProductPicturesForm: React.FC<Props> = props => {
-  const { intl } = props;
+  const { images: imagesFromProp, isEdit, intl } = props;
 
-  const [images, setImages] = useState<Array<string>>([]);
+  const [images, setImages] = useState<Array<string>>(imagesFromProp || []);
 
   const uploadImagesToStorage = async (imagesFromInput: Array<File>) => {
     const imageUrls: Array<string> = [];
@@ -56,7 +58,7 @@ const AddAProductPicturesForm: React.FC<Props> = props => {
   return (
     <Form name="AddAProductPicturesForm" className={style.form}>
       <div className={style.formTitle}>
-        <FormattedMessage id="AddAProduct.TabImagesTitle" />
+        <FormattedMessage id={isEdit ? "EditProduct.TabImagesTitle" : "AddAProduct.TabImagesTitle"} />
       </div>
 
       <ImageInput

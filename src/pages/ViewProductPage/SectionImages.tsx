@@ -10,16 +10,13 @@ interface Props {
 
 const SectionImages: React.FC<Props> = (props) => {
   const { images } = props;
-  return (
-    <section className={style.images}>
-      <ImageCarousel images={images} />
-      {/* {images.map((img, index) => (
-        <div className={style.image} key={index}>
-          <img src={img} alt='Preview image' />
-        </div>
-      ))} */}
-    </section>
-  )
+  return images
+    ? (
+      <section className={style.images}>
+        <ImageCarousel images={images} />
+      </section>
+    )
+    : null
 }
 
 export default SectionImages;

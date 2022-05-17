@@ -1,6 +1,9 @@
-export function getErrorMessage(error: unknown) {
-  if (error instanceof Error) return error.message;
-  return String(error);
+
+export function getErrorMessage (error: any) {
+	const { msg } = error.response?.data;
+	if (msg) return msg;
+	if (error instanceof Error) return error.message;
+	return String(error);
 }
 
 export const createCommonLicenseFile = (
