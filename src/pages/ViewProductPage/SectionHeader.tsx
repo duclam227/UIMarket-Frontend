@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { Button } from 'react-bootstrap';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
@@ -8,6 +8,7 @@ import parse from 'html-react-parser';
 import { customer, product } from '../../app/util/interfaces';
 
 import style from './ViewProductPage.module.css';
+import cartAPI from '../../api/cart';
 
 interface Props {
   product: product;
@@ -18,6 +19,23 @@ const SectionHeader: React.FC<Props> = (props) => {
   const { product, currentUser } = props;
 
   const isCurrentUserSeller = currentUser?.customerEmail === product.shopId.customerEmail;
+  const navigate = useNavigate();
+
+  const handleAddToCart = () => {
+    if (!currentUser) {
+      navigate('/signup');
+      return;
+    }
+
+    cartAPI.addToCart(product._id!)
+      .then((res: any) => {
+        console.log(res);
+        //handle finish
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
 
   return (
     <section className={style.header}>
@@ -30,7 +48,7 @@ const SectionHeader: React.FC<Props> = (props) => {
               <FormattedMessage id='ViewProductPage.EditProduct' />
             </Button>
           </Link>
-          : <Button className={style.button}>
+          : <Button className={style.button} onClick={handleAddToCart}>
             <AiOutlineShoppingCart />
             <FormattedMessage id='ViewProductPage.AddToCart' />
           </Button>
