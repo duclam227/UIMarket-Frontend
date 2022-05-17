@@ -37,6 +37,7 @@ import {
   AccountVerifiedPage,
   ChangePasswordPage,
   ForbiddenPage,
+  CartPage,
   LandingPage,
   EditProductPage,
 } from './pages';
@@ -107,6 +108,7 @@ function App() {
         <Route path="/user/:id/*" element={<UserProfilePage />} />
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactUsPage />} />
+        <Route path="/cart" element={<CartPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/products" element={<ProductListPage />} />
         <Route path="/products/add" element={<AddAProductPage />} />
