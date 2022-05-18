@@ -2,13 +2,16 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
 import { Button } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaPen } from 'react-icons/fa';
-import parse from 'html-react-parser';
+
 import { customer, product } from '../../app/util/interfaces';
+import cartAPI from '../../api/cart';
 
 import style from './ViewProductPage.module.css';
-import cartAPI from '../../api/cart';
 
 interface Props {
   product: product;
@@ -31,6 +34,7 @@ const SectionHeader: React.FC<Props> = (props) => {
       .then((res: any) => {
         console.log(res);
         //handle finish
+        toast.success('added');
       })
       .catch(error => {
         console.log(error);
@@ -55,6 +59,7 @@ const SectionHeader: React.FC<Props> = (props) => {
         }
 
       </div>
+      <ToastContainer />
     </section>
   )
 }
