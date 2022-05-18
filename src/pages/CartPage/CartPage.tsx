@@ -3,7 +3,7 @@ import { Button, Col, Row } from 'react-bootstrap';
 import { PageWithNavbar } from '../../components';
 import Container from 'react-bootstrap/Container';
 
-import { getErrorMessage } from '../../app/util/index';
+import { getErrorMessage, saveMostRecentInvoiceId } from '../../app/util/index';
 import cartAPI from '../../api/cart';
 import paymentAPI from '../../api/payment';
 
@@ -42,7 +42,9 @@ const CartPage: FunctionComponent = () => {
     paymentAPI.checkout(checkoutArray)
       .then((res: any) => {
         console.log(res);
-        setIsLoading(false);
+        const { paypal_link, invoiceId } = res;
+        saveMostRecentInvoiceId(invoiceId);
+        window.location.replace(paypal_link);
       })
       .catch(error => {
         console.log(error);
