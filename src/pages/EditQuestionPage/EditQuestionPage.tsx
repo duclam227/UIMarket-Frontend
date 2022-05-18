@@ -20,6 +20,7 @@ import './EditQuestionPage.css';
 import style from './EditQuestionPage.module.css';
 import questionAPI from '../../api/question';
 import { RichTextEditor } from '../../components';
+import { navbarBranches } from '../../app/util/config';
 
 interface Props {
   intl: IntlShape,
@@ -173,7 +174,7 @@ const EditQuestionPage: FC<Props> = (props) => {
   }, [])
 
   return (
-    <PageWithNavbar>
+    <PageWithNavbar branch={navbarBranches.question}>
       <Container className={containerClassName}>
         <h1 className={style.pageTitle}>{pageTitle}</h1>
 
