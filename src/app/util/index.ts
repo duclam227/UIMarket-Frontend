@@ -1,3 +1,4 @@
+const INVOICE_ID='invoiceId';
 
 export function getErrorMessage (error: any) {
 	const { msg } = error.response?.data;
@@ -27,3 +28,11 @@ export const createCommonLicenseFile = (
     },
   );
 };
+
+export const saveMostRecentInvoiceId = (invoiceId: string) => {
+  localStorage.setItem(INVOICE_ID, invoiceId);
+}
+
+export const getMostRecentInvoiceId = () => {
+  return localStorage.getItem(INVOICE_ID) || null;
+}
