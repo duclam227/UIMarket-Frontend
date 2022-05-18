@@ -9,7 +9,7 @@ import { LanguageWrapper } from './components';
 import store from './redux/store';
 
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './custom.scss';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 ReactDOM.render(
