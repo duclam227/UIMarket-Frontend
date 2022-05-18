@@ -1,5 +1,5 @@
-import { useState, FC, ChangeEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, FC, ChangeEvent, FormEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { genericAvatarUrl } from '../../../app/util/const';
@@ -22,21 +22,15 @@ interface IProps {
   intl: IntlShape;
 }
 
-const NavBar: FC<IProps> = (props) => {
-  const {
-    branch,
-    intl
-  } = props;
+const NavBar: FC<IProps> = props => {
+  const { branch, intl } = props;
 
   // Left side nav items
   const appName = (
     <FormattedMessage id="CommonNavbar.appName" defaultMessage="App Name" />
   );
   const itemQuestionsLabel = (
-    <FormattedMessage
-      id="CommonNavbar.itemQuestionsLabel"
-      defaultMessage="Questions"
-    />
+    <FormattedMessage id="CommonNavbar.itemQuestionsLabel" defaultMessage="Questions" />
   );
   const itemAskAQuestionLabel = (
     <FormattedMessage
@@ -51,10 +45,7 @@ const NavBar: FC<IProps> = (props) => {
     defaultMessage: 'Search',
   });
   const itemLoginBtnLabel = (
-    <FormattedMessage
-      id="CommonNavbar.itemLoginBtnLabel"
-      defaultMessage="Log In"
-    />
+    <FormattedMessage id="CommonNavbar.itemLoginBtnLabel" defaultMessage="Log In" />
   );
   const userDropdownProfileLabel = (
     <FormattedMessage
@@ -69,16 +60,14 @@ const NavBar: FC<IProps> = (props) => {
     />
   );
   const itemSignupBtnLabel = (
-    <FormattedMessage
-      id="CommonNavbar.itemSignupBtnLabel"
-      defaultMessage="Sign Up"
-    />
+    <FormattedMessage id="CommonNavbar.itemSignupBtnLabel" defaultMessage="Sign Up" />
   );
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const currentUser = useSelector((state: State) => state.auth.user);
   const [searchQuery, setSearchQuery] = useState('');
-
   const handleChange = ({ target: input }: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(input.value);
   };
@@ -87,13 +76,17 @@ const NavBar: FC<IProps> = (props) => {
     dispatch(logOut());
   };
 
+  const handleProductSearch = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate(`/products?keyword=${searchQuery}`);
+  };
   return (
     <>
       <nav className={style.mainNavbar}>
         <section className={style.leftSideNav}>
           <Logo />
 
-          <Form className={style.searchBarWrapper}>
+          <Form className={style.searchBarWrapper} onSubmit={e => handleProductSearch(e)}>
             <div className={style.searchBar}>
               <BsSearch className={style.searchIcon} />
               <Form.Control
@@ -106,12 +99,11 @@ const NavBar: FC<IProps> = (props) => {
         </section>
 
         <section className={style.rightSideNav}>
-
           <div className={style.buttonRow}>
             <button className={style.sellButton}>Sell your art</button>
 
-            {currentUser
-              ? <>
+            {currentUser ? (
+              <>
                 <div className="nav-item dropdown p-1">
                   <a
                     className="nav-link dropdown-toggle p-0 d-flex align-items-center"
@@ -135,47 +127,46 @@ const NavBar: FC<IProps> = (props) => {
                     aria-labelledby="navbarDropdown"
                   >
                     <li>
-                      <Link
-                        to={`/user/${currentUser._id}`}
-                        className="dropdown-item"
-                      >
+                      <Link to={`/user/${currentUser._id}`} className="dropdown-item">
                         {userDropdownProfileLabel}
                       </Link>
                     </li>
                     <hr className="dropdown-divider" />
                     <li className="">
-                      <button
-                        className={`${style.authButton}`}
-                        onClick={handleLogout}
-                      >
+                      <button className={`${style.authButton}`} onClick={handleLogout}>
                         {userDropdownLogoutBtnLabel}
                       </button>
                     </li>
                   </ul>
                 </div>
               </>
-              : <>
-                <Link to='/login'><button className={style.authButton}>{itemLoginBtnLabel}</button></Link>
-                <Link to='/signup'><button className={style.authButton}>{itemSignupBtnLabel}</button></Link>
+            ) : (
+              <>
+                <Link to="/login">
+                  <button className={style.authButton}>{itemLoginBtnLabel}</button>
+                </Link>
+                <Link to="/signup">
+                  <button className={style.authButton}>{itemSignupBtnLabel}</button>
+                </Link>
               </>
-            }
+            )}
 
             <div className={style.separator}></div>
-            <Link to='/cart'><button className={style.authButton}><BsCart className={style.cartIcon} /></button></Link>
+            <Link to="/cart">
+              <button className={style.authButton}>
+                <BsCart className={style.cartIcon} />
+              </button>
+            </Link>
           </div>
         </section>
-
       </nav>
-      {branch === config.navbarBranches.question
-        ? <QuestionNavbar />
-        : <ProductNavbar />
-      }
+      {branch === config.navbarBranches.question ? <QuestionNavbar /> : <ProductNavbar />}
     </>
   );
 };
 
 NavBar.defaultProps = {
   branch: config.navbarBranches.shop,
-}
+};
 
 export default injectIntl(NavBar);

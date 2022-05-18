@@ -1,0 +1,5 @@
+@import '../../app/util/colors.css';
+
+.searchQuery {
+  color: var(--pink-600);
+}
