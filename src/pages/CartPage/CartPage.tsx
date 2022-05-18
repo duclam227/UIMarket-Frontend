@@ -4,9 +4,10 @@ import { PageWithNavbar } from '../../components';
 import Container from 'react-bootstrap/Container';
 
 import { getErrorMessage } from '../../app/util/index';
+import cartAPI from '../../api/cart';
+import paymentAPI from '../../api/payment';
 
 import styles from './CartPage.module.css';
-import cartAPI from '../../api/cart/index';
 
 const CartPage: FunctionComponent = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -28,6 +29,25 @@ const CartPage: FunctionComponent = () => {
         setIsLoading(false);
       });
   }, []);
+
+  const handleCheckoutCart = () => {
+    setIsLoading(true);
+    const checkoutArray = cartProducts.map(item => {
+      return {
+        product: item.product._id,
+        shop: item.product.shopId,
+      }
+    });
+
+    paymentAPI.checkout(checkoutArray)
+      .then((res: any) => {
+        console.log(res);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }
 
   const renderItems = (cart: Array<any>) => {
     const handleRemoveItem = (removedItem: any) => {
@@ -96,7 +116,7 @@ const CartPage: FunctionComponent = () => {
           <span>{cart.length} items</span>
           <strong>{totalPrice(cart)}$</strong>
         </div>
-        <Button className="m-2">Checkout with PayPal</Button>
+        <Button className="m-2" onClick={handleCheckoutCart}>Checkout with PayPal</Button>
       </div>
     );
   };
