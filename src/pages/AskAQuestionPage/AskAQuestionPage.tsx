@@ -22,6 +22,7 @@ import './AskAQuestionPage.css';
 import style from './AskAQuestionPage.module.css';
 import questionAPI from '../../api/question';
 import { RichTextEditor } from '../../components';
+import { navbarBranches } from '../../app/util/config';
 
 const AskAQuestionPage = ({ intl }: any) => {
   const formGroupClassName = 'mb-3';
@@ -145,7 +146,7 @@ const AskAQuestionPage = ({ intl }: any) => {
     }
   };
   return (
-    <PageWithNavbar>
+    <PageWithNavbar branch={navbarBranches.question}>
       <Container className={containerClassName}>
         <h1 className={style.pageTitle}>{pageTitle}</h1>
 
@@ -172,7 +173,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                     <RichTextEditor
                       onChange={onChange}
                       onBlur={onBlur}
-                      // initialValue={question.body}
+                    // initialValue={question.body}
                     />
                   )}
                 />

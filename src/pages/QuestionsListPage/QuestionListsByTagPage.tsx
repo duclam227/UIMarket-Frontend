@@ -13,6 +13,7 @@ import { Button } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { State } from '../../redux/store';
+import { navbarBranches } from '../../app/util/config';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -79,7 +80,7 @@ const QuestionListsByTagPage: FC = () => {
 	};
 
 	return (
-		<PageWithNavbar>
+		<PageWithNavbar branch={navbarBranches.question}>
 			<div className={style.container}>
 				<div className={style.mainContent}>
 					<div className={style.header}>

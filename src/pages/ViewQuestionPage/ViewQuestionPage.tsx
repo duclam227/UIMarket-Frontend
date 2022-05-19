@@ -13,6 +13,7 @@ import SectionAddAnswer from "./SectionAddAnswer";
 import SectionAnswers from "./SectionAnswers";
 
 import style from './ViewQuestionPage.module.css';
+import { navbarBranches } from "../../app/util/config";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -84,7 +85,7 @@ const ViewQuestionPage = () => {
   }
 
   return (
-    <PageWithNavbar>
+    <PageWithNavbar branch={navbarBranches.question}>
       <div className={style.container}>
         {isLoading
           ? 'loading...'

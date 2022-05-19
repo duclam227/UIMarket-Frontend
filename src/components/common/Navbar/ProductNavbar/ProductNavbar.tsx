@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 
 import { BsFillLightningChargeFill } from 'react-icons/bs';
+import { Link } from 'react-router-dom';
 import categoryAPI from '../../../../api/category';
 
 import style from './ProductNavbar.module.css';
@@ -33,7 +34,9 @@ const ProductNavbar = () => {
       </section>
 
       <section className={style.rightSide}>
-        <button className={style.button}>DeeX Forum</button>
+        <Link to='/questions'>
+          <button className={style.button}>DeeX Forum</button>
+        </Link>
       </section>
     </nav>
   )

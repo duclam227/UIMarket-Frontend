@@ -41,6 +41,7 @@ import {
   LandingPage,
   EditProductPage,
 } from './pages';
+import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
 
 function App() {
@@ -109,6 +110,7 @@ function App() {
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactUsPage />} />
         <Route path="/cart" element={<CartPage />} />
+        <Route path="/payment/*" element={<ConfirmPaymentPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/products" element={<ProductListPage />} />
         <Route path="/products/add" element={<AddAProductPage />} />
