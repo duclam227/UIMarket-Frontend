@@ -125,9 +125,11 @@ const SideNav: FC<Props> = props => {
       <ul className={style.navGroup}>
         <div className={style.navGroupName}>
           <BsBag className={style.navGroupNameIcon} />
-          <span className={style.navGroupNameLabel}>
-            {purchaseReviewsNavGroupLabel}
-          </span>
+          <Link to={`/purchases`}>
+            <span className={style.navGroupNameLabel}>
+              {purchaseReviewsNavGroupLabel}
+            </span>
+          </Link>
         </div>
       </ul>
 
