@@ -40,6 +40,7 @@ import {
   CartPage,
   LandingPage,
   EditProductPage,
+  PurchaseHistoryPage,
 } from './pages';
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
@@ -116,6 +117,7 @@ function App() {
         <Route path="/products/add" element={<AddAProductPage />} />
         <Route path="/product/:id" element={<ViewProductPage />} />
         <Route path="/product/:id/edit" element={<EditProductPage />} />
+        <Route path="/purchases" element={<PurchaseHistoryPage />} />
         <Route
           path="/questions/new"
           element={
