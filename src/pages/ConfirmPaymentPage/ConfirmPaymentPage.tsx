@@ -21,16 +21,16 @@ const ConfirmPaymentPage = () => {
   const token = searchParams.get('token');
   const invoiceId = getMostRecentInvoiceId();
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   paymentAPI.confirmOrder(token!, invoiceId!)
-  //     .then((res: any) => {
-  //       setIsLoading(false);
-  //     })
-  //     .catch(error => {
-  //       console.log(error);
-  //     })
-  // }, [])
+  useEffect(() => {
+    setIsLoading(true);
+    paymentAPI.confirmOrder(token!, invoiceId!)
+      .then((res: any) => {
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.log(error);
+      })
+  }, [])
 
   return isLoading
     ? <PageWithNavbar>
