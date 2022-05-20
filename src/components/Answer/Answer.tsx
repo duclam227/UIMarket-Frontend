@@ -1,21 +1,19 @@
-import { ChangeEvent, FC, useEffect, useState } from "react";
-import { Button, Form, Modal } from "react-bootstrap";
-import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
+import { ChangeEvent, FC, useEffect, useState } from 'react';
+import { Button, Form, Modal } from 'react-bootstrap';
+import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 import parse from 'html-react-parser';
 
-import { customer, voteStatus } from "../../app/util/interfaces";
+import { customer, voteStatus } from '../../app/util/interfaces';
 
-import { Paginator, ThreeDotMenu, Comment } from "../../components";
+import { Paginator, ThreeDotMenu, Comment, ReportModal } from '../../components';
 
-import answerAPI from "../../api/answer";
-import commentAPI from "../../api/comment";
+import answerAPI from '../../api/answer';
+import commentAPI from '../../api/comment';
 
-import {
-  FaCheck
-} from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa';
 
-import SectionAnswerVoter from "./SectionAnswerVoter";
-import SectionEditAnswer from "./SectionEditAnswer";
+import SectionAnswerVoter from './SectionAnswerVoter';
+import SectionEditAnswer from './SectionEditAnswer';
 
 import style from './Answer.module.css';
 
@@ -24,10 +22,10 @@ interface SectionAnswerProps {
   currentUser: customer | null;
   question: any;
   handleMarkBestAnswer: Function;
-  intl: IntlShape
+  intl: IntlShape;
 }
 
-const Answer: FC<SectionAnswerProps> = (props) => {
+const Answer: FC<SectionAnswerProps> = props => {
   const { answer, currentUser, question, intl } = props;
 
   const [answerContent, setAnswerContent] = useState<string>(answer.answerContent || '');
@@ -38,148 +36,173 @@ const Answer: FC<SectionAnswerProps> = (props) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [reply, setReply] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [showReportModal, setShowReportModal] = useState<boolean>(false);
+  const handleShowReportModal = () => {
+    setShowReportModal(true);
+  };
+  const handleCloseReportModal = () => {
+    setShowReportModal(false);
+  };
 
   useEffect(() => {
-    commentAPI.getCommentsByPageNumber(answer._id, 1, 2)
-      .then((res: any) => {
-        setComments(res.comments);
-        setCommentPage(res.page);
-        setCommentTotalPages(res.totalPages);
-      })
-  }, [])
+    commentAPI.getCommentsByPageNumber(answer._id, 1, 2).then((res: any) => {
+      setComments(res.comments);
+      setCommentPage(res.page);
+      setCommentTotalPages(res.totalPages);
+    });
+  }, []);
 
   if (!answer || !answerContent) {
     return null;
   }
 
   const isUserAuthenticated = !!currentUser;
-  const isCurrentUserAuthor = isUserAuthenticated && currentUser.customerEmail === answer.customerInfo[0].customerEmail;
+  const isCurrentUserAuthor =
+    isUserAuthenticated &&
+    currentUser.customerEmail === answer.customerInfo[0].customerEmail;
 
   const turnOnReply = () => {
     setIsReply(true);
-  }
+  };
 
   const handleChange = ({ target: input }: ChangeEvent<HTMLInputElement>) => {
     setReply(input.value);
-  }
+  };
 
   const addReply = () => {
-    commentAPI.addNewComment(reply, question._id, answer._id, 'Answer')
+    commentAPI
+      .addNewComment(reply, question._id, answer._id, 'Answer')
       .then(res => {
         setIsReply(false);
       })
       .catch(error => {
         console.log(error);
-      })
-  }
+      });
+  };
 
   const editAnswer = () => {
     setIsEdit(true);
-  }
+  };
 
   const handleSaveAnswer = (newContent: string) => {
-    answerAPI.updateAnswer(newContent, answer._id)
+    answerAPI
+      .updateAnswer(newContent, answer._id)
       .then(res => {
         setAnswerContent(newContent);
       })
       .catch(error => {
         console.log(error);
-      })
-  }
+      });
+  };
 
   const deleteAnswer = () => {
     setIsModalOpen(true);
-  }
+  };
 
-  const menuItems = [
+  const authorMenuItems = [
     {
       key: 'edit',
       label: intl.formatMessage({ id: 'Answer.editLabel' }),
-      function: editAnswer
+      function: editAnswer,
     },
     {
       key: 'delete',
       label: intl.formatMessage({ id: 'Answer.deleteLabel' }),
-      function: deleteAnswer
+      function: deleteAnswer,
     },
-  ]
+  ];
+  const reportMenuItem = {
+    key: 'report',
+    label: intl.formatMessage({ id: 'Answer.reportLabel' }),
+    function: handleShowReportModal,
+  };
+  const menuItems = isCurrentUserAuthor
+    ? [reportMenuItem, ...authorMenuItems]
+    : [reportMenuItem];
 
   const confirmDeleteModal = (
     <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)}>
       <Modal.Header closeButton>
-        <Modal.Title><FormattedMessage id='Answer.confirmDelete' /></Modal.Title>
+        <Modal.Title>
+          <FormattedMessage id="Answer.confirmDelete" />
+        </Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-        <p><FormattedMessage id='Answer.confirmDeleteContent' /></p>
+        <p>
+          <FormattedMessage id="Answer.confirmDeleteContent" />
+        </p>
       </Modal.Body>
 
       <Modal.Footer>
-        <Button variant="secondary" onClick={() => setIsModalOpen(false)}><FormattedMessage id='Answer.close' /></Button>
-        <Button variant="primary" onClick={() => {
-          answerAPI.deleteAnswer(answer._id)
-            .then((res: any) => {
-              setAnswerContent('');
-            })
-            .catch(error => {
-              console.log(error);
-            })
-        }}>
-          <FormattedMessage id='Answer.deleteLabel' />
+        <Button variant="secondary" onClick={() => setIsModalOpen(false)}>
+          <FormattedMessage id="Answer.close" />
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => {
+            answerAPI
+              .deleteAnswer(answer._id)
+              .then((res: any) => {
+                setAnswerContent('');
+              })
+              .catch(error => {
+                console.log(error);
+              });
+          }}
+        >
+          <FormattedMessage id="Answer.deleteLabel" />
         </Button>
       </Modal.Footer>
     </Modal>
-  )
+  );
 
   const getMoreComments = (pageNumber: number) => {
-    commentAPI.getCommentsByPageNumber(answer._id, pageNumber, 2)
-      .then((res: any) => {
-        setComments([...comments, ...res.comments]);
-        setCommentPage(res.page);
-        setCommentTotalPages(res.totalPages);
-      })
-  }
+    commentAPI.getCommentsByPageNumber(answer._id, pageNumber, 2).then((res: any) => {
+      setComments([...comments, ...res.comments]);
+      setCommentPage(res.page);
+      setCommentTotalPages(res.totalPages);
+    });
+  };
 
   const markBestAnswer = () => {
-    answerAPI.markBestAnswer(question._id, answer._id)
+    answerAPI
+      .markBestAnswer(question._id, answer._id)
       .then((res: any) => {
         props.handleMarkBestAnswer();
       })
       .catch(error => {
         console.log(error);
-      })
-  }
+      });
+  };
 
-  const bestAnswerIcon = <FaCheck
-    className={answer.bestAnswer
-      ? style.bestAnswerActive
-      : style.bestAnswer}
-    onClick={markBestAnswer}
-  />
+  const bestAnswerIcon = (
+    <FaCheck
+      className={answer.bestAnswer ? style.bestAnswerActive : style.bestAnswer}
+      onClick={markBestAnswer}
+    />
+  );
 
   return (
     <div className={style.answer}>
       {confirmDeleteModal}
       <div className={style.sideContent}>
         <div>avt</div>
-        <div className={style.markBestAnswer}>
-          {bestAnswerIcon}
-        </div>
+        <div className={style.markBestAnswer}>{bestAnswerIcon}</div>
       </div>
       <div className={style.content}>
         <div className={style.authorInfo}>
           {answer.customerInfo[0].customerName}
-          {isCurrentUserAuthor &&
-            <ThreeDotMenu menuItems={menuItems} />
-          }
+          <ThreeDotMenu menuItems={menuItems} />
         </div>
-        {isEdit
-          ? <SectionEditAnswer
+        {isEdit ? (
+          <SectionEditAnswer
             initialValue={answerContent}
             onHide={() => setIsEdit(false)}
             onSave={(content: string) => handleSaveAnswer(content)}
           />
-          : <>
+        ) : (
+          <>
             {parse(answerContent)}
 
             <div className={style.footerContent}>
@@ -187,40 +210,42 @@ const Answer: FC<SectionAnswerProps> = (props) => {
                 answer={answer}
                 question={question}
                 currentUser={currentUser}
-                handleVoteStatus={() => { }}
+                handleVoteStatus={() => {}}
               />
-              {currentUser?.customerEmail
-                ? <div className={style.replyButton} onClick={turnOnReply}>Reply</div>
-                : null
-              }
+              {currentUser?.customerEmail ? (
+                <div className={style.replyButton} onClick={turnOnReply}>
+                  Reply
+                </div>
+              ) : null}
             </div>
 
-            {
-              comments
-                ? <div className={style.sectionComments}>
-                  {comments.map((c: any) => <Comment
+            {comments ? (
+              <div className={style.sectionComments}>
+                {comments.map((c: any) => (
+                  <Comment
                     key={c._id}
                     question={question}
                     answer={answer}
                     comment={c}
                     currentUser={currentUser}
-                  />)}
-                  {commentTotalPages > commentPage ?
-                    <div className={style.showMoreComments}>
-                      <span onClick={() => getMoreComments(commentPage + 1)}>Show more...</span>
-                    </div>
-                    : null
-                  }
-                </div>
-                : null
-            }
+                  />
+                ))}
+                {commentTotalPages > commentPage ? (
+                  <div className={style.showMoreComments}>
+                    <span onClick={() => getMoreComments(commentPage + 1)}>
+                      Show more...
+                    </span>
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
           </>
-        }
+        )}
 
-        {isReply &&
+        {isReply && (
           <Form className={style.addCommentWrapper}>
             <Form.Group>
-              <Form.Control type='textarea' onChange={(e) => handleChange(e as any)} />
+              <Form.Control type="textarea" onChange={e => handleChange(e as any)} />
             </Form.Group>
             <div className={style.editFooter}>
               <Button
@@ -241,10 +266,16 @@ const Answer: FC<SectionAnswerProps> = (props) => {
               </Button>
             </div>
           </Form>
-        }
+        )}
+        <ReportModal
+          show={showReportModal}
+          onClose={handleCloseReportModal}
+          reportObjectId={answer._id!}
+          type="answer"
+        />
       </div>
-    </div >
-  )
-}
+    </div>
+  );
+};
 
 export default injectIntl(Answer);
