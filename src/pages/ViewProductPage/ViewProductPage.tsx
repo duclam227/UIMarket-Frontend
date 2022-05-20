@@ -8,7 +8,7 @@ import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { State } from '../../redux/store';
 import { product } from '../../app/util/interfaces';
 import { getErrorMessage } from '../../app/util';
-import { PageWithNavbar } from '../../components';
+import { PageWithNavbar, ReportModal } from '../../components';
 
 import productAPI from '../../api/product';
 import reviewAPI from '../../api/review';
@@ -32,6 +32,13 @@ const ViewProductPage: React.FC = () => {
   const [reviews, setReviews] = useState<Array<any> | null>(null);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [showReportModal, setShowReportModal] = useState<boolean>(false);
+  const handleShowReportModal = () => {
+    setShowReportModal(true);
+  };
+  const handleCloseReportModal = () => {
+    setShowReportModal(false);
+  }
 
   const goToPage = (pageNumber: number) => {
     setIsLoading(true);
@@ -83,7 +90,11 @@ const ViewProductPage: React.FC = () => {
     <PageWithNavbar>
       <div className={style.wrapper}>
         {/* <div className={style.content}> */}
-        <SectionHeader product={product!} currentUser={currentUser!} />
+        <SectionHeader
+          product={product!}
+          currentUser={currentUser!}
+          onShowReportModal={handleShowReportModal}
+        />
         <SectionImages images={product?.productPictures!} />
         <SectionDescription body={product?.productDescription!} />
         <SectionReviews
@@ -91,6 +102,12 @@ const ViewProductPage: React.FC = () => {
           totalPages={totalPages}
           currentPage={currentPage}
           handleGoToPage={(page: number) => goToPage(page)}
+        />
+        <ReportModal
+          show={showReportModal}
+          onClose={handleCloseReportModal}
+          reportObjectId={product._id!}
+          type="product"
         />
       </div>
     </PageWithNavbar>
