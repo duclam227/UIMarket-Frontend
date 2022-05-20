@@ -4,6 +4,7 @@ export { default as LanguageWrapper } from './LanguageWrapper/LanguageWrapper';
 export { default as Question } from './Question/Question';
 export { default as QuestionList } from './QuestionList/QuestionList';
 export { default as ProductList } from './ProductList/ProductList';
+export { default as ReportModal } from './ReportModal/ReportModal';
 
 /* =============== Common =============== */
 export { default as AuthenticationLayout } from './common/AuthenticationLayout/AuthenticationLayout';
