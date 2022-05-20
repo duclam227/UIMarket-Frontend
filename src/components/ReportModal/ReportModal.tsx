@@ -93,7 +93,7 @@ const ReportModal: FC<Props> = props => {
               defaultValue="placeholder"
             >
               <option disabled value="placeholder">
-                Tell us why this product should be removed
+                Please select a report reason
               </option>
               {reportTypeContent[type].reasons.map((reason: any) => (
                 <option key={reason.label} value={reason.label}>
