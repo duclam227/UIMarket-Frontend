@@ -71,7 +71,9 @@ const SectionHeader: React.FC<Props> = props => {
             onClick={() => onShowReportModal!()}
           >
             <BsExclamationOctagon size={20} className={`me-2`} />
-            <span>Report</span>
+            <span>
+              <FormattedMessage id="ReportModal.reportBtnLabel" />
+            </span>
           </Button>
         )}
       </div>
