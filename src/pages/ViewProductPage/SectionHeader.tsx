@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { Button } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { AiOutlineShoppingCart } from 'react-icons/ai';
@@ -60,7 +60,6 @@ const SectionHeader: React.FC<Props> = (props) => {
         }
 
       </div>
-      <ToastContainer />
     </section>
   )
 }
