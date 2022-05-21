@@ -65,6 +65,7 @@ export interface product {
 	productPictures?: Array<string>;
 	productFile?: string;
 	productStatus?: number;
+	productId?: string;
 	totalSold?: number;
 	totalReview?: number;
 	productRating?: number;
