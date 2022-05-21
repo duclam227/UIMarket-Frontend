@@ -1,26 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
 import { BsDownload, BsArrowRightCircle } from 'react-icons/bs';
-
-import { product } from '../../app/util/interfaces';
+import ReviewProduct from './ReviewProduct/ReviewProduct';
 
 import style from './PurchaseHistoryPage.module.css';
 
 interface Props {
   key: string;
-  product: product;
+  purchase: any;
 }
 
 const Product: React.FC<Props> = props => {
   const {
-    product,
+    purchase,
   } = props;
+
+  const { product, shop } = purchase;
+
+  const [isReviewing, setIsReviewing] = useState<boolean>(false);
 
   const notAvailableImg =
     'https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101031/112815934-no-image-available-icon-flat-vector-illustration.jpg?ver=6';
@@ -34,7 +34,7 @@ const Product: React.FC<Props> = props => {
       <Link to={`/product/${product._id}`}>
         <div className={style.thumbnail}>
           <img
-            src={product.coverPicture || notAvailableImg}
+            src={product.productPictures[0] || notAvailableImg}
             className={`${style.productThumbnail}`}
             alt="Placeholder"
           />
@@ -44,12 +44,12 @@ const Product: React.FC<Props> = props => {
         <Link to={`/product/${product._id}`}>
           <div className={style.productName}>{product.productName}</div>
         </Link >
-        <Link to={`/shop/${product.shop._id}`}>
+        <Link to={`/shop/${shop._id}`}>
           <div className={style.shopInfo}>
             <FormattedMessage
               id='PurchaseHistoryPage.shopInfo'
               values={{
-                shopName: product.shop.shopName,
+                shopName: shop.shopName,
                 b: (word: string) => <b>{word}</b>,
               }}
             />
@@ -72,19 +72,33 @@ const Product: React.FC<Props> = props => {
         <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
 
         <Dropdown.Menu>
-          <Dropdown.Item>
-            <FormattedMessage id='PurchaseHistoryPage.reviewButtonLabel' />
-          </Dropdown.Item>
-          <Dropdown.Divider />
-          <Dropdown.Item>
-            <FormattedMessage id='PurchaseHistoryPage.downloadLicenseLabel' />
-          </Dropdown.Item>
-          <Dropdown.Divider />
+          {!purchase.isReview
+            ? <>
+              <Dropdown.Item onClick={() => setIsReviewing(true)}>
+                <FormattedMessage id='PurchaseHistoryPage.reviewButtonLabel' />
+              </Dropdown.Item>
+              <Dropdown.Divider />
+            </>
+            : null
+          }
+
           <Dropdown.Item>
             <FormattedMessage id='PurchaseHistoryPage.reportButtonLabel' />
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
+
+      {isReviewing
+        ? <ReviewProduct
+          productInfo={{
+            invoiceId: purchase.invoiceId,
+            productId: product._id,
+            productName: product.productName,
+          }}
+          handleClose={() => setIsReviewing(false)}
+        />
+        : null
+      }
     </div >
   );
 };

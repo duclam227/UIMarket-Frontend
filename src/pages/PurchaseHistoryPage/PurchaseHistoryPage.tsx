@@ -13,7 +13,7 @@ import { OneToFivePage } from '../../components';
 import style from './PurchaseHistoryPage.module.css';
 import Product from './Product';
 
-const ITEMS_PER_PAGE = 15;
+const ITEMS_PER_PAGE = 10;
 
 interface IProps {
   intl: IntlShape;
@@ -26,17 +26,12 @@ const PurchaseHistoryPage: FC<IProps> = (props) => {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [products, setProducts] = useState<Array<product> | null>(null);
-
-  // if (!currentUser) {
-  //   navigate('/');
-  // }
+  const [products, setProducts] = useState<Array<any> | null>(null);
 
   useEffect(() => {
     setIsLoading(true);
     invoiceAPI.getPurchaseHistoryByPage(1, ITEMS_PER_PAGE)
       .then((res: any) => {
-        console.log(res);
         setProducts([...res.products]);
         setIsLoading(false);
       })
@@ -71,9 +66,11 @@ const PurchaseHistoryPage: FC<IProps> = (props) => {
               ? <Spinner animation='border' />
               : products && products.length > 0
                 ? <div className={style.productList}>
-                  {products.map((product: product) => <Product key={product._id!} product={product} />)}
+                  {products.map((purchase: any) => <Product key={purchase._id!} purchase={purchase} />)}
                 </div>
-                : null
+                : <div className={style.noProducts}>
+                  <FormattedMessage id='PurchaseHistoryPage.noProductsMessage' />
+                </div>
             }
           </section>
 
