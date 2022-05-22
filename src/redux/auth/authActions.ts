@@ -96,8 +96,7 @@ const logInWithGoogle = (tokenId: string) => {
 				dispatch(loginSuccess({ ...customer }));
 			})
 			.catch(error => {
-				const errorMsg = getErrorMessage(error);
-				dispatch(setError(errorMsg));
+				throw error;
 			});
 	};
 };
