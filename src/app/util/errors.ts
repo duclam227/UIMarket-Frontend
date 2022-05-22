@@ -1,11 +1,12 @@
 export const errors = {
 	auth: {
 		'account-inactivated': 'accountInactive',
-		'duplicate-key': 'emailExisted',
+		'email-existed': 'emailExisted',
 		'invalid-authentication': 'invalidAuthentication',
 		'missing-req-body': 'actionFailed',
 		'validation-failed': 'actionFailed',
 		'invalid-googleid': 'actionFailed',
+		'action-failed': 'actionFailed',
 	},
 	answer: {
 		'invalid-question-id': 'actionFailed',
