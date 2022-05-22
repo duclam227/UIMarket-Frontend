@@ -1,38 +1,36 @@
-const INVOICE_ID='invoiceId';
+const INVOICE_ID = 'invoiceId';
 
 export function getErrorMessage (error: any) {
-	const { msg } = error.response?.data;
+	const { response, status } = error;
+
+	if (!response || status >= 500) {
+		return 'action-failed';
+	}
+
+	const { msg } = response.data;
 	if (msg) return msg;
 	if (error instanceof Error) return error.message;
 	return String(error);
 }
 
 export const createCommonLicenseFile = (
-  productName: string,
-  authorName: string,
-  licenseType: string,
+	productName: string,
+	authorName: string,
+	licenseType: string,
 ) => {
-  const licenseContent = (
-    productName: string,
-    author: string,
-    licenseType: string,
-  ) => {
-    return `This is the common license for product ${productName}\nAuthor: ${author},\nLicense Type: ${licenseType},\nYou can view your license detail by download the custom license file!\nPlease download and keep it in a safe place!`;
-  };
+	const licenseContent = (productName: string, author: string, licenseType: string) => {
+		return `This is the common license for product ${productName}\nAuthor: ${author},\nLicense Type: ${licenseType},\nYou can view your license detail by download the custom license file!\nPlease download and keep it in a safe place!`;
+	};
 
-  return new File(
-    [licenseContent(productName, authorName, licenseType)],
-    'license.txt',
-    {
-      type: 'text/plain',
-    },
-  );
+	return new File([ licenseContent(productName, authorName, licenseType) ], 'license.txt', {
+		type: 'text/plain',
+	});
 };
 
 export const saveMostRecentInvoiceId = (invoiceId: string) => {
-  localStorage.setItem(INVOICE_ID, invoiceId);
-}
+	localStorage.setItem(INVOICE_ID, invoiceId);
+};
 
 export const getMostRecentInvoiceId = () => {
-  return localStorage.getItem(INVOICE_ID) || null;
-}
+	return localStorage.getItem(INVOICE_ID) || null;
+};
