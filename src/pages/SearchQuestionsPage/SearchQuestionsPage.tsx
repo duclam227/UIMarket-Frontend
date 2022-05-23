@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import questionAPI from '../../api/question';
+import { navbarBranches } from '../../app/util/config';
 import { question } from '../../app/util/interfaces';
 import { PageWithNavbar, Paginator, QuestionList } from '../../components';
 import { SearchForm } from '../../forms';
@@ -66,7 +67,7 @@ const SearchQuestionsPage: React.FC<IProps> = (props) => {
   }, [keyword])
 
   return (
-    <PageWithNavbar>
+    <PageWithNavbar branch={navbarBranches.question}>
       <div className={style.wrapper}>
         <div className={style.content}>
           <SearchForm

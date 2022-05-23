@@ -14,6 +14,7 @@ import style from './QuestionListsPage.module.css';
 import { tabList } from './QuestionListsPage';
 import { useSelector } from 'react-redux';
 import { State } from '../../redux/store';
+import { navbarBranches } from '../../app/util/config';
 
 
 const ITEMS_PER_PAGE = 10;
@@ -64,7 +65,7 @@ const PopularQuestionListsPage: FC = () => {
 	}
 
 	return (
-		<PageWithNavbar>
+		<PageWithNavbar branch={navbarBranches.question}>
 			<div className={style.container}>
 				<div className={style.mainContent}>
 					<div className={style.header}>

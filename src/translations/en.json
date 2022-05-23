@@ -55,6 +55,9 @@
   "Comment.close": "Cancel",
   "Comment.deleteLabel": "Delete",
   "Comment.editLabel": "Edit",
+  "ConfirmPaymentPage.successMessage": "Your purchase has been successful!",
+  "ConfirmPaymentPage.buyMoreLabel": "Continue shopping",
+  "ConfirmPaymentPage.checkPurchasesLabel": "Check out your purchases",
   "CreateAShopPage.title": "Create your shop",
   "CreateAShopForm.shopNameLabel": "Shop name",
   "CreateAShopForm.shopNamePlaceholder": "Shop name should express who you are!",
@@ -237,6 +240,7 @@
   "VerifyPromptPage.sentEmailMessage": "We've just sent a link to activate your account to",
   "VerifyPromptPage.checkSpamMessage": "Please check the spam folder.",
   "ViewProductPage.AddToCart": "Add to cart",
+  "ViewProductPage.AddToCartSuccessMessage": "Added item to cart!",
   "ViewProductPage.DescriptionTitle": "Description",
   "ViewProductPage.ReviewTitle": "Reviews",
   "ViewProductPage.EditProduct": "Edit"

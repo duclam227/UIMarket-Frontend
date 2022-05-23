@@ -1,0 +1,30 @@
+.wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: 100%;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 20px;
+	padding: 50px 10px;
+
+	width: 70%;
+
+	background-color: white;
+	border-radius: 20px;
+}
+
+.content img {
+	max-height: 30vh;
+}
+
+.buttonRow {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+}

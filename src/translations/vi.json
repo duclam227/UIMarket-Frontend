@@ -55,6 +55,9 @@
   "Comment.close": "Hủy",
   "Comment.deleteLabel": "Xóa",
   "Comment.editLabel": "Chỉnh sửa",
+  "ConfirmPaymentPage.successMessage": "Hoàn tất thủ tục thanh toán!",
+  "ConfirmPaymentPage.buyMoreLabel": "Tiếp tục mua sắm",
+  "ConfirmPaymentPage.checkPurchasesLabel": "Xem sản phẩm đã mua",
   "CreateAShopPage.title": "Mở cửa hàng của riêng bạn",
   "CreateAShopForm.shopNameLabel": "Tên cửa hàng",
   "CreateAShopForm.shopNamePlaceholder": "Tên cửa hàng nên bộc lộ cá tính của riêng bạn!",
@@ -237,6 +240,7 @@
   "VerifyPromptPage.sentEmailMessage": "Chúng tôi đã gửi link kích hoạt tài khoản của bạn tới",
   "VerifyPromptPage.checkSpamMessage": "Vui lòng kiểm tra hộp thư spam.",
   "ViewProductPage.AddToCart": "Thêm vào giỏ hàng",
+  "ViewProductPage.AddToCartSuccessMessage": "Thêm vào giỏ thành công!",
   "ViewProductPage.DescriptionTitle": "Mô tả",
   "ViewProductPage.ReviewTitle": "Đánh giá",
   "ViewProductPage.EditProduct": "Chỉnh sửa"
