@@ -12,7 +12,7 @@ const BIG_LIMIT = 10;
 const Paginator: FC<PaginatorProps> = (props) => {
   const { totalNumberOfPages, currentPage } = props;
 
-  if (totalNumberOfPages === 1) {
+  if (totalNumberOfPages <= 1) {
     return null;
   }
 

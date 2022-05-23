@@ -7,9 +7,16 @@ class Get {
     return axiosClient.get(`${PRODUCT_ENDPOINT}/info/${id}`);
   };
 
-  getAllProductsByPageNumber = (pageNumber: number | string, itemsPerPage: number) => {
+  getAllProductsByPageNumber = (
+    pageNumber: number | string,
+    itemsPerPage: number,
+    filter?: string | null,
+    sort?: string | null,
+  ) => {
     return axiosClient.get(
-      `${PRODUCT_ENDPOINT}?page=${pageNumber}&limit=${itemsPerPage}`,
+      `${PRODUCT_ENDPOINT}?page=${pageNumber}&limit=${itemsPerPage}${
+        filter ? `&filter=${filter}` : ''
+      }${sort ? `&sort=${sort}` : ''}`,
     );
   };
 
