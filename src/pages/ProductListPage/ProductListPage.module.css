@@ -3,3 +3,8 @@
 .searchQuery {
   color: var(--pink-600);
 }
+
+.sidebarWrapper {
+  background-color: white;
+  min-height: 100vh;
+}
