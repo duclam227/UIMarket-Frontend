@@ -4,6 +4,8 @@
 	align-items: center;
 	justify-content: center;
 	min-height: 200px;
+	padding: 20px;
+
 	background-color: #0b0d17;
 }
 
@@ -17,4 +19,10 @@
 
 .list a {
 	color: white;
+}
+
+.logo {
+	fill: white;
+	width: 10rem;
+	margin: 1rem;
 }

@@ -16,6 +16,7 @@ export { default as FileInput } from './common/FileInput/FileInput';
 export { default as ImageCarousel } from './common/ImageCarousel/ImageCarousel';
 export { default as ImageInput } from './common/ImageInput/ImageInput';
 export { default as InfoCardContainer } from './common/InfoCardContainer/InfoCardContainer';
+export { default as LogoIcon } from './common/LogoIcon/LogoIcon';
 export { default as Navbar } from './common/Navbar/Navbar';
 export { default as Paginator } from './common/Paginator/Paginator';
 export { default as PageWithNavbar } from './common/PageWithNavbar/PageWithNavbar';

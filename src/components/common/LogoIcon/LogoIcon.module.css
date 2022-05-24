@@ -1,0 +1,6 @@
+@import url('../../../app/util/colors.css');
+
+.root {
+	margin: 2rem;
+	fill: var(--pink-logo);
+}

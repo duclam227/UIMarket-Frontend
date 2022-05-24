@@ -1,14 +1,14 @@
 
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
-import logo from '../../../app/assets/deex.png';
+import { LogoIcon } from '../..';
 
 import style from './Footer.module.css';
 
 const Footer = () => {
   return (
     <footer className={style.wrapper}>
-      <img src={logo} />
+      <LogoIcon className={style.logo} />
       <section className={style.list}>
         <Link to='/about'><FormattedMessage id='Footer.about' /></Link>
         <Link to='/licenses'><FormattedMessage id='Footer.licenses' /></Link>
