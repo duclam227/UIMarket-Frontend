@@ -1,21 +1,23 @@
 import { FC, useState } from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
-
+import { toast } from 'react-toastify';
+import GoogleLogin from 'react-google-login';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 import { authCredentials } from '../../app/util/interfaces';
+import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
 import { logInWithGoogle, signUp } from '../../redux';
 import { State } from '../../redux/store';
 
-import style from './SignupForm.module.css';
 import { FormInput } from '../../components';
-import GoogleLogin from 'react-google-login';
 import authAPI from '../../api/auth';
 
+import style from './SignupForm.module.css';
 interface SignupFormProps {
   intl: IntlShape;
 }
@@ -54,10 +56,6 @@ const SignupForm: FC<SignupFormProps> = props => {
     />
   );
 
-  //name
-  // const signupFormNameLabel = (
-  //   <FormattedMessage id="SignupForm.nameLabel" defaultMessage="Name" />
-  // );
   const signupFormNameLabel = intl.formatMessage({
     id: 'SignupForm.nameLabel',
     defaultMessage: 'Name',
@@ -67,10 +65,6 @@ const SignupForm: FC<SignupFormProps> = props => {
     defaultMessage: 'John',
   });
 
-  //email
-  // const signupFormEmailLabel = (
-  //   <FormattedMessage id="SignupForm.emailLabel" defaultMessage="Email" />
-  // );
   const signupFormEmailLabel = intl.formatMessage({
     id: 'SignupForm.emailLabel',
     defaultMessage: 'Email',
@@ -80,10 +74,6 @@ const SignupForm: FC<SignupFormProps> = props => {
     defaultMessage: 'example@email.com',
   });
 
-  //password
-  // const signupFormPasswordLabel = (
-  //   <FormattedMessage id="SignupForm.passwordLabel" defaultMessage="Password" />
-  // );
   const signupFormPasswordLabel = intl.formatMessage({
     id: 'SignupForm.passwordLabel',
     defaultMessage: 'Password',
@@ -107,12 +97,6 @@ const SignupForm: FC<SignupFormProps> = props => {
     customerPassword: Joi.string().required().label('Password'), //Remember to add min(8) rule
   });
 
-  // const [credentials, setCredentials] = useState<authCredentials>({
-  //   customerEmail: '',
-  //   customerPassword: '',
-  //   customerName: '',
-  // });
-
   const {
     handleSubmit,
     formState: { errors, isDirty, isValid },
@@ -127,24 +111,29 @@ const SignupForm: FC<SignupFormProps> = props => {
     },
   });
 
-  // const onChange = ({ currentTarget: input }: any) => {
-  //   setCredentials({ ...credentials, [input.id]: input.value });
-  // };
-
   const handleSignup: SubmitHandler<authCredentials> = async data => {
     try {
       const res: any = await authAPI.signUp(data);
       navigate(
         `/signup/verify-prompt?email=${data.customerEmail}&userId=${res.userId}`,
       );
-    } catch (e) {
-      console.log('Sign up error');
+    } catch (error) {
+      console.log(error)
+      const errorMsg = getErrorMessage(error);
+      const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
+      toast.error(intl.formatMessage({ id: `SignupForm.${errorCode}` }))
     }
   };
 
   const handleGoogleLogin = (data: any) => {
     const { tokenId } = data;
-    dispatch(logInWithGoogle(tokenId));
+    try {
+      dispatch(logInWithGoogle(tokenId));
+    } catch (error) {
+      const errorMsg = getErrorMessage(error);
+      const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
+      toast.error(intl.formatMessage({ id: `SignupForm.${errorCode}` }))
+    }
     navigate('/');
   };
 

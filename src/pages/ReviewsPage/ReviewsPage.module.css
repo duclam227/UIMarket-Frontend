@@ -1,0 +1,159 @@
+@import url('../../app/util/colors.css');
+
+.wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 100%;
+	height: 100%;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+
+	width: 95%;
+	height: 100%;
+}
+
+.header {
+	display: flex;
+	flex-direction: row;
+	padding: 2rem 3rem;
+
+	width: 100%;
+
+	background-color: white;
+	border: 1px solid var(--gray-300);
+	border-top: none;
+}
+
+.searchbox {
+	margin-left: auto;
+}
+
+.body {
+	display: flex;
+	flex-direction: row;
+	margin-top: 2rem;
+	padding: 3px;
+
+	width: 100%;
+
+	background-color: white;
+	border: 1px solid var(--gray-300);
+}
+
+.productList {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.review {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 2rem 3rem;
+
+	width: 100%;
+}
+
+.review:hover {
+	background-color: var(--gray-100);
+}
+
+.thumbnail img {
+	width: 9rem;
+	height: 9rem;
+	object-fit: cover;
+}
+
+.productInfo {
+	display: flex;
+	flex-direction: column;
+	padding: .8rem .5rem;
+	width: fit-content;
+}
+
+.productName {
+	font-weight: 550;
+}
+
+.shopInfo {
+	color: var(--gray-500);
+}
+
+.downloadButton {
+	display: flex !important;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+
+	height: fit-content;
+}
+
+.noProducts {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 5vh;
+	width: 100%;
+}
+
+.reviewContent {
+	display: flex;
+	flex-direction: column;
+	padding: 0 10px 10px 10px;
+
+	width: 100%;
+}
+
+.authorInfo {
+	display: flex;
+	align-items: flex-end;
+	flex-direction: row;
+	gap: 5px;
+
+	color: var(--gray-600);
+}
+
+.footerContent {
+	display: flex;
+	gap: 20px;
+
+	margin-top: 20px;
+}
+
+.menuButton {
+	margin-left: auto;
+}
+
+.yellowStar {
+	color: #ffda6a;
+}
+
+.grayStar {
+	color: #e9ecef;
+}
+
+.ratingHeader {
+	margin-left: auto;
+}
+
+.reviewBody {
+	padding: 1rem 0;
+}
+
+.reviewImages {
+	max-height: 100px;
+	width: 100%;
+
+	display: flex;
+	flex-direction: row;
+	gap: 2px;
+
+	overflow-x: scroll;
+}

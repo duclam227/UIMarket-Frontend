@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../../../app/assets/logo.jpg';
+import logo from './deex.png';
 
 import style from './Logo.module.css';
 

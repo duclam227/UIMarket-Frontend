@@ -18,6 +18,7 @@ import style from './LoginForm.module.css';
 import { FormInput } from '../../components';
 import authAPI from '../../api/auth';
 import { getErrorMessage } from '../../app/util';
+import { toast } from "react-toastify";
 
 interface loginFormProps {
   intl: IntlShape;
@@ -74,9 +75,6 @@ const LoginForm: FC<loginFormProps> = props => {
   });
 
   const dispatch = useDispatch();
-  const authError = useSelector((state: State) => state.auth.error);
-  const authErrorCode: any = authError && errorCodes.auth[authError as keyof typeof errorCodes.auth];
-  const authErrorMsg = authErrorCode && <FormattedMessage id={`LoginForm.${authErrorCode}`} />
 
   const schema = Joi.object({
     customerEmail: Joi.string()
@@ -102,10 +100,6 @@ const LoginForm: FC<loginFormProps> = props => {
     },
   });
 
-  // const onChange = ({ currentTarget: input }: any) => {
-  //   setCredentials({ ...credentials, [input.id]: input.value });
-  // };
-
   const handleLogin: SubmitHandler<authCredentials> = async data => {
     try {
       const res: any = await authAPI.logIn(data);
@@ -118,14 +112,22 @@ const LoginForm: FC<loginFormProps> = props => {
         const { userId } = e.response.data;
         navigate(`/login/not-verified?userId=${userId}`);
       } else {
-        console.log('Login failed: ', getErrorMessage(e));
+        const errorMsg = getErrorMessage(e);
+        const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
+        toast.error(intl.formatMessage({ id: `LoginForm.${errorCode}` }))
       }
     }
   };
 
   const handleGoogleLogin = (data: any) => {
     const { tokenId } = data;
-    dispatch(logInWithGoogle(tokenId));
+    try {
+      dispatch(logInWithGoogle(tokenId));
+    } catch (error) {
+      const errorMsg = getErrorMessage(error);
+      const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
+      toast.error(intl.formatMessage({ id: `LoginForm.${errorCode}` }))
+    }
   };
 
   const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -180,12 +182,6 @@ const LoginForm: FC<loginFormProps> = props => {
               </Alert>
             )}
           </Form.Group>
-
-          {authError ? (
-            <Form.Text>
-              <Alert variant="danger">{authErrorMsg}</Alert>
-            </Form.Text>
-          ) : null}
 
           <Button
             variant="primary"

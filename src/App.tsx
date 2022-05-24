@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -40,6 +41,8 @@ import {
   CartPage,
   LandingPage,
   EditProductPage,
+  PurchaseHistoryPage,
+  ReviewsPage,
 } from './pages';
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
@@ -60,6 +63,7 @@ function App() {
 
   return (
     <div className="App">
+      <ToastContainer />
       <Routes>
         <Route
           path="/login"
@@ -116,6 +120,7 @@ function App() {
         <Route path="/products/add" element={<AddAProductPage />} />
         <Route path="/product/:id" element={<ViewProductPage />} />
         <Route path="/product/:id/edit" element={<EditProductPage />} />
+        <Route path="/purchases" element={<PurchaseHistoryPage />} />
         <Route
           path="/questions/new"
           element={
@@ -148,6 +153,7 @@ function App() {
             </RequireUser>
           }
         />
+        <Route path="/reviews" element={<ReviewsPage />} />
         <Route path="/forbidden" element={<ForbiddenPage />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="*" element={<NotFoundPage />} />

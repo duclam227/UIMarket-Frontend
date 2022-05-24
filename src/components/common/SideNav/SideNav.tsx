@@ -55,6 +55,16 @@ const SideNav: FC<Props> = props => {
       defaultMessage="Purchase & Reviews"
     />
   );
+  const purchasesNavLinkLabel = (
+    <FormattedMessage
+      id="SideNav.purchasesNavLinkLabel"
+    />
+  );
+  const reviewsNavLinkLabel = (
+    <FormattedMessage
+      id="SideNav.reviewsNavLinkLabel"
+    />
+  );
   const myStoreNavGroupLabel = (
     <FormattedMessage
       id="SideNav.myStoreNavGroupLabel"
@@ -125,10 +135,18 @@ const SideNav: FC<Props> = props => {
       <ul className={style.navGroup}>
         <div className={style.navGroupName}>
           <BsBag className={style.navGroupNameIcon} />
-          <span className={style.navGroupNameLabel}>
-            {purchaseReviewsNavGroupLabel}
-          </span>
+          <Link to={`/purchases`}>
+            <span className={style.navGroupNameLabel}>
+              {purchaseReviewsNavGroupLabel}
+            </span>
+          </Link>
         </div>
+        <Link to={`/purchases`}>
+          <li className={style.navLinkItem}>{purchasesNavLinkLabel}</li>
+        </Link>
+        <Link to={`/reviews`}>
+          <li className={style.navLinkItem}>{reviewsNavLinkLabel}</li>
+        </Link>
       </ul>
 
       {/* My store nav group */}
