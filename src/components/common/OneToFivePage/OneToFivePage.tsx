@@ -9,8 +9,9 @@ import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
 import { State } from '../../../redux/store';
-import { Navbar as CustomNavbar } from '../..';
+import { Navbar as CustomNavbar, Footer } from '../..';
 import SideNav from '../SideNav/SideNav';
+
 import style from './OneToFivePage.module.css';
 
 const PageWithSideNav: FC = props => {
@@ -57,6 +58,7 @@ const PageWithSideNav: FC = props => {
           //Don't render side nav
           <div className={style.pageContainer}>{children}</div>
         )}
+        <Footer />
       </div>
     </>
   );
