@@ -1,6 +1,13 @@
 @import url('../../../app/util/propertySet.css');
 @import url('../../../app/util/colors.css');
 
+.logo {
+	width: 9rem;
+	margin: 1rem;
+	margin-right: 3rem;
+	padding: 1rem;
+}
+
 .avatarWrapper {
 	display: inline-block;
 	height: 2em;

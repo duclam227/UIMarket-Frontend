@@ -9,13 +9,13 @@ import { State } from '../../../redux/store';
 import { logOut } from '../../../redux';
 
 import Form from 'react-bootstrap/Form';
-import Logo from './Logo/Logo';
 import { BsSearch, BsCart } from 'react-icons/bs';
 
 import QuestionNavbar from './QuestionNavbar/QuestionNavbar';
+import ProductNavbar from './ProductNavbar/ProductNavbar';
+import LogoIcon from '../LogoIcon/LogoIcon';
 
 import style from './Navbar.module.css';
-import ProductNavbar from './ProductNavbar/ProductNavbar';
 
 interface IProps {
   branch?: string;
@@ -24,20 +24,6 @@ interface IProps {
 
 const NavBar: FC<IProps> = props => {
   const { branch, intl } = props;
-
-  // Left side nav items
-  const appName = (
-    <FormattedMessage id="CommonNavbar.appName" defaultMessage="App Name" />
-  );
-  const itemQuestionsLabel = (
-    <FormattedMessage id="CommonNavbar.itemQuestionsLabel" defaultMessage="Questions" />
-  );
-  const itemAskAQuestionLabel = (
-    <FormattedMessage
-      id="CommonNavbar.itemAskAQuestionLabel"
-      defaultMessage="Ask a question"
-    />
-  );
 
   //Right side nav items
   const searchBarPlaceholder = intl.formatMessage({
@@ -84,7 +70,7 @@ const NavBar: FC<IProps> = props => {
     <>
       <nav className={style.mainNavbar}>
         <section className={style.leftSideNav}>
-          <Logo />
+          <LogoIcon className={style.logo} />
 
           <Form className={style.searchBarWrapper} onSubmit={e => handleProductSearch(e)}>
             <div className={style.searchBar}>

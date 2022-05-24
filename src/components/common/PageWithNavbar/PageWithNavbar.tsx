@@ -1,6 +1,6 @@
 import { StringRegexOptions } from "joi";
 import { Children, FC } from "react";
-import { Navbar } from "../..";
+import { Navbar, Footer } from "../..";
 import { navbarBranches } from "../../../app/util/config";
 
 import style from './PageWithNavbar.module.css';
@@ -18,6 +18,7 @@ const PageWithNavbar: FC<IProps> = (props) => {
         <div className={style.pageContainer}>
           {children}
         </div>
+        <Footer />
       </div>
     </>
   )
