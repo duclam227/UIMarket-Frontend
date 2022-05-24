@@ -16,6 +16,19 @@ class Get {
 			config,
 		);
 	}
+
+	getReviewsOfUserByPage (pageNumber: number, perPage: number) {
+		const jwt = getJwt();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		};
+		return axiosClient.get(
+			`${REVIEW_ENDPOINT}/user/list?page=${pageNumber}&limit=${perPage}`,
+			config,
+		);
+	}
 }
 
 export default new Get();
