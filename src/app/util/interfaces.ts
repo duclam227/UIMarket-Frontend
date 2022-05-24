@@ -77,3 +77,8 @@ export interface voteStatus {
 	upvote: boolean;
 	downvote: boolean;
 }
+export interface ReportObject {
+  reportObject: string;
+  reason: string;
+  objectType: string;
+}
