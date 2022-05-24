@@ -188,6 +188,8 @@
   "ResetForgetPasswordForm.newPasswordPlaceholder": "Mật khẩu mới",
   "ResetForgetPasswordForm.confirmPasswordLabel": "Xác nhận mật khẩu",
   "ResetForgetPasswordForm.confirmPasswordPlaceholder": "Xác nhận lại mật khẩu",
+  "ReviewsPage.reviewItemTitle": "Bạn đã đánh giá",
+  "ReviewsPage.reviewItemTitleConnectingWord": "vào ngày",
   "ReviewProduct.cancelButtonLabel": "Hủy",
   "ReviewProduct.imageLabel": "Thêm hình ảnh (không bắt buộc)",
   "ReviewProduct.submitButtonLabel": "Gửi đánh giá",

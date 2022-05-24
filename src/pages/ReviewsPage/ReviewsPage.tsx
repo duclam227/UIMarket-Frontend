@@ -3,11 +3,16 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { Form, Spinner } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { State } from '../../redux/store';
 
-import invoiceAPI from '../../api/invoice';
+import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
+import reviewAPI from '../../api/review';
 
 import { OneToFivePage } from '../../components';
+
+import Review from './Review';
 
 import style from './ReviewsPage.module.css';
 
@@ -24,7 +29,23 @@ const ReviewsPage: FC<IProps> = (props) => {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [products, setProducts] = useState<Array<any> | null>(null);
+  const [reviews, setReviews] = useState<Array<any> | null>(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+    reviewAPI.getReviewsOfUserByPage(1, ITEMS_PER_PAGE)
+      .then((res: any) => {
+        const { reviews } = res;
+        setReviews([...reviews]);
+        console.log(res);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
+        toast.error(intl.formatMessage({ id: `LoginForm.${errorCode}` }))
+      })
+  }, [])
 
   return (
     <OneToFivePage>
@@ -43,9 +64,9 @@ const ReviewsPage: FC<IProps> = (props) => {
           <section className={style.body}>
             {isLoading
               ? <Spinner animation='border' />
-              : products && products.length > 0
+              : reviews && reviews.length > 0
                 ? <div className={style.productList}>
-                  {products.map((purchase: any) => <div>review</div>)}
+                  {reviews.map((review: any) => <Review review={review} />)}
                 </div>
                 : <div className={style.noProducts}>
                   <FormattedMessage id='ReviewsPage.noReviewsMessage' />

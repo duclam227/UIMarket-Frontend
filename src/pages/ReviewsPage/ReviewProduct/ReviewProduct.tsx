@@ -15,19 +15,19 @@ import style from './ReviewProduct.module.css';
 import { toast } from 'react-toastify';
 
 interface IProps {
-  productInfo: any
+  review: any;
   handleClose: Function;
   intl: IntlShape;
 }
 
 const ReviewProduct: FC<IProps> = (props) => {
-  const { productInfo, intl } = props;
-  const { productName, productId, invoiceId } = productInfo;
+  const { review, intl } = props;
+  const { product } = review;
+  const { productName, } = product;
 
-  const [rating, setRating] = useState<number>(0);
-  const [images, setImages] = useState<Array<string>>([]);
+  const [rating, setRating] = useState<number>(review.productRating || 0);
+  const [images, setImages] = useState<Array<string>>(review.reviewPictures || []);
 
-  const navigate = useNavigate();
 
   const schema = Joi.object({
     productReview: Joi.string().label('Review').allow(''),
@@ -43,7 +43,7 @@ const ReviewProduct: FC<IProps> = (props) => {
     resolver: joiResolver(schema),
     mode: 'onTouched',
     defaultValues: {
-      productReview: '',
+      productReview: review.productReview || '',
     },
   });
 
@@ -82,9 +82,8 @@ const ReviewProduct: FC<IProps> = (props) => {
 
   const handleReview: SubmitHandler<any> = async data => {
     const { productReview } = data;
-    reviewAPI.addReview({
-      invoiceId,
-      productId,
+    reviewAPI.editReview({
+      _id: review._id,
       productReview: productReview || '',
       productRating: rating,
       reviewPictures: images,
@@ -98,7 +97,7 @@ const ReviewProduct: FC<IProps> = (props) => {
       })
   };
 
-  return invoiceId
+  return review._id
     ? <Modal
       show={true}
       backdrop="static"

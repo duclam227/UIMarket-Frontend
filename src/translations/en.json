@@ -188,6 +188,8 @@
   "ResetForgetPasswordForm.newPasswordPlaceholder": "New password",
   "ResetForgetPasswordForm.confirmPasswordLabel": "Confirm password",
   "ResetForgetPasswordForm.confirmPasswordPlaceholder": "Confirm password",
+  "ReviewsPage.reviewItemTitle": "You reviewed",
+  "ReviewsPage.reviewItemTitleConnectingWord": "on",
   "ReviewProduct.cancelButtonLabel": "Cancel",
   "ReviewProduct.imageLabel": "Add some pictures (optional)",
   "ReviewProduct.submitButtonLabel": "Submit review",
