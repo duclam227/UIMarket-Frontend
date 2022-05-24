@@ -7,6 +7,7 @@ import { BsDownload, BsArrowRightCircle } from 'react-icons/bs';
 import ReviewProduct from './ReviewProduct/ReviewProduct';
 
 import style from './PurchaseHistoryPage.module.css';
+import s3API from '../../api/amazonS3';
 
 interface Props {
   key: string;
@@ -26,7 +27,18 @@ const Product: React.FC<Props> = props => {
     'https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101031/112815934-no-image-available-icon-flat-vector-illustration.jpg?ver=6';
 
   const handleDownload = () => {
-    window.open(product.productFile, '_blank');
+    const productUrl = product.productFile;
+    const afterSplit = productUrl.split('/');
+    const productId = afterSplit.at(-1);
+
+    s3API.downloadFile('products', true, productId)
+      .then((res: any) => {
+        const { url } = res;
+        window.open(url, '_blank');
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 
   return (
