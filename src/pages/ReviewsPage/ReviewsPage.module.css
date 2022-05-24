@@ -142,3 +142,18 @@
 .ratingHeader {
 	margin-left: auto;
 }
+
+.reviewBody {
+	padding: 1rem 0;
+}
+
+.reviewImages {
+	max-height: 100px;
+	width: 100%;
+
+	display: flex;
+	flex-direction: row;
+	gap: 2px;
+
+	overflow-x: scroll;
+}

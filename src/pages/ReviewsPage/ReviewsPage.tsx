@@ -37,7 +37,6 @@ const ReviewsPage: FC<IProps> = (props) => {
       .then((res: any) => {
         const { reviews } = res;
         setReviews([...reviews]);
-        console.log(res);
         setIsLoading(false);
       })
       .catch(error => {

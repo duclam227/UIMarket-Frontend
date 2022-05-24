@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { FormattedDate, FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
 
-import { HiDotsHorizontal } from 'react-icons/hi';
-
 import style from './ReviewsPage.module.css';
 import { Button, Dropdown } from 'react-bootstrap';
 import ReviewProduct from './ReviewProduct/ReviewProduct';
@@ -51,7 +49,21 @@ const Review: React.FC<IProps> = (props) => {
             {renderStars(review.productRating)}
           </div>
         </div>
-        {review.productReview}
+
+        {review.productReview
+          ?
+          <div className={style.reviewBody}>
+            <FormattedMessage id='ReviewsPage.reviewPrefix' /> {review.productReview}
+          </div>
+          : null
+        }
+        {review.reviewPictures
+          ?
+          <div className={style.reviewImages}>
+            {review.reviewPictures.map((img: string) => <img src={img} key={img} />)}
+          </div>
+          : null
+        }
         <div className={style.footerContent}>
           <Button variant='primary' className={style.menuButton} onClick={() => setIsEditing(true)}>
             <FormattedMessage id='ReviewsPage.editReviewLabel' />
