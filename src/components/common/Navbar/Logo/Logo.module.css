@@ -3,6 +3,7 @@
 	justify-content: center;
 	align-items: center;
 	margin-right: 100px;
+	padding: 30px 0;
 
 	box-sizing: border-box;
 	height: 100%;
@@ -11,5 +12,4 @@
 
 .wrapper img {
 	max-width: 60%;
-	max-height: 100%;
 }
