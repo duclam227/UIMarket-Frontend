@@ -4,11 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css';
-import {
-  RequireAnonymous,
-  RequireUser,
-  RequireAuthenticated,
-} from './components';
+import { RequireAnonymous, RequireUser, RequireAuthenticated } from './components';
 
 import {
   AboutUsPage,
@@ -43,6 +39,7 @@ import {
   EditProductPage,
   PurchaseHistoryPage,
   ReviewsPage,
+  ViewLicensePage,
 } from './pages';
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
@@ -74,20 +71,11 @@ function App() {
           }
         />
         <Route path="/verify" element={<AccountVerifiedPage />} />
-        <Route
-          path="/login/not-verified"
-          element={<AccountNotVerifiedPage />}
-        />
+        <Route path="/login/not-verified" element={<AccountNotVerifiedPage />} />
         <Route path="/signup/verify-prompt" element={<VerifyPromptPage />} />
-        <Route
-          path="/signup"
-          element={<AuthenticationPage destination="signup" />}
-        />
+        <Route path="/signup" element={<AuthenticationPage destination="signup" />} />
         <Route path="/create-shop" element={<CreateAShopPage />} />
-        <Route
-          path="/recover"
-          element={<AuthenticationPage destination="recover" />}
-        />
+        <Route path="/recover" element={<AuthenticationPage destination="recover" />} />
         <Route
           path="/resetForgetPassword"
           element={<AuthenticationPage destination="reset" />}
@@ -120,6 +108,7 @@ function App() {
         <Route path="/products/add" element={<AddAProductPage />} />
         <Route path="/product/:id" element={<ViewProductPage />} />
         <Route path="/product/:id/edit" element={<EditProductPage />} />
+        <Route path="/purchases/:id" element={<ViewLicensePage />} />
         <Route path="/purchases" element={<PurchaseHistoryPage />} />
         <Route
           path="/questions/new"
@@ -130,20 +119,11 @@ function App() {
           }
         />
         <Route path="/questions/all" element={<QuestionListsPage />} />
-        <Route
-          path="/questions/bountied"
-          element={<BountiedQuestionListsPage />}
-        />
-        <Route
-          path="/questions/popular"
-          element={<PopularQuestionListsPage />}
-        />
+        <Route path="/questions/bountied" element={<BountiedQuestionListsPage />} />
+        <Route path="/questions/popular" element={<PopularQuestionListsPage />} />
         <Route path="/questions/search/*" element={<SearchQuestionsPage />} />
         <Route path="/questions/tag/:id" element={<QuestionListsPageByTag />} />
-        <Route
-          path="/questions/*"
-          element={<Navigate replace to="/questions/all" />}
-        />
+        <Route path="/questions/*" element={<Navigate replace to="/questions/all" />} />
         <Route path="/question/:id" element={<ViewQuestionPage />} />
         <Route
           path="/question/:id/edit"
