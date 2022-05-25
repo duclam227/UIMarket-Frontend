@@ -3,6 +3,7 @@ import post from './post';
 
 const shopAPI = {
 	getAllProductsOfShop: get.getAllProductsOfShop,
+	getShopById: get.getShopById,
 
 	createShop: post.createShop,
 };
