@@ -43,6 +43,7 @@ import {
   EditProductPage,
   PurchaseHistoryPage,
   ReviewsPage,
+  ShopWalletPage,
 } from './pages';
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
@@ -110,6 +111,7 @@ function App() {
         />
         <Route path="/user/:id/products" element={<ManageProductsPage />} />
         <Route path="/user/:id/shop" element={<ShopHomePage />} />
+        <Route path="/user/:id/wallet" element={<ShopWalletPage />} />
         <Route path="/user/:id/*" element={<UserProfilePage />} />
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactUsPage />} />

@@ -30,6 +30,7 @@ export { default as QuestionListsPageByTag } from './QuestionsListPage/QuestionL
 export { default as ReviewsPage } from './ReviewsPage/ReviewsPage';
 export { default as SearchQuestionsPage } from './SearchQuestionsPage/SearchQuestionsPage';
 export { default as ShopHomePage } from './ShopHomePage/ShopHomePage';
+export { default as ShopWalletPage } from './ShopWalletPage/ShopWalletPage';
 export { default as VerifyPromptPage } from './VerifyPromptPage/VerifyPromptPage';
 export { default as ViewProductPage } from './ViewProductPage/ViewProductPage';
 export { default as ViewQuestionPage } from './ViewQuestionPage/ViewQuestionPage';
