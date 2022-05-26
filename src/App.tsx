@@ -111,7 +111,6 @@ function App() {
         />
         <Route path="/user/:id/products" element={<ManageProductsPage />} />
         <Route path="/user/:id/shop" element={<ShopHomePage />} />
-        <Route path="/user/:id/wallet" element={<ShopWalletPage />} />
         <Route path="/user/:id/*" element={<UserProfilePage />} />
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactUsPage />} />
@@ -156,6 +155,7 @@ function App() {
           }
         />
         <Route path="/reviews" element={<ReviewsPage />} />
+        <Route path="/wallet" element={<ShopWalletPage />} />
         <Route path="/forbidden" element={<ForbiddenPage />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="*" element={<NotFoundPage />} />

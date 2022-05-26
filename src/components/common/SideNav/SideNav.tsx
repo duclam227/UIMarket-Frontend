@@ -127,7 +127,7 @@ const SideNav: FC<Props> = props => {
             {paymentNavGroupLabel}
           </span>
         </div>
-        <Link to='wallet'>
+        <Link to='/wallet'>
           <li className={style.navLinkItem}>{deexWalletNavLinkLabel}</li>
         </Link>
         <li className={style.navLinkItem}>{bankAccountsNavLinkLabel}</li>
