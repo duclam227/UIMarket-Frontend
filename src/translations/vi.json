@@ -288,6 +288,7 @@
   "VerifyPromptPage.verifyMessage": "Tài khoản cần phải được kích hoạt trước khi đăng nhập!",
   "VerifyPromptPage.sentEmailMessage": "Chúng tôi đã gửi link kích hoạt tài khoản của bạn tới",
   "VerifyPromptPage.checkSpamMessage": "Vui lòng kiểm tra hộp thư spam.",
+  "ViewLicensePage.pagetitle": "Giấy phép bản quyền điện tử",
   "ViewProductPage.AddToCart": "Thêm vào giỏ hàng",
   "ViewProductPage.AddToCartSuccessMessage": "Thêm vào giỏ thành công!",
   "ViewProductPage.DescriptionTitle": "Mô tả",

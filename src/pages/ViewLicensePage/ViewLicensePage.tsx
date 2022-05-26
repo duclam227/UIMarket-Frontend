@@ -1,5 +1,6 @@
-import React, { FC, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { FormattedDate, FormattedMessage } from 'react-intl';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -8,19 +9,56 @@ import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { BsDownload } from 'react-icons/bs';
+
 import PageWithSideNav from '../../components/common/OneToFivePage/OneToFivePage';
 import style from './ViewLicensePage.module.css';
 import { LogoIcon } from '../../components';
+import licenseAPI from '../../api/license';
 
+interface LicenseInfo {
+  shopName: string;
+  customerEmail: string;
+  productId: string;
+  boughtTime: Date;
+}
 const ViewLicensePage = () => {
+  const pageTitle = <FormattedMessage id="ViewLicensePage.pagetitle" />;
+  const downloadButtonLabel = (
+    <FormattedMessage id="PurchaseHistoryPage.downloadButtonLabel" />
+  );
   const params = useParams();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [licenseInfo, setLicenseInfo] = useState<LicenseInfo | null>(null);
+  useEffect(() => {
+    if (!params.id) navigate(`/bad-request`, { replace: true });
+
+    const getLicense = async () => {
+      try {
+        const res: any = await licenseAPI.getLicenseById(params.id!);
+        setLicenseInfo({
+          shopName: res.shop.shopName,
+          customerEmail: res.userId.customerEmail,
+          productId: res.product._id,
+          boughtTime: new Date(res.boughtTime),
+        });
+        setIsLoading(false);
+      } catch (error: any) {
+        setLicenseInfo(null);
+        if (error && error.response.status === 404)
+          navigate('/not-found', { replace: true });
+        if (error && error.response.status === 400)
+          navigate('/bad-request', { replace: true });
+      }
+    };
+    getLicense();
+  }, []);
   return (
     <PageWithSideNav>
       <div className={`${style.content}`}>
         <Container fluid className={`bg-white border py-4`}>
           <Row>
-            <h2>Your Digital License</h2>
+            <h2>{pageTitle}</h2>
           </Row>
         </Container>
         {isLoading ? (
@@ -36,26 +74,41 @@ const ViewLicensePage = () => {
                 <div className={`bg-white py-3 px-4`}>
                   <LogoIcon className={style.logo} />
                   <table>
-                    <tr>
-                      <th className={`text-primary`}>Licensor: </th>
-                      <td>Store Name</td>
-                    </tr>
-                    <tr>
-                      <th className={`text-primary`}>Licensee: </th>
-                      <td>Buyer Email</td>
-                    </tr>
-                    <tr>
-                      <th className={`text-primary`}>Product ID: </th>
-                      <td>ID</td>
-                    </tr>
-                    <tr>
-                      <th className={`text-primary`}>Asset URL: </th>
-                      <td>Item URL</td>
-                    </tr>
-                    <tr>
-                      <th className={`text-primary`}>Purchase Date: </th>
-                      <td>08 Sep 2020</td>
-                    </tr>
+                    <tbody>
+                      <tr>
+                        <th className={`text-primary`}>Licensor: </th>
+                        <td>{licenseInfo?.shopName}</td>
+                      </tr>
+                      <tr>
+                        <th className={`text-primary`}>Licensee: </th>
+                        <td> {licenseInfo?.customerEmail} </td>
+                      </tr>
+                      <tr>
+                        <th className={`text-primary`}>Product ID: </th>
+                        <td>{licenseInfo?.productId}</td>
+                      </tr>
+                      <tr>
+                        <th className={`text-primary`}>Asset URL: </th>
+                        <td>
+                          <Link
+                            to={`${process.env.REACT_APP_BASE_CLIENT_URL}/product/${licenseInfo?.productId}`}
+                          >
+                            {`${process.env.REACT_APP_BASE_CLIENT_URL}/product/${licenseInfo?.productId}`}
+                          </Link>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th className={`text-primary`}>Purchase Date: </th>
+                        <td>
+                          <FormattedDate
+                            value={licenseInfo?.boughtTime}
+                            year="numeric"
+                            month="long"
+                            day="2-digit"
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
                   </table>
 
                   {/* License description section */}
@@ -108,7 +161,7 @@ const ViewLicensePage = () => {
               <Col md={3} xxl={2} className={`d-flex justify-content-end`}>
                 <span>
                   <Button className={`px-5 py-2 d-flex align-items-center`}>
-                    <span className={`me-2`}>Download</span>
+                    <span className={`me-2 text-nowrap`}>{downloadButtonLabel}</span>
                     <BsDownload />
                   </Button>
                 </span>
