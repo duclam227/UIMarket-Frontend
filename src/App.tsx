@@ -40,6 +40,7 @@ import {
   PurchaseHistoryPage,
   ReviewsPage,
   ViewLicensePage,
+  BadRequestPage,
 } from './pages';
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
@@ -135,6 +136,7 @@ function App() {
         />
         <Route path="/reviews" element={<ReviewsPage />} />
         <Route path="/forbidden" element={<ForbiddenPage />} />
+        <Route path="/bad-request" element={<BadRequestPage />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

@@ -6,6 +6,7 @@ export { default as AccountVerifiedPage } from './AccountVerifiedPage/AccountVer
 export { default as AddAProductPage } from './AddAProductPage/AddAProductPage';
 export { default as AskAQuestionPage } from './AskAQuestionPage/AskAQuestionPage';
 export { default as AuthenticationPage } from './AuthenticationPage/AuthenticationPage';
+export { default as BadRequestPage } from './BadRequestPage/BadRequestPage';
 export { default as BountiedQuestionListsPage } from './QuestionsListPage/BountiedQuestionListsPage';
 export { default as CartPage } from './CartPage/CartPage';
 export { default as ChangePasswordPage } from './ChangePasswordPage/ChangePasswordPage';
