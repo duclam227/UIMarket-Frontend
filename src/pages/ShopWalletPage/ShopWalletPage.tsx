@@ -16,6 +16,7 @@ import { OneToFivePage } from '../../components';
 import Transaction from './Transaction';
 
 import style from './ShopWalletPage.module.css';
+import WithdrawModal from './WithdrawModal';
 
 const ITEMS_PER_PAGE = 15;
 
@@ -32,6 +33,7 @@ const ShopWalletPage: FC<IProps> = (props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [transactions, setTransactions] = useState<Array<any> | null>(null);
   const [balance, setBalance] = useState<number | null>(null);
+  const [isWithdrawing, setIsWithdrawing] = useState<boolean>(false);
 
   useEffect(() => {
     if (currentUser?.shopId) {
@@ -100,7 +102,7 @@ const ShopWalletPage: FC<IProps> = (props) => {
                 </div>
                 : null
               }
-              <Button variant='primary'>
+              <Button variant='primary' onClick={() => setIsWithdrawing(true)}>
                 <FaPaypal />
                 <FormattedMessage id='ShopWalletPage.withdrawButtonLabel' />
               </Button>
@@ -132,6 +134,15 @@ const ShopWalletPage: FC<IProps> = (props) => {
           </section>
 
         </div>
+
+        {isWithdrawing
+          ? <WithdrawModal
+            handleClose={() => setIsWithdrawing(false)}
+            balance={balance!}
+          />
+          : null
+        }
+
       </div>
     </OneToFivePage >
   )

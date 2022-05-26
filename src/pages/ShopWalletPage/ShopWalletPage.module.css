@@ -95,7 +95,7 @@
 
 .transactionHeading {
 	display: grid;
-	grid-template-columns: 3fr 1fr 1fr 1.3fr;
+	grid-template-columns: 2.3fr 1fr 1fr 1.3fr;
 	margin-top: 20px;
 
 	width: 100%;
@@ -113,19 +113,31 @@
 
 .transaction {
 	display: grid;
-	grid-template-columns: 3fr 1fr 1fr 1.3fr;
+	grid-template-columns: 2.3fr 1fr 1fr 1.3fr;
 	padding: 15px 0;
 
 	border-top: 1px dashed var(--gray-300);
 	width: 100%;
 }
 
-.transactionHeading *,
-.transaction * {
-	padding-left: 1rem;
-}
-
 .productLink {
 	padding: 0;
 	font-weight: 600;
+}
+
+.withdrawModalBody {
+	display: flex;
+	flex-direction: column;
+}
+
+.amount {
+	font-weight: 650;
+}
+
+.receive {
+	color: var(--teal-500);
+}
+
+.withdraw {
+	color: var(--red-400);
 }

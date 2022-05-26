@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { FC } from "react";
 import { Badge } from "react-bootstrap";
 import { FormattedDate, FormattedMessage } from "react-intl";
@@ -13,7 +14,6 @@ interface IProps {
 
 const Transaction: FC<IProps> = (props) => {
   const { transaction } = props;
-  console.log(transaction);
 
   const {
     action,
@@ -23,7 +23,8 @@ const Transaction: FC<IProps> = (props) => {
     transactionStatus,
   } = transaction;
 
-  const truncatedProductId = productId.substring(0, 4);
+  const truncatedProductId = productId && productId.substring(0, 4);
+  const absoluteChangeAmount = changeAmount && Math.abs(changeAmount);
 
   return (
     <div className={style.transaction}>
@@ -33,7 +34,7 @@ const Transaction: FC<IProps> = (props) => {
             <FormattedMessage
               id={`ShopWalletPage.receivedMoneyMessage`}
               values={{
-                money: changeAmount,
+                money: absoluteChangeAmount,
               }}
             />
             <Link className={style.productLink} to={`/product/${productId}`}>
@@ -46,14 +47,18 @@ const Transaction: FC<IProps> = (props) => {
             </Link>
           </>
           : <FormattedMessage
-            id={`ShopWalletPage.withrawedMoneyMessage`}
+            id={`ShopWalletPage.withdrawedMoneyMessage`}
             values={{
-              money: changeAmount,
+              money: absoluteChangeAmount,
             }}
           />
         }
       </div>
-      <div>{changeAmount}</div>
+      {changeAmount > 0
+        ? <div className={classNames(style.amount, style.receive)}>${absoluteChangeAmount}</div>
+        : <div className={classNames(style.amount, style.withdraw)}>-${absoluteChangeAmount}</div>
+      }
+
       <div><FormattedDate value={createdAt} /></div>
       <div>
         {transactionStatus === transactionStatusTypes.pending
