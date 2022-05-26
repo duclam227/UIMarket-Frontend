@@ -21,7 +21,7 @@ class Get {
 		return axiosClient.get(imageUploadApiEndpoint, config);
 	};
 
-	downloadFile = (folder: string, isPrivate: boolean, id: string) => {
+	downloadFile = (folder: string, isPrivate: boolean, id: string, filename: string) => {
 		const jwt = getJwt();
 		const config = {
 			headers: {
@@ -31,8 +31,10 @@ class Get {
 
 		const folderInLink = `${folder}/${id}`;
 
+		const encodedFilename = encodeURIComponent(filename);
+
 		return axiosClient.get(
-			`${API_ENDPOINT}/download?folder=${folderInLink}&isPrivate=${isPrivate}`,
+			`${API_ENDPOINT}/download?folder=${folderInLink}&isPrivate=${isPrivate}&fileName=${encodedFilename}`,
 			config,
 		);
 	};

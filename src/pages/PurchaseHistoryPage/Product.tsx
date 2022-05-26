@@ -31,7 +31,7 @@ const Product: React.FC<Props> = props => {
     const afterSplit = productUrl.split('/');
     const productId = afterSplit.at(-1);
 
-    s3API.downloadFile('products', true, productId)
+    s3API.downloadFile('products', true, productId, product.productName)
       .then((res: any) => {
         const { url } = res;
         window.open(url, '_blank');
