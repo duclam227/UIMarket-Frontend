@@ -19,7 +19,6 @@ const Transaction: FC<IProps> = (props) => {
 
   return (
     <div className={style.transaction}>
-      <div>{_id}</div>
       <div>{reason}</div>
       <div>{changeAmount}</div>
       <div>.</div>

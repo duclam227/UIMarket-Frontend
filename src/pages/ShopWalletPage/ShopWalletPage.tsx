@@ -116,7 +116,6 @@ const ShopWalletPage: FC<IProps> = (props) => {
                     <h4><FormattedMessage id='ShopWalletPage.transactionHistoryTitle' /> </h4>
                   </div>
                   <div className={style.transactionHeading}>
-                    <div><FormattedMessage id='ShopWalletPage.transactionTableIdLabel' /></div>
                     <div><FormattedMessage id='ShopWalletPage.transactionTableDescriptionLabel' /></div>
                     <div><FormattedMessage id='ShopWalletPage.transactionTableAmountLabel' /></div>
                     <div><FormattedMessage id='ShopWalletPage.transactionTableDateLabel' /></div>
