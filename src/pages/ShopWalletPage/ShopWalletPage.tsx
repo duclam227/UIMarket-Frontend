@@ -32,7 +32,7 @@ const ShopWalletPage: FC<IProps> = (props) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [transactions, setTransactions] = useState<Array<any> | null>(null);
-  const [balance, setBalance] = useState<number | null>(null);
+  const [balance, setBalance] = useState<number | null>(0);
   const [isWithdrawing, setIsWithdrawing] = useState<boolean>(false);
 
   useEffect(() => {
