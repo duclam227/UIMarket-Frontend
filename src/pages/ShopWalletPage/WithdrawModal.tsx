@@ -9,6 +9,8 @@ import { joiResolver } from '@hookform/resolvers/joi';
 
 import { FormInput } from '../../components';
 import paymentAPI from '../../api/payment';
+import { errors as errorCodes } from '../../app/util/errors';
+import { getErrorMessage } from '../../app/util';
 
 import style from './ShopWalletPage.module.css';
 
@@ -41,10 +43,12 @@ const WithdrawModal: FC<IProps> = (props) => {
     paymentAPI.withdrawMoney(amountValue)
       .then((res: any) => {
         props.handleClose();
-        toast.success(intl.formatMessage({ id: 'ReviewProduct.successMessage' }));
+        toast.success(intl.formatMessage({ id: 'ShopWalletPage.successMessage' }));
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.payment[errorMsg as keyof typeof errorCodes.payment];
+        toast.error(intl.formatMessage({ id: `ShopWalletPage.${errorCode}` }))
       })
   };
 
