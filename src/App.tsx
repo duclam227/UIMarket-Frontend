@@ -118,7 +118,7 @@ function App() {
         <Route path="/payment/*" element={<ConfirmPaymentPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/products" element={<ProductListPage />} />
-        <Route path="/products/add" element={<AddAProductPage />} />
+        <Route path="/products/add" element={<RequireUser><AddAProductPage /></RequireUser>} />
         <Route path="/product/:id" element={<ViewProductPage />} />
         <Route path="/product/:id/edit" element={<EditProductPage />} />
         <Route path="/purchases" element={<PurchaseHistoryPage />} />
