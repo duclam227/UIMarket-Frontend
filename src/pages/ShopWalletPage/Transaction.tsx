@@ -47,7 +47,7 @@ const Transaction: FC<IProps> = (props) => {
             </Link>
           </>
           : <FormattedMessage
-            id={`ShopWalletPage.withdrawedMoneyMessage`}
+            id={`ShopWalletPage.withdrawnMoneyMessage`}
             values={{
               money: absoluteChangeAmount,
             }}
