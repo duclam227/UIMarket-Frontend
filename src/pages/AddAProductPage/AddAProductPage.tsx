@@ -40,10 +40,7 @@ const AddAProductPage: React.FC = () => {
     product.productPictures &&
     product.productPictures.length > 0
   );
-  const isFilesFilled = !!(
-    productFiles &&
-    productFiles.length > 0
-  )
+  const isFilesFilled = !!(productFiles && productFiles.length > 0);
 
   const updateProduct = (input: any) => {
     setProduct({
@@ -94,7 +91,7 @@ const AddAProductPage: React.FC = () => {
               })
               .then((res: any) => {
                 const { _id } = res.product;
-                navigate(`/product/${_id}`)
+                navigate(`/product/${_id}`);
               })
               .catch(error => {
                 console.log(error);
@@ -158,7 +155,7 @@ const AddAProductPage: React.FC = () => {
             disabled={!isImagesFilled || !isDescriptionFilled || !isFilesFilled}
             onClick={handleSubmit}
           >
-            Add product
+            <FormattedMessage id="AddAProduct.submitBtn" />
           </Button>
         </div>
       </div>
