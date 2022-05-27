@@ -293,6 +293,8 @@
   "ShopWalletPage.withdrawModalAmountLabel": "Enter the amount:",
   "ShopWalletPage.withdrawModalAmountPlaceholder": "$100",
   "ShopWalletPage.withdrawModalTitle": "Withdraw with PayPal",
+  "ShopWalletPage.missingPayPalEmail": "You need to set up your PayPal email!",
+  "ShopWalletPage.actionFailed": "Please try a gain later!",
   "SideNav.myProfileNavGroupLabel": "My Profile",
   "SideNav.editProfileNavLinkLabel": "Edit Profile",
   "SideNav.changePasswordNavLinkLabel": "Change password",
