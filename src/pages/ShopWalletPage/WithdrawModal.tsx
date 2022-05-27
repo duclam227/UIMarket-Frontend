@@ -16,6 +16,7 @@ import style from './ShopWalletPage.module.css';
 
 interface IProps {
   handleClose: Function;
+  handleReload: Function;
   balance: number;
   intl: IntlShape;
 }
@@ -43,7 +44,9 @@ const WithdrawModal: FC<IProps> = (props) => {
     paymentAPI.withdrawMoney(amountValue)
       .then((res: any) => {
         props.handleClose();
-        toast.success(intl.formatMessage({ id: 'ShopWalletPage.successMessage' }));
+        toast.success(intl.formatMessage({ id: 'ShopWalletPage.successMessage' }), {
+          onClose: () => props.handleReload()
+        });
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
