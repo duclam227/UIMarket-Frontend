@@ -87,7 +87,9 @@ const NavBar: FC<IProps> = props => {
         <section className={style.rightSideNav}>
           <div className={style.buttonRow}>
             <Link to={currentUser ? '/products/add' : '/signup'}>
-              <button className={style.sellButton}>Sell your art</button>
+              <button className={style.sellButton}>
+                <FormattedMessage id="NavBar.openShop" defaultMessage="Sell your art" />
+              </button>
             </Link>
 
             {currentUser ? (
