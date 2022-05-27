@@ -24,7 +24,8 @@ const Transaction: FC<IProps> = (props) => {
   } = transaction;
 
   const truncatedProductId = productId && productId.substring(0, 4);
-  const absoluteChangeAmount = changeAmount && Math.abs(changeAmount);
+  const roundedChangeAmount = changeAmount && Math.round(changeAmount * 100) / 100;
+  const absoluteChangeAmount = roundedChangeAmount && Math.abs(roundedChangeAmount);
 
   return (
     <div className={style.transaction}>
