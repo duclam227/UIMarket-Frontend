@@ -6,7 +6,7 @@ const RequireAnonymous = ({ children }: { children: JSX.Element }) => {
   const navigate = useNavigate();
   const currentUser = useSelector((state: State) => state.auth.user);
   if (currentUser) {
-    navigate('/questions/all', { replace: true });
+    navigate('/', { replace: true });
   }
   return children;
 };
