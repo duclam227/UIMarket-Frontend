@@ -12,11 +12,11 @@ import shopAPI from '../../api/shop';
 import invoiceAPI from '../../api/invoice';
 
 import { FaPaypal } from 'react-icons/fa';
-import { OneToFivePage } from '../../components';
+import { OneToFivePage, Paginator } from '../../components';
 import Transaction from './Transaction';
+import WithdrawModal from './WithdrawModal';
 
 import style from './ShopWalletPage.module.css';
-import WithdrawModal from './WithdrawModal';
 
 const ITEMS_PER_PAGE = 15;
 
@@ -33,7 +33,30 @@ const ShopWalletPage: FC<IProps> = (props) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [transactions, setTransactions] = useState<Array<any> | null>(null);
   const [balance, setBalance] = useState<number | null>(0);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [isWithdrawing, setIsWithdrawing] = useState<boolean>(false);
+  const [isReload, setIsReload] = useState<boolean>(false);
+
+  const goToPage = (page: number) => {
+    setIsLoading(true);
+    invoiceAPI.getTransactionHistoryByPage(page, ITEMS_PER_PAGE)
+      .then((res: any) => {
+        console.log(res);
+        setTransactions([...res.transactions]);
+        setTotalPages(res.totalPages);
+        setCurrentPage(page);
+      })
+      .catch(error => {
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
+        toast.error(intl.formatMessage({ id: `ShopWalletPage.${errorCode}` }))
+      })
+      .finally(() => {
+        setIsLoading(false);
+      })
+  }
+
 
   useEffect(() => {
     if (currentUser?.shopId) {
@@ -41,7 +64,11 @@ const ShopWalletPage: FC<IProps> = (props) => {
       shopAPI.getShopById(currentUser?.shopId! || '')
         .then((res: any) => {
           const { shop } = res;
-          setBalance(shop.shopBalance);
+          const { shopBalance } = shop;
+
+          const roundedBalance = Math.round(shopBalance * 100) / 100;
+
+          setBalance(roundedBalance);
         })
         .catch(error => {
           const errorMsg = getErrorMessage(error);
@@ -52,13 +79,16 @@ const ShopWalletPage: FC<IProps> = (props) => {
           setIsLoading(false);
         })
     }
-  }, [currentUser])
+  }, [currentUser, isReload])
 
   useEffect(() => {
     if (currentUser) {
       invoiceAPI.getTransactionHistoryByPage(1, ITEMS_PER_PAGE)
         .then((res: any) => {
+          console.log(res);
           setTransactions([...res.transactions]);
+          setTotalPages(res.totalPages);
+          setCurrentPage(1);
         })
         .catch(error => {
           const errorMsg = getErrorMessage(error);
@@ -69,7 +99,7 @@ const ShopWalletPage: FC<IProps> = (props) => {
           setIsLoading(false);
         })
     }
-  }, [currentUser])
+  }, [currentUser, isReload])
 
   return (
     <OneToFivePage>
@@ -126,6 +156,12 @@ const ShopWalletPage: FC<IProps> = (props) => {
                   <div className={style.transactionList}>
                     {transactions.map((tsx: any) => <Transaction key={tsx._id} transaction={tsx} />)}
                   </div>
+
+                  <Paginator
+                    currentPage={currentPage}
+                    totalNumberOfPages={totalPages}
+                    handleClickGoToPage={(page: number) => goToPage(page)}
+                  />
                 </>
                 : <div className={style.noTransactions}>
                   <FormattedMessage id='ShopWalletPage.noTransactionsMessage' />
@@ -137,6 +173,7 @@ const ShopWalletPage: FC<IProps> = (props) => {
 
         {isWithdrawing
           ? <WithdrawModal
+            handleReload={() => setIsReload(!isReload)}
             handleClose={() => setIsWithdrawing(false)}
             balance={balance!}
           />
