@@ -3,6 +3,8 @@ const INVOICE_ID = 'invoiceId';
 export function getErrorMessage (error: any) {
 	const { response, status } = error;
 
+	console.error(error);
+
 	if (!response || status >= 500) {
 		return 'action-failed';
 	}
