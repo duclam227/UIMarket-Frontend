@@ -14,10 +14,7 @@ interface Props {
 }
 const SideNav: FC<Props> = props => {
   const myProfileNavGroupLabel = (
-    <FormattedMessage
-      id="SideNav.myProfileNavGroupLabel"
-      defaultMessage="My Profile"
-    />
+    <FormattedMessage id="SideNav.myProfileNavGroupLabel" defaultMessage="My Profile" />
   );
   const editProfileNavLinkLabel = (
     <FormattedMessage
@@ -32,16 +29,10 @@ const SideNav: FC<Props> = props => {
     />
   );
   const paymentNavGroupLabel = (
-    <FormattedMessage
-      id="SideNav.paymentNavGroupLabel"
-      defaultMessage="Payment"
-    />
+    <FormattedMessage id="SideNav.paymentNavGroupLabel" defaultMessage="Payment" />
   );
   const deexWalletNavLinkLabel = (
-    <FormattedMessage
-      id="SideNav.deexWalletNavLinkLabel"
-      defaultMessage="DeeX Wallet"
-    />
+    <FormattedMessage id="SideNav.deexWalletNavLinkLabel" defaultMessage="DeeX Wallet" />
   );
   const bankAccountsNavLinkLabel = (
     <FormattedMessage
@@ -55,27 +46,13 @@ const SideNav: FC<Props> = props => {
       defaultMessage="Purchase & Reviews"
     />
   );
-  const purchasesNavLinkLabel = (
-    <FormattedMessage
-      id="SideNav.purchasesNavLinkLabel"
-    />
-  );
-  const reviewsNavLinkLabel = (
-    <FormattedMessage
-      id="SideNav.reviewsNavLinkLabel"
-    />
-  );
+  const purchasesNavLinkLabel = <FormattedMessage id="SideNav.purchasesNavLinkLabel" />;
+  const reviewsNavLinkLabel = <FormattedMessage id="SideNav.reviewsNavLinkLabel" />;
   const myStoreNavGroupLabel = (
-    <FormattedMessage
-      id="SideNav.myStoreNavGroupLabel"
-      defaultMessage="My Store"
-    />
+    <FormattedMessage id="SideNav.myStoreNavGroupLabel" defaultMessage="My Store" />
   );
   const productsNavLinkLabel = (
-    <FormattedMessage
-      id="SideNav.productsNavLinkLabel"
-      defaultMessage="Products"
-    />
+    <FormattedMessage id="SideNav.productsNavLinkLabel" defaultMessage="Products" />
   );
   const bankDetailsNavLinkLabel = (
     <FormattedMessage
@@ -90,7 +67,7 @@ const SideNav: FC<Props> = props => {
   return (
     //Sidenav only for logged in users?
     <div className={`${style.sideNavWrapper} ${className}`}>
-      {/* Current user display */}
+      {/* Current user display
       <div className={style.currentUserRow}>
         <div className={style.currentUser}>
           <div className={style.profilePictureWrapper}>
@@ -102,14 +79,17 @@ const SideNav: FC<Props> = props => {
           </div>
           <div className={style.username}>{currentUser?.customerName}</div>
         </div>
-      </div>
+      </div> */}
       {/* Profile nav group */}
       <ul className={style.navGroup}>
         <div className={style.navGroupName}>
           <BsGear className={style.navGroupNameIcon} />
-          <span className={style.navGroupNameLabel}>
+          <Link
+            to={`/user/${currentUser?._id}/activity`}
+            className={style.navGroupNameLabel}
+          >
             {myProfileNavGroupLabel}
-          </span>
+          </Link>
         </div>
         <Link to={`/user/${currentUser?._id}/edit`}>
           <li className={style.navLinkItem}>{editProfileNavLinkLabel}</li>
@@ -123,9 +103,7 @@ const SideNav: FC<Props> = props => {
       <ul className={style.navGroup}>
         <div className={style.navGroupName}>
           <BsWallet className={style.navGroupNameIcon} />
-          <span className={style.navGroupNameLabel}>
-            {paymentNavGroupLabel}
-          </span>
+          <span className={style.navGroupNameLabel}>{paymentNavGroupLabel}</span>
         </div>
         <li className={style.navLinkItem}>{deexWalletNavLinkLabel}</li>
         <li className={style.navLinkItem}>{bankAccountsNavLinkLabel}</li>
@@ -135,10 +113,8 @@ const SideNav: FC<Props> = props => {
       <ul className={style.navGroup}>
         <div className={style.navGroupName}>
           <BsBag className={style.navGroupNameIcon} />
-          <Link to={`/purchases`}>
-            <span className={style.navGroupNameLabel}>
-              {purchaseReviewsNavGroupLabel}
-            </span>
+          <Link to={`/purchases`} className={style.navGroupNameLabel}>
+            {purchaseReviewsNavGroupLabel}
           </Link>
         </div>
         <Link to={`/purchases`}>
@@ -153,10 +129,7 @@ const SideNav: FC<Props> = props => {
       <ul className={style.navGroup}>
         <div className={style.navGroupName}>
           <BsShop className={style.navGroupNameIcon} />
-          <Link
-            to={`/user/${currentUser?._id}/shop`}
-            className={style.navGroupNameLabel}
-          >
+          <Link to={`/user/${currentUser?._id}/shop`} className={style.navGroupNameLabel}>
             {myStoreNavGroupLabel}
           </Link>
         </div>
