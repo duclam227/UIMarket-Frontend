@@ -304,7 +304,16 @@
   "VerifyPromptPage.checkSpamMessage": "Please check the spam folder.",
   "ViewProductPage.AddToCart": "Add to cart",
   "ViewProductPage.AddToCartSuccessMessage": "Added item to cart!",
-  "ViewProductPage.DescriptionTitle": "Description",
+  "ViewProductPage.BuyNow": "Buy it now",
+  "ViewProductPage.DescriptionTitle": "About the Product",
+  "ViewProductPage.EditProduct": "Edit",
+  "ViewProductPage.meetSeller": "Meet your seller",
+  "ViewProductPage.price": "${money}",
+  "ViewProductPage.priceLabel": "Price",
+  "ViewProductPage.totalReviews": "{count, plural, =0 {# reviews} one {# review} other {# reviews}}",
+  "ViewProductPage.totalSold": "{count} sales",
   "ViewProductPage.ReviewTitle": "Reviews",
-  "ViewProductPage.EditProduct": "Edit"
+  "ViewProductPage.reportProduct": "Report this product",
+  "ViewProductPage.viewShopButton": "Visit shop",
+  "ViewProductPage.ownerMessage": "You are the owner of this product. Click here to edit."
 }
