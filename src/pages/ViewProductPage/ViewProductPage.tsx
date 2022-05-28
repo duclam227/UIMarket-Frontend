@@ -104,7 +104,7 @@ const ViewProductPage: React.FC = () => {
 
       <div className={style.wrapper}>
         <div className={style.content}>
-          {/* <SectionImages images={product?.productPictures!} /> */}
+          <SectionImages images={product?.productPictures!} />
           <SectionDescription body={product?.productDescription!} />
           <SectionReviews
             reviews={reviews!}

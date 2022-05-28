@@ -10,7 +10,7 @@
 .wrapper {
 	display: grid;
 	grid-template-columns: 2fr 1.2fr;
-	gap: 1rem;
+	gap: 2rem;
 
 	padding: 3rem 6rem;
 
@@ -50,6 +50,8 @@
 .header {
 	composes: section;
 	position: sticky;
+	top: 1rem;
+
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
@@ -99,6 +101,14 @@
 	padding: 20px 40px;
 	background-color: white;
 	border-radius: 20px;
+}
+
+.images {
+	composes: section;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 10px;
 }
 
 .review {
