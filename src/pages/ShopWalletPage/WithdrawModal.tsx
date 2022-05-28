@@ -45,7 +45,7 @@ const WithdrawModal: FC<IProps> = (props) => {
       .then((res: any) => {
         props.handleClose();
         toast.success(intl.formatMessage({ id: 'ShopWalletPage.successMessage' }), {
-          onClose: () => props.handleReload()
+          onOpen: () => props.handleReload()
         });
       })
       .catch(error => {
