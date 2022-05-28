@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { FaPen } from 'react-icons/fa';
 
 import { State } from '../../redux/store';
 import { product } from '../../app/util/interfaces';
@@ -33,6 +34,9 @@ const ViewProductPage: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
+
+  const isCurrentUserSeller = currentUser?.customerEmail === product?.shopId.customerEmail;
+
   const handleShowReportModal = () => {
     setShowReportModal(true);
   };
@@ -82,12 +86,19 @@ const ViewProductPage: React.FC = () => {
 
   return isLoading || !product ? (
     <PageWithNavbar>
-      <div className={style.wrapper}>
+      <div className={style.centerWrapper}>
         <Spinner animation="border" />
       </div>
     </PageWithNavbar>
   ) : (
     <PageWithNavbar>
+      <div className={style.centerWrapper}>
+        <Link to='edit' className={style.userManagePanel}>
+          <FormattedMessage id='ViewProductPage.ownerMessage' />
+          <FaPen />
+        </Link>
+      </div>
+
       <div className={style.wrapper}>
         <div className={style.content}>
           {/* <SectionImages images={product?.productPictures!} /> */}
