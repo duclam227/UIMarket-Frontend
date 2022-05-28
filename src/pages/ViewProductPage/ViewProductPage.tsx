@@ -89,26 +89,29 @@ const ViewProductPage: React.FC = () => {
   ) : (
     <PageWithNavbar>
       <div className={style.wrapper}>
-        {/* <div className={style.content}> */}
-        <SectionHeader
-          product={product!}
-          currentUser={currentUser!}
-          onShowReportModal={handleShowReportModal}
-        />
-        <SectionImages images={product?.productPictures!} />
-        <SectionDescription body={product?.productDescription!} />
-        <SectionReviews
-          reviews={reviews!}
-          totalPages={totalPages}
-          currentPage={currentPage}
-          handleGoToPage={(page: number) => goToPage(page)}
-        />
-        <ReportModal
-          show={showReportModal}
-          onClose={handleCloseReportModal}
-          reportObjectId={product._id!}
-          type="product"
-        />
+        <div className={style.content}>
+          {/* <SectionImages images={product?.productPictures!} /> */}
+          <SectionDescription body={product?.productDescription!} />
+          <SectionReviews
+            reviews={reviews!}
+            totalPages={totalPages}
+            currentPage={currentPage}
+            handleGoToPage={(page: number) => goToPage(page)}
+          />
+          <ReportModal
+            show={showReportModal}
+            onClose={handleCloseReportModal}
+            reportObjectId={product._id!}
+            type="product"
+          />
+        </div>
+        <div className={style.contentRight}>
+          <SectionHeader
+            product={product!}
+            currentUser={currentUser!}
+            onShowReportModal={handleShowReportModal}
+          />
+        </div>
       </div>
     </PageWithNavbar>
   );
