@@ -55,7 +55,9 @@ const SectionSeller: React.FC<Props> = props => {
               </div>
             </div >
 
-            <Button><FormattedMessage id='ViewProductPage.viewShopButton' /></Button>
+            <Link to={`/shop/${shop._id}`}>
+              <Button><FormattedMessage id='ViewProductPage.viewShopButton' /></Button>
+            </Link>
           </>
           : <Spinner animation='border' />
       }
