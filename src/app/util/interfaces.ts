@@ -48,7 +48,7 @@ export interface customer {
 		coin: string;
 		point: string;
 	};
-	customer_Status: string;
+	customerStatus: string;
 	createdAt: Date;
 	updatedAt: Date;
 	shopId: string;
