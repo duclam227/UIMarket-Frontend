@@ -111,6 +111,16 @@
 	gap: 10px;
 }
 
+.image {
+	flex: 0 1 40%;
+}
+
+.image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
 .review {
 	display: flex;
 	flex-direction: row;
