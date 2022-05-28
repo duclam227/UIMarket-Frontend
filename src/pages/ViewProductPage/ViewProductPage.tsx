@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { useParams, Link } from 'react-router-dom';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaPen } from 'react-icons/fa';
+import { BsFlag, BsExclamationOctagon } from 'react-icons/bs';
 
 import { State } from '../../redux/store';
 import { product } from '../../app/util/interfaces';
@@ -20,6 +21,7 @@ import SectionImages from './SectionImages';
 import SectionReviews from './SectionReviews';
 
 import style from './ViewProductPage.module.css';
+import SectionSeller from './SectionSeller';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -125,6 +127,14 @@ const ViewProductPage: React.FC = () => {
             currentUser={currentUser!}
             onShowReportModal={handleShowReportModal}
           />
+          <SectionSeller
+            product={product!}
+            currentUser={currentUser!}
+          />
+          <div className={style.reportPanel} onClick={() => handleShowReportModal!()}>
+            <BsFlag />
+            <FormattedMessage id='ViewProductPage.reportProduct' />
+          </div>
         </div>
       </div>
     </PageWithNavbar>
