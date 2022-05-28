@@ -14,6 +14,7 @@ import SectionQuestionVoter from './SectionQuestionVoter';
 import SectionBountyHeader from './SectionBountyHeader';
 
 import style from './Question.module.css';
+import UserAvatar from '../common/UserAvatar/UserAvatar';
 
 interface QuestionProps {
   question: any;
@@ -24,6 +25,8 @@ interface QuestionProps {
 const Question: FC<QuestionProps> = props => {
   const { question, currentUser, intl } = props;
   const navigate = useNavigate();
+
+  console.log(question)
 
   const [voteStatus, setVoteStatus] = useState<voteStatus>(question.voteStatus || null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -141,9 +144,11 @@ const Question: FC<QuestionProps> = props => {
         <h1 className={style.title}>{question.questionTitle}</h1>
         <div className={style.moreInfo}>
           <div className={style.authorInfo}>
-            <FormattedMessage id="Question.askedBy" />
-            <img src="/" alt="avt" />
-            <span>{question.userId.customerName}</span>
+            <div className="text-nowrap">
+              <FormattedMessage id="Question.askedBy" />
+            </div>
+            <UserAvatar image={question.userId.customerAvatar} />
+            <div className="text-nowrap">{question.userId.customerName}</div>
           </div>
         </div>
         <div className={style.content}>{parse(question.questionContent)}</div>

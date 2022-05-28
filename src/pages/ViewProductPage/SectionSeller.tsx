@@ -9,6 +9,7 @@ import { customer, product } from '../../app/util/interfaces';
 import shopAPI from '../../api/shop';
 
 import style from './ViewProductPage.module.css';
+import { UserAvatar } from '../../components';
 
 interface Props {
   product: product;
@@ -37,6 +38,8 @@ const SectionSeller: React.FC<Props> = props => {
       .finally(() => setIsLoading(false))
   }, [])
 
+  console.log(shop)
+
   return (
     <section className={style.seller}>
       {
@@ -45,7 +48,7 @@ const SectionSeller: React.FC<Props> = props => {
             <b><FormattedMessage id='ViewProductPage.meetSeller' /></b>
             <div className={style.review}>
               <div className={style.sideContent}>
-                <div>avt</div>
+                <UserAvatar image={shop.userId.customerAvatar} />
               </div>
               <div className={style.reviewContent}>
                 {shop.shopDescription}

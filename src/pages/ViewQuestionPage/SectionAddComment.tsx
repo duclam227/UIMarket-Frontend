@@ -6,7 +6,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import style from './ViewQuestionPage.module.css';
 import { customer } from "../../app/util/interfaces";
 import answerAPI from "../../api/answer";
-import { RichTextEditor } from "../../components";
+import { RichTextEditor, UserAvatar } from "../../components";
 
 interface AddCommentProps {
   question: any;
@@ -45,7 +45,9 @@ const SectionAddComment: FC<AddCommentProps> = (props) => {
 
   return (
     <div className={style.addCommentWrapper}>
-      <div className={style.userAvatar}>avt</div>
+      <div className={style.userAvatar}>
+        <UserAvatar image={currentUser.customerAvatar} />
+      </div>
       <div className={style.addCommentForm}>
         <Form>
           <Form.Group>
