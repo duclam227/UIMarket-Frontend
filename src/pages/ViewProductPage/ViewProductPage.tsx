@@ -92,12 +92,15 @@ const ViewProductPage: React.FC = () => {
     </PageWithNavbar>
   ) : (
     <PageWithNavbar>
-      <div className={style.centerWrapper}>
-        <Link to='edit' className={style.userManagePanel}>
-          <FormattedMessage id='ViewProductPage.ownerMessage' />
-          <FaPen />
-        </Link>
-      </div>
+      {isCurrentUserSeller
+        ? <div className={style.centerWrapper}>
+          <Link to='edit' className={style.userManagePanel}>
+            <FormattedMessage id='ViewProductPage.ownerMessage' />
+            <FaPen />
+          </Link>
+        </div>
+        : null
+      }
 
       <div className={style.wrapper}>
         <div className={style.content}>
