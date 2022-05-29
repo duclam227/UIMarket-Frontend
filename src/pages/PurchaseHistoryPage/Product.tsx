@@ -15,9 +15,7 @@ interface Props {
 }
 
 const Product: React.FC<Props> = props => {
-  const {
-    purchase,
-  } = props;
+  const { purchase } = props;
 
   const { product, shop } = purchase;
 
@@ -55,11 +53,11 @@ const Product: React.FC<Props> = props => {
       <div className={style.productInfo}>
         <Link to={`/product/${product._id}`}>
           <div className={style.productName}>{product.productName}</div>
-        </Link >
+        </Link>
         <Link to={`/shop/${shop._id}`}>
           <div className={style.shopInfo}>
             <FormattedMessage
-              id='PurchaseHistoryPage.shopInfo'
+              id="PurchaseHistoryPage.shopInfo"
               values={{
                 shopName: shop.shopName,
                 b: (word: string) => <b>{word}</b>,
@@ -68,40 +66,39 @@ const Product: React.FC<Props> = props => {
           </div>
         </Link>
       </div>
-      <Link to={`/license/`}>
+      <Link to={`/purchases/${purchase._id}`}>
         <div className={style.downloadButton}>
-          <FormattedMessage id='PurchaseHistoryPage.viewLicenseLabel' />
+          <FormattedMessage id="PurchaseHistoryPage.viewLicenseLabel" />
           <BsArrowRightCircle />
         </div>
       </Link>
 
       <Dropdown as={ButtonGroup}>
         <Button className={style.downloadButton} onClick={handleDownload}>
-          <FormattedMessage id='PurchaseHistoryPage.downloadButtonLabel' />
+          <FormattedMessage id="PurchaseHistoryPage.downloadButtonLabel" />
           <BsDownload />
         </Button>
 
         <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
 
         <Dropdown.Menu>
-          {!purchase.isReview
-            ? <>
+          {!purchase.isReview ? (
+            <>
               <Dropdown.Item onClick={() => setIsReviewing(true)}>
-                <FormattedMessage id='PurchaseHistoryPage.reviewButtonLabel' />
+                <FormattedMessage id="PurchaseHistoryPage.reviewButtonLabel" />
               </Dropdown.Item>
               <Dropdown.Divider />
             </>
-            : null
-          }
+          ) : null}
 
           <Dropdown.Item>
-            <FormattedMessage id='PurchaseHistoryPage.reportButtonLabel' />
+            <FormattedMessage id="PurchaseHistoryPage.reportButtonLabel" />
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
 
-      {isReviewing
-        ? <ReviewProduct
+      {isReviewing ? (
+        <ReviewProduct
           productInfo={{
             invoiceId: purchase.invoiceId,
             productId: product._id,
@@ -109,9 +106,8 @@ const Product: React.FC<Props> = props => {
           }}
           handleClose={() => setIsReviewing(false)}
         />
-        : null
-      }
-    </div >
+      ) : null}
+    </div>
   );
 };
 
