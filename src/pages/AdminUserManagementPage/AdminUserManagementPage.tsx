@@ -92,7 +92,6 @@ const AdminUserManagementPage: FC<Props> = props => {
   };
   const thBstrapClass = 'fw-bold text-muted';
   return (
-    <PageWithNavbar branch="admin">
       <Container className={`bg-white w-75 py-4 px-4 mt-3 rounded ${style.container}`}>
         <Form className={style.searchBarWrapper}>
           <div className={style.searchBar}>
@@ -193,7 +192,6 @@ const AdminUserManagementPage: FC<Props> = props => {
           handleClickGoToPage={(number: number) => goToPage(number)}
         />
       </Container>
-    </PageWithNavbar>
   );
 };
 
