@@ -165,7 +165,7 @@ const CartPage: FunctionComponent = () => {
               defaultMessage="Looks like you haven't bought anything."
             ></FormattedMessage>
             <Button href="/products" className="m-5">
-              Continue Shopping
+              Continue shopping
             </Button>
           </Container>
         )}
