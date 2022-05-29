@@ -54,6 +54,7 @@ export interface customer {
 	shopId: string;
 	refreshtoken: string;
 	customerAvatar: string;
+	isAdmin: boolean;
 }
 export interface product {
 	_id?: string;
