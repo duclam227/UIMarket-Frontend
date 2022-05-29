@@ -123,7 +123,6 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
     }
   };
   const handleDeactivateProduct = async (id: string) => {
-    console.log('Activated product', products);
     //Save previous Products
     const prevProducts = products && JSON.parse(JSON.stringify(products));
 
