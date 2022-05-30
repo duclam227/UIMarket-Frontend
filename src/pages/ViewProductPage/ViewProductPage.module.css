@@ -108,6 +108,10 @@
 	border-radius: 20px;
 }
 
+.seller a button {
+	width: 100%;
+}
+
 .body {
 	composes: section;
 	min-height: 10vh;
