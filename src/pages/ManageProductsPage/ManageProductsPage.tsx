@@ -57,14 +57,9 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
   }, [shopId]);
 
   const handleSelectProduct = (id: string) => {
-    const newProducts = products
-      ? products.map(product => ({ ...product }))
-      : null;
+    const newProducts = products ? products.map(product => ({ ...product })) : null;
 
-    const selectedProduct = _.find(
-      newProducts,
-      product => product.product._id === id,
-    );
+    const selectedProduct = _.find(newProducts, product => product.product._id === id);
     if (!selectedProduct) return;
     selectedProduct.isSelected = selectedProduct.isSelected ? false : true;
 
@@ -107,10 +102,7 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
     const prevProducts = products ? JSON.parse(JSON.stringify(products)) : null;
     const newProducts = products ? JSON.parse(JSON.stringify(products)) : null;
 
-    const selectedProduct = _.find(
-      newProducts,
-      product => product.product._id === id,
-    );
+    const selectedProduct = _.find(newProducts, product => product.product._id === id);
     if (!selectedProduct) return;
     selectedProduct.product.productStatus = 1;
 
@@ -129,10 +121,7 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
     //Create new Products
     const newProducts = products ? JSON.parse(JSON.stringify(products)) : null;
     //Find product need to be updated
-    const selectedProduct = _.find(
-      newProducts,
-      product => product.product._id === id,
-    );
+    const selectedProduct = _.find(newProducts, product => product.product._id === id);
     //Update product
     if (!selectedProduct) return;
     selectedProduct.product.productStatus = 0;
@@ -175,10 +164,7 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
               </Link>
             </div>
             <div className={style.noProductsImage}>
-              <img
-                src={noProductsImage}
-                alt="A picture telling there are no products"
-              />
+              <img src={noProductsImage} alt="A picture telling there are no products" />
             </div>
             <h4 className={style.title}>
               <FormattedMessage id="ManageProductsPage.noProductsTitle" />
@@ -238,7 +224,15 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
                     onChange={e => handleSelectAll(e)}
                   />
                   <span>
-                    <Button variant="danger" onClick={handleDeleteSelected}>
+                    <Button
+                      variant={
+                        products.some(product => product.isSelected)
+                          ? 'danger'
+                          : 'secondary'
+                      }
+                      onClick={handleDeleteSelected}
+                      disabled={!products.some(product => product.isSelected)}
+                    >
                       <FormattedMessage id="ManageProductsPage.deleteSelectedBtnLabel" />
                     </Button>
                   </span>
