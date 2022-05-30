@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Link } from 'react-router-dom';
 import { GoogleLogin } from 'react-google-login';
@@ -27,6 +27,7 @@ interface loginFormProps {
 const LoginForm: FC<loginFormProps> = props => {
   const { intl } = props;
   const navigate = useNavigate();
+  const location = useLocation();
 
   //general login form labels
   const title = (
@@ -107,6 +108,9 @@ const LoginForm: FC<loginFormProps> = props => {
       localStorage.setItem('authToken', token);
       const customer: customer = { ...user };
       dispatch(loginSuccess({ ...customer }));
+      const { state: locationState }: { state: any } = location;
+      window.location = locationState ? locationState.from.pathname : '/';
+
     } catch (e: any) {
       if (e.response && e.response.data.msg === 'account-inactived') {
         const { userId } = e.response.data;
@@ -123,6 +127,8 @@ const LoginForm: FC<loginFormProps> = props => {
     const { tokenId } = data;
     try {
       dispatch(logInWithGoogle(tokenId));
+      const { state: locationState }: { state: any } = location;
+      window.location = locationState ? locationState.from.pathname : '/';
     } catch (error) {
       const errorMsg = getErrorMessage(error);
       const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];

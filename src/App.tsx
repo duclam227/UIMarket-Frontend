@@ -44,6 +44,7 @@ import {
   EditProductPage,
   PurchaseHistoryPage,
   ReviewsPage,
+  ShopWalletPage,
   ViewLicensePage,
   BadRequestPage,
   AdminUserManagementPage,
@@ -112,7 +113,7 @@ function App() {
         <Route path="/payment/*" element={<ConfirmPaymentPage />} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/products" element={<ProductListPage />} />
-        <Route path="/products/add" element={<AddAProductPage />} />
+        <Route path="/products/add" element={<RequireUser><AddAProductPage /></RequireUser>} />
         <Route path="/product/:id" element={<ViewProductPage />} />
         <Route path="/product/:id/edit" element={<EditProductPage />} />
         <Route path="/purchases/:id" element={<ViewLicensePage />} />
@@ -143,6 +144,7 @@ function App() {
         <Route path="/admin/:tab" element={<AdminRoutes />} />
         <Route path="/admin" element={<Navigate to="/admin/user-management" replace />} />
         <Route path="/reviews" element={<ReviewsPage />} />
+        <Route path="/wallet" element={<ShopWalletPage />} />
         <Route path="/forbidden" element={<ForbiddenPage />} />
         <Route path="/bad-request" element={<BadRequestPage />} />
         <Route path="/" element={<LandingPage />} />

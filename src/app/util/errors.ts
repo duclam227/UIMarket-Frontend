@@ -25,6 +25,10 @@ export const errors = {
 		'already-gone': 'commentDeleted',
 		'missing-req-body': 'actionFailed',
 	},
+	payment: {
+		'invalid-paypal': 'missingPayPalEmail',
+		'action-failed': 'actionFailed',
+	},
 	product: {
 		'invalid-category-id': 'actionFailed',
 		'invalid-shop-id': 'actionFailed',

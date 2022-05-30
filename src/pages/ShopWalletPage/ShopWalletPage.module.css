@@ -1,0 +1,143 @@
+@import url('../../app/util/colors.css');
+
+.wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	width: 100%;
+	height: 100%;
+}
+
+.content {
+	display: flex;
+	flex-direction: column;
+
+	width: 95%;
+	height: 100%;
+}
+
+.header {
+	display: flex;
+	flex-direction: row;
+	padding: 2rem 3rem;
+	margin-bottom: 2rem;
+
+	width: 100%;
+
+	background-color: white;
+	border: 1px solid var(--gray-300);
+	border-top: none;
+}
+
+.body {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 2rem;
+	padding: 2rem;
+
+	width: 100%;
+
+	background-color: white;
+	border: 1px solid var(--gray-300);
+}
+
+.balanceSection {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+
+	width: 100%;
+}
+
+.balanceSection .body {
+	padding: 20px;
+
+	display: flex;
+	flex-direction: column;
+}
+
+.balanceSection .body button {
+	width: fit-content;
+
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	gap: 5px;
+}
+
+.balanceSection div h4 {
+	font-weight: 550;
+	margin-bottom: 0;
+}
+
+.balanceNumber {
+	font-size: 3.5rem;
+	font-weight: 600;
+	margin-bottom: 20px;
+}
+
+.bodySubtitle {
+	color: var(--gray-500);
+}
+
+.noTransactions {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 5vh;
+	width: 100%;
+}
+
+.bodyHeader h4 {
+	font-weight: 600;
+}
+
+.transactionHeading {
+	display: grid;
+	grid-template-columns: 2.3fr 1fr 1fr 1.3fr;
+	margin-top: 20px;
+
+	width: 100%;
+	padding: 20px 0;
+
+	font-weight: 600;
+	color: var(--gray-600);
+}
+
+.transactionList {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+}
+
+.transaction {
+	display: grid;
+	grid-template-columns: 2.3fr 1fr 1fr 1.3fr;
+	padding: 15px 0;
+
+	border-top: 1px dashed var(--gray-300);
+	width: 100%;
+}
+
+.productLink {
+	padding: 0;
+	font-weight: 600;
+}
+
+.withdrawModalBody {
+	display: flex;
+	flex-direction: column;
+}
+
+.amount {
+	font-weight: 650;
+}
+
+.receive {
+	color: var(--teal-500);
+}
+
+.withdraw {
+	color: var(--red-400);
+}
