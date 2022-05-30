@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
-import { Form, Spinner } from 'react-bootstrap';
+import { Button, Form, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import { State } from '../../redux/store';
 
@@ -13,6 +13,7 @@ import reviewAPI from '../../api/review';
 import { OneToFivePage } from '../../components';
 
 import Review from './Review';
+import illustration from '../../app/assets/error-not-found.png';
 
 import style from './ReviewsPage.module.css';
 
@@ -22,7 +23,7 @@ interface IProps {
   intl: IntlShape;
 }
 
-const ReviewsPage: FC<IProps> = (props) => {
+const ReviewsPage: FC<IProps> = props => {
   const { intl } = props;
 
   const currentUser = useSelector((state: State) => state.auth.user);
@@ -33,7 +34,8 @@ const ReviewsPage: FC<IProps> = (props) => {
 
   useEffect(() => {
     setIsLoading(true);
-    reviewAPI.getReviewsOfUserByPage(1, ITEMS_PER_PAGE)
+    reviewAPI
+      .getReviewsOfUserByPage(1, ITEMS_PER_PAGE)
       .then((res: any) => {
         const { reviews } = res;
         setReviews([...reviews]);
@@ -42,9 +44,9 @@ const ReviewsPage: FC<IProps> = (props) => {
       .catch(error => {
         const errorMsg = getErrorMessage(error);
         const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
-        toast.error(intl.formatMessage({ id: `LoginForm.${errorCode}` }))
-      })
-  }, [])
+        toast.error(intl.formatMessage({ id: `LoginForm.${errorCode}` }));
+      });
+  }, []);
 
   return (
     <OneToFivePage>
@@ -61,22 +63,37 @@ const ReviewsPage: FC<IProps> = (props) => {
             </div>
           </section>
           <section className={style.body}>
-            {isLoading
-              ? <Spinner animation='border' />
-              : reviews && reviews.length > 0
-                ? <div className={style.productList}>
-                  {reviews.map((review: any) => <Review review={review} />)}
+            {isLoading ? (
+              <Spinner animation="border" />
+            ) : reviews && reviews.length > 0 ? (
+              <div className={style.productList}>
+                {reviews.map((review: any) => (
+                  <Review review={review} />
+                ))}
+              </div>
+            ) : (
+              <div className={style.noProducts}>
+                <div className="d-flex flex-column align-items-center mb-2">
+                  <img
+                    className={'m-4 ' + style.img}
+                    src={illustration}
+                    alt="empty list"
+                  ></img>
+                  <FormattedMessage
+                    id="ReviewsPage.noReviewsMessage"
+                    defaultMessage="Looks like you haven't bought anything."
+                  ></FormattedMessage>
+                  <Button href="/products" className="m-4">
+                    Continue shopping
+                  </Button>
                 </div>
-                : <div className={style.noProducts}>
-                  <FormattedMessage id='ReviewsPage.noReviewsMessage' />
-                </div>
-            }
+              </div>
+            )}
           </section>
-
         </div>
       </div>
-    </OneToFivePage >
-  )
+    </OneToFivePage>
+  );
 };
 
 export default injectIntl(ReviewsPage);

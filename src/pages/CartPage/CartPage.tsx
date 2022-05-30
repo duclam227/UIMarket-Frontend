@@ -1,13 +1,13 @@
 import { FunctionComponent, useEffect, useState } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Spinner, Button, Col, Row } from 'react-bootstrap';
 import { PageWithNavbar } from '../../components';
 import Container from 'react-bootstrap/Container';
 
 import { getErrorMessage, saveMostRecentInvoiceId } from '../../app/util/index';
 import cartAPI from '../../api/cart';
 import paymentAPI from '../../api/payment';
-
 import { FormattedMessage } from 'react-intl';
+import illustration from '../../app/assets/cart-empty.png';
 
 import styles from './CartPage.module.css';
 
@@ -148,8 +148,8 @@ const CartPage: FunctionComponent = () => {
           <FormattedMessage id="CartPage.Title" defaultMessage="My Cart" />
         </h1>
         {isLoading ? (
-          <p>loading...</p>
-        ) : (
+          <Spinner animation="border" />
+        ) : cartProducts && cartProducts.length > 0 ? (
           <Row>
             <Col className={styles.cartpage_productlist} lg="7">
               {renderItems(cartProducts)}
@@ -157,6 +157,17 @@ const CartPage: FunctionComponent = () => {
             <Col lg="1"></Col>
             <Col lg="4">{renderSummary(cartProducts)}</Col>
           </Row>
+        ) : (
+          <Container fluid className="d-flex flex-column align-items-center mb-5">
+            <img src={illustration} alt="empty cart" className="m-5"></img>
+            <FormattedMessage
+              id="CartPage.NoItems"
+              defaultMessage="Looks like you haven't bought anything."
+            ></FormattedMessage>
+            <Button href="/products" className="m-5">
+              Continue shopping
+            </Button>
+          </Container>
         )}
       </Container>
     </PageWithNavbar>
