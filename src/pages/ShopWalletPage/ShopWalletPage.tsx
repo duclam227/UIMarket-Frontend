@@ -32,7 +32,7 @@ const ShopWalletPage: FC<IProps> = (props) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [transactions, setTransactions] = useState<Array<any> | null>(null);
-  const [balance, setBalance] = useState<number | null>(0);
+  const [balance, setBalance] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isWithdrawing, setIsWithdrawing] = useState<boolean>(false);
@@ -42,7 +42,6 @@ const ShopWalletPage: FC<IProps> = (props) => {
     setIsLoading(true);
     invoiceAPI.getTransactionHistoryByPage(page, ITEMS_PER_PAGE)
       .then((res: any) => {
-        console.log(res);
         setTransactions([...res.transactions]);
         setTotalPages(res.totalPages);
         setCurrentPage(page);
@@ -56,7 +55,6 @@ const ShopWalletPage: FC<IProps> = (props) => {
         setIsLoading(false);
       })
   }
-
 
   useEffect(() => {
     if (currentUser?.shopId) {
@@ -85,7 +83,6 @@ const ShopWalletPage: FC<IProps> = (props) => {
     if (currentUser) {
       invoiceAPI.getTransactionHistoryByPage(1, ITEMS_PER_PAGE)
         .then((res: any) => {
-          console.log(res);
           setTransactions([...res.transactions]);
           setTotalPages(res.totalPages);
           setCurrentPage(1);
@@ -116,23 +113,21 @@ const ShopWalletPage: FC<IProps> = (props) => {
           <section className={style.balanceSection}>
             <div className={style.body}>
               <h4><FormattedMessage id='ShopWalletPage.currentBalance' /> </h4>
-              {balance
-                ? <div className={style.balanceNumber}>
-                  <FormattedMessage id='ShopWalletPage.balanceNumber' values={{ number: balance }} />
-                </div>
-                : null
-              }
+              <div className={style.balanceNumber}>
+                <FormattedMessage id='ShopWalletPage.balanceNumber' values={{ number: balance }} />
+              </div>
               <div className={style.bodySubtitle}><FormattedMessage id='ShopWalletPage.currentBalanceSubtitle' /> </div>
             </div>
             <div className={style.body}>
               <h4><FormattedMessage id='ShopWalletPage.canWithdraw' /> </h4>
-              {balance
-                ? <div className={style.balanceNumber}>
-                  <FormattedMessage id='ShopWalletPage.balanceNumber' values={{ number: balance }} />
-                </div>
-                : null
-              }
-              <Button variant='primary' onClick={() => setIsWithdrawing(true)}>
+              <div className={style.balanceNumber}>
+                <FormattedMessage id='ShopWalletPage.balanceNumber' values={{ number: balance }} />
+              </div>
+              <Button
+                variant='primary'
+                onClick={() => setIsWithdrawing(true)}
+                disabled={!(balance > 0)}
+              >
                 <FaPaypal />
                 <FormattedMessage id='ShopWalletPage.withdrawButtonLabel' />
               </Button>
@@ -171,16 +166,17 @@ const ShopWalletPage: FC<IProps> = (props) => {
 
         </div>
 
-        {isWithdrawing
-          ? <WithdrawModal
-            handleReload={() => setIsReload(!isReload)}
-            handleClose={() => setIsWithdrawing(false)}
-            balance={balance!}
-          />
-          : null
+        {
+          isWithdrawing
+            ? <WithdrawModal
+              handleReload={() => setIsReload(!isReload)}
+              handleClose={() => setIsWithdrawing(false)}
+              balance={balance!}
+            />
+            : null
         }
 
-      </div>
+      </div >
     </OneToFivePage >
   )
 };
