@@ -293,7 +293,7 @@
   "ShopWalletPage.withdrawModalAmountPlaceholder": "$100",
   "ShopWalletPage.withdrawModalAmountLabel": "Nhập số tiền:",
   "ShopWalletPage.withdrawButtonLabel": "Rút tiền về PayPal",
-  "ShopWalletPage.missingPayPalEmail": "Bạn chưa cung cấp email PayPal!",
+  "ShopWalletPage.missingPayPalEmail": "Bạn chưa cung cấp email PayPal trong thông tin cửa hàng!",
   "ShopWalletPage.actionFailed": "Xin vui lòng thử lại sau!",
   "SideNav.myProfileNavGroupLabel": "Hồ sơ của tôi",
   "SideNav.editProfileNavLinkLabel": "Chỉnh sửa thông tin",
