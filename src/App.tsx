@@ -4,7 +4,12 @@ import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css';
-import { RequireAnonymous, RequireUser, RequireAuthenticated } from './components';
+import {
+  RequireAnonymous,
+  RequireUser,
+  RequireAuthenticated,
+  AdminRoutes,
+} from './components';
 
 import {
   AboutUsPage,
@@ -41,6 +46,7 @@ import {
   ReviewsPage,
   ViewLicensePage,
   BadRequestPage,
+  AdminUserManagementPage,
 } from './pages';
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
@@ -134,6 +140,8 @@ function App() {
             </RequireUser>
           }
         />
+        <Route path="/admin/:tab" element={<AdminRoutes />} />
+        <Route path="/admin" element={<Navigate to="/admin/user-management" replace />} />
         <Route path="/reviews" element={<ReviewsPage />} />
         <Route path="/forbidden" element={<ForbiddenPage />} />
         <Route path="/bad-request" element={<BadRequestPage />} />

@@ -20,20 +20,20 @@
   padding: 1rem;
 }
 
-table {
+.table {
   border-collapse: separate !important;
   border-spacing: 0.2em !important;
   width: 100%;
 }
-th {
+.th {
   width: 20%;
   background-color: var(--pink-200);
   padding: 0.8em;
 }
-tr {
+.tr {
   width: 100%;
 }
-td {
+.td {
   width: 70%;
   background-color: var(--pink-100);
   padding: 0.8em;

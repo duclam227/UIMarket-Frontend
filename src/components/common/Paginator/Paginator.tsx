@@ -24,6 +24,7 @@ const Paginator: FC<PaginatorProps> = (props) => {
         for (let i = 1; i <= 10; i++) {
           pagingButtons.push(
             <Pagination.Item
+              key={i}
               active={currentPage === i ? true : false}
               onClick={(number) => goToPage(i)}
             >{i}</Pagination.Item>
@@ -36,6 +37,7 @@ const Paginator: FC<PaginatorProps> = (props) => {
         for (let i = 1; i <= totalNumberOfPages; i++) {
           pagingButtons.push(
             <Pagination.Item
+              key={i}
               active={currentPage === i ? true : false}
               onClick={(number) => goToPage(i)}
             >{i}</Pagination.Item>
@@ -58,6 +60,7 @@ const Paginator: FC<PaginatorProps> = (props) => {
         for (let i = finalFirstNumber; i <= finalLastNumber; i++) {
           pagingButtons.push(
             <Pagination.Item
+              key={i}
               active={currentPage === i ? true : false}
               onClick={() => goToPage(i)}
             >{i}</Pagination.Item>
@@ -70,6 +73,7 @@ const Paginator: FC<PaginatorProps> = (props) => {
         for (let i = 1; i <= totalNumberOfPages; i++) {
           pagingButtons.push(
             <Pagination.Item
+              key={i}
               active={currentPage === i ? true : false}
               onClick={(number) => goToPage(i)}
             >{i}</Pagination.Item>
