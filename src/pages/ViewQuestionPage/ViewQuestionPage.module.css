@@ -1,15 +1,13 @@
 @import '../../app/util/colors.css';
 
 .container {
-	display: grid;
-	grid-template-columns: 15vw auto;
+	display: flex;
+	justify-content: center;
 
 	width: 100%;
 }
 
 .content {
-	grid-column: 2;
-	margin-right: 2em;
 }
 
 .answersTitle {
@@ -32,4 +30,10 @@
 
 .addCommentButton {
 	margin-top: 20px;
+}
+
+.userAvatar {
+	grid-column: 1;
+	padding: 5px;
+	width: 100px;
 }

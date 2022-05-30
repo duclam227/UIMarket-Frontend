@@ -4,11 +4,11 @@ export { default as AboutUsPage } from './AboutUsPage/About';
 export { default as AccountNotVerifiedPage } from './AccountNotVerifiedPage/AccountNotVerifiedPage';
 export { default as AccountVerifiedPage } from './AccountVerifiedPage/AccountVerifiedPage';
 export { default as AddAProductPage } from './AddAProductPage/AddAProductPage';
+export { default as AdminUserManagementPage } from './AdminUserManagementPage/AdminUserManagementPage';
 export { default as AskAQuestionPage } from './AskAQuestionPage/AskAQuestionPage';
 export { default as AuthenticationPage } from './AuthenticationPage/AuthenticationPage';
-export {
-	default as BountiedQuestionListsPage,
-} from './QuestionsListPage/BountiedQuestionListsPage';
+export { default as BadRequestPage } from './BadRequestPage/BadRequestPage';
+export { default as BountiedQuestionListsPage } from './QuestionsListPage/BountiedQuestionListsPage';
 export { default as CartPage } from './CartPage/CartPage';
 export { default as ChangePasswordPage } from './ChangePasswordPage/ChangePasswordPage';
 export { default as ContactUsPage } from './ContactUsPage/Contact';
@@ -32,6 +32,7 @@ export { default as SearchQuestionsPage } from './SearchQuestionsPage/SearchQues
 export { default as ShopHomePage } from './ShopHomePage/ShopHomePage';
 export { default as ShopWalletPage } from './ShopWalletPage/ShopWalletPage';
 export { default as VerifyPromptPage } from './VerifyPromptPage/VerifyPromptPage';
+export { default as ViewLicensePage } from './ViewLicensePage/ViewLicensePage';
 export { default as ViewProductPage } from './ViewProductPage/ViewProductPage';
 export { default as ViewQuestionPage } from './ViewQuestionPage/ViewQuestionPage';
 export { default as UserProfilePage } from './UserProfilePage/UserProfilePage';
