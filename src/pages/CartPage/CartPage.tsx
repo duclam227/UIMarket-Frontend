@@ -7,6 +7,8 @@ import { getErrorMessage, saveMostRecentInvoiceId } from '../../app/util/index';
 import cartAPI from '../../api/cart';
 import paymentAPI from '../../api/payment';
 
+import { FormattedMessage } from 'react-intl';
+
 import styles from './CartPage.module.css';
 
 const CartPage: FunctionComponent = () => {
@@ -36,10 +38,11 @@ const CartPage: FunctionComponent = () => {
       return {
         product: item.product._id,
         shop: item.product.shopId,
-      }
+      };
     });
 
-    paymentAPI.checkout(checkoutArray)
+    paymentAPI
+      .checkout(checkoutArray)
       .then((res: any) => {
         console.log(res);
         const { paypal_link, invoiceId } = res;
@@ -48,8 +51,8 @@ const CartPage: FunctionComponent = () => {
       })
       .catch(error => {
         console.log(error);
-      })
-  }
+      });
+  };
 
   const renderItems = (cart: Array<any>) => {
     const handleRemoveItem = (removedItem: any) => {
@@ -90,7 +93,7 @@ const CartPage: FunctionComponent = () => {
                 className="btn btn-link text-decoration-none"
                 onClick={() => handleRemoveItem(product)}
               >
-                Remove
+                <FormattedMessage id="CartPage.Remove" defaultMessage="Remove" />
               </button>
             </div>
           </div>
@@ -113,12 +116,27 @@ const CartPage: FunctionComponent = () => {
   const renderSummary = (cart: any) => {
     return (
       <div className="d-flex flex-column p-4 bg-white border rounded">
-        <h4 className="m-2">Summary</h4>
+        <h4 className="m-2">
+          <FormattedMessage id="CartPage.Summary" defaultMessage="Summary" />
+        </h4>
         <div className="d-flex justify-content-between m-2">
-          <span>{cart.length} items</span>
+          <span>
+            <FormattedMessage
+              id="CartPage.numOfItems"
+              defaultMessage="{length} items"
+              values={{
+                length: cart.length,
+              }}
+            />
+          </span>
           <strong>{totalPrice(cart)}$</strong>
         </div>
-        <Button className="m-2" onClick={handleCheckoutCart}>Checkout with PayPal</Button>
+        <Button className="m-2" onClick={handleCheckoutCart}>
+          <FormattedMessage
+            id="CartPage.checkoutBtnLabel"
+            defaultMessage="Checkout with Paypal"
+          />
+        </Button>
       </div>
     );
   };
@@ -126,7 +144,9 @@ const CartPage: FunctionComponent = () => {
   return (
     <PageWithNavbar>
       <Container>
-        <h1 className="my-4">My Cart</h1>
+        <h1 className="my-4">
+          <FormattedMessage id="CartPage.Title" defaultMessage="My Cart" />
+        </h1>
         {isLoading ? (
           <p>loading...</p>
         ) : (
