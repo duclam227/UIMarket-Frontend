@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { FaPen } from 'react-icons/fa';
+import { BsFlag, BsExclamationOctagon } from 'react-icons/bs';
 
 import { State } from '../../redux/store';
 import { product } from '../../app/util/interfaces';
@@ -19,6 +21,7 @@ import SectionImages from './SectionImages';
 import SectionReviews from './SectionReviews';
 
 import style from './ViewProductPage.module.css';
+import SectionSeller from './SectionSeller';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -33,6 +36,9 @@ const ViewProductPage: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
+
+  const isCurrentUserSeller = currentUser?.customerEmail === product?.shopId.customerEmail;
+
   const handleShowReportModal = () => {
     setShowReportModal(true);
   };
@@ -82,33 +88,54 @@ const ViewProductPage: React.FC = () => {
 
   return isLoading || !product ? (
     <PageWithNavbar>
-      <div className={style.wrapper}>
+      <div className={style.centerWrapper}>
         <Spinner animation="border" />
       </div>
     </PageWithNavbar>
   ) : (
     <PageWithNavbar>
+      {isCurrentUserSeller
+        ? <div className={style.centerWrapper}>
+          <Link to='edit' className={style.userManagePanel}>
+            <FormattedMessage id='ViewProductPage.ownerMessage' />
+            <FaPen />
+          </Link>
+        </div>
+        : null
+      }
+
       <div className={style.wrapper}>
-        {/* <div className={style.content}> */}
-        <SectionHeader
-          product={product!}
-          currentUser={currentUser!}
-          onShowReportModal={handleShowReportModal}
-        />
-        <SectionImages images={product?.productPictures!} />
-        <SectionDescription body={product?.productDescription!} />
-        <SectionReviews
-          reviews={reviews!}
-          totalPages={totalPages}
-          currentPage={currentPage}
-          handleGoToPage={(page: number) => goToPage(page)}
-        />
-        <ReportModal
-          show={showReportModal}
-          onClose={handleCloseReportModal}
-          reportObjectId={product._id!}
-          type="product"
-        />
+        <div className={style.content}>
+          <SectionImages images={product?.productPictures!} />
+          <SectionDescription body={product?.productDescription!} />
+          <SectionReviews
+            reviews={reviews!}
+            totalPages={totalPages}
+            currentPage={currentPage}
+            handleGoToPage={(page: number) => goToPage(page)}
+          />
+          <ReportModal
+            show={showReportModal}
+            onClose={handleCloseReportModal}
+            reportObjectId={product._id!}
+            type="product"
+          />
+        </div>
+        <div className={style.contentRight}>
+          <SectionHeader
+            product={product!}
+            currentUser={currentUser!}
+            onShowReportModal={handleShowReportModal}
+          />
+          <SectionSeller
+            product={product!}
+            currentUser={currentUser!}
+          />
+          <div className={style.reportPanel} onClick={() => handleShowReportModal!()}>
+            <BsFlag />
+            <FormattedMessage id='ViewProductPage.reportProduct' />
+          </div>
+        </div>
       </div>
     </PageWithNavbar>
   );

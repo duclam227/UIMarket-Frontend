@@ -13,7 +13,7 @@ import style from './UserProfilePage.module.css';
 import { useSelector } from 'react-redux';
 
 import { State } from '../../redux/store';
-import { OneToFivePage } from '../../components';
+import { OneToFivePage, UserAvatar } from '../../components';
 import UserActivityTab from './UserActivityTab/UserActivityTab';
 import profileAPI from '../../api/profile';
 import AllTopAnswers from './SeeAllTab/AllTopAnswers';

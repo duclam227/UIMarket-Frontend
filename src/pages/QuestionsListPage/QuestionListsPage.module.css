@@ -3,8 +3,8 @@
 .container {
 	height: 100%;
 
-	display: grid;
-	grid-template-columns: 15vw auto;
+	display: flex;
+	justify-content: center;
 }
 
 .header {
@@ -25,9 +25,9 @@
 }
 
 .mainContent {
-	grid-column: 2;
 	background-color: var(--gray);
-	margin-right: 30px;
+
+	width: 80%;
 }
 
 .tabContainer {

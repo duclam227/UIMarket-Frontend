@@ -316,7 +316,16 @@
   "ViewLicensePage.pagetitle": "Giấy phép bản quyền điện tử",
   "ViewProductPage.AddToCart": "Thêm vào giỏ hàng",
   "ViewProductPage.AddToCartSuccessMessage": "Thêm vào giỏ thành công!",
-  "ViewProductPage.DescriptionTitle": "Mô tả",
+  "ViewProductPage.BuyNow": "Mua ngay",
+  "ViewProductPage.DescriptionTitle": "Mô tả sản phẩm",
+  "ViewProductPage.EditProduct": "Chỉnh sửa",
+  "ViewProductPage.meetSeller": "Giới thiệu người bán",
+  "ViewProductPage.price": "${money}",
+  "ViewProductPage.priceLabel": "Giá",
+  "ViewProductPage.totalReviews": "{count} đánh giá",
+  "ViewProductPage.totalSold": "Đã bán {count}",
   "ViewProductPage.ReviewTitle": "Đánh giá",
-  "ViewProductPage.EditProduct": "Chỉnh sửa"
+  "ViewProductPage.reportProduct": "Báo cáo vi phạm",
+  "ViewProductPage.viewShopButton": "Xem cửa hàng",
+  "ViewProductPage.ownerMessage": "Bạn là chủ sản phẩm này, nhấn để chỉnh sửa."
 }
