@@ -62,33 +62,33 @@ const ViewLicensePage = () => {
         {/* Table */}
         <div className={`bg-white py-3 px-4`}>
           <LogoIcon className={style.logo} />
-          <table>
+          <table className={`${style.table}`}>
             <tbody>
-              <tr>
-                <th className={`text-primary`}>Licensor: </th>
-                <td>{licenseInfo?.shopName}</td>
+              <tr className={`${style.tr}`}>
+                <th className={`text-primary ${style.th}`}>Licensor: </th>
+                <td className={`${style.td}`}>{licenseInfo?.shopName}</td>
               </tr>
-              <tr>
-                <th className={`text-primary`}>Licensee: </th>
-                <td> {licenseInfo?.customerEmail} </td>
+              <tr className={`${style.tr}`}>
+                <th className={`text-primary ${style.th}`}>Licensee: </th>
+                <td className={`${style.td}`}> {licenseInfo?.customerEmail} </td>
               </tr>
-              <tr>
-                <th className={`text-primary`}>Product ID: </th>
-                <td>{licenseInfo?.productId}</td>
+              <tr className={`${style.tr}`}>
+                <th className={`text-primary ${style.th}`}>Product ID: </th>
+                <td className={`${style.td}`}>{licenseInfo?.productId}</td>
               </tr>
-              <tr>
-                <th className={`text-primary`}>Asset URL: </th>
-                <td>
+              <tr className={`${style.tr}`}>
+                <th className={`text-primary ${style.th}`}>Asset URL: </th>
+                <td className={`${style.td}`}>
                   <Link
-                    to={`${process.env.REACT_APP_BASE_CLIENT_URL}/product/${licenseInfo?.productId}`}
+                    to={`/product/${licenseInfo?.productId}`}
                   >
                     {`${process.env.REACT_APP_BASE_CLIENT_URL}/product/${licenseInfo?.productId}`}
                   </Link>
                 </td>
               </tr>
-              <tr>
-                <th className={`text-primary`}>Purchase Date: </th>
-                <td>
+              <tr className={`${style.tr}`}>
+                <th className={`text-primary ${style.th}`}>Purchase Date: </th>
+                <td className={`${style.td}`}>
                   <FormattedDate
                     value={licenseInfo?.boughtTime}
                     year="numeric"

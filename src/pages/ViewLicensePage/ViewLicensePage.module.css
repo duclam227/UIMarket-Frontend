@@ -15,9 +15,9 @@
 }
 
 .logo {
-  width: 9rem;
-  margin: 0rem 0.3rem 0.3rem;
-  padding: 1rem;
+  width: 9em;
+  margin: 0 0.5em 0.3em !important;
+  padding: 1em;
 }
 
 .table {
