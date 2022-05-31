@@ -78,15 +78,18 @@ function App() {
             </RequireAnonymous>
           }
         />
-        <Route path="/verify" element={<AccountVerifiedPage />} />
-        <Route path="/login/not-verified" element={<AccountNotVerifiedPage />} />
-        <Route path="/signup/verify-prompt" element={<VerifyPromptPage />} />
+        <Route path="/verify" element={<RequireAnonymous><AccountVerifiedPage /></RequireAnonymous>} />
+        <Route path="/login/not-verified" element={<RequireAnonymous><AccountNotVerifiedPage /></RequireAnonymous>} />
+        <Route path="/signup/verify-prompt" element={<RequireAnonymous><VerifyPromptPage /></RequireAnonymous>} />
         <Route path="/signup" element={<RequireAnonymous><AuthenticationPage destination="signup" /></RequireAnonymous>} />
         <Route path="/create-shop" element={<RequireUser><CreateAShopPage /></RequireUser>} />
-        <Route path="/recover" element={<AuthenticationPage destination="recover" />} />
+        <Route path="/recover" element={<RequireAnonymous><AuthenticationPage destination="recover" /></RequireAnonymous>} />
         <Route
           path="/resetForgetPassword"
-          element={<AuthenticationPage destination="reset" />}
+          element={
+            <RequireAnonymous>
+              <AuthenticationPage destination="reset" />
+            </RequireAnonymous>}
         />
         <Route
           path="/user/:id/edit"
