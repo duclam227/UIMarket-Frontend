@@ -1,9 +1,8 @@
-import { Navigate, useLocation, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { State } from '../../../redux/store';
 
 const RequireAuthenticated = ({ children }: { children: JSX.Element }) => {
-  const location = useLocation();
   const params = useParams();
   const currentUser = useSelector((state: State) => state.auth.user);
   if (currentUser && currentUser._id != params.id)
