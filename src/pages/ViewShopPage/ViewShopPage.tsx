@@ -10,6 +10,7 @@ import styles from './ViewShopPage.module.css';
 import { FormattedMessage } from 'react-intl';
 import { ProductList } from '../../components';
 import productAPI from '../../api/product/index';
+import { genericAvatarUrl } from '../../app/util/const';
 
 export interface ShopInfo {
   shopName: string;
@@ -27,6 +28,7 @@ const EditShopPage: FunctionComponent = () => {
     shopEmail: '',
     shopPhone: '',
   });
+  const [shopAvatar, setShopAvatar] = useState<string>('');
   const [products, setProducts] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { id } = useParams();
@@ -38,6 +40,8 @@ const EditShopPage: FunctionComponent = () => {
       .then((res: any) => {
         const { shop }: any = res;
         setShopInfo(shop);
+        const { customerAvatar } = shop.userId;
+        setShopAvatar(customerAvatar);
         console.log(shop);
       })
       .catch(error => {
@@ -49,6 +53,7 @@ const EditShopPage: FunctionComponent = () => {
       .then((res: any) => {
         const newProducts = res.products;
         setProducts(newProducts);
+        console.log(products);
       })
       .catch((error: any) => {
         console.log('Get shop products error: ', error);
@@ -73,9 +78,13 @@ const EditShopPage: FunctionComponent = () => {
 
           <div className={styles.avatarWrapper}>
             <img
-              src="https://d3ui957tjb5bqd.cloudfront.net/images/users/132/1321/1321357/avatar-75-75-r.jpg?1619119787"
+              src={shopAvatar || genericAvatarUrl}
               className={styles.avatarImage}
               alt={shopInfo.shopName}
+              onError={({ currentTarget }) => {
+                currentTarget.onerror = null; // prevents looping
+                currentTarget.src = genericAvatarUrl;
+              }}
             />
           </div>
         </div>
