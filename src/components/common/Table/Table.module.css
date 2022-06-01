@@ -1,0 +1,16 @@
+.thead {
+  border-bottom: 1px dashed var(--gray-300);
+}
+
+.th {
+  padding: 1em;
+}
+
+.td {
+  padding: 1em;
+}
+
+.tr :last-child {
+  display: flex;
+  justify-content: end;
+}
