@@ -9,12 +9,16 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
 
+import logo from './logo.png';
+
 import { BsDownload } from 'react-icons/bs';
 
 import PageWithSideNav from '../../components/common/OneToFivePage/OneToFivePage';
 import style from './ViewLicensePage.module.css';
 import { LogoIcon } from '../../components';
 import licenseAPI from '../../api/license';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 interface LicenseInfo {
   shopName: string;
@@ -62,96 +66,111 @@ const ViewLicensePage = () => {
         {/* Table */}
         <div className={`bg-white py-3 px-4`}>
           <LogoIcon className={style.logo} />
-          <table className={`${style.table}`}>
-            <tbody>
-              <tr className={`${style.tr}`}>
-                <th className={`text-primary ${style.th}`}>Licensor: </th>
-                <td className={`${style.td}`}>{licenseInfo?.shopName}</td>
-              </tr>
-              <tr className={`${style.tr}`}>
-                <th className={`text-primary ${style.th}`}>Licensee: </th>
-                <td className={`${style.td}`}> {licenseInfo?.customerEmail} </td>
-              </tr>
-              <tr className={`${style.tr}`}>
-                <th className={`text-primary ${style.th}`}>Product ID: </th>
-                <td className={`${style.td}`}>{licenseInfo?.productId}</td>
-              </tr>
-              <tr className={`${style.tr}`}>
-                <th className={`text-primary ${style.th}`}>Asset URL: </th>
-                <td className={`${style.td}`}>
-                  <Link
-                    to={`/product/${licenseInfo?.productId}`}
-                  >
-                    {`${process.env.REACT_APP_BASE_CLIENT_URL}/product/${licenseInfo?.productId}`}
-                  </Link>
-                </td>
-              </tr>
-              <tr className={`${style.tr}`}>
-                <th className={`text-primary ${style.th}`}>Purchase Date: </th>
-                <td className={`${style.td}`}>
-                  <FormattedDate
-                    value={licenseInfo?.boughtTime}
-                    year="numeric"
-                    month="long"
-                    day="2-digit"
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div id='license'>
+            <table className={`${style.table}`} >
+              <tbody>
+                <tr className={`${style.tr}`}>
+                  <th className={`text-primary ${style.th}`}>Licensor: </th>
+                  <td className={`${style.td}`}>{licenseInfo?.shopName}</td>
+                </tr>
+                <tr className={`${style.tr}`}>
+                  <th className={`text-primary ${style.th}`}>Licensee: </th>
+                  <td className={`${style.td}`}> {licenseInfo?.customerEmail} </td>
+                </tr>
+                <tr className={`${style.tr}`}>
+                  <th className={`text-primary ${style.th}`}>Product ID: </th>
+                  <td className={`${style.td}`}>{licenseInfo?.productId}</td>
+                </tr>
+                <tr className={`${style.tr}`}>
+                  <th className={`text-primary ${style.th}`}>Asset URL: </th>
+                  <td className={`${style.td}`}>
+                    <Link
+                      to={`/product/${licenseInfo?.productId}`}
+                    >
+                      {`${process.env.REACT_APP_BASE_CLIENT_URL}/product/${licenseInfo?.productId}`}
+                    </Link>
+                  </td>
+                </tr>
+                <tr className={`${style.tr}`}>
+                  <th className={`text-primary ${style.th}`}>Purchase Date: </th>
+                  <td className={`${style.td}`}>
+                    <FormattedDate
+                      value={licenseInfo?.boughtTime}
+                      year="numeric"
+                      month="long"
+                      day="2-digit"
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
 
-          {/* License description section */}
-          <section className={`mt-2 px-1`}>
-            <p>
-              The DeeX License grants the user an ongoing, non-exclusive, worldwide
-              license to utilize the digital work (“Licensed Asset”).
-            </p>
-            <p>
-              You are licensed to use the “Asset” to create unlimited end projects for
-              yourself or for your clients.
-            </p>
-            <strong>Can be used for</strong>
-            <ul className={`${style.allowedUnorderedList}`}>
-              <li className={`${style.allowedListItem}`}>
-                Physical or digital end products for sale
-              </li>
-              <li className={`${style.allowedListItem}`}>
-                Unlimited physical advertisements for local & global markets
-              </li>
-              <li className={`${style.allowedListItem}`}>
-                Digital paid advertisements with unlimited impressions
-              </li>
-              <li className={`${style.allowedListItem}`}>Broadcast and streaming</li>
-            </ul>
-            <strong>What you cannot do</strong>
-            <ul className={`${style.notAllowedUnorderedList}`}>
-              <li className={`${style.notAllowedListItem}`}>
-                Resell or sub-license the Asset in a way that is directly competitive with
-                it
-              </li>
-              <li className={`${style.notAllowedListItem}`}>
-                Resell any modification of the Asset on its own
-              </li>
-              <li className={`${style.notAllowedListItem}`}>
-                Make the Asset public or share the Asset in any way that allows others to
-                download, extract, or redistribute it as a standalone filet
-              </li>
-              <li className={`${style.notAllowedListItem}`}>
-                Falsely represent authorship and/or ownership of the Asset
-              </li>
-            </ul>
-          </section>
+            {/* License description section */}
+            <section className={`mt-2 px-1`} >
+              <p>
+                The DeeX License grants the user an ongoing, non-exclusive, worldwide
+                license to utilize the digital work (“Licensed Asset”).
+              </p>
+              <p>
+                You are licensed to use the “Asset” to create unlimited end projects for
+                yourself or for your clients.
+              </p>
+              <strong>Can be used for</strong>
+              <ul className={`${style.allowedUnorderedList}`}>
+                <li className={`${style.allowedListItem}`}>
+                  Physical or digital end products for sale
+                </li>
+                <li className={`${style.allowedListItem}`}>
+                  Unlimited physical advertisements for local & global markets
+                </li>
+                <li className={`${style.allowedListItem}`}>
+                  Digital paid advertisements with unlimited impressions
+                </li>
+                <li className={`${style.allowedListItem}`}>Broadcast and streaming</li>
+              </ul>
+              <strong>What you cannot do</strong>
+              <ul className={`${style.notAllowedUnorderedList}`}>
+                <li className={`${style.notAllowedListItem}`}>
+                  Resell or sub-license the Asset in a way that is directly competitive with
+                  it
+                </li>
+                <li className={`${style.notAllowedListItem}`}>
+                  Resell any modification of the Asset on its own
+                </li>
+                <li className={`${style.notAllowedListItem}`}>
+                  Make the Asset public or share the Asset in any way that allows others to
+                  download, extract, or redistribute it as a standalone filet
+                </li>
+                <li className={`${style.notAllowedListItem}`}>
+                  Falsely represent authorship and/or ownership of the Asset
+                </li>
+              </ul>
+            </section>
+          </div>
         </div>
       </div>
       {/* Download button */}
       <span>
-        <Button className={`px-5 py-2 d-flex align-items-center`}>
+        <Button className={`px-5 py-2 d-flex align-items-center`} onClick={() => createPDFFile()}>
           <span className={`me-2 text-nowrap`}>{downloadButtonLabel}</span>
           <BsDownload />
         </Button>
       </span>
     </div>
   );
+
+  const createPDFFile = async () => {
+    const license = document.getElementById('license');
+
+    html2canvas(license!)
+      .then((canvas: any) => {
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF();
+        pdf.addImage(logo, 'JPEG', 0, 0, 0, 0)
+        pdf.addImage(imgData, 'JPEG', 0, 20, 210, 0);
+        pdf.save(`${licenseInfo?.productId}_${licenseInfo?.customerEmail}.pdf`);
+      })
+  }
 
   return (
     <PageWithSideNav>
