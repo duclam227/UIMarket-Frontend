@@ -49,6 +49,9 @@
   padding: 1em;
 }
 .actionBtn {
+  width: fit-content;
+  float: right;
+  display: inline;
   background-color: var(--gray-100);
   padding: 0.4em 1em;
   border-radius: 0.3em;
