@@ -28,22 +28,18 @@ const CreateAShopForm: React.FC<Props> = (props) => {
   const [images, setImages] = useState<Array<string>>([]);
   const dispatch = useDispatch();
 
-  const uploadImage = (image: File) => {
-    s3API.getSignedUrl('images')
-      .then((res: any) => {
-        const signedUploadUrl: string = res.url;
-        s3API.uploadToS3Bucket(signedUploadUrl, image)
-          .then((res: any) => {
-            const imageUrl = signedUploadUrl.split('?')[0];
-            setImages([...images, imageUrl]);
-          })
-          .catch(error => {
-            throw error;
-          })
-      })
-      .catch(error => {
-        console.log(error);
-      })
+  const uploadImage = async (image: Array<File>) => {
+    try {
+      const response: any = await s3API.getSignedUrl('images');
+      const signedUploadUrl: string = response.url;
+
+      const responseUpload: any = await s3API.uploadToS3Bucket(signedUploadUrl, image[0]);
+      const imageUrl = signedUploadUrl.split('?')[0];
+      setImages([...images, imageUrl]);
+    }
+    catch (error) {
+      console.log(error);
+    }
   }
 
   const deleteImage = (indexToDelete: number) => {
@@ -76,20 +72,21 @@ const CreateAShopForm: React.FC<Props> = (props) => {
 
   const handleCreateShop = () => {
     const banner = images.length && images[0];
-    shopAPI.createShop({
-      ...shopInfo,
-      shopBanner: banner,
-    })
-      .then((res: any) => {
-        console.log(res);
-        const { token }: { token: string } = res;
-        setJwt(token);
+    console.log(banner);
+    // shopAPI.createShop({
+    //   ...shopInfo,
+    //   shopBanner: banner,
+    // })
+    //   .then((res: any) => {
+    //     console.log(res);
+    //     const { token }: { token: string } = res;
+    //     setJwt(token);
 
-        dispatch(logInWithJWT(token));
-      })
-      .catch(error => {
-        console.log(error);
-      })
+    //     dispatch(logInWithJWT(token));
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   })
   }
 
   const schema = Joi.object({
@@ -162,7 +159,7 @@ const CreateAShopForm: React.FC<Props> = (props) => {
         <ImageInput
           images={images}
           multiple={false}
-          handleUploadImage={(image: File) => uploadImage(image)}
+          handleUploadImage={(image: Array<File>) => uploadImage(image)}
           handleDeleteImage={(index: number) => deleteImage(index)}
         />
       </Form.Group>
