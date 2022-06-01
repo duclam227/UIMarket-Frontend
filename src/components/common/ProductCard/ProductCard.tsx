@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import style from './ProductCard.module.css';
 
-interface ProductCard {
+interface Product {
   _id?: string;
   coverPicture: string;
   shopId: any;
@@ -14,33 +14,22 @@ interface ProductCard {
 }
 
 interface ProductCardProps {
-  product: ProductCard
+  product: Product;
 }
 
 const ProductCard: FunctionComponent<ProductCardProps> = props => {
   const { product } = props;
 
-  const {
-    _id,
-    coverPicture,
-    shopId,
-    productName,
-    productPrice,
-    productRating,
-  } = product;
+  const { _id, coverPicture, shopId, productName, productPrice, productRating } = product;
 
   const renderStars = (productRating: number) => {
     const starArray: Array<any> = [];
     let rating = productRating;
     for (let key = 1; key <= 5; key++) {
       if (rating > 0) {
-        starArray.push(
-          <i className={'bi-star-fill ' + style.yellowStar} key={key} />,
-        );
+        starArray.push(<i className={'bi-star-fill ' + style.yellowStar} key={key} />);
       } else {
-        starArray.push(
-          <i className={'bi-star-fill ' + style.grayStar} key={key} />,
-        );
+        starArray.push(<i className={'bi-star-fill ' + style.grayStar} key={key} />);
       }
       rating = rating - 1;
     }
@@ -49,6 +38,7 @@ const ProductCard: FunctionComponent<ProductCardProps> = props => {
   };
 
   const pLink = '/product/' + _id;
+  const shopLink = '/shop/' + shopId._id;
 
   return (
     <Col xs={12} md={6} lg={3}>
@@ -63,20 +53,27 @@ const ProductCard: FunctionComponent<ProductCardProps> = props => {
             />
           </a>
         </div>
-        <Link className="text-dark" to={pLink}>
-          <Card.Body>
+
+        <Card.Body>
+          <a className="text-dark" href={pLink}>
             <h6>
               {productName.length > 30
                 ? `${productName.substring(0, 30)}..`
                 : productName}
             </h6>
-            <p className="text-secondary mb-2">by {shopId.shopName}</p>
-            <div className="d-flex justify-content-between ">
-              {renderStars(productRating)}
-              <strong>${productPrice}</strong>
-            </div>
-          </Card.Body>
-        </Link>
+          </a>
+          <div className="mb-3 text-secondary">
+            by
+            <a className={'ms-1 ' + style.secondaryLink} href={shopLink}>
+              {shopId.shopName}
+            </a>
+          </div>
+
+          <div className="d-flex justify-content-between ">
+            {renderStars(productRating)}
+            <strong>${productPrice}</strong>
+          </div>
+        </Card.Body>
       </Card>
     </Col>
   );

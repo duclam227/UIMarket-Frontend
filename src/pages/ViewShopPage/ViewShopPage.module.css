@@ -1,0 +1,46 @@
+@import '../../app/util/colors.css';
+
+
+.bannerImageWrapper {
+  position: relative;
+  z-index: 1;
+  padding: 0;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.bannerImageElement {
+  margin: 0 auto;
+  object-fit: cover;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 320px;
+}
+
+.avatarWrapper {
+  display: block;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 50%;
+  width: 94px;
+  height: 94px;
+  border: 4px solid #fff;
+  position: relative;
+  z-index: 1;
+  margin-top: calc(-94px / 2);
+}
+
+.avatarImage {
+  height: auto;
+  display: block;
+  max-width: 100%;
+}
+
+.shopInfo {
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  max-width: 400px;
+}

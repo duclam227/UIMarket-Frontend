@@ -32,4 +32,5 @@ export { default as ShopHomePage } from './ShopHomePage/ShopHomePage';
 export { default as VerifyPromptPage } from './VerifyPromptPage/VerifyPromptPage';
 export { default as ViewProductPage } from './ViewProductPage/ViewProductPage';
 export { default as ViewQuestionPage } from './ViewQuestionPage/ViewQuestionPage';
+export { default as ViewShopPage } from './ViewShopPage/ViewShopPage';
 export { default as UserProfilePage } from './UserProfilePage/UserProfilePage';
