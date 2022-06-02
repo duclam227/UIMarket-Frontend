@@ -18,7 +18,7 @@ const Product: FC<IProps> = props => {
 
   return (
     <div className={style.product}>
-      <Link to={`/product/${product._id}`}>
+      <Link to={`/product/${product.product}`}>
         <div className={style.thumbnail}>
           <img
             src={product.coverPicture || notAvailableImg}
@@ -28,7 +28,7 @@ const Product: FC<IProps> = props => {
         </div>
       </Link>
       <div className={style.productInfo}>
-        <Link to={`/product/${product._id}`}>
+        <Link to={`/product/${product.product}`}>
           <div className={style.productName}>{product.productName}</div>
         </Link>
       </div>

@@ -73,6 +73,7 @@ export interface product {
 	shopId?: any;
 	shop?: any;
 	license?: string;
+	product?: string;
 }
 
 export interface voteStatus {
