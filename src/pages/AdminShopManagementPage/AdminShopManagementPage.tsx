@@ -34,7 +34,6 @@ const AdminShopManagementPage: FC<Props> = props => {
     const getAllShops = async () => {
       try {
         const res: any = await adminAPI.getAllShops(1, ITEMS_PER_PAGE);
-        console.log(res);
         const { shops, totalPages, page } = res;
         setShops(shops);
         setCurrentPage(page);
