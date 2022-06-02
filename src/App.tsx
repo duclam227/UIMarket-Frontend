@@ -48,6 +48,7 @@ import {
   ViewLicensePage,
   BadRequestPage,
   AdminUserManagementPage,
+  RequestRefundPage,
 } from './pages';
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
@@ -145,6 +146,7 @@ function App() {
             </RequireUser>
           }
         />
+        <Route path="/refund/:id" element={<RequireUser><RequestRefundPage /></RequireUser>} />
         <Route path="/admin/:tab" element={<AdminRoutes />} />
         <Route path="/admin" element={<Navigate to="/admin/user-management" replace />} />
         <Route path="/wallet" element={<RequireUser><ShopWalletPage /></RequireUser>} />
