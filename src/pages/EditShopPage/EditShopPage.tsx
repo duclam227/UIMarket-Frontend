@@ -8,7 +8,7 @@ import styles from './EditShopPage.module.css';
 import shopAPI from '../../api/shop/index';
 import { State } from '../../redux/store';
 import bannerPlaceholder from '../../app/assets/banner-placeholder.png';
-import { ImageInput } from '../../components';
+import { ImageInput, OneToFivePage } from '../../components';
 import s3API from '../../api/amazonS3';
 import { useDispatch } from 'react-redux';
 import { logInWithJWT } from '../../redux/index';
@@ -133,8 +133,7 @@ const EditShopPage: FunctionComponent = () => {
   };
 
   return (
-    <div>
-      <Navbar></Navbar>
+    <OneToFivePage>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Container className={styles.mainContainer}>
           {/*no cover*/}
@@ -283,7 +282,7 @@ const EditShopPage: FunctionComponent = () => {
           </div>
         </div>
       </form>
-    </div>
+    </OneToFivePage>
   );
 };
 
