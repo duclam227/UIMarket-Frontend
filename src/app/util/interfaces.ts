@@ -76,6 +76,21 @@ export interface product {
   shop?: any;
 }
 
+export interface shop {
+  _id: string;
+  shopBalance: number;
+  shopDescription: string;
+  shopEmail: string;
+  shopName: string;
+  shopPayPal: {
+    paypalEmail: string,
+    paypalId: string,
+  }
+  shopStatus: number;
+  taxCode: string;
+  userId: string;
+}
+
 export interface voteStatus {
   upvote: boolean;
   downvote: boolean;
