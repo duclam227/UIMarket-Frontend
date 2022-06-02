@@ -18,6 +18,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { MdWrongLocation } from 'react-icons/md';
 
 export interface ShopInfo {
+  _id?: string;
   shopName: string;
   shopDescription: string;
   shopBanner: string;
@@ -273,7 +274,7 @@ const EditShopPage: FunctionComponent = () => {
             ></FormattedMessage>
           </div>
           <div className="d-flex">
-            <Button variant="dark" href="./" className="m-2">
+            <Button variant="dark" href={`/shop/${shopInfo._id}`} className="m-2">
               View shop
             </Button>
             <Button variant="primary" className="m-2" type="submit" disabled={!isDirty}>
