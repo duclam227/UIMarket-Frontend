@@ -36,7 +36,7 @@ const EditShopPage: FunctionComponent = () => {
 
   useEffect(() => {
     shopAPI
-      .getShopInfo(id as string)
+      .getShopById(id as string)
       .then((res: any) => {
         const { shop }: any = res;
         setShopInfo(shop);
