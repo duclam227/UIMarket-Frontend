@@ -45,7 +45,6 @@ const SectionHeader: React.FC<Props> = props => {
       });
   };
 
-  console.log(product)
   const renderStars = (productRating: number) => {
     const starArray: Array<any> = [];
     let rating = productRating;
