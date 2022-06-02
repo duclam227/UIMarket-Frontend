@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -18,11 +18,12 @@ interface Props {
   onShowReportModal?: Function;
   product: product;
   currentUser: customer;
+  isBought: boolean | null;
   intl: IntlShape;
 }
 
 const SectionHeader: React.FC<Props> = props => {
-  const { product, currentUser, intl, onShowReportModal } = props;
+  const { product, currentUser, isBought, intl } = props;
   const isCurrentUserSeller = currentUser?.customerEmail === product.shopId.customerEmail;
   const navigate = useNavigate();
 
@@ -76,31 +77,46 @@ const SectionHeader: React.FC<Props> = props => {
       </div>
 
       <section className={style.buyPanel}>
-        <div className={style.priceRow}>
-          <span><FormattedMessage id='ViewProductPage.priceLabel' /></span>
-          <span>
-            <FormattedMessage
-              id='ViewProductPage.price'
-              values={{ money: product.productPrice }}
-            />
-          </span>
-        </div>
-        <Button
-          className={style.button}
-          onClick={handleAddToCart}
-          disabled={isCurrentUserSeller}
-        >
-          <FormattedMessage id="ViewProductPage.BuyNow" />
-        </Button>
-        <Button
-          className={style.button}
-          onClick={handleAddToCart}
-          disabled={isCurrentUserSeller}
-          variant='outline-primary'
-        >
-          <AiOutlineShoppingCart />
-          <FormattedMessage id="ViewProductPage.AddToCart" />
-        </Button>
+        {isBought === null
+          ? <Spinner animation='border' />
+          : <><div className={style.priceRow}>
+            <span><FormattedMessage id='ViewProductPage.priceLabel' /></span>
+            <span>
+              <FormattedMessage
+                id='ViewProductPage.price'
+                values={{ money: product.productPrice }}
+              />
+            </span>
+          </div>
+            {isBought === true
+              ? <Link to='/purchases'><Button
+                className={style.button}
+              >
+                <FormattedMessage id="ViewProductPage.AlreadyOwned" />
+              </Button></Link>
+              : <>
+                <Button
+                  className={style.button}
+                  onClick={handleAddToCart}
+                  disabled={isCurrentUserSeller}
+                >
+                  <FormattedMessage id="ViewProductPage.BuyNow" />
+                </Button>
+                <Button
+                  className={style.button}
+                  onClick={handleAddToCart}
+                  disabled={isCurrentUserSeller}
+                  variant='outline-primary'
+                >
+                  <AiOutlineShoppingCart />
+                  <FormattedMessage id="ViewProductPage.AddToCart" />
+                </Button>
+              </>
+
+            }
+
+          </>
+        }
       </section>
 
       {/* <div className={style.buttonRow}>

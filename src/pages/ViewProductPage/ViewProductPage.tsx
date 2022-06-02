@@ -36,6 +36,7 @@ const ViewProductPage: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
+  const [isBought, setIsBought] = useState<boolean | null>(null);
 
   const isCurrentUserSeller = currentUser?.customerEmail === product?.shopId.customerEmail;
 
@@ -69,7 +70,9 @@ const ViewProductPage: React.FC = () => {
     productAPI
       .getProductById(id!)
       .then((res: any) => {
+        console.log(res);
         setProduct(res.product);
+        setIsBought(res.isBought);
       })
       .catch(error => {
         console.log(error);
@@ -126,6 +129,7 @@ const ViewProductPage: React.FC = () => {
             product={product!}
             currentUser={currentUser!}
             onShowReportModal={handleShowReportModal}
+            isBought={isBought}
           />
           <SectionSeller
             product={product!}
