@@ -1,16 +1,13 @@
-import React, { FC, useEffect, useState } from 'react';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
-import { Link } from 'react-router-dom';
+import { FC, useEffect, useState } from 'react';
+import { injectIntl, IntlShape } from 'react-intl';
 import { toast } from 'react-toastify';
 
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Spinner from 'react-bootstrap/Spinner';
 
-import { BsSearch, BsChevronDown } from 'react-icons/bs';
+import { BsSearch } from 'react-icons/bs';
 
-import { PageWithNavbar, Paginator } from '../../components';
+import { Paginator } from '../../components';
 import style from './AdminUserManagementPage.module.css';
 import { customer } from '../../app/util/interfaces';
 import adminAPI from '../../api/admin';
@@ -37,11 +34,11 @@ const AdminUserManagementPage: FC<Props> = props => {
       try {
         const res: any = await adminAPI.getAllUsers(1, ITEMS_PER_PAGE);
         const { users, totalPages, page } = res;
-        console.log(users);
         setUsers(users);
         setCurrentPage(page);
         setTotalPages(totalPages);
       } catch (error) {
+        toast.error('Cannot get data! An error has occurred');
         console.log(error);
       }
     };
@@ -57,6 +54,7 @@ const AdminUserManagementPage: FC<Props> = props => {
       setCurrentPage(pageNumber);
       setTotalPages(totalPages);
     } catch (error) {
+      toast.error('Cannot get data! An error has occurred');
       console.log(error);
     }
   };
@@ -73,7 +71,7 @@ const AdminUserManagementPage: FC<Props> = props => {
       toast.success('Action completed successfully');
     } catch (error) {
       setUsers(prevUsers);
-      toast.error('An unknown error occurred');
+      toast.error('An error has occurred');
     }
   };
   const handleActivateUser = async (userId: string) => {
@@ -88,7 +86,7 @@ const AdminUserManagementPage: FC<Props> = props => {
       toast.success('Action completed successfully');
     } catch (error) {
       setUsers(prevUsers);
-      toast.error('An unknown error occurred');
+      toast.error('An error has occurred');
     }
   };
   return (
@@ -106,7 +104,7 @@ const AdminUserManagementPage: FC<Props> = props => {
       <UsersTable
         onActivateUser={handleActivateUser}
         onDeactivateUser={handleDeactivateUser}
-        users={users!}
+        users={users}
       />
       <Paginator
         totalNumberOfPages={totalPages}
