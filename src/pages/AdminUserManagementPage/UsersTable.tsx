@@ -1,21 +1,20 @@
 import React, { FC } from 'react';
+import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 
-import Form from 'react-bootstrap/Form';
 
 import { BsChevronDown } from 'react-icons/bs';
 
 import { Column, customer } from '../../app/util/interfaces';
 import { Table } from '../../components';
 import style from './AdminUserManagementPage.module.css';
-import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 
 interface Props {
-  users: customer[];
+  users: customer[] | null;
   onActivateUser: Function;
   onDeactivateUser: Function;
   intl: IntlShape;
 }
-const UserTable: FC<Props> = props => {
+const UsersTable: FC<Props> = props => {
   const { users, onActivateUser, onDeactivateUser, intl } = props;
   const actionDropdownPlaceholder = (
     <FormattedMessage id="AdminUserManagementPage.actionDropdownPlaceholder" />
@@ -60,7 +59,7 @@ const UserTable: FC<Props> = props => {
             aria-labelledby="actionsMenuDropdown"
           >
             <li>
-              {user.customerStatus >= 0 ? (
+              {user.customerStatus > 0 ? (
                 <span
                   onClick={() => onDeactivateUser(user._id)}
                   className="dropdown-item"
@@ -83,4 +82,4 @@ const UserTable: FC<Props> = props => {
   );
 };
 
-export default injectIntl(UserTable);
+export default injectIntl(UsersTable);
