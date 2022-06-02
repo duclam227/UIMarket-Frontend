@@ -39,6 +39,16 @@ class Get {
       }${sort ? `&sort=${sort}` : ''}`,
     );
   };
+
+  getShopProductsByPageNumber = (
+    shopId: string,
+    pageNumber: number | string,
+    itemsPerPage: number,
+  ) => {
+    return axiosClient.get(
+      `${PRODUCT_ENDPOINT}/shop/${shopId}?page=${pageNumber}&limit=${itemsPerPage}`,
+    );
+  };
 }
 
 export default new Get();

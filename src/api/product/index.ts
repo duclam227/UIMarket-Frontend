@@ -8,12 +8,13 @@ const productAPI = {
   getProductById: get.getProductById,
   getAllProductsByPageNumber: get.getAllProductsByPageNumber,
   getTrendingProducts: get.getTrendingProducts,
-	searchProducts: get.searchProduct,
-  
+  searchProducts: get.searchProduct,
+  getShopProductsByPageNumber: get.getShopProductsByPageNumber,
+
   //post
   addNewProduct: post.addNewProduct,
 
-	editProduct: put.editProduct,
+  editProduct: put.editProduct,
   activateProduct: put.activateProduct,
   deactivateProduct: put.deactivateProduct,
 

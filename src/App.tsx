@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css';
+
 import {
   RequireAnonymous,
   RequireUser,
@@ -44,6 +45,8 @@ import {
   EditProductPage,
   PurchaseHistoryPage,
   ReviewsPage,
+  EditShopPage,
+  ViewShopPage,
   ShopWalletPage,
   ViewLicensePage,
   BadRequestPage,
@@ -78,6 +81,7 @@ function App() {
             </RequireAnonymous>
           }
         />
+
         <Route path="/verify" element={<RequireAnonymous><AccountVerifiedPage /></RequireAnonymous>} />
         <Route path="/login/not-verified" element={<RequireAnonymous><AccountNotVerifiedPage /></RequireAnonymous>} />
         <Route path="/signup/verify-prompt" element={<RequireAnonymous><VerifyPromptPage /></RequireAnonymous>} />
@@ -109,6 +113,7 @@ function App() {
         />
         <Route path="/user/:id/products" element={<RequireUser><ManageProductsPage /></RequireUser>} />
         <Route path="/user/:id/shop" element={<RequireUser><ShopHomePage /></RequireUser>} />
+        <Route path="/user/:id/shop/edit" element={<RequireUser><EditShopPage /></RequireUser>} />
         <Route path="/user/:id/reviews" element={<RequireUser><ReviewsPage /></RequireUser>} />
         <Route path="/user/:id/*" element={<UserProfilePage />} />
         <Route path="/about" element={<AboutUsPage />} />
@@ -122,6 +127,7 @@ function App() {
         <Route path="/product/:id/edit" element={<RequireUser><EditProductPage /></RequireUser>} />
         <Route path="/purchases/:id" element={<RequireUser><ViewLicensePage /></RequireUser>} />
         <Route path="/purchases" element={<RequireUser><PurchaseHistoryPage /></RequireUser>} />
+        <Route path="/shop/:id/" element={<ViewShopPage />} />
         <Route
           path="/questions/new"
           element={

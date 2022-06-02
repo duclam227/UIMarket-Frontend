@@ -17,6 +17,7 @@ export { default as EditPersonalInfoPage } from './EditPersonalInfoPage/EditPers
 export { default as EditProfilePage } from './EditProfilePage/EditProfilePage';
 export { default as EditProductPage } from './EditProductPage/EditProductPage';
 export { default as EditQuestionPage } from './EditQuestionPage/EditQuestionPage';
+export { default as EditShopPage } from './EditShopPage/EditShopPage';
 export { default as ForbiddenPage } from './ForbiddenPage/ForbiddenPage';
 export { default as LandingPage } from './LandingPage/LandingPage';
 export { default as ManageProductsPage } from './ManageProductsPage/ManageProductsPage';
@@ -35,4 +36,5 @@ export { default as VerifyPromptPage } from './VerifyPromptPage/VerifyPromptPage
 export { default as ViewLicensePage } from './ViewLicensePage/ViewLicensePage';
 export { default as ViewProductPage } from './ViewProductPage/ViewProductPage';
 export { default as ViewQuestionPage } from './ViewQuestionPage/ViewQuestionPage';
+export { default as ViewShopPage } from './ViewShopPage/ViewShopPage';
 export { default as UserProfilePage } from './UserProfilePage/UserProfilePage';
