@@ -72,6 +72,7 @@ export interface product {
 	productRating?: number;
 	shopId?: any;
 	shop?: any;
+	license?: string;
 }
 
 export interface voteStatus {
@@ -79,7 +80,7 @@ export interface voteStatus {
 	downvote: boolean;
 }
 export interface ReportObject {
-  reportObject: string;
-  reason: string;
-  objectType: string;
+	reportObject: string;
+	reason: string;
+	objectType: string;
 }
