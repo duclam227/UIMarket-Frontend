@@ -81,7 +81,7 @@ const Product: React.FC<Props> = props => {
 
         <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
 
-        <Dropdown.Menu>
+        <Dropdown.Menu className={style.dropdown}>
           {!purchase.isReview ? (
             <>
               <Dropdown.Item onClick={() => setIsReviewing(true)}>
@@ -92,7 +92,9 @@ const Product: React.FC<Props> = props => {
           ) : null}
 
           <Dropdown.Item>
-            <FormattedMessage id="PurchaseHistoryPage.reportButtonLabel" />
+            <Link to={`/refund/${purchase.invoiceId}`}>
+              <FormattedMessage id="PurchaseHistoryPage.reportButtonLabel" />
+            </Link>
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
