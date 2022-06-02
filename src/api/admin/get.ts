@@ -9,6 +9,11 @@ class Get {
       `${API_ENDPOINT}/users?page=${pageNumber}&limit=${itemsPerPage}`,
     );
   };
+  getAllShops = (pageNumber: number | string, itemsPerPage: number) => {
+    return axiosClient.get(
+      `${API_ENDPOINT}/shops?page=${pageNumber}&limit=${itemsPerPage}`,
+    );
+  };
 }
 
 export default new Get();

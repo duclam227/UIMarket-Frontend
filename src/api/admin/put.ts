@@ -8,6 +8,13 @@ class Put {
   deactivateUser = (userId: string) => {
     return axiosClient.put(`${API_ENDPOINT}/users/${userId}/deactive`);
   };
+
+  activateShop = (shopId: string) => {
+    return axiosClient.put(`${API_ENDPOINT}/shops/${shopId}/active`);
+  };
+  deactivateShop = (shopId: string) => {
+    return axiosClient.put(`${API_ENDPOINT}/shops/${shopId}/deactive`);
+  };
 }
 
 export default new Put();
