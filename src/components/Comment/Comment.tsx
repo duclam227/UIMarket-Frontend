@@ -12,6 +12,7 @@ import SectionEditComment from './SectionEditComment';
 
 import style from './Comment.module.css';
 import commentAPI from '../../api/comment';
+import UserAvatar from '../common/UserAvatar/UserAvatar';
 
 interface Props {
   answer: any;
@@ -126,9 +127,11 @@ const Comment: FC<Props> = props => {
   return (
     <div className={style.comment}>
       {confirmDeleteModal}
-      <div className={style.sideContent}>avt</div>
+      <div className={style.sideContent}>
+        <UserAvatar image={comment.userId.customerAvatar} />
+      </div>
       <div className={style.content}>
-        <div className={style.authorInfo}>
+        <div className={style.authorInfo + "text-nowrap"}>
           {comment.userId.customerName}
           <ThreeDotMenu menuItems={menuItems} />
         </div>

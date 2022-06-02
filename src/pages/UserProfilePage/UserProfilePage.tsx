@@ -8,19 +8,12 @@ import Nav from 'react-bootstrap/Nav';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { BsPencil } from 'react-icons/bs';
-import {
-  Link,
-  Routes,
-  Route,
-  useParams,
-  Navigate,
-  useNavigate,
-} from 'react-router-dom';
+import { Link, Routes, Route, useParams, Navigate, useNavigate } from 'react-router-dom';
 import style from './UserProfilePage.module.css';
 import { useSelector } from 'react-redux';
 
 import { State } from '../../redux/store';
-import { OneToFivePage } from '../../components';
+import { OneToFivePage, UserAvatar } from '../../components';
 import UserActivityTab from './UserActivityTab/UserActivityTab';
 import profileAPI from '../../api/profile';
 import AllTopAnswers from './SeeAllTab/AllTopAnswers';
@@ -92,21 +85,18 @@ const UserProfilePage = () => {
   const params = useParams();
   const navigate = useNavigate();
   const currentUser = useSelector((state: State) => state.auth.user);
-  const [userProfileInfo, setUserProfileInfo] =
-    useState<UserProfileInfo | null>(null);
+  const [userProfileInfo, setUserProfileInfo] = useState<UserProfileInfo | null>(null);
   const [profileStats, setProfileStats] = useState<ProfileStats | null>(null);
-  const [profileTagStats, setProfileTagStats] = useState<TagStat[] | null>(
-    null,
-  );
+  const [profileTagStats, setProfileTagStats] = useState<TagStat[] | null>(null);
   const [profileTopQuestions, setProfileTopQuestions] = useState<
     GeneralQuestionInfo[] | null
   >(null);
   const [profileBountiedQuestions, setProfileBountiedQuestions] = useState<
     GeneralQuestionInfo[] | null
   >(null);
-  const [profileTopAnswers, setProfileTopAnswers] = useState<
-    GeneralAnswerInfo[] | null
-  >(null);
+  const [profileTopAnswers, setProfileTopAnswers] = useState<GeneralAnswerInfo[] | null>(
+    null,
+  );
   //Missing features: Paginate see all page
   //Missing features: Sort question by upvotes
   const [isFetchingData, setIsFetchingData] = useState<boolean>(true);
@@ -163,7 +153,10 @@ const UserProfilePage = () => {
               <p className={style.profileBio}>{userProfileInfo.customerBio}</p>
             ) : (
               <p className={bioNotAvailableMessageClassname}>
-                This user does not have a bio
+                <FormattedMessage
+                  id="UserProfilePage.noBioMsg"
+                  defaultMessage={'This user does not have a bio.'}
+                />
               </p>
             )}
           </Col>
@@ -229,17 +222,11 @@ const UserProfilePage = () => {
                 />
                 <Route
                   path="/activity/topanswers/all"
-                  element={
-                    <AllTopAnswers profileTopAnswers={profileTopAnswers} />
-                  }
+                  element={<AllTopAnswers profileTopAnswers={profileTopAnswers} />}
                 />
                 <Route
                   path="/activity/topquestions/all"
-                  element={
-                    <AllTopQuestions
-                      profileTopQuestions={profileTopQuestions}
-                    />
-                  }
+                  element={<AllTopQuestions profileTopQuestions={profileTopQuestions} />}
                 />
                 <Route
                   path="/activity/tags/all"

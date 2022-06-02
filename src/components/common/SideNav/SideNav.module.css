@@ -4,7 +4,7 @@
   width: 100%;
   top: 0;
   min-height: 100vh;
-  padding: 1em 0 0 0.7em;
+  padding: 1em 0 0 0.4em;
   background-color: white;
 }
 
@@ -46,6 +46,10 @@
   margin-top: 1.5em;
 }
 
+.navGroup:first-child {
+  margin-top: 0em;
+}
+
 .navGroupName {
   display: flex;
   justify-content: flex-start;
@@ -55,9 +59,15 @@
 }
 
 .navGroupName:hover {
-  color: var(--gray-700);
+  color: var(--pink-500);
   cursor: pointer;
   transform: translate(5%);
+}
+.navGroupName:hover > span {
+  color: var(--pink-500);
+}
+.navGroupName:hover > a {
+  color: var(--pink-500);
 }
 
 .navGroupNameIcon {
@@ -82,7 +92,7 @@
   color: var(--gray-600);
 }
 .navLinkItem:hover {
-  color: var(--gray-900);
+  color: var(--pink-600);
   cursor: pointer;
   transform: translate(5%);
 }

@@ -12,6 +12,9 @@ import { OneToFivePage } from '../../components';
 
 import style from './PurchaseHistoryPage.module.css';
 import Product from './Product';
+import { Button } from 'react-bootstrap';
+
+import illustration from '../../app/assets/error-not-found.png';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -19,7 +22,7 @@ interface IProps {
   intl: IntlShape;
 }
 
-const PurchaseHistoryPage: FC<IProps> = (props) => {
+const PurchaseHistoryPage: FC<IProps> = props => {
   const { intl } = props;
 
   const currentUser = useSelector((state: State) => state.auth.user);
@@ -30,15 +33,16 @@ const PurchaseHistoryPage: FC<IProps> = (props) => {
 
   useEffect(() => {
     setIsLoading(true);
-    invoiceAPI.getPurchaseHistoryByPage(1, ITEMS_PER_PAGE)
+    invoiceAPI
+      .getPurchaseHistoryByPage(1, ITEMS_PER_PAGE)
       .then((res: any) => {
         setProducts([...res.products]);
         setIsLoading(false);
       })
       .catch(error => {
         console.log(error);
-      })
-  }, [])
+      });
+  }, []);
 
   return (
     <OneToFivePage>
@@ -62,22 +66,37 @@ const PurchaseHistoryPage: FC<IProps> = (props) => {
             </Form>
           </section>
           <section className={style.body}>
-            {isLoading
-              ? <Spinner animation='border' />
-              : products && products.length > 0
-                ? <div className={style.productList}>
-                  {products.map((purchase: any) => <Product key={purchase._id!} purchase={purchase} />)}
+            {isLoading ? (
+              <Spinner animation="border" />
+            ) : products && products.length > 0 ? (
+              <div className={style.productList}>
+                {products.map((purchase: any) => (
+                  <Product key={purchase._id!} purchase={purchase} />
+                ))}
+              </div>
+            ) : (
+              <div className={style.noProducts}>
+                <div className="d-flex flex-column align-items-center mb-2">
+                  <img
+                    className={'m-4 ' + style.img}
+                    src={illustration}
+                    alt="empty list"
+                  ></img>
+                  <FormattedMessage
+                    id="PurchaseHistoryPage.noProductsMessage"
+                    defaultMessage="Looks like you haven't bought anything."
+                  ></FormattedMessage>
+                  <Button href="/products" className="m-4">
+                    Continue shopping
+                  </Button>
                 </div>
-                : <div className={style.noProducts}>
-                  <FormattedMessage id='PurchaseHistoryPage.noProductsMessage' />
-                </div>
-            }
+              </div>
+            )}
           </section>
-
         </div>
       </div>
-    </OneToFivePage >
-  )
+    </OneToFivePage>
+  );
 };
 
 export default injectIntl(PurchaseHistoryPage);

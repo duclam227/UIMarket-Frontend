@@ -4,7 +4,13 @@ import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import './App.css';
-import { RequireAnonymous, RequireUser, RequireAuthenticated } from './components';
+
+import {
+  RequireAnonymous,
+  RequireUser,
+  RequireAuthenticated,
+  AdminRoutes,
+} from './components';
 
 import {
   AboutUsPage,
@@ -41,6 +47,10 @@ import {
   ReviewsPage,
   EditShopPage,
   ViewShopPage,
+  ShopWalletPage,
+  ViewLicensePage,
+  BadRequestPage,
+  AdminUserManagementPage,
 } from './pages';
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
@@ -71,15 +81,19 @@ function App() {
             </RequireAnonymous>
           }
         />
-        <Route path="/verify" element={<AccountVerifiedPage />} />
-        <Route path="/login/not-verified" element={<AccountNotVerifiedPage />} />
-        <Route path="/signup/verify-prompt" element={<VerifyPromptPage />} />
-        <Route path="/signup" element={<AuthenticationPage destination="signup" />} />
-        <Route path="/create-shop" element={<CreateAShopPage />} />
-        <Route path="/recover" element={<AuthenticationPage destination="recover" />} />
+
+        <Route path="/verify" element={<RequireAnonymous><AccountVerifiedPage /></RequireAnonymous>} />
+        <Route path="/login/not-verified" element={<RequireAnonymous><AccountNotVerifiedPage /></RequireAnonymous>} />
+        <Route path="/signup/verify-prompt" element={<RequireAnonymous><VerifyPromptPage /></RequireAnonymous>} />
+        <Route path="/signup" element={<RequireAnonymous><AuthenticationPage destination="signup" /></RequireAnonymous>} />
+        <Route path="/create-shop" element={<RequireUser><CreateAShopPage /></RequireUser>} />
+        <Route path="/recover" element={<RequireAnonymous><AuthenticationPage destination="recover" /></RequireAnonymous>} />
         <Route
           path="/resetForgetPassword"
-          element={<AuthenticationPage destination="reset" />}
+          element={
+            <RequireAnonymous>
+              <AuthenticationPage destination="reset" />
+            </RequireAnonymous>}
         />
         <Route
           path="/user/:id/edit"
@@ -97,21 +111,23 @@ function App() {
             </RequireAuthenticated>
           }
         />
-        <Route path="/user/:id/products" element={<ManageProductsPage />} />
-        <Route path="/user/:id/shop" element={<ShopHomePage />} />
-        <Route path="/user/:id/shop/edit" element={<EditShopPage />} />
+        <Route path="/user/:id/products" element={<RequireUser><ManageProductsPage /></RequireUser>} />
+        <Route path="/user/:id/shop" element={<RequireUser><ShopHomePage /></RequireUser>} />
+        <Route path="/user/:id/shop/edit" element={<RequireUser><EditShopPage /></RequireUser>} />
+        <Route path="/user/:id/reviews" element={<RequireUser><ReviewsPage /></RequireUser>} />
         <Route path="/user/:id/*" element={<UserProfilePage />} />
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactUsPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/payment/*" element={<ConfirmPaymentPage />} />
+        <Route path="/cart" element={<RequireUser><CartPage /></RequireUser>} />
+        <Route path="/payment/*" element={<RequireUser><ConfirmPaymentPage /></RequireUser>} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/products" element={<ProductListPage />} />
-        <Route path="/products/add" element={<AddAProductPage />} />
+        <Route path="/products/add" element={<RequireUser><AddAProductPage /></RequireUser>} />
         <Route path="/product/:id" element={<ViewProductPage />} />
-        <Route path="/product/:id/edit" element={<EditProductPage />} />
+        <Route path="/product/:id/edit" element={<RequireUser><EditProductPage /></RequireUser>} />
+        <Route path="/purchases/:id" element={<RequireUser><ViewLicensePage /></RequireUser>} />
+        <Route path="/purchases" element={<RequireUser><PurchaseHistoryPage /></RequireUser>} />
         <Route path="/shop/:id/" element={<ViewShopPage />} />
-        <Route path="/purchases" element={<PurchaseHistoryPage />} />
         <Route
           path="/questions/new"
           element={
@@ -135,8 +151,11 @@ function App() {
             </RequireUser>
           }
         />
-        <Route path="/reviews" element={<ReviewsPage />} />
+        <Route path="/admin/:tab" element={<AdminRoutes />} />
+        <Route path="/admin" element={<Navigate to="/admin/user-management" replace />} />
+        <Route path="/wallet" element={<RequireUser><ShopWalletPage /></RequireUser>} />
         <Route path="/forbidden" element={<ForbiddenPage />} />
+        <Route path="/bad-request" element={<BadRequestPage />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

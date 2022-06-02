@@ -1,0 +1,12 @@
+@import '../../../app/util/colors.css';
+
+.logo {
+  width: 9rem;
+  margin: 0em !important;
+  padding: 1rem;
+}
+
+.navItemWrapper {
+  width: 75%;
+  gap: 0.5em;
+}

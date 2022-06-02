@@ -22,7 +22,7 @@
 }
 
 .logo {
-	fill: white;
+	fill: white !important;
 	width: 10rem;
 	margin: 1rem;
 }

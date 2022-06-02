@@ -4,9 +4,11 @@ import put from './put';
 
 const shopAPI = {
   getAllProductsOfShop: get.getAllProductsOfShop,
-  getShopInfo: get.getShopInfo,
   createShop: post.createShop,
   updateShop: put.updateShop,
+	getAllProductsOfShop: get.getAllProductsOfShop,
+	getShopById: get.getShopById,
+	createShop: post.createShop,
 };
 
 export default shopAPI;

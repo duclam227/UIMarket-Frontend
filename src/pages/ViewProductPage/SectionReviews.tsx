@@ -1,6 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Paginator } from '../../components';
+import { Paginator, UserAvatar } from '../../components';
 
 import style from './ViewProductPage.module.css';
 
@@ -18,7 +18,7 @@ const SectionReviews: React.FC<Props> = (props) => {
     return (
       <div key={review._id} className={style.review}>
         <div className={style.sideContent}>
-          <div>avt</div>
+          <UserAvatar image={review.user.customerAvatar} />
         </div>
         <div className={style.reviewContent}>
           <div className={style.authorInfo}>

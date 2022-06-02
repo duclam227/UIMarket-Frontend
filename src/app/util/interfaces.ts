@@ -48,12 +48,13 @@ export interface customer {
 		coin: string;
 		point: string;
 	};
-	customer_Status: string;
+	customerStatus: number;
 	createdAt: Date;
 	updatedAt: Date;
 	shopId: string;
 	refreshtoken: string;
 	customerAvatar: string;
+	isAdmin: boolean;
 }
 export interface product {
 	_id?: string;

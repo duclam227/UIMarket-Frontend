@@ -16,6 +16,7 @@ import SectionAnswerVoter from './SectionAnswerVoter';
 import SectionEditAnswer from './SectionEditAnswer';
 
 import style from './Answer.module.css';
+import UserAvatar from '../common/UserAvatar/UserAvatar';
 
 interface SectionAnswerProps {
   answer: any;
@@ -187,11 +188,11 @@ const Answer: FC<SectionAnswerProps> = props => {
     <div className={style.answer}>
       {confirmDeleteModal}
       <div className={style.sideContent}>
-        <div>avt</div>
+        <UserAvatar image={answer.customerInfo[0].customerAvatar} />
         <div className={style.markBestAnswer}>{bestAnswerIcon}</div>
       </div>
       <div className={style.content}>
-        <div className={style.authorInfo}>
+        <div className={style.authorInfo + " text-nowrap"}>
           {answer.customerInfo[0].customerName}
           <ThreeDotMenu menuItems={menuItems} />
         </div>
@@ -210,7 +211,7 @@ const Answer: FC<SectionAnswerProps> = props => {
                 answer={answer}
                 question={question}
                 currentUser={currentUser}
-                handleVoteStatus={() => {}}
+                handleVoteStatus={() => { }}
               />
               {currentUser?.customerEmail ? (
                 <div className={style.replyButton} onClick={turnOnReply}>

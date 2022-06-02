@@ -1,0 +1,55 @@
+@import '/src/app/util/colors.css';
+
+.searchBarWrapper {
+  display: flex;
+  align-items: center;
+  padding: 5px 0;
+
+  width: 50%;
+  height: 100%;
+}
+.searchBar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  position: relative;
+
+  height: 100%;
+  width: 100%;
+}
+.searchIcon {
+  width: 20px;
+  height: 20px;
+  left: 15px;
+  position: absolute;
+}
+
+.searchBar input {
+  padding: 0.5em 0;
+  padding-left: 45px;
+  border: none;
+  background-color: #f7f7f8;
+  border-radius: 4px;
+  height: 100%;
+}
+
+.searchBar input:focus {
+  background-color: #f7f7f8;
+  border: 0px;
+}
+
+.thead {
+  border-bottom: 1px dashed var(--gray-300);
+}
+.th {
+  padding: 1em;
+}
+.td {
+  padding: 1em;
+}
+.actionBtn {
+  background-color: var(--gray-100);
+  padding: 0.4em 1em;
+  border-radius: 0.3em;
+}

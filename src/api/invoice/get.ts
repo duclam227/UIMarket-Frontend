@@ -17,6 +17,20 @@ class Get {
 			config,
 		);
 	};
+
+	getTransactionHistoryByPage = (pageNumber: string | number, perPage: string | number) => {
+		const jwt = getJwt();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		};
+
+		return axiosClient.get(
+			`${INVOICE_ENDPOINT}/transaction?page=${pageNumber}&limit=${perPage}`,
+			config,
+		);
+	};
 }
 
 export default new Get();
