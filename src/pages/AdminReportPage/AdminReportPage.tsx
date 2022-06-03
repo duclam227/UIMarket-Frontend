@@ -34,7 +34,6 @@ const AdminReportPage: FC<Props> = props => {
     const getAllReports = async () => {
       try {
         const res: any = await adminAPI.getAllReports(1, ITEMS_PER_PAGE);
-        console.log('res', res);
         const { reports, totalPages, page } = res;
         setReports(reports);
         setCurrentPage(page);
