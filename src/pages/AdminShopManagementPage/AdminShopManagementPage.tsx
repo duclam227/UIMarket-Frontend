@@ -39,6 +39,7 @@ const AdminShopManagementPage: FC<Props> = props => {
         setCurrentPage(page);
         setTotalPages(totalPages);
       } catch (error) {
+        toast.error('Cannot get data! An error has occurred');
         console.log(error);
       }
     };
@@ -53,6 +54,7 @@ const AdminShopManagementPage: FC<Props> = props => {
       setCurrentPage(pageNumber);
       setTotalPages(totalPages);
     } catch (error) {
+      toast.error('Cannot get data! An error has occurred');
       console.log(error);
     }
   };
