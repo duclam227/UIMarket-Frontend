@@ -14,6 +14,7 @@ import SectionAnswers from "./SectionAnswers";
 
 import style from './ViewQuestionPage.module.css';
 import { navbarBranches } from "../../app/util/config";
+import { Spinner } from "react-bootstrap";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -27,6 +28,7 @@ const ViewQuestionPage = () => {
   const [answers, setAnswers] = useState<Array<any>>([]);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isReload, setIsReload] = useState<boolean>(false);
 
   const currentUser = useSelector((state: State) => state.auth.user);
 
@@ -57,7 +59,7 @@ const ViewQuestionPage = () => {
         setError(errorMsg);
         setIsLoading(false);
       })
-  }, [])
+  }, [isReload])
 
   const goToPage = (page: number) => {
     answerAPI.getAnswersByPageNumber(page, ITEMS_PER_PAGE, id)
@@ -74,21 +76,14 @@ const ViewQuestionPage = () => {
   }
 
   const addAnswer = (answer: any) => {
-    const customerInfo = [
-      {
-        customerEmail: answer.userId.customerEmail,
-        customerName: answer.userId.customerName,
-      }
-    ]
-    answer.customerInfo = [...customerInfo];
-    setAnswers([...answers, answer]);
+    setIsReload(!isReload);
   }
 
   return (
     <PageWithNavbar branch={navbarBranches.question}>
       <div className={style.container}>
         {isLoading
-          ? 'loading...'
+          ? <Spinner animation='border' />
           : question &&
           <div className={style.content}>
             <Question question={question} currentUser={currentUser} />
