@@ -117,7 +117,6 @@
   "EditQuestionPage.addBountyTopUpBtnText": "Top up",
   "EditQuestionPage.addBountyInputPlaceholder": "$10",
   "EditQuestionPage.submitBtnText": "Save",
-
   "EditShopPage.AddShopBanner": "Update your cover to showcase your business. Recommended size @ 1320 x 320",
   "EditShopPage.ShopNameLabel": "Shop Name",
   "EditShopPage.ShopEmailLabel": "Shop Email",
@@ -130,7 +129,6 @@
   "EditShopPage.ShopNameRequired": "Please enter your shop name",
   "EditShopPage.ShopEmailRequired": "Please enter your shop email",
   "EditShopPage.PhoneErrMsg": "Please enter a valid phone number",
-
   "FileInput.uploadTitle": "Click to upload your files",
   "FileInput.uploadSubtitle": "Supports single or bulk upload.",
   "Footer.about": "About us",
@@ -193,6 +191,7 @@
   "PurchaseHistoryPage.downloadButtonLabel": "Download",
   "PurchaseHistoryPage.noProductsMessage": "You have yet to buy any products.",
   "PurchaseHistoryPage.reportButtonLabel": "Request refund",
+  "PurchaseHistoryPage.continueShoppingMessage": "Continue shopping",
   "PurchaseHistoryPage.reviewButtonLabel": "Send review",
   "PurchaseHistoryPage.searchPlaceholder": "Search products by name...",
   "PurchaseHistoryPage.subtitle": "Download products you bought.",

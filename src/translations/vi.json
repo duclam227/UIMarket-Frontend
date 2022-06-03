@@ -117,7 +117,6 @@
   "EditQuestionPage.addBountyTopUpBtnText": "Nạp thêm",
   "EditQuestionPage.addBountyInputPlaceholder": "$10",
   "EditQuestionPage.submitBtnText": "Lưu",
-
   "EditShopPage.AddShopBanner": "Cập nhật ảnh bìa cho cửa hàng của bạn. Kích thước khuyến nghị @ 1320 x 320",
   "EditShopPage.ShopNameLabel": "Tên cửa hàng",
   "EditShopPage.ShopEmailLabel": "Email cửa hàng",
@@ -130,7 +129,6 @@
   "EditShopPage.ShopNameRequired": "Vui lòng nhập tên cửa hàng",
   "EditShopPage.ShopEmailRequired": "Vui lòng nhập email cửa hàng",
   "EditShopPage.PhoneErrMsg": "Vui lòng nhập số điện thoại hợp lệ",
-
   "FileInput.uploadTitle": "Nhấp vào đây để đăng file",
   "FileInput.uploadSubtitle": "Hỗ trợ đăng từng file hay nhiều file.",
   "Footer.about": "Về chúng tôi",
@@ -193,6 +191,7 @@
   "PurchaseHistoryPage.downloadButtonLabel": "Tải xuống",
   "PurchaseHistoryPage.noProductsMessage": "Bạn chưa mua sản phẩm nào.",
   "PurchaseHistoryPage.reportButtonLabel": "Yêu cầu hoàn tiền",
+  "PurchaseHistoryPage.continueShoppingMessage": "Tiếp tục mua sắm",
   "PurchaseHistoryPage.reviewButtonLabel": "Đánh giá",
   "PurchaseHistoryPage.searchPlaceholder": "Tìm theo tên...",
   "PurchaseHistoryPage.subtitle": "Tải xuống những sản phẩm bạn đã mua.",

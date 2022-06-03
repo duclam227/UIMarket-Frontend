@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { Form, Spinner } from 'react-bootstrap';
 import { State } from '../../redux/store';
@@ -8,7 +8,7 @@ import { State } from '../../redux/store';
 import { product } from '../../app/util/interfaces';
 import invoiceAPI from '../../api/invoice';
 
-import { OneToFivePage } from '../../components';
+import { OneToFivePage, Paginator } from '../../components';
 
 import style from './PurchaseHistoryPage.module.css';
 import Product from './Product';
@@ -17,32 +17,68 @@ import { Button } from 'react-bootstrap';
 import illustration from '../../app/assets/error-not-found.png';
 
 const ITEMS_PER_PAGE = 10;
+const DEBOUNCE_TIME = 300;
 
 interface IProps {
   intl: IntlShape;
+}
+
+let debounceTimer: any;
+function Debounce(func: Function, time: number) {
+  debounceTimer = clearTimeout(debounceTimer);
+  debounceTimer = window.setTimeout(func, time);
 }
 
 const PurchaseHistoryPage: FC<IProps> = props => {
   const { intl } = props;
 
   const currentUser = useSelector((state: State) => state.auth.user);
+  const [params] = useSearchParams();
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [products, setProducts] = useState<Array<any> | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(0);
 
-  useEffect(() => {
+  const handleSearch = (value: string) => {
+    const encodedKeyword = encodeURIComponent(value);
+    Debounce(() => {
+      navigate(`/purchases?name=${encodedKeyword}`);
+    }, DEBOUNCE_TIME);
+  }
+
+  const goToPage = (page: number) => {
     setIsLoading(true);
+    const query = params.get('name');
     invoiceAPI
-      .getPurchaseHistoryByPage(1, ITEMS_PER_PAGE)
+      .getPurchaseHistoryByPage(page, ITEMS_PER_PAGE, query)
       .then((res: any) => {
         setProducts([...res.products]);
+        setCurrentPage(res.page);
+        setTotalPages(res.totalPages);
         setIsLoading(false);
       })
       .catch(error => {
         console.log(error);
       });
-  }, []);
+  }
+
+  useEffect(() => {
+    setIsLoading(true);
+    const query = params.get('name');
+    invoiceAPI
+      .getPurchaseHistoryByPage(1, ITEMS_PER_PAGE, query)
+      .then((res: any) => {
+        setProducts([...res.products]);
+        setCurrentPage(1);
+        setTotalPages(res.totalPages);
+        setIsLoading(false);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, [params]);
 
   return (
     <OneToFivePage>
@@ -62,36 +98,45 @@ const PurchaseHistoryPage: FC<IProps> = props => {
                 placeholder={intl.formatMessage({
                   id: 'PurchaseHistoryPage.searchPlaceholder',
                 })}
+                onChange={(e: any) => handleSearch(e.target.value)}
               ></Form.Control>
             </Form>
           </section>
           <section className={style.body}>
             {isLoading ? (
               <Spinner animation="border" />
-            ) : products && products.length > 0 ? (
-              <div className={style.productList}>
-                {products.map((purchase: any) => (
-                  <Product key={purchase._id!} purchase={purchase} />
-                ))}
-              </div>
-            ) : (
-              <div className={style.noProducts}>
-                <div className="d-flex flex-column align-items-center mb-2">
-                  <img
-                    className={'m-4 ' + style.img}
-                    src={illustration}
-                    alt="empty list"
-                  ></img>
-                  <FormattedMessage
-                    id="PurchaseHistoryPage.noProductsMessage"
-                    defaultMessage="Looks like you haven't bought anything."
-                  ></FormattedMessage>
-                  <Button href="/products" className="m-4">
-                    Continue shopping
-                  </Button>
+            ) : products && products.length > 0
+              ? (
+                <div className={style.productList}>
+                  {products.map((purchase: any) => (
+                    <Product key={purchase._id!} purchase={purchase} />
+                  ))}
+                  <Paginator
+                    currentPage={currentPage}
+                    totalNumberOfPages={totalPages}
+                    handleClickGoToPage={(page: number) => goToPage(page)}
+                  />
                 </div>
-              </div>
-            )}
+              ) : (
+                <div className={style.noProducts}>
+                  <div className="d-flex flex-column align-items-center mb-2">
+                    <img
+                      className={'m-4 ' + style.img}
+                      src={illustration}
+                      alt="empty list"
+                    ></img>
+                    <FormattedMessage
+                      id="PurchaseHistoryPage.noProductsMessage"
+                      defaultMessage="Looks like you haven't bought anything."
+                    ></FormattedMessage>
+                    <Button href="/products" className="m-4">
+                      <FormattedMessage
+                        id="PurchaseHistoryPage.continueShoppingMessage"
+                      ></FormattedMessage>
+                    </Button>
+                  </div>
+                </div>
+              )}
           </section>
         </div>
       </div>
