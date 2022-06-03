@@ -83,9 +83,9 @@ export interface shop {
   shopEmail: string;
   shopName: string;
   shopPayPal: {
-    paypalEmail: string,
-    paypalId: string,
-  }
+    paypalEmail: string;
+    paypalId: string;
+  };
   shopStatus: number;
   taxCode: string;
   userId: string;
@@ -96,9 +96,13 @@ export interface voteStatus {
   downvote: boolean;
 }
 export interface ReportObject {
+  _id: string;
+  userId: string;
   reportObject: string;
   reason: string;
   objectType: string;
+  resolveFlag: number;
+  createdAt: Date;
 }
 export interface DataColumn {
   path: string;
@@ -107,11 +111,11 @@ export interface DataColumn {
   bold?: boolean;
 }
 
-export interface InteractionColumn {
+export interface CustomColumn {
   key: string;
   label?: string;
   width?: number;
   content: Function;
 }
 
-export type Column = DataColumn | InteractionColumn;
+export type Column = DataColumn | CustomColumn;
