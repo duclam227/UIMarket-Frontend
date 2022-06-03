@@ -4,10 +4,11 @@ import { useSelector } from 'react-redux';
 
 import { State } from '../../redux/store';
 import { PageWithNavbar } from '../';
-import { AdminShopManagementPage, AdminUserManagementPage } from '../../pages';
+import { AdminReportPage, AdminShopManagementPage, AdminUserManagementPage } from '../../pages';
 const ADMIN_TAB = {
   'user-management': <AdminUserManagementPage />,
   'shop-management': <AdminShopManagementPage />,
+  'reports': <AdminReportPage />,
 };
 
 const AdminRoutes = () => {

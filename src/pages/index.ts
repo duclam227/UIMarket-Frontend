@@ -4,6 +4,7 @@ export { default as AboutUsPage } from './AboutUsPage/About';
 export { default as AccountNotVerifiedPage } from './AccountNotVerifiedPage/AccountNotVerifiedPage';
 export { default as AccountVerifiedPage } from './AccountVerifiedPage/AccountVerifiedPage';
 export { default as AddAProductPage } from './AddAProductPage/AddAProductPage';
+export { default as AdminReportPage } from './AdminReportPage/AdminReportPage';
 export { default as AdminShopManagementPage } from './AdminShopManagementPage/AdminShopManagementPage';
 export { default as AdminUserManagementPage } from './AdminUserManagementPage/AdminUserManagementPage';
 export { default as AskAQuestionPage } from './AskAQuestionPage/AskAQuestionPage';

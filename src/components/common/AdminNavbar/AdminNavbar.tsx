@@ -33,7 +33,7 @@ const AdminNavbar = () => {
       label: <FormattedMessage id="AdminNavbar.invoiceManagement" />,
     },
     {
-      key: 'support-center',
+      key: 'reports',
       label: <FormattedMessage id="AdminNavbar.supportCenter" />,
     },
   ];
