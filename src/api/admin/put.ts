@@ -1,19 +1,44 @@
 import axiosClient from '../';
 const API_ENDPOINT = '/api/v1/admin';
+import { getJwt } from '../../app/util/authHelpers';
 
 class Put {
   activateUser = (userId: string) => {
-    return axiosClient.put(`${API_ENDPOINT}/users/${userId}/active`);
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    return axiosClient.put(`${API_ENDPOINT}/users/${userId}/active`, null, config);
   };
   deactivateUser = (userId: string) => {
-    return axiosClient.put(`${API_ENDPOINT}/users/${userId}/deactive`);
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    return axiosClient.put(`${API_ENDPOINT}/users/${userId}/deactive`, null, config);
   };
 
   activateShop = (shopId: string) => {
-    return axiosClient.put(`${API_ENDPOINT}/shops/${shopId}/active`);
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    return axiosClient.put(`${API_ENDPOINT}/shops/${shopId}/active`, null, config);
   };
   deactivateShop = (shopId: string) => {
-    return axiosClient.put(`${API_ENDPOINT}/shops/${shopId}/deactive`);
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    return axiosClient.put(`${API_ENDPOINT}/shops/${shopId}/deactive`, null, config);
   };
 }
 
