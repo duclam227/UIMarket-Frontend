@@ -34,29 +34,43 @@ class Get {
 		);
 	};
 
-  searchProduct = (
-    query: string,
-    pageNumber: number | string,
-    itemsPerPage: number,
-    filter?: string | null,
-    sort?: string | null,
-  ) => {
-    return axiosClient.get(
-      `${PRODUCT_ENDPOINT}/search/${query}?page=${pageNumber}&limit=${itemsPerPage}${
-        filter ? `&filter=${filter}` : ''
-      }${sort ? `&sort=${sort}` : ''}`,
-    );
-  };
+	searchProduct = (
+		query: string,
+		pageNumber: number | string,
+		itemsPerPage: number,
+		filter?: string | null,
+		sort?: string | null,
+	) => {
+		return axiosClient.get(
+			`${PRODUCT_ENDPOINT}/search/${query}?page=${pageNumber}&limit=${itemsPerPage}${filter
+				? `&filter=${filter}`
+				: ''}${sort ? `&sort=${sort}` : ''}`,
+		);
+	};
 
-  getShopProductsByPageNumber = (
-    shopId: string,
-    pageNumber: number | string,
-    itemsPerPage: number,
-  ) => {
-    return axiosClient.get(
-      `${PRODUCT_ENDPOINT}/shop/${shopId}?page=${pageNumber}&limit=${itemsPerPage}`,
-    );
-  };
+	getShopProductsByPageNumber = (
+		shopId: string,
+		pageNumber: number | string,
+		itemsPerPage: number,
+	) => {
+		return axiosClient.get(
+			`${PRODUCT_ENDPOINT}/shop/${shopId}?page=${pageNumber}&limit=${itemsPerPage}`,
+		);
+	};
+
+	getCategoryProductsByPageNumber = (
+		pageNumber: number | string,
+		itemsPerPage: number,
+		category: string,
+		filter?: string | null,
+		sort?: string | null,
+	) => {
+		return axiosClient.get(
+			`${PRODUCT_ENDPOINT}/category/${category}?page=${pageNumber}&limit=${itemsPerPage}${filter
+				? `&filter=${filter}`
+				: ''}${sort ? `&sort=${sort}` : ''}`,
+		);
+	};
 }
 
 export default new Get();
