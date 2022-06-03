@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { Column, InteractionColumn } from '../../../app/util/interfaces';
+import { FC } from 'react';
+import { Column } from '../../../app/util/interfaces';
 import TableBody from './TableBody';
 import TableHeader from './TableHeader';
 
@@ -23,7 +23,7 @@ const Table: FC<Props> = props => {
         ))}
       </colgroup>
       <TableHeader columns={columns} />
-      <TableBody columns={columns} data={data} rowKeyPath={rowKeyPath}/>
+      <TableBody columns={columns} data={data} rowKeyPath={rowKeyPath} />
     </table>
   );
 };
