@@ -3,6 +3,7 @@ import put from './put';
 const adminAPI = {
   getAllUsers: get.getAllUsers,
   getAllShops: get.getAllShops,
+  getAllReports: get.getAllReports,
 
   activateUser: put.activateUser,
   deactivateUser: put.deactivateUser,
