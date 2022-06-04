@@ -117,6 +117,20 @@
   "EditQuestionPage.addBountyTopUpBtnText": "Nạp thêm",
   "EditQuestionPage.addBountyInputPlaceholder": "$10",
   "EditQuestionPage.submitBtnText": "Lưu",
+
+  "EditShopPage.AddShopBanner": "Cập nhật ảnh bìa cho cửa hàng của bạn. Kích thước khuyến nghị @ 1320 x 320",
+  "EditShopPage.ShopNameLabel": "Tên cửa hàng",
+  "EditShopPage.ShopEmailLabel": "Email cửa hàng",
+  "EditShopPage.TagLineLabel": "Lời giới thiệu cho cửa hàng",
+  "EditShopPage.PhoneLabel": "Số điện thoại",
+  "EditShopPage.EditMsg": "Bạn đang chỉnh sửa cửa hàng",
+  "EditShopPage.ViewBtnLabel": "Xem cửa hàng",
+  "EditShopPage.SaveBtnLabel": "Lưu",
+  "EditShopPage.EditNameBtnLabel": "Chỉnh sửa tên",
+  "EditShopPage.ShopNameRequired": "Vui lòng nhập tên cửa hàng",
+  "EditShopPage.ShopEmailRequired": "Vui lòng nhập email cửa hàng",
+  "EditShopPage.PhoneErrMsg": "Vui lòng nhập số điện thoại hợp lệ",
+
   "FileInput.uploadTitle": "Nhấp vào đây để đăng file",
   "FileInput.uploadSubtitle": "Hỗ trợ đăng từng file hay nhiều file.",
   "Footer.about": "Về chúng tôi",
@@ -350,7 +364,6 @@
   "ViewProductPage.totalReviews": "{count} đánh giá",
   "ViewProductPage.totalSold": "Đã bán {count}",
   "ViewProductPage.ReviewTitle": "Đánh giá",
-  "ViewProductPage.EditProduct": "Chỉnh sửa",
   "ViewProductPage.reportProduct": "Báo cáo vi phạm",
   "ViewProductPage.viewShopButton": "Xem cửa hàng",
   "ViewProductPage.ownerMessage": "Bạn là chủ sản phẩm này, nhấn để chỉnh sửa."
