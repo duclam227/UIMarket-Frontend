@@ -99,18 +99,6 @@ const SideNav: FC<Props> = props => {
         </Link>
       </ul>
 
-      {/* Payment nav group */}
-      <ul className={style.navGroup}>
-        <div className={style.navGroupName}>
-          <BsWallet className={style.navGroupNameIcon} />
-          <span className={style.navGroupNameLabel}>{paymentNavGroupLabel}</span>
-        </div>
-        <Link to='/wallet'>
-          <li className={style.navLinkItem}>{deexWalletNavLinkLabel}</li>
-        </Link>
-        <li className={style.navLinkItem}>{bankAccountsNavLinkLabel}</li>
-      </ul>
-
       {/* Purchase nav group */}
       <ul className={style.navGroup}>
         <div className={style.navGroupName}>
@@ -138,7 +126,9 @@ const SideNav: FC<Props> = props => {
         <Link to={`/user/${currentUser?._id}/products`}>
           <li className={style.navLinkItem}>{productsNavLinkLabel}</li>
         </Link>
-        <li className={style.navLinkItem}>{bankDetailsNavLinkLabel}</li>
+        <Link to='/wallet'>
+          <li className={style.navLinkItem}>{deexWalletNavLinkLabel}</li>
+        </Link>
       </ul>
     </div>
   );
