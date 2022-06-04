@@ -73,7 +73,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
           type="number"
           placeholder={productPricePlaceholder}
           required={true}
-          defaultValue={initialValue?.productPrice || null}
+          defaultValue={initialValue?.productPrice >= 0 ? initialValue?.productPrice : null}
         />
       </Form.Group>
 
