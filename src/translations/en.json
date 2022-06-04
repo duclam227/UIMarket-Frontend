@@ -268,7 +268,7 @@
   "ReviewProduct.cancelButtonLabel": "Cancel",
   "ReviewProduct.imageLabel": "Add some pictures (optional)",
   "ReviewProduct.submitButtonLabel": "Submit review",
-  "ReviewProduct.successMessage": "Reviewed sent!",
+  "ReviewProduct.successMessage": "Review sent!",
   "ReviewProduct.reviewLabel": "Add your comment (optional)",
   "ReviewProduct.reviewPlaceholder": "I love this product!",
   "ReviewProduct.title": "Rate {name}",
