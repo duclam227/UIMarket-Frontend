@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
-import { Button, Spinner } from 'react-bootstrap';
+import { Button, Spinner, Badge, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -67,6 +67,7 @@ const SectionHeader: React.FC<Props> = props => {
 
   return (
     <section className={style.header}>
+      <Link to={`/products/category/${product.productCategory._id}`} className={style.categoryPill}><Badge pill bg='primary'>{product.productCategory.categoryName}</Badge></Link>
       <h1 className={style.title}>{product.productName}</h1>
       <div className={style.subtitle}>
         {renderStars(product.productRating!)}
