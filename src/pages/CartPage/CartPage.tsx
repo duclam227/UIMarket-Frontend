@@ -44,7 +44,6 @@ const CartPage: FunctionComponent = () => {
     paymentAPI
       .checkout(checkoutArray)
       .then((res: any) => {
-        console.log(res);
         const { paypal_link, invoiceId } = res;
         saveMostRecentInvoiceId(invoiceId);
         window.location.replace(paypal_link);

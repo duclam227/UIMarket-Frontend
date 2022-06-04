@@ -144,7 +144,7 @@ const EditPersonalInfoPage = () => {
             : 'No phone number added yet',
         });
       } catch (error) {
-        console.log('Get user info error: ', error);
+        console.log(error);
       }
     };
     getUserProfile(id);

@@ -54,7 +54,6 @@ const Comment: FC<Props> = props => {
     commentAPI
       .updateComment(newContent, comment._id)
       .then(res => {
-        console.log(res);
         setCommentContent(newContent);
       })
       .catch(error => {

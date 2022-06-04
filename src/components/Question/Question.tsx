@@ -26,8 +26,6 @@ const Question: FC<QuestionProps> = props => {
   const { question, currentUser, intl } = props;
   const navigate = useNavigate();
 
-  console.log(question)
-
   const [voteStatus, setVoteStatus] = useState<voteStatus>(question.voteStatus || null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
