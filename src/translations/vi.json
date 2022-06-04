@@ -224,6 +224,7 @@
   "QuestionListsPage.title": "Câu hỏi",
   "QuestionListsPage.titleBountied": "Câu hỏi có treo thưởng",
   "QuestionListsPage.titlePopular": "Câu hỏi nổi bật",
+  "Question.authorCantVote": "Bạn không thể vote cho câu hỏi này!",
   "Question.askedBy": "Được hỏi bởi",
   "Question.confirmDelete": "Xác nhận",
   "Question.confirmDeleteContent": "Bạn muốn xóa câu hỏi này?",
