@@ -37,6 +37,7 @@ export { default as RequestRefundPage } from './RequestRefundPage/RequestRefundP
 export { default as SearchQuestionsPage } from './SearchQuestionsPage/SearchQuestionsPage';
 export { default as ShopHomePage } from './ShopHomePage/ShopHomePage';
 export { default as ShopWalletPage } from './ShopWalletPage/ShopWalletPage';
+export { default as TagListPage } from './TagListPage/TagListPage';
 export { default as VerifyPromptPage } from './VerifyPromptPage/VerifyPromptPage';
 export { default as ViewLicensePage } from './ViewLicensePage/ViewLicensePage';
 export { default as ViewProductPage } from './ViewProductPage/ViewProductPage';
