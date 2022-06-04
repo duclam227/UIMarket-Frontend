@@ -84,6 +84,9 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
           aria-label="Default select example"
           defaultValue={initialValue?.productCategory || null}
         >
+          <option selected disabled={true}>
+            {intl.formatMessage({ id: 'AddAProduct.ProductCategoryPlaceholder' })}
+          </option>
           {categories && categories.map(cat => (
             <option value={cat._id}>{cat.categoryName}</option>
           ))
