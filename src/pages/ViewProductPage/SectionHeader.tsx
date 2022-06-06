@@ -27,7 +27,7 @@ const SectionHeader: React.FC<Props> = props => {
   const isCurrentUserSeller = currentUser?.customerEmail === product.shopId.customerEmail;
   const navigate = useNavigate();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (action?: string) => {
     if (!currentUser) {
       navigate('/signup');
       return;
@@ -39,6 +39,13 @@ const SectionHeader: React.FC<Props> = props => {
         //handle finish
         toast.success(
           intl.formatMessage({ id: 'ViewProductPage.AddToCartSuccessMessage' }),
+          {
+            onOpen: () => {
+              if (action && action === 'now') {
+                navigate('/cart');
+              }
+            }
+          }
         );
       })
       .catch(error => {
@@ -98,14 +105,16 @@ const SectionHeader: React.FC<Props> = props => {
               : <>
                 <Button
                   className={style.button}
-                  onClick={handleAddToCart}
+                  onClick={() => {
+                    handleAddToCart('now');
+                  }}
                   disabled={isCurrentUserSeller}
                 >
                   <FormattedMessage id="ViewProductPage.BuyNow" />
                 </Button>
                 <Button
                   className={style.button}
-                  onClick={handleAddToCart}
+                  onClick={() => handleAddToCart()}
                   disabled={isCurrentUserSeller}
                   variant='outline-primary'
                 >
