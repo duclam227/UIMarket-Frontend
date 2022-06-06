@@ -83,6 +83,8 @@ const ProductListPage: FC<Props> = props => {
   useEffect(() => {
     getSearchProducts();
 
+    window.scrollTo(0, 0);
+
     async function getSearchProducts() {
       setIsLoading(true);
       try {
