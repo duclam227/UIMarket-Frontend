@@ -1,16 +1,32 @@
-import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-
-import { BsPerson, BsPersonCircle } from 'react-icons/bs';
-import { LogoIcon } from '../../';
-
-import style from './AdminNavbar.module.css';
+import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+
+import { BsPersonCircle } from 'react-icons/bs';
+
+import { LogoIcon } from '../../';
+import { State } from '../../../redux/store';
+import style from './AdminNavbar.module.css';
+import { logOut } from '../../../redux';
 const AdminNavbar = () => {
+  const userDropdownProfileLabel = (
+    <FormattedMessage
+      id="CommonNavbar.userDropdownProfileLabel"
+      defaultMessage="Profile"
+    />
+  );
+  const userDropdownLogoutBtnLabel = (
+    <FormattedMessage
+      id="CommonNavbar.userDropdownLogoutBtnLabel"
+      defaultMessage="Logout"
+    />
+  );
   const params = useParams();
+  const dispatch = useDispatch();
   const activeNavClassName = 'active bg-dark';
   const inactiveNavClassName = 'text-dark';
-  const renderNavItems = () => {};
+  const currentUser = useSelector((state: State) => state.auth.user);
+
   const tabs = [
     {
       key: 'dashboard',
@@ -58,7 +74,54 @@ const AdminNavbar = () => {
         ))}
       </ul>
       <div className={`d-flex justify-content-center align-items-center`}>
-        <BsPersonCircle size={30} />
+        {currentUser && currentUser.customerAvatar ? (
+          <div className="nav-item dropdown p-1">
+            <a
+              className="nav-link dropdown-toggle p-0 d-flex align-items-center"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <div className={style.avatarWrapper}>
+                <img
+                  src={currentUser.customerAvatar}
+                  className={style.userAvatar}
+                  alt="User profile"
+                />
+              </div>
+            </a>
+            <ul
+              className="dropdown-menu dropdown-menu-lg-end position-absolute mt-1"
+              aria-labelledby="navbarDropdown"
+            >
+              <li>
+                <Link to={`/user/${currentUser._id}`} className="dropdown-item">
+                  {userDropdownProfileLabel}
+                </Link>
+              </li>
+              <hr className="dropdown-divider" />
+              <li>
+                <button
+                  className={`${style.authButton}`}
+                  onClick={() => dispatch(logOut())}
+                >
+                  {userDropdownLogoutBtnLabel}
+                </button>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          // <div className={style.avatarWrapper}>
+          //   <img
+          //     src={currentUser?.customerAvatar}
+          //     className={style.userAvatar}
+          //     alt="User profile"
+          //   />
+          // </div>
+          <BsPersonCircle size={30} />
+        )}
       </div>
     </nav>
   );
