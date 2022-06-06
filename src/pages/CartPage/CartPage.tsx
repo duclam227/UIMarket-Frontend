@@ -10,11 +10,13 @@ import { FormattedMessage } from 'react-intl';
 import illustration from '../../app/assets/cart-empty.png';
 
 import styles from './CartPage.module.css';
+import { useNavigate } from 'react-router-dom';
 
 const CartPage: FunctionComponent = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [cartProducts, setProducts] = useState<Array<any>>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
@@ -44,9 +46,14 @@ const CartPage: FunctionComponent = () => {
     paymentAPI
       .checkout(checkoutArray)
       .then((res: any) => {
-        const { paypal_link, invoiceId } = res;
-        saveMostRecentInvoiceId(invoiceId);
-        window.location.replace(paypal_link);
+        const { paypal_link, invoiceId, isFree } = res;
+        console.log(res);
+        if (!isFree) {
+          saveMostRecentInvoiceId(invoiceId);
+          window.location.replace(paypal_link);
+        } else {
+          navigate('/purchases');
+        }
       })
       .catch(error => {
         console.log(error);
