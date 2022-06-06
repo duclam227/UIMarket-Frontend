@@ -5,7 +5,7 @@ import { FC, useEffect, useState } from 'react';
 import { Button, Form, Spinner } from 'react-bootstrap';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import s3API from '../../api/amazonS3';
 import invoiceAPI from '../../api/invoice';
@@ -30,6 +30,8 @@ const RequestRefundPage: FC<IProps> = (props) => {
   const [productList, setProductList] = useState<Array<product> | null>(null);
   const [selectedProducts, setSelectedProducts] = useState<Array<string>>([]);
   const [images, setImages] = useState<Array<string>>([]);
+
+  const navigate = useNavigate();
 
   const schema = Joi.object({
     refundReason: Joi.string().required().label('Reason').min(20),
@@ -88,7 +90,9 @@ const RequestRefundPage: FC<IProps> = (props) => {
     paymentAPI.requestRefund(invoiceDetail._id!, [...selectedProducts], refundReason, [...images]
     )
       .then((res: any) => {
-        toast.success(intl.formatMessage({ id: 'RequestRefundPage.submitSuccessMessage' }))
+        toast.success(intl.formatMessage({ id: 'RequestRefundPage.submitSuccessMessage' }), {
+          onClose: () => navigate('/purchases')
+        })
       })
       .catch(error => {
         console.log(error);
