@@ -24,6 +24,17 @@ class Get {
 
 		return axiosClient.get(`${SHOP_ENDPOINT}/info/${id}`, config);
 	}
+
+	searchProduct (name: string) {
+		const jwt = getJwt();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		};
+
+		return axiosClient.get(`${SHOP_ENDPOINT}/product/search/${name}`, config);
+	}
 }
 
 export default new Get();

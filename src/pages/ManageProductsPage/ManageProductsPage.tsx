@@ -1,6 +1,6 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
-import _ from 'lodash';
+import _, { debounce } from 'lodash';
 
 import Button from 'react-bootstrap/Button';
 import Spinner from 'react-bootstrap/Spinner';
@@ -9,7 +9,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { State } from '../../redux/store';
 import { product } from '../../app/util/interfaces';
@@ -31,16 +31,43 @@ interface ProductListItem {
   product: product;
 }
 
+const DEBOUNCE_TIME = 300;
+
+let debounceTimer: any;
+function Debounce(func: Function, time: number) {
+  debounceTimer = clearTimeout(debounceTimer);
+  debounceTimer = window.setTimeout(func, time);
+}
+
 const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
   const currentUser = useSelector((state: State) => state.auth.user);
   const shopId = currentUser?.shopId;
 
   const [products, setProducts] = useState<ProductListItem[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
   useEffect(() => {
-    shopId &&
-      shopAPI
-        .getAllProductsOfShop(shopId)
+    const query = searchParams.get('name');
+    if (!query) {
+      shopId &&
+        shopAPI
+          .getAllProductsOfShop(shopId)
+          .then((res: any) => {
+            const { products } = res;
+            const manageProductItems = products.map((product: product) => ({
+              isSelected: false,
+              product: { ...product },
+            }));
+            setProducts(manageProductItems);
+            setIsLoading(false);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    } else {
+      shopAPI.searchProduct(query)
         .then((res: any) => {
           const { products } = res;
           const manageProductItems = products.map((product: product) => ({
@@ -53,7 +80,8 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
         .catch(error => {
           console.log(error);
         });
-  }, [shopId]);
+    }
+  }, [shopId, searchParams]);
 
   const handleSelectProduct = (id: string) => {
     const newProducts = products ? products.map(product => ({ ...product })) : null;
@@ -69,9 +97,9 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
     const { checked } = e.target;
     const newProducts = products
       ? products.map(product => ({
-          ...product,
-          isSelected: checked,
-        }))
+        ...product,
+        isSelected: checked,
+      }))
       : null;
     setProducts(newProducts);
   };
@@ -113,6 +141,7 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
       console.log(getErrorMessage(error));
     }
   };
+
   const handleDeactivateProduct = async (id: string) => {
     //Save previous Products
     const prevProducts = products && JSON.parse(JSON.stringify(products));
@@ -133,6 +162,14 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
       console.log(getErrorMessage(error));
     }
   };
+
+  const handleSearch = (value: string) => {
+    const encodedKeyword = encodeURIComponent(value);
+    Debounce(() => {
+      navigate(`/user/${currentUser?._id}/products?name=${encodedKeyword}`)
+    }, DEBOUNCE_TIME)
+  }
+
   return isLoading ? (
     //Loading
     <OneToFivePage>
@@ -142,102 +179,85 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
     </OneToFivePage>
   ) : (
     <OneToFivePage>
-      {!(shopId && products && products.length > 0) ? (
-        //Empty product
-        <div className={style.wrapper}>
-          <div className={style.content}>
-            <div className={style.header}>
-              <div>
-                <h3 className={style.title}>
-                  <FormattedMessage id="ManageProductsPage.manageProductsTitle" />
-                </h3>
+      (//Manage Product
+      <div className={style.wrapperK}>
+        <div className={style.contentK}>
+          <Container className={`p-0`}>
+            {/* Header */}
+            <Row className={`bg-white p-4 border ${style.headerK}`}>
+              <Col lg={6}>
+                <div>
+                  <h2 className={style.title}>
+                    <FormattedMessage id="ManageProductsPage.manageProductsTitle" />
+                  </h2>
+                  <h5 className="text-muted">
+                    <FormattedMessage id="ManageProductsPage.manageProductsSubtitle" />
+                  </h5>
+                </div>
+              </Col>
+              <Col lg={3}>
+                <Form>
+                  <Form.Control
+                    placeholder={intl.formatMessage({
+                      id: 'ManageProductsPage.searchPlaceholder',
+                      defaultMessage: 'Search by title or ID',
+                    })}
+                    onChange={(e) => handleSearch(e.target.value)}
+                  ></Form.Control>
+                </Form>
+              </Col>
+              <Col lg={3} className={`d-flex justify-content-end`}>
+                <Link to="/products/add" className={style.addProductButton}>
+                  <Button className="d-flex justify-content-center align-items-center">
+                    <BsPlusCircle className="me-2" />
+                    <FormattedMessage id="ManageProductsPage.addProductButton" />
+                  </Button>
+                </Link>
+              </Col>
+            </Row>
+
+            {/* Control panel */}
+            <Row className={`mt-4`}>
+              <div
+                className={`border bg-white px-4 py-2 d-flex align-items-center ${style.controlPanelContainer}`}
+              >
+                <Form.Check
+                  inline
+                  type="checkbox"
+                  className={`me-5`}
+                  checked={products?.every(product => product.isSelected)}
+                  onChange={e => handleSelectAll(e)}
+                />
+                <span>
+                  <Button
+                    variant={
+                      products?.some(product => product.isSelected)
+                        ? 'danger'
+                        : 'secondary'
+                    }
+                    onClick={handleDeleteSelected}
+                    disabled={!products?.some(product => product.isSelected)}
+                  >
+                    <FormattedMessage id="ManageProductsPage.deleteSelectedBtnLabel" />
+                  </Button>
+                </span>
+              </div>
+            </Row>
+
+            {!(shopId && products && products.length > 0) ? (
+              //Empty product
+              <div className={style.wrapper}>
+                <div className={style.noProductsImage}>
+                  <img src={noProductsImage} alt="A picture telling there are no products" />
+                </div>
+                <h4 className={style.title}>
+                  <FormattedMessage id="ManageProductsPage.noProductsTitle" />
+                </h4>
                 <h6>
-                  <FormattedMessage id="ManageProductsPage.manageProductsSubtitle" />
+                  <FormattedMessage id="ManageProductsPage.noProductsSubtitle" />
                 </h6>
               </div>
-              <Link to="/products/add" className={style.addProductButton}>
-                <Button className="d-flex justify-content-center align-items-center">
-                  <BsPlusCircle className="me-2" />
-                  <FormattedMessage id="ManageProductsPage.addProductButton" />
-                </Button>
-              </Link>
-            </div>
-            <div className={style.noProductsImage}>
-              <img src={noProductsImage} alt="A picture telling there are no products" />
-            </div>
-            <h4 className={style.title}>
-              <FormattedMessage id="ManageProductsPage.noProductsTitle" />
-            </h4>
-            <h6>
-              <FormattedMessage id="ManageProductsPage.noProductsSubtitle" />
-            </h6>
-          </div>
-        </div>
-      ) : (
-        //Manage Product
-        <div className={style.wrapperK}>
-          <div className={style.contentK}>
-            <Container className={`p-0`}>
-              {/* Header */}
-              <Row className={`bg-white p-4 border ${style.headerK}`}>
-                <Col lg={6}>
-                  <div>
-                    <h2 className={style.title}>
-                      <FormattedMessage id="ManageProductsPage.manageProductsTitle" />
-                    </h2>
-                    <h5 className="text-muted">
-                      <FormattedMessage id="ManageProductsPage.manageProductsSubtitle" />
-                    </h5>
-                  </div>
-                </Col>
-                <Col lg={3}>
-                  <Form>
-                    <Form.Control
-                      placeholder={intl.formatMessage({
-                        id: 'ManageProductsPage.searchPlaceholder',
-                        defaultMessage: 'Search by title or ID',
-                      })}
-                    ></Form.Control>
-                  </Form>
-                </Col>
-                <Col lg={3} className={`d-flex justify-content-end`}>
-                  <Link to="/products/add" className={style.addProductButton}>
-                    <Button className="d-flex justify-content-center align-items-center">
-                      <BsPlusCircle className="me-2" />
-                      <FormattedMessage id="ManageProductsPage.addProductButton" />
-                    </Button>
-                  </Link>
-                </Col>
-              </Row>
-
-              {/* Control panel */}
-              <Row className={`mt-4`}>
-                <div
-                  className={`border bg-white px-4 py-2 d-flex align-items-center ${style.controlPanelContainer}`}
-                >
-                  <Form.Check
-                    inline
-                    type="checkbox"
-                    className={`me-5`}
-                    checked={products.every(product => product.isSelected)}
-                    onChange={e => handleSelectAll(e)}
-                  />
-                  <span>
-                    <Button
-                      variant={
-                        products.some(product => product.isSelected)
-                          ? 'danger'
-                          : 'secondary'
-                      }
-                      onClick={handleDeleteSelected}
-                      disabled={!products.some(product => product.isSelected)}
-                    >
-                      <FormattedMessage id="ManageProductsPage.deleteSelectedBtnLabel" />
-                    </Button>
-                  </span>
-                </div>
-              </Row>
-
+            ) : <>
               {/* {Product list} */}
               <Row className={`mt-3 border bg-white`}>
                 {products.map(productItem => (
@@ -252,11 +272,11 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
                   />
                 ))}
               </Row>
-            </Container>
-          </div>
+            </>}
+          </Container>
         </div>
-      )}
-    </OneToFivePage>
+      </div>
+    </OneToFivePage >
   );
 };
 
