@@ -1,6 +1,6 @@
 import axiosClient from '../';
-const API_ENDPOINT = '/api/v1/admin';
 import { getJwt } from '../../app/util/authHelpers';
+const API_ENDPOINT = '/api/v1/admin';
 
 class Put {
   activateUser = (userId: string) => {
