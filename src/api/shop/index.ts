@@ -1,11 +1,12 @@
 import get from './get';
 import post from './post';
+import put from './put';
 
 const shopAPI = {
 	getAllProductsOfShop: get.getAllProductsOfShop,
-	getShopById: get.getShopById,
-
 	createShop: post.createShop,
+	updateShop: put.updateShop,
+	getShopById: get.getShopById,
 };
 
 export default shopAPI;

@@ -24,7 +24,7 @@ const ProductList: FC<Props> = props => {
   const renderProductList = () => {
     return (
       <Container fluid="lg" className="py-4">
-        <Row className="justify-content-center gy-4">{renderProduct()}</Row>
+        <Row className="gy-4">{renderProduct()}</Row>
       </Container>
     );
   };

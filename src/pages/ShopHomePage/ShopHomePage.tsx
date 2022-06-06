@@ -18,7 +18,7 @@ const ShopHomePage: React.FC = () => {
 
   useEffect(() => {
     if (shopId) {
-      navigate(`/user/${currentUser._id}/products`);
+      navigate(`/user/${currentUser._id}/shop/edit`);
     }
   }, [shopId])
 
