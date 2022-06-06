@@ -75,6 +75,7 @@ const CartPage: FunctionComponent = () => {
             return item.product._id !== removedItem._id;
           });
           setProducts(newList);
+          setSelectedProducts([...selectedProducts.filter(pro => pro.product !== removedItem._id)])
         })
         .catch(error => {
           const errorMsg = getErrorMessage(error);
@@ -90,7 +91,7 @@ const CartPage: FunctionComponent = () => {
           key={product._id}
           className="d-flex flex-wrap flex-lg-nowrap align-items-stretch py-4 border-bottom border-1 mb-4"
         >
-          <div className={'d-flex m-1 flex-fill align-items-center justify-content-center'}>
+          <div className={'d-flex m-1 align-items-center justify-content-center'}>
             <Form>
               <Form.Check
                 inline
