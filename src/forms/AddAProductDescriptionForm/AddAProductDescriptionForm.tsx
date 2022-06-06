@@ -121,7 +121,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
         <Controller
           control={control}
           name="productDescription"
-          render={({ field: { onChange, onBlur } }) => (
+          render={({ field: { onChange, onBlur, value } }) => (
             <RichTextEditor
               onChange={(e: any) => {
                 props.updateProductInfo({
@@ -129,7 +129,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
                 });
               }}
               onBlur={onBlur}
-              initialValue={initialValue?.productDescription || null}
+              initialValue={value}
             />
           )}
         />
