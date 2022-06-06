@@ -5,6 +5,7 @@ const paymentAPI = {
 	confirmOrder: get.confirmOrder,
 	checkout: post.checkoutCart,
 	withdrawMoney: post.withdrawMoney,
+	requestRefund: post.requestRefund,
 };
 
 export default paymentAPI;

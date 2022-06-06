@@ -1,30 +1,38 @@
 import axiosClient from '..';
+import { getJwt } from '../../app/util/authHelpers';
 
 const PRODUCT_ENDPOINT = 'api/v1/products';
 
 class Get {
-  getProductById = (id: string) => {
-    return axiosClient.get(`${PRODUCT_ENDPOINT}/info/${id}`);
-  };
+	getProductById = (id: string) => {
+		const jwt = getJwt();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		};
 
-  getAllProductsByPageNumber = (
-    pageNumber: number | string,
-    itemsPerPage: number,
-    filter?: string | null,
-    sort?: string | null,
-  ) => {
-    return axiosClient.get(
-      `${PRODUCT_ENDPOINT}?page=${pageNumber}&limit=${itemsPerPage}${
-        filter ? `&filter=${filter}` : ''
-      }${sort ? `&sort=${sort}` : ''}`,
-    );
-  };
+		return axiosClient.get(`${PRODUCT_ENDPOINT}/info/${id}`, config);
+	};
 
-  getTrendingProducts = (pageNumber: number | string, itemsPerPage: number) => {
-    return axiosClient.get(
-      `${PRODUCT_ENDPOINT}?page=${pageNumber}&limit=${itemsPerPage}&sort=sort-des`,
-    );
-  };
+	getAllProductsByPageNumber = (
+		pageNumber: number | string,
+		itemsPerPage: number,
+		filter?: string | null,
+		sort?: string | null,
+	) => {
+		return axiosClient.get(
+			`${PRODUCT_ENDPOINT}?page=${pageNumber}&limit=${itemsPerPage}${filter
+				? `&filter=${filter}`
+				: ''}${sort ? `&sort=${sort}` : ''}`,
+		);
+	};
+
+	getTrendingProducts = (pageNumber: number | string, itemsPerPage: number) => {
+		return axiosClient.get(
+			`${PRODUCT_ENDPOINT}?page=${pageNumber}&limit=${itemsPerPage}&sort=sort-des`,
+		);
+	};
 
   searchProduct = (
     query: string,

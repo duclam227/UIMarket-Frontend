@@ -31,6 +31,17 @@ class Get {
 			config,
 		);
 	};
+
+	getInvoiceById = (id: string) => {
+		const jwt = getJwt();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		};
+
+		return axiosClient.get(`${INVOICE_ENDPOINT}/detail/${id}`, config);
+	};
 }
 
 export default new Get();
