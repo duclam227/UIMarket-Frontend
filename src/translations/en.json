@@ -58,6 +58,7 @@
   "CartPage.checkoutBtnLabel": "Checkout with Paypal",
   "CartPage.Summary": "Summary",
   "CartPage.numOfItems": "{length} items",
+  "CartPage.NoItems": "Looks like you haven't bought anything.",
   "CartPage.Remove": "Remove",
   "ChangePasswordPage.changePasswordBtnLabel": "Change password",
   "CommonNavbar.appName": "DeeX",

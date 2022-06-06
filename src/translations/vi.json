@@ -58,6 +58,7 @@
   "CartPage.checkoutBtnLabel": "Thanh toán qua Paypal",
   "CartPage.Summary": "Tổng cộng",
   "CartPage.numOfItems": "{length} sản phẩm",
+  "CartPage.NoItems": "Bạn chưa thêm gì vào giỏ cả.",
   "CartPage.Remove": "Xóa sản phẩm",
   "ChangePasswordPage.changePasswordBtnLabel": "Đổi mật khẩu",
   "CommonNavbar.appName": "DeeX",
