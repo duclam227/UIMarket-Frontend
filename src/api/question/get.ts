@@ -2,6 +2,7 @@ import axiosClient from '..';
 import { getJwt } from '../../app/util/authHelpers';
 
 const QUESTIONS_ENDPOINT = 'api/v1/questions';
+const TAGS_ENDPOINT = 'api/v1/questionTags';
 const jwt = getJwt();
 
 class Get {
@@ -46,6 +47,16 @@ class Get {
 		return axiosClient.get(
 			`${QUESTIONS_ENDPOINT}?title=${title}&page=${pageNumber}&limit=${itemsPerPage}`,
 		);
+	};
+
+	getTagListByPage = (pageNumber: number | string, itemsPerPage: number) => {
+		const config = {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		};
+
+		return axiosClient.get(`${TAGS_ENDPOINT}?page=${pageNumber}&limit=${itemsPerPage}`, config);
 	};
 }
 

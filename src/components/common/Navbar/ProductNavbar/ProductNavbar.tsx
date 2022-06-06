@@ -31,9 +31,11 @@ const ProductNavbar = () => {
         </button>
         <div className={style.categoryList}>
           {categories.map((category: any) => (
-            <button key={category._id} className={style.button}>
-              {category.categoryName}
-            </button>
+            <Link to={`/products/category/${category._id}`}>
+              <button key={category._id} className={style.button} >
+                {category.categoryName}
+              </button>
+            </Link>
           ))}
         </div>
       </section>

@@ -61,7 +61,7 @@ export interface product {
 	coverPicture?: string;
 	productName: string;
 	productPrice: number;
-	productCategory: string;
+	productCategory: any;
 	productDescription: string;
 	productPictures?: Array<string>;
 	productFile?: string;

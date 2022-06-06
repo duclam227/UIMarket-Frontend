@@ -90,7 +90,6 @@ const EditShopPage: FunctionComponent<IProps> = props => {
       .getShopById(id as string)
       .then((res: any) => {
         const { shop }: any = res;
-        console.log(res);
         setShopInfo(shop);
         reset(shop);
         const { customerAvatar } = shop.userId;

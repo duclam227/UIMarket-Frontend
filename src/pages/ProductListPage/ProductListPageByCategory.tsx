@@ -1,5 +1,5 @@
 import { FC, useEffect, useState, ChangeEvent } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
 import Container from 'react-bootstrap/Container';
@@ -23,6 +23,7 @@ interface Props {
 
 const ProductListPage: FC<Props> = props => {
   const { intl } = props;
+  const { id } = useParams();
 
   const searchResultMessage = (
     <FormattedMessage
@@ -43,16 +44,16 @@ const ProductListPage: FC<Props> = props => {
   const fetchPaginatedData = async (
     pageNumber: number,
     itemPerPage: number,
-    keyword?: string | null,
+    category?: string | null,
     filter?: string | null,
     sort?: string | null,
   ) => {
-    if (keyword) {
+    if (category) {
       try {
-        return await productAPI.searchProducts(
-          keyword,
+        return await productAPI.getCategoryProductsByPageNumber(
           pageNumber,
           itemPerPage,
+          category!,
           filter,
           sort,
         );
@@ -90,7 +91,7 @@ const ProductListPage: FC<Props> = props => {
         const data: any = await fetchPaginatedData(
           1,
           ITEMS_PER_PAGE,
-          searchParams.get('keyword'),
+          id!,
           searchParams.get('filter'),
           searchParams.get('sort'),
         );
@@ -103,7 +104,7 @@ const ProductListPage: FC<Props> = props => {
         setIsLoading(false);
       }
     }
-  }, [searchParams]);
+  }, [searchParams, id]);
 
   const goToPage = (pageNumber: number) => {
     setIsLoading(true);

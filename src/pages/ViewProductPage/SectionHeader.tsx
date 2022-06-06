@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
-import { Button, Spinner } from 'react-bootstrap';
+import { Button, Spinner, Badge } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -27,7 +27,7 @@ const SectionHeader: React.FC<Props> = props => {
   const isCurrentUserSeller = currentUser?.customerEmail === product.shopId.customerEmail;
   const navigate = useNavigate();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (action?: string) => {
     if (!currentUser) {
       navigate('/signup');
       return;
@@ -39,6 +39,13 @@ const SectionHeader: React.FC<Props> = props => {
         //handle finish
         toast.success(
           intl.formatMessage({ id: 'ViewProductPage.AddToCartSuccessMessage' }),
+          {
+            onOpen: () => {
+              if (action && action === 'now') {
+                navigate('/cart');
+              }
+            }
+          }
         );
       })
       .catch(error => {
@@ -67,6 +74,7 @@ const SectionHeader: React.FC<Props> = props => {
 
   return (
     <section className={style.header}>
+      <Link to={`/products/category/${product.productCategory._id}`} className={style.categoryPill}><Badge pill bg='primary'>{product.productCategory.categoryName}</Badge></Link>
       <h1 className={style.title}>{product.productName}</h1>
       <div className={style.subtitle}>
         {renderStars(product.productRating!)}
@@ -97,14 +105,16 @@ const SectionHeader: React.FC<Props> = props => {
               : <>
                 <Button
                   className={style.button}
-                  onClick={handleAddToCart}
+                  onClick={() => {
+                    handleAddToCart('now');
+                  }}
                   disabled={isCurrentUserSeller}
                 >
                   <FormattedMessage id="ViewProductPage.BuyNow" />
                 </Button>
                 <Button
                   className={style.button}
-                  onClick={handleAddToCart}
+                  onClick={() => handleAddToCart()}
                   disabled={isCurrentUserSeller}
                   variant='outline-primary'
                 >

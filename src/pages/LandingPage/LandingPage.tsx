@@ -44,7 +44,7 @@ const LandingPage: React.FC<IProps> = (props) => {
   }, [])
 
   useEffect(() => {
-    productAPI.searchProducts('template', 1, 4)
+    productAPI.getCategoryProductsByPageNumber(1, 4, '627bc2f599bc9a68d1105497')
       .then((res: any) => {
         setThemeProducts(res.products);
       })
@@ -68,7 +68,7 @@ const LandingPage: React.FC<IProps> = (props) => {
         products={themeProducts}
         title={themeProductsTitle}
         subtitle={themeProductsSubtitle}
-        link="/products&title=theme"
+        link="/products/category/627bc2f599bc9a68d1105497"
       />
       <SectionStartEarning />
     </PageWithNavbar>

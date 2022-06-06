@@ -8,6 +8,7 @@ import ReviewProduct from './ReviewProduct/ReviewProduct';
 
 interface IProps {
   review: any;
+  handleReload: Function;
 }
 
 const Review: React.FC<IProps> = (props) => {
@@ -75,7 +76,10 @@ const Review: React.FC<IProps> = (props) => {
       {isEditing
         ? <ReviewProduct
           review={review}
-          handleClose={() => setIsEditing(false)}
+          handleClose={() => {
+            setIsEditing(false);
+            props.handleReload();
+          }}
         />
         : null
       }

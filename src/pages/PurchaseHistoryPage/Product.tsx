@@ -44,7 +44,7 @@ const Product: React.FC<Props> = props => {
       <Link to={`/product/${product._id}`}>
         <div className={style.thumbnail}>
           <img
-            src={product.productPictures[0] || notAvailableImg}
+            src={product.productPictures || notAvailableImg}
             className={`${style.productThumbnail}`}
             alt="Placeholder"
           />

@@ -141,7 +141,7 @@ const Product: React.FC<Props> = props => {
                 aria-labelledby="settingsMenuDropdown"
               >
                 <li>
-                  <Link to={`#`} className="dropdown-item">
+                  <Link to={`/product/${product._id}/edit`} className="dropdown-item">
                     {editMenuItemLabel}
                   </Link>
                 </li>

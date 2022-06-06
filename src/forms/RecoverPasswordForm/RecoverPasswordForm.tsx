@@ -110,8 +110,8 @@ const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
     setResendCountdown(60);
     try {
       await authAPI.sendRecoverPasswordRequest(submittedRecoverCredentials);
-    } catch (e) {
-      console.log('Send recover request failed ', e);
+    } catch (error) {
+      console.log(error);
     }
   };
   return (

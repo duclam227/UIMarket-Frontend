@@ -54,7 +54,6 @@ const AdminUserManagementPage: FC<Props> = props => {
       try {
         const res: any = await adminAPI.getAllUsers(1, ITEMS_PER_PAGE);
         const { users, totalPages, page } = res;
-        console.log(users);
         setUsers(users);
         setCurrentPage(page);
         setTotalPages(totalPages);
@@ -117,7 +116,7 @@ const AdminUserManagementPage: FC<Props> = props => {
           <Form.Control
             type="text"
             placeholder={searchBarPlaceholder}
-            // onChange={e => handleChange(e as any)}
+          // onChange={e => handleChange(e as any)}
           />
         </div>
       </Form>

@@ -4,23 +4,24 @@ import deleteClass from './delete';
 import put from './put';
 
 const productAPI = {
-  //get
-  getProductById: get.getProductById,
-  getAllProductsByPageNumber: get.getAllProductsByPageNumber,
-  getTrendingProducts: get.getTrendingProducts,
-  searchProducts: get.searchProduct,
-  getShopProductsByPageNumber: get.getShopProductsByPageNumber,
+	//get
+	getProductById: get.getProductById,
+	getAllProductsByPageNumber: get.getAllProductsByPageNumber,
+	getTrendingProducts: get.getTrendingProducts,
+	searchProducts: get.searchProduct,
+	getShopProductsByPageNumber: get.getShopProductsByPageNumber,
+	getCategoryProductsByPageNumber: get.getCategoryProductsByPageNumber,
 
-  //post
-  addNewProduct: post.addNewProduct,
+	//post
+	addNewProduct: post.addNewProduct,
 
-  editProduct: put.editProduct,
-  activateProduct: put.activateProduct,
-  deactivateProduct: put.deactivateProduct,
+	editProduct: put.editProduct,
+	activateProduct: put.activateProduct,
+	deactivateProduct: put.deactivateProduct,
 
-  //delete
-  //deleteClass bcuz delete is a reserved keyword
-  deleteProduct: deleteClass.deleteProduct,
+	//delete
+	//deleteClass bcuz delete is a reserved keyword
+	deleteProduct: deleteClass.deleteProduct,
 };
 
 export default productAPI;

@@ -72,13 +72,11 @@ const CreateAShopForm: React.FC<Props> = (props) => {
 
   const handleCreateShop = () => {
     const banner = images.length && images[0];
-
     shopAPI.createShop({
       ...shopInfo,
       shopBanner: banner,
     })
       .then((res: any) => {
-        console.log(res);
         const { token }: { token: string } = res;
         setJwt(token);
 

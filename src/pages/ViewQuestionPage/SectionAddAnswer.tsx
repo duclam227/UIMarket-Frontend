@@ -1,4 +1,4 @@
-import { FC, ChangeEvent, SyntheticEvent, useState, } from "react";
+import { FC, ChangeEvent, SyntheticEvent, useState, useEffect, } from "react";
 import { Button, Form } from "react-bootstrap";
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -18,6 +18,7 @@ const SectionAddAnswer: FC<AddAnswerProps> = (props) => {
   const { currentUser, question } = props;
 
   const [answer, setAnswer] = useState<string>('');
+  const [editor, setEditor] = useState<any>(null);
 
   if (currentUser === null) {
     return (
@@ -31,14 +32,13 @@ const SectionAddAnswer: FC<AddAnswerProps> = (props) => {
     answerAPI.addNewAnswer(answer, question._id)
       .then((res: any) => {
         props.handleAddAnswer(res);
-        setAnswer('');
+        editor.setData('');
       })
       .catch((error) => {
         console.log(error);
       })
   }
 
-  console.log(currentUser)
   return (
     <div className={style.addCommentWrapper}>
       <div className={style.userAvatar}>
@@ -53,6 +53,7 @@ const SectionAddAnswer: FC<AddAnswerProps> = (props) => {
               onChange={(event: SyntheticEvent, editor: any): void => {
                 setAnswer(editor.getData());
               }}
+              onReady={(editor: any) => setEditor(editor)}
             ></CKEditor>
           </Form.Group>
 

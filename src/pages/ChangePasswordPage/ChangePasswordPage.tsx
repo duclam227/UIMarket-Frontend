@@ -78,7 +78,7 @@ const ChangePasswordPage: FC<{ intl: IntlShape }> = ({ intl }) => {
       });
       navigate(`/user/${userId}`, { replace: true });
     } catch (error) {
-      console.log(getErrorMessage(error));
+      console.log(error);
     }
   };
   return (

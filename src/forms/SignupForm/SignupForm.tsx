@@ -148,7 +148,7 @@ const SignupForm: FC<SignupFormProps> = props => {
             clientId={CLIENT_ID!}
             buttonText={continueWithGoogleLabel}
             onSuccess={(res: any) => handleGoogleLogin(res)}
-            onFailure={(res: any) => console.log(res)}
+            onFailure={(res: any) => toast.error(intl.formatMessage({ id: 'LoginForm.actionFailed' }))}
             cookiePolicy={'single_host_origin'}
           />
         </div>

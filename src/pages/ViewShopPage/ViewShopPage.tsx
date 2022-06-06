@@ -42,7 +42,6 @@ const EditShopPage: FunctionComponent = () => {
         setShopInfo(shop);
         const { customerAvatar } = shop.userId;
         setShopAvatar(customerAvatar);
-        console.log(shop);
       })
       .catch(error => {
         console.log('Get shop info error: ', error);
@@ -53,7 +52,6 @@ const EditShopPage: FunctionComponent = () => {
       .then((res: any) => {
         const newProducts = res.products;
         setProducts(newProducts);
-        console.log(products);
       })
       .catch((error: any) => {
         console.log('Get shop products error: ', error);
