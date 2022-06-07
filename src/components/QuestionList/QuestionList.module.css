@@ -1,5 +1,9 @@
 @import '../../app/util/colors.css';
 
+.container {
+	width: 100%;
+}
+
 .questionContainer {
 	width: 100%;
 	display: flex;

@@ -90,11 +90,9 @@ const QuestionList: FC<Props> = (props) => {
   }
 
   return (
-    <>
-      <div className={style.container}>
-        {renderQuestions()}
-      </div>
-    </>
+    <div className={style.container}>
+      {renderQuestions()}
+    </div>
   );
 };
 
