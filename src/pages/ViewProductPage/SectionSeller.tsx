@@ -46,7 +46,7 @@ const SectionSeller: React.FC<Props> = props => {
             <b><FormattedMessage id='ViewProductPage.meetSeller' /></b>
             <div className={style.review}>
               <div className={style.sideContent}>
-                <UserAvatar image={shop.userId.customerAvatar} />
+                <UserAvatar image={shop.userId?.customerAvatar} />
               </div>
               <div className={style.reviewContent}>
                 {shop.shopDescription}
