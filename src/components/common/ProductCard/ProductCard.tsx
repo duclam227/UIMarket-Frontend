@@ -42,39 +42,41 @@ const ProductCard: FunctionComponent<ProductCardProps> = props => {
 
   return (
     <Col xs={12} md={6} lg={3}>
-      <Card className={'border-0 ' + style.pcard}>
-        <div>
-          <Link to={pLink}>
-            <Card.Img
-              variant="top"
-              src={coverPicture}
-              className={style.cardImg}
-              style={{ aspectRatio: '2 / 1' }}
-            />
-          </Link>
-        </div>
-
-        <Card.Body>
-          <Link className="text-dark" to={pLink}>
-            <h6>
-              {productName.length > 30
-                ? `${productName.substring(0, 30)}..`
-                : productName}
-            </h6>
-          </Link>
-          <div className="mb-3 text-secondary">
-            by
-            <a className={'ms-1 ' + style.secondaryLink} href={shopLink}>
-              {shopId.shopName}
-            </a>
+      <Link to={pLink}>
+        <Card className={'border-0 ' + style.pcard}>
+          <div>
+            <Link to={pLink}>
+              <Card.Img
+                variant="top"
+                src={coverPicture}
+                className={style.cardImg}
+                style={{ aspectRatio: '2 / 1' }}
+              />
+            </Link>
           </div>
 
-          <div className="d-flex justify-content-between ">
-            {renderStars(productRating)}
-            <strong>${productPrice}</strong>
-          </div>
-        </Card.Body>
-      </Card>
+          <Card.Body>
+            <Link className="text-dark" to={pLink}>
+              <h6>
+                {productName.length > 30
+                  ? `${productName.substring(0, 30)}..`
+                  : productName}
+              </h6>
+            </Link>
+            <div className="mb-3 text-secondary">
+              by
+              <a className={'ms-1 ' + style.secondaryLink} href={shopLink}>
+                {shopId.shopName}
+              </a>
+            </div>
+
+            <div className="d-flex justify-content-between ">
+              {renderStars(productRating)}
+              <strong>${productPrice}</strong>
+            </div>
+          </Card.Body>
+        </Card>
+      </Link>
     </Col>
   );
 };
