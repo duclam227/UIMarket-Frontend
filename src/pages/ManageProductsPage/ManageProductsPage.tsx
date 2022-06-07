@@ -1,5 +1,6 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import _, { debounce } from 'lodash';
 
 import Button from 'react-bootstrap/Button';
@@ -12,19 +13,20 @@ import Form from 'react-bootstrap/Form';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { State } from '../../redux/store';
+import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
 import { product } from '../../app/util/interfaces';
 import noProductsImage from '../../app/assets/error-not-found.png';
 
 import { BsPlusCircle } from 'react-icons/bs';
 
 import shopAPI from '../../api/shop';
+import productAPI from '../../api/product';
 
 import { OneToFivePage } from '../../components';
 import Product from './Product';
 
 import style from './ManageProductsPage.module.css';
-import productAPI from '../../api/product';
-import { getErrorMessage } from '../../app/util';
 
 interface ProductListItem {
   isSelected: boolean;
@@ -64,7 +66,9 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
             setIsLoading(false);
           })
           .catch(error => {
-            console.log(error);
+            const errorMsg = getErrorMessage(error);
+            const errorCode: any = errorCodes.shop[errorMsg as keyof typeof errorCodes.shop];
+            toast.error(intl.formatMessage({ id: `Shop.${errorCode}` }));
           });
     } else {
       shopAPI.searchProduct(query)
@@ -78,7 +82,9 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
           setIsLoading(false);
         })
         .catch(error => {
-          console.log(error);
+          const errorMsg = getErrorMessage(error);
+          const errorCode: any = errorCodes.shop[errorMsg as keyof typeof errorCodes.shop];
+          toast.error(intl.formatMessage({ id: `Shop.${errorCode}` }));
         });
     }
   }, [shopId, searchParams]);

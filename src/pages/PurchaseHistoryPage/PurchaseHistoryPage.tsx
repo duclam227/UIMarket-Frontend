@@ -1,20 +1,23 @@
 import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { Form, Spinner } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { State } from '../../redux/store';
 
 import { product } from '../../app/util/interfaces';
+import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
 import invoiceAPI from '../../api/invoice';
 
 import { OneToFivePage, Paginator } from '../../components';
+import Product from './Product';
+import illustration from '../../app/assets/error-not-found.png';
 
 import style from './PurchaseHistoryPage.module.css';
-import Product from './Product';
-import { Button } from 'react-bootstrap';
 
-import illustration from '../../app/assets/error-not-found.png';
 
 const ITEMS_PER_PAGE = 10;
 const DEBOUNCE_TIME = 300;
@@ -60,7 +63,9 @@ const PurchaseHistoryPage: FC<IProps> = props => {
         setIsLoading(false);
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.invoice[errorMsg as keyof typeof errorCodes.invoice];
+        toast.error(intl.formatMessage({ id: `Invoice.${errorCode}` }));
       });
   }
 
@@ -76,7 +81,9 @@ const PurchaseHistoryPage: FC<IProps> = props => {
         setIsLoading(false);
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.invoice[errorMsg as keyof typeof errorCodes.invoice];
+        toast.error(intl.formatMessage({ id: `Invoice.${errorCode}` }));
       });
   }, [params]);
 

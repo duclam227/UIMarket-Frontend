@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 
 import { BsDownload, BsArrowRightCircle } from 'react-icons/bs';
 import ReviewProduct from './ReviewProduct/ReviewProduct';
 
-import style from './PurchaseHistoryPage.module.css';
 import s3API from '../../api/amazonS3';
+import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
 
+import style from './PurchaseHistoryPage.module.css';
 interface Props {
   key: string;
   purchase: any;
+  intl: IntlShape;
 }
 
 const Product: React.FC<Props> = props => {
-  const { purchase } = props;
+  const { purchase, intl } = props;
 
   const { product, shop } = purchase;
 
@@ -35,7 +39,9 @@ const Product: React.FC<Props> = props => {
         window.open(url, '_blank');
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.upload[errorMsg as keyof typeof errorCodes.upload];
+        toast.error(intl.formatMessage({ id: `Upload.${errorCode}` }));
       })
   }
 
@@ -113,4 +119,4 @@ const Product: React.FC<Props> = props => {
   );
 };
 
-export default Product;
+export default injectIntl(Product);

@@ -14,7 +14,10 @@ export const errors = {
 		'invalid-credentials': 'notPriviledged',
 		failed: 'actionFailed',
 		'already-gone': 'answerDeleted',
+		'action-failed': 'actionFailed',
 	},
+	cart: {},
+	category: {},
 	comment: {
 		'invalid-question-id': 'actionFailed',
 		'invalid-answer-id': 'actionFailed',
@@ -24,7 +27,9 @@ export const errors = {
 		failed: 'actionFailed',
 		'already-gone': 'commentDeleted',
 		'missing-req-body': 'actionFailed',
+		'action-failed': 'actionFailed',
 	},
+	invoice: {},
 	payment: {
 		'invalid-paypal': 'missingPayPalEmail',
 		'action-failed': 'actionFailed',
@@ -33,7 +38,9 @@ export const errors = {
 		'invalid-category-id': 'actionFailed',
 		'invalid-shop-id': 'actionFailed',
 		'invalid-product-id': 'actionFailed',
+		'action-failed': 'actionFailed',
 	},
+	profile: {},
 	question: {
 		'invalid-question-id': 'questionNotFound',
 		'missing-req-body': 'actionFailed',
@@ -42,7 +49,9 @@ export const errors = {
 		failed: 'actionFailed',
 		'already-gone': 'actionFailed',
 		'invalid-tag-id': 'actionFailed',
+		'action-failed': 'actionFailed',
 	},
+	review: {},
 	shop: {
 		'invalid-authentication': 'notPriviledged',
 		'invalid-shop-id': 'shopNotFound',
@@ -50,8 +59,23 @@ export const errors = {
 		'invalid-credentials': 'notPriviledged',
 		failed: 'actionFailed',
 		'already-gone': 'actionFailed',
+		'action-failed': 'actionFailed',
 	},
+	upload: {},
 	user: {
 		'invalid-user-id': 'userNotFound',
+		'action-failed': 'actionFailed',
+	},
+	//Vote.id
+	voting: {
+		'invalid-authentication': 'notPriviledged',
+		'invalid-answer-id': 'answerNotFound',
+		'invalid-comment-id': 'commentNotFound',
+		'invalid-question-id': 'questionNotFound',
+		'invalid-credentials': 'notPriviledged',
+		'missing-req-body': 'actionFailed',
+		failed: 'actionFailed',
+		'already-gone': 'actionFailed',
+		'action-failed': 'actionFailed',
 	},
 };

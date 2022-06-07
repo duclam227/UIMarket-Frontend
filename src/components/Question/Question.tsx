@@ -6,15 +6,18 @@ import parse from 'html-react-parser';
 import { Button, Modal } from 'react-bootstrap';
 
 import { customer, voteStatus } from '../../app/util/interfaces';
+import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
 
 import questionAPI from '../../api/question';
 
 import { ReportModal, ThreeDotMenu } from '../../components';
 import SectionQuestionVoter from './SectionQuestionVoter';
 import SectionBountyHeader from './SectionBountyHeader';
+import UserAvatar from '../common/UserAvatar/UserAvatar';
 
 import style from './Question.module.css';
-import UserAvatar from '../common/UserAvatar/UserAvatar';
+import { toast } from 'react-toastify';
 
 interface QuestionProps {
   question: any;
@@ -117,7 +120,9 @@ const Question: FC<QuestionProps> = props => {
                 navigate('/');
               })
               .catch(error => {
-                console.log(error);
+                const errorMsg = getErrorMessage(error);
+                const errorCode: any = errorCodes.question[errorMsg as keyof typeof errorCodes.question];
+                toast.error(intl.formatMessage({ id: `Question.${errorCode}` }));
               });
           }}
         >

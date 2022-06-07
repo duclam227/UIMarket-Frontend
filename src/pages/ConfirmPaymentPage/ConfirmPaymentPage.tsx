@@ -1,19 +1,26 @@
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Spinner, Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { State } from '../../redux/store';
 
-import { getMostRecentInvoiceId } from '../../app/util';
+import { getErrorMessage, getMostRecentInvoiceId } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
 import paymentAPI from '../../api/payment';
 
 import { PageWithNavbar } from '../../components';
 import cover from './successIllustration.png';
 
 import style from './ConfirmPaymentPage.module.css';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
-const ConfirmPaymentPage = () => {
+interface IProps {
+  intl: IntlShape;
+}
+
+const ConfirmPaymentPage: FC<IProps> = (props) => {
+  const { intl } = props;
 
   const currentUser = useSelector((state: State) => state.auth.user);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -28,7 +35,9 @@ const ConfirmPaymentPage = () => {
         setIsLoading(false);
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.payment[errorMsg as keyof typeof errorCodes.payment];
+        toast.error(intl.formatMessage({ id: `Payment.${errorCode}` }));
       })
   }, [])
 
@@ -58,4 +67,4 @@ const ConfirmPaymentPage = () => {
     </PageWithNavbar>
 }
 
-export default ConfirmPaymentPage;
+export default injectIntl(ConfirmPaymentPage);

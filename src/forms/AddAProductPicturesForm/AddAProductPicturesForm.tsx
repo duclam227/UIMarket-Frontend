@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { IntlShape, injectIntl, FormattedMessage } from 'react-intl';
 import Form from 'react-bootstrap/Form';
+import { toast } from 'react-toastify';
 
+import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
 import s3API from '../../api/amazonS3';
 
 import { ImageInput } from '../../components';
@@ -30,10 +33,11 @@ const AddAProductPicturesForm: React.FC<Props> = props => {
         const responseUpload: any = await s3API.uploadToS3Bucket(signedUploadUrl, imagesFromInput[i]);
         const imageUrl = signedUploadUrl.split('?')[0];
         imageUrls.push(imageUrl);
-
       }
       catch (error) {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.upload[errorMsg as keyof typeof errorCodes.upload];
+        toast.error(intl.formatMessage({ id: `Upload.${errorCode}` }));
       }
     }
 

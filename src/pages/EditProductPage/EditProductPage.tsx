@@ -1,14 +1,16 @@
 import JSZip from 'jszip';
 import React, { useEffect, useState } from 'react';
 import { Button, Nav, Spinner, Tab, TabContainer, Tabs } from 'react-bootstrap';
-import { FormattedMessage } from 'react-intl';
+import { toast } from 'react-toastify';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import s3API from '../../api/amazonS3';
 import categoryAPI from '../../api/category';
 import productAPI from '../../api/product';
-import { createCommonLicenseFile } from '../../app/util';
+import { createCommonLicenseFile, getErrorMessage } from '../../app/util';
 import { product } from '../../app/util/interfaces';
+import { errors as errorCodes } from '../../app/util/errors';
 
 import { OneToFivePage, PageWithNavbar } from '../../components';
 import {
@@ -20,7 +22,12 @@ import { State } from '../../redux/store';
 
 import style from './EditProductPage.module.css';
 
-const EditProductPage: React.FC = () => {
+interface IProps {
+  intl: IntlShape
+}
+
+const EditProductPage: React.FC<IProps> = (props) => {
+  const { intl } = props;
   const currentUser = useSelector((state: State) => state.auth.user);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [product, setProduct] = useState<product | null>(null);
@@ -110,7 +117,9 @@ const EditProductPage: React.FC = () => {
             });
         })
         .catch(error => {
-          console.log(error);
+          const errorMsg = getErrorMessage(error);
+          const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
+          toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
         });
     } else {
       productAPI
@@ -122,7 +131,9 @@ const EditProductPage: React.FC = () => {
           navigate(`/product/${_id}`)
         })
         .catch(error => {
-          console.log(error);
+          const errorMsg = getErrorMessage(error);
+          const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
+          toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
         });
     }
 
@@ -139,7 +150,9 @@ const EditProductPage: React.FC = () => {
         setProduct({ ...rest, productDescription });
         setIsLoading(false);
       } catch (error) {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
+        toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
       }
     };
 
@@ -218,4 +231,4 @@ const EditProductPage: React.FC = () => {
   );
 };
 
-export default EditProductPage;
+export default injectIntl(EditProductPage);

@@ -1,7 +1,8 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
-import classNames from 'classnames';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import classNames from 'classnames';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -15,6 +16,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import { question } from '../../app/util/interfaces';
 import { PageWithNavbar } from '../../components';
 import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
 
 import './EditQuestionPage.css';
 import style from './EditQuestionPage.module.css';
@@ -169,7 +171,9 @@ const EditQuestionPage: FC<Props> = (props) => {
         setBody(question.questionContent);
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.question[errorMsg as keyof typeof errorCodes.question];
+        toast.error(intl.formatMessage({ id: `Question.${errorCode}` }));
       })
   }, [])
 

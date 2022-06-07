@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
 import questionAPI from '../../api/question';
 import { navbarBranches } from '../../app/util/config';
+import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
 import { question } from '../../app/util/interfaces';
+
 import { PageWithNavbar, Paginator, QuestionList } from '../../components';
 import { SearchForm } from '../../forms';
 
@@ -42,7 +47,9 @@ const SearchQuestionsPage: React.FC<IProps> = (props) => {
         setTotalPages(totalPages);
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.question[errorMsg as keyof typeof errorCodes.question];
+        toast.error(intl.formatMessage({ id: `Question.${errorCode}` }));
       });
   };
 
@@ -61,7 +68,9 @@ const SearchQuestionsPage: React.FC<IProps> = (props) => {
           }
         })
         .catch(error => {
-          console.log(error);
+          const errorMsg = getErrorMessage(error);
+          const errorCode: any = errorCodes.question[errorMsg as keyof typeof errorCodes.question];
+          toast.error(intl.formatMessage({ id: `Question.${errorCode}` }));
         })
     }
   }, [keyword])

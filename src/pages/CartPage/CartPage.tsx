@@ -4,15 +4,22 @@ import { PageWithNavbar } from '../../components';
 import Container from 'react-bootstrap/Container';
 
 import { getErrorMessage, saveMostRecentInvoiceId } from '../../app/util/index';
+import { errors as errorCodes } from '../../app/util/errors';
 import cartAPI from '../../api/cart';
 import paymentAPI from '../../api/payment';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import illustration from '../../app/assets/cart-empty.png';
 
 import styles from './CartPage.module.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-const CartPage: FunctionComponent = () => {
+interface IProps {
+  intl: IntlShape;
+}
+
+const CartPage: FunctionComponent<IProps> = (props) => {
+  const { intl } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [cartProducts, setProducts] = useState<Array<any>>([]);
@@ -42,7 +49,6 @@ const CartPage: FunctionComponent = () => {
       .checkout(selectedProducts)
       .then((res: any) => {
         const { paypal_link, invoiceId, isFree } = res;
-        console.log(res);
         if (!isFree) {
           saveMostRecentInvoiceId(invoiceId);
           window.location.replace(paypal_link);
@@ -51,7 +57,9 @@ const CartPage: FunctionComponent = () => {
         }
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.payment[errorMsg as keyof typeof errorCodes.payment];
+        toast.error(intl.formatMessage({ id: `Payment.${errorCode}` }));
       });
   };
 
@@ -200,4 +208,4 @@ const CartPage: FunctionComponent = () => {
   );
 };
 
-export default CartPage;
+export default injectIntl(CartPage);

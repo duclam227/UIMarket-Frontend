@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { FormattedMessage, IntlShape, injectIntl } from "react-intl";
+import { toast } from "react-toastify";
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -9,6 +10,8 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { FormInput, ImageInput } from "../../components";
 import { logInWithJWT } from '../../redux/index';
 import { setJwt } from "../../app/util/authHelpers";
+import { errors as errorCodes } from "../../app/util/errors";
+import { getErrorMessage } from "../../app/util";
 
 import shopAPI from "../../api/shop";
 import s3API from "../../api/amazonS3";
@@ -38,7 +41,9 @@ const CreateAShopForm: React.FC<Props> = (props) => {
       setImages([...images, imageUrl]);
     }
     catch (error) {
-      console.log(error);
+      const errorMsg = getErrorMessage(error);
+      const errorCode: any = errorCodes.upload[errorMsg as keyof typeof errorCodes.upload];
+      toast.error(intl.formatMessage({ id: `Upload.${errorCode}` }));
     }
   }
 
@@ -83,7 +88,9 @@ const CreateAShopForm: React.FC<Props> = (props) => {
         dispatch(logInWithJWT(token));
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
+        toast.error(intl.formatMessage({ id: `LoginForm.${errorCode}` }));
       })
   }
 

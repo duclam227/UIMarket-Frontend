@@ -1,16 +1,26 @@
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Badge, Spinner } from 'react-bootstrap';
-import { FormattedMessage } from 'react-intl';
+import { toast } from 'react-toastify';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { Link } from 'react-router-dom';
+
 import questionAPI from '../../api/question';
 import { navbarBranches } from '../../app/util/config';
+import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
+
 import { PageWithNavbar, Paginator } from '../../components';
 
 import style from './TagListPage.module.css';
 
 const ITEMS_PER_PAGE = 15;
 
-const TagListPage = () => {
+interface IProps {
+  intl: IntlShape
+}
+
+const TagListPage: FC<IProps> = (props) => {
+  const { intl } = props;
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [tags, setTags] = useState<Array<any> | null>(null);
@@ -39,7 +49,9 @@ const TagListPage = () => {
         setTags([...res]);
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.question[errorMsg as keyof typeof errorCodes.question];
+        toast.error(intl.formatMessage({ id: `Question.${errorCode}` }));
       })
       .finally(() => setIsLoading(false))
   }, [])
@@ -61,4 +73,4 @@ const TagListPage = () => {
   )
 };
 
-export default TagListPage;
+export default injectIntl(TagListPage);

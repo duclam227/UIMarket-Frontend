@@ -3,16 +3,19 @@ import { Button, Form, Modal } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import StarRatings from 'react-star-ratings';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 
 import s3API from '../../../api/amazonS3';
 import reviewAPI from '../../../api/review';
+import { getErrorMessage } from '../../../app/util';
+import { errors as errorCodes } from '../../../app/util/errors';
+
 import { FormInput, ImageInput } from '../../../components';
 
 import style from './ReviewProduct.module.css';
-import { toast } from 'react-toastify';
 
 interface IProps {
   review: any;
@@ -64,7 +67,9 @@ const ReviewProduct: FC<IProps> = (props) => {
 
       }
       catch (error) {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.upload[errorMsg as keyof typeof errorCodes.upload];
+        toast.error(intl.formatMessage({ id: `Upload.${errorCode}` }));
       }
     }
 
@@ -93,7 +98,9 @@ const ReviewProduct: FC<IProps> = (props) => {
         toast.success(intl.formatMessage({ id: 'ReviewProduct.successMessage' }));
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.review[errorMsg as keyof typeof errorCodes.review];
+        toast.error(intl.formatMessage({ id: `Review.${errorCode}` }));
       })
   };
 

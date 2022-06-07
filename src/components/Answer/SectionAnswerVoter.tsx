@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
 
 import { getErrorMessage } from "../../app/util";
+import { errors as errorCodes } from "../../app/util/errors";
 import { customer, voteStatus } from "../../app/util/interfaces";
 
 import {
@@ -16,16 +17,19 @@ import {
 import voteAPI from "../../api/vote";
 
 import style from './Answer.module.css';
+import { toast } from "react-toastify";
+import { injectIntl, IntlShape } from "react-intl";
 
 interface VoterProps {
   question: any;
   answer: any;
   currentUser: customer | null;
   handleVoteStatus: Function;
+  intl: IntlShape;
 }
 
 const SectionAnswerVoter: FC<VoterProps> = (props) => {
-  const { answer, question, currentUser } = props;
+  const { answer, question, currentUser, intl } = props;
   const [upvote, setUpvote] = useState(answer.totalUpvote);
   const [downvote, setDownvote] = useState(answer.totalDownvote);
   const [voteStatus, setVoteStatus] = useState<voteStatus>(answer.voteStatus);
@@ -72,7 +76,8 @@ const SectionAnswerVoter: FC<VoterProps> = (props) => {
       })
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
-        console.log(error);
+        const errorCode: any = errorCodes.voting[errorMsg as keyof typeof errorCodes.voting];
+        toast.error(intl.formatMessage({ id: `Vote.${errorCode}` }));
       })
   }
 
@@ -108,8 +113,8 @@ const SectionAnswerVoter: FC<VoterProps> = (props) => {
       })
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
-        console.log(error);
-
+        const errorCode: any = errorCodes.voting[errorMsg as keyof typeof errorCodes.voting];
+        toast.error(intl.formatMessage({ id: `Vote.${errorCode}` }))
       })
   }
 
@@ -136,4 +141,4 @@ const SectionAnswerVoter: FC<VoterProps> = (props) => {
   )
 }
 
-export default SectionAnswerVoter;
+export default injectIntl(SectionAnswerVoter);

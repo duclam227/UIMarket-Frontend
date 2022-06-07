@@ -5,11 +5,15 @@ import { Button, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { UserAvatar } from '../../components';
+
 import { customer, product } from '../../app/util/interfaces';
+import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
+
 import shopAPI from '../../api/shop';
 
 import style from './ViewProductPage.module.css';
-import { UserAvatar } from '../../components';
 
 interface Props {
   product: product;
@@ -33,7 +37,9 @@ const SectionSeller: React.FC<Props> = props => {
         setShop(res.shop);
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.shop[errorMsg as keyof typeof errorCodes.shop];
+        toast.error(intl.formatMessage({ id: `Shop.${errorCode}` }));
       })
       .finally(() => setIsLoading(false))
   }, [])

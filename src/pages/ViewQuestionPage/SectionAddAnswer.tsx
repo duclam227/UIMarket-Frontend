@@ -1,21 +1,27 @@
 import { FC, ChangeEvent, SyntheticEvent, useState, useEffect, } from "react";
 import { Button, Form } from "react-bootstrap";
+import { toast } from "react-toastify";
 import Editor from 'ckeditor5-custom-build/build/ckeditor';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 
-import style from './ViewQuestionPage.module.css';
 import { customer } from "../../app/util/interfaces";
+import { getErrorMessage } from "../../app/util";
+import { errors as errorCodes } from "../../app/util/errors";
 import answerAPI from "../../api/answer";
+
 import { UserAvatar } from "../../components";
 
+import style from './ViewQuestionPage.module.css';
+import { injectIntl, IntlShape } from "react-intl";
 interface AddAnswerProps {
   question: any;
   currentUser: customer | null;
   handleAddAnswer: Function;
+  intl: IntlShape
 }
 
 const SectionAddAnswer: FC<AddAnswerProps> = (props) => {
-  const { currentUser, question } = props;
+  const { currentUser, question, intl } = props;
 
   const [answer, setAnswer] = useState<string>('');
   const [editor, setEditor] = useState<any>(null);
@@ -35,7 +41,9 @@ const SectionAddAnswer: FC<AddAnswerProps> = (props) => {
         editor.setData('');
       })
       .catch((error) => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
+        toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }));
       })
   }
 
@@ -71,4 +79,4 @@ const SectionAddAnswer: FC<AddAnswerProps> = (props) => {
   )
 }
 
-export default SectionAddAnswer;
+export default injectIntl(SectionAddAnswer);

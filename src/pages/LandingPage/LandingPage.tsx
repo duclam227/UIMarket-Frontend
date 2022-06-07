@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 
 import { product } from "../../app/util/interfaces";
 import { State } from "../../redux/store";
 
+import { getErrorMessage } from "../../app/util";
+import { errors as errorCodes } from "../../app/util/errors";
 import productAPI from "../../api/product";
 
 import { PageWithNavbar } from "../../components";
@@ -39,7 +42,9 @@ const LandingPage: React.FC<IProps> = (props) => {
         setTrendingProducts(res.products);
       })
       .catch(error => {
-        console.log(error)
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
+        toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
       })
   }, [])
 
@@ -49,7 +54,9 @@ const LandingPage: React.FC<IProps> = (props) => {
         setThemeProducts(res.products);
       })
       .catch(error => {
-        console.log(error)
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
+        toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
       })
   }, [])
 
