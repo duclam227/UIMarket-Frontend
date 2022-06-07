@@ -41,7 +41,7 @@ const ProductNavbar: FC<IProps> = (props) => {
         </button>
         <div className={style.categoryList}>
           {categories.map((category: any) => (
-            <Link to={`/products/category/${category._id}`}>
+            <Link key={category._id} to={`/products/category/${category._id}`}>
               <button key={category._id} className={style.button} >
                 {category.categoryName}
               </button>

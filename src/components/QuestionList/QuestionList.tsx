@@ -39,13 +39,16 @@ const QuestionList: FC<Props> = (props) => {
     const displayTag: Array<any> = [];
     for (let i = 0; i < tags.length; i++) {
       if (i > tags.length) {
-        
         break;
       }
       displayTag.push(
-        (<>
-          <div onClick={() => handleClickTag(tags[i].tagName)} key={tags[i].tagName} className={style.tag}>{tags[i].tagName}</div>
-        </>)
+        (<div
+          onClick={() => handleClickTag(tags[i].tagName)}
+          key={tags[i].tagName}
+          className={style.tag}
+        >
+          {tags[i].tagName}
+        </div>)
       )
     }
 
@@ -63,7 +66,7 @@ const QuestionList: FC<Props> = (props) => {
     return questionsList.map((q: any, i: number) => {
       const qLink = '/question/' + q._id;
       return (
-        <div key={q._id} className={style.questionContainer}>
+        <div key={i} className={style.questionContainer}>
           <div className={style.sideContent}>
             <div><FormattedMessage id="QuestionList.numberOfVotes" values={{ count: q.totalUpvote - q.totalDownvote }} /></div>
             <div className={style.answersCount}><FormattedMessage id="QuestionList.numberOfAnswers" values={{ count: q.totalAnswer }} /></div>
