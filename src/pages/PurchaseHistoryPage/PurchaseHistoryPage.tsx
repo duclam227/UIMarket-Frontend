@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { Form, Spinner } from 'react-bootstrap';
 import { State } from '../../redux/store';
@@ -129,11 +129,13 @@ const PurchaseHistoryPage: FC<IProps> = props => {
                       id="PurchaseHistoryPage.noProductsMessage"
                       defaultMessage="Looks like you haven't bought anything."
                     ></FormattedMessage>
-                    <Button href="/products" className="m-4">
-                      <FormattedMessage
-                        id="PurchaseHistoryPage.continueShoppingMessage"
-                      ></FormattedMessage>
-                    </Button>
+                    <Link to='/products'>
+                      <Button className="m-4">
+                        <FormattedMessage
+                          id="PurchaseHistoryPage.continueShoppingMessage"
+                        ></FormattedMessage>
+                      </Button>
+                    </Link>
                   </div>
                 </div>
               )}
