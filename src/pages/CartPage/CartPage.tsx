@@ -186,9 +186,13 @@ const CartPage: FunctionComponent = () => {
             <FormattedMessage
               id="CartPage.NoItems"
             ></FormattedMessage>
-            <Button href="/products" className="m-5">
-              Continue shopping
-            </Button>
+            <Link to='/products'>
+              <Button className="m-5">
+                <FormattedMessage
+                  id="PurchaseHistoryPage.continueShoppingMessage"
+                ></FormattedMessage>
+              </Button>
+            </Link>
           </Container>
         )}
       </Container>
