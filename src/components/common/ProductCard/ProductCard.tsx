@@ -56,18 +56,18 @@ const ProductCard: FunctionComponent<ProductCardProps> = props => {
           </div>
 
           <Card.Body>
-            <Link className="text-dark" to={pLink}>
-              <h6>
-                {productName.length > 30
-                  ? `${productName.substring(0, 30)}..`
-                  : productName}
-              </h6>
-            </Link>
+            <h6>
+              {productName.length > 30
+                ? `${productName.substring(0, 30)}..`
+                : productName}
+            </h6>
             <div className="mb-3 text-secondary">
               by
-              <a className={'ms-1 ' + style.secondaryLink} href={shopLink}>
-                {shopId.shopName}
-              </a>
+              <span className={'ms-1 ' + style.secondaryLink}>
+                <Link to={shopLink}>
+                  {shopId.shopName}
+                </Link>
+              </span>
             </div>
 
             <div className="d-flex justify-content-between ">
