@@ -14,7 +14,7 @@ const ImageCarousel: React.FC<IProps> = props => {
 
   const renderImages = () => {
     return images.map((img, index) => (
-      <Carousel.Item className={style.imageWrapper}>
+      <Carousel.Item key={index} className={style.imageWrapper}>
         <img
           className={style.img}
           src={img}
