@@ -72,6 +72,7 @@ const Product: React.FC<Props> = props => {
           </div>
         </Link>
       </div>
+
       <Link to={`/purchases/${purchase._id}`}>
         <div className={style.downloadButton}>
           <FormattedMessage id="PurchaseHistoryPage.viewLicenseLabel" />
@@ -97,7 +98,7 @@ const Product: React.FC<Props> = props => {
             </>
           ) : null}
 
-          <Dropdown.Item>
+          <Dropdown.Item as={Button}>
             <Link to={`/refund/${purchase.invoiceId}`}>
               <FormattedMessage id="PurchaseHistoryPage.reportButtonLabel" />
             </Link>
