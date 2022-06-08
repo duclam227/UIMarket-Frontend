@@ -23,7 +23,7 @@ const ConfirmPaymentPage: FC<IProps> = (props) => {
   const { intl } = props;
 
   const currentUser = useSelector((state: State) => state.auth.user);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const token = searchParams.get('token');
   const invoiceId = getMostRecentInvoiceId();
@@ -41,13 +41,11 @@ const ConfirmPaymentPage: FC<IProps> = (props) => {
       })
   }, [])
 
-  return isLoading
-    ? <PageWithNavbar>
-      <Spinner animation='border' />
-    </PageWithNavbar>
-    : <PageWithNavbar>
-      <div className={style.wrapper}>
-        <div className={style.content}>
+  return <PageWithNavbar>
+    <div className={style.wrapper}>
+      {isLoading
+        ? <Spinner animation='border' />
+        : <div className={style.content}>
           <img src={cover} alt='Picture of a person with a cup' />
           <h3><FormattedMessage id='ConfirmPaymentPage.successMessage' /></h3>
           <div className={style.buttonRow}>
@@ -63,8 +61,9 @@ const ConfirmPaymentPage: FC<IProps> = (props) => {
             </Link>
           </div>
         </div>
-      </div>
-    </PageWithNavbar>
+      }
+    </div>
+  </PageWithNavbar>
 }
 
 export default injectIntl(ConfirmPaymentPage);
