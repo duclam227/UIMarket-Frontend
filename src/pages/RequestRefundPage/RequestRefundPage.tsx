@@ -140,8 +140,8 @@ const RequestRefundPage: FC<IProps> = (props) => {
             </section>
             <section className={style.container}>
               {productList && productList.length > 0
-                ? productList.map(product => <Product
-                  key={product._id}
+                ? productList.map((product, index) => <Product
+                  key={index}
                   product={product}
                   handleToggleProduct={(id: string) => onToggleProductSelect(id)}
                 />)
