@@ -53,6 +53,7 @@
   "AskAQuestionPage.addBountyBalanceLabel": "Balance: $",
   "AskAQuestionPage.addBountyTopUpBtnText": "Top up",
   "AskAQuestionPage.addBountyInputPlaceholder": "$10",
+  "AskAQuestionPage.removeBountyLabel": "Remove bounty",
   "AskAQuestionPage.submitBtnText": "Post Question",
   "CartPage.Title": "My Cart",
   "CartPage.checkoutBtnLabel": "Checkout with Paypal",

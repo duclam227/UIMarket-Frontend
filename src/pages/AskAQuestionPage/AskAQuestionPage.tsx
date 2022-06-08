@@ -12,21 +12,23 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { FormInput, PageWithNavbar } from '../../components';
+import { RichTextEditor } from '../../components';
 import { getErrorMessage } from '../../app/util';
+import { navbarBranches } from '../../app/util/config';
+
+import questionAPI from '../../api/question';
 
 import './AskAQuestionPage.css';
 import style from './AskAQuestionPage.module.css';
-import questionAPI from '../../api/question';
-import { RichTextEditor } from '../../components';
-import { navbarBranches } from '../../app/util/config';
 
 const AskAQuestionPage = ({ intl }: any) => {
   const formGroupClassName = 'mb-3';
-  const cardClassName = 'mb-4';
+  const cardClassName = 'mb-4 d-flex flex-column';
   const containerClassName = classNames(style.pageContainer, 'w-75');
   const postQuestionButtonClassName = 'mb-3';
   const topUpButtonClassName = 'mb-3';
@@ -126,6 +128,7 @@ const AskAQuestionPage = ({ intl }: any) => {
     },
   });
   const [balance, setBalance] = useState<number>(0);
+  const [isBountyOn, setIsBountyOn] = useState<boolean>(false);
   const [postInProgress, setPostInProgress] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -145,12 +148,13 @@ const AskAQuestionPage = ({ intl }: any) => {
       setErrorMessage(errorMessage);
     }
   };
+
   return (
     <PageWithNavbar branch={navbarBranches.question}>
       <Container className={containerClassName}>
         <h1 className={style.pageTitle}>{pageTitle}</h1>
 
-        <Form onSubmit={handleSubmit(handlePostQuestion)}>
+        <Form onSubmit={handleSubmit(handlePostQuestion)} className='d-flex flex-column'>
           <Card className={cardClassName}>
             <Card.Body>
               <FormInput
@@ -199,32 +203,45 @@ const AskAQuestionPage = ({ intl }: any) => {
             </Card.Body>
           </Card>
 
-          <Card className={cardClassName}>
-            <Card.Body>
-              <Row>
-                <Col md={8}>
-                  <h4>{addBountyLabel}</h4>
-                  <p className="text-muted">{addBountyDescription}</p>
-                </Col>
-                <Col md={4} className={topUpGroupClassName}>
-                  <h4>
-                    {addBountyBalanceLabel}
-                    {balance}
-                  </h4>
-                  <Button variant="warning" className={topUpButtonClassName}>
-                    {addBountyTopUpBtnText}
-                  </Button>
-                </Col>
-              </Row>
+          <Button
+            id="checkBounty"
+            variant={isBountyOn ? 'primary' : 'outline-primary'}
+            onClick={() => setIsBountyOn(!isBountyOn)}
+            className={style.checkBountyButton}
+          >
+            {isBountyOn
+              ? <FormattedMessage id='AskAQuestionPage.removeBountyLabel' />
+              : <FormattedMessage id='AskAQuestionPage.addBountyLabel' />
+            }
+          </Button>
 
-              <Row>
-                <FormInput
-                  placeholder={addBountyInputPlaceholder}
-                  name="bounty"
-                  control={control}
-                  type="number"
-                />
-                {/* <Form.Group controlId="bounty">
+          {isBountyOn
+            ? <Card className={cardClassName}>
+              <Card.Body>
+                <Row>
+                  <Col md={8}>
+                    <h4>{addBountyLabel}</h4>
+                    <p className="text-muted">{addBountyDescription}</p>
+                  </Col>
+                  <Col md={4} className={topUpGroupClassName}>
+                    <h4>
+                      {addBountyBalanceLabel}
+                      {balance}
+                    </h4>
+                    <Button variant="warning" className={topUpButtonClassName}>
+                      {addBountyTopUpBtnText}
+                    </Button>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <FormInput
+                    placeholder={addBountyInputPlaceholder}
+                    name="bounty"
+                    control={control}
+                    type="number"
+                  />
+                  {/* <Form.Group controlId="bounty">
                   <Form.Control
                     type="number"
                     placeholder={addBountyInputPlaceholder}
@@ -237,9 +254,11 @@ const AskAQuestionPage = ({ intl }: any) => {
                     </Alert>
                   )}
                 </Form.Group> */}
-              </Row>
-            </Card.Body>
-          </Card>
+                </Row>
+              </Card.Body>
+            </Card>
+            : null
+          }
 
           <Alert
             variant="danger"

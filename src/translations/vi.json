@@ -53,6 +53,7 @@
   "AskAQuestionPage.addBountyBalanceLabel": "Số dư: $",
   "AskAQuestionPage.addBountyTopUpBtnText": "Nạp xu",
   "AskAQuestionPage.addBountyInputPlaceholder": "$10",
+  "AskAQuestionPage.removeBountyLabel": "Bỏ treo thưởng",
   "AskAQuestionPage.submitBtnText": "Đăng câu hỏi",
   "CartPage.Title": "Giỏ hàng",
   "CartPage.checkoutBtnLabel": "Thanh toán qua Paypal",

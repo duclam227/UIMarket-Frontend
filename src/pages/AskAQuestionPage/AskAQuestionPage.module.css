@@ -1,18 +1,24 @@
 @import '../../app/util/colors.css';
 .pageContainer {
-  /* display: grid to prevent margin collapsing */
+	/* display: grid to prevent margin collapsing */
 }
 
 .pageTitle {
-  position: relative;
-  left: 0.45em;
-  margin: 1em 0em;
+	position: relative;
+	left: 0.45em;
+	margin: 1em 0em;
 }
 
 .label {
-  font-size: x-large;
+	font-size: x-large;
 }
 
 .whatever {
-  display: inline-flex;
+	display: inline-flex;
+}
+
+.checkBountyButton {
+	margin-bottom: 10px;
+	border-radius: 50px !important;
+	width: fit-content;
 }
