@@ -58,6 +58,12 @@ const UserActivityTab: FC<Props> = props => {
     />
   );
 
+  const pointStatItemLabel = (
+    <FormattedMessage
+      id="UserActivityTab.pointStatItemLabel"
+    />
+  );
+
   const tagsLabel = (
     <FormattedMessage id="UserActivityTab.tagsLabel" defaultMessage="Tags" />
   );
@@ -130,6 +136,10 @@ const UserActivityTab: FC<Props> = props => {
               <div className={statItemClassName}>
                 <h5>{profileStats?.upvote}</h5>
                 <h6 className="m-0 text-muted">{upvoteStatItemLabel}</h6>
+              </div>
+              <div className={statItemClassName}>
+                <h5>{profileStats?.point}</h5>
+                <h6 className="m-0 text-muted">{pointStatItemLabel}</h6>
               </div>
             </>
           </InfoCardContainer>

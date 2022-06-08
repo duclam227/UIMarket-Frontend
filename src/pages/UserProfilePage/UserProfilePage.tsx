@@ -26,6 +26,7 @@ export interface ProfileStats {
   questions: number;
   upvote: number;
   answers: number;
+  point: number;
 }
 
 export interface TagStat {
@@ -114,7 +115,7 @@ const UserProfilePage = () => {
         const res2: any = await profileAPI.getUserProfileInfoById(id);
         const { user } = res2;
         setUserProfileInfo({ ...user });
-        setProfileStats({ ...stat });
+        setProfileStats({ ...stat, ...user.customerWallet });
         setProfileTagStats([...tagStats]);
         setProfileTopQuestions([...questions]);
         setProfileBountiedQuestions([...questionBounty]);
