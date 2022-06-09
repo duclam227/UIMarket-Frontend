@@ -115,6 +115,7 @@
   "EditQuestionPage.questionTags": "Tags",
   "EditQuestionPage.questionTagsPlaceholder": "e.g UI, color, alignment, ...",
   "EditQuestionPage.addBountyLabel": "Adjust bounty",
+  "EditQuestionPage.removeBountyLabel": "Hide bounty adjustment",
   "EditQuestionPage.addBountyDescription": "Bountied questions will appear highlighted and can attract more answers. You need credit to add bounty to a question",
   "EditQuestionPage.addBountyBalanceLabel": "Balance: $",
   "EditQuestionPage.addBountyTopUpBtnText": "Top up",

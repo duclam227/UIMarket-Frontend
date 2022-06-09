@@ -15,4 +15,11 @@
 
 .label {
 	font-size: x-large;
+	margin-top: 1rem;
+}
+
+.checkBountyButton {
+	margin-bottom: 10px;
+	border-radius: 50px !important;
+	width: fit-content;
 }

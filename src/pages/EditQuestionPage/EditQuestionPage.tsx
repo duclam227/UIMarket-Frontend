@@ -6,7 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
+import Joi, { number } from 'joi';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -118,20 +118,21 @@ const EditQuestionPage = ({ intl }: any) => {
     title: string;
     body: string;
     tags: string;
-    bounty: number;
-    bountyDueDate: Date;
+    // bounty: number;
+    // bountyDueDate: Date;
   }
   const navigate = useNavigate();
   const schema = Joi.object({
     title: Joi.string().min(10).max(100).required().label('Title'),
     body: Joi.string().min(20).required().label('Body'),
     tags: Joi.string().allow('', null).label('Tags'),
-    bounty: Joi.number().min(question?.bounty || 150).max(balance).label('Bounty amount'),
-    bountyDueDate: Joi.date().min(question?.bountyDueDate || new Date()).label('Due date'),
-  });
+    // bounty: Joi.number().min(question?.bounty || 150).max(balance).label('Bounty amount'),
+    // bountyDueDate: Joi.date().min(question?.bountyDueDate || new Date()).label('Due date'),
+  })
 
   const {
     register,
+    unregister,
     handleSubmit,
     formState: { errors, isDirty, isValid },
     control,
@@ -143,8 +144,8 @@ const EditQuestionPage = ({ intl }: any) => {
       title: question?.title || '',
       body: body || '',
       tags: '',
-      bounty: question?.bounty <= 0 ? 0 : question?.bounty,
-      bountyDueDate: question?.bountyDueDate || new Date(),
+      // bounty: question?.bounty <= 0 ? 0 : question?.bounty,
+      // bountyDueDate: question?.bountyDueDate || new Date(),
     },
   });
 
@@ -156,18 +157,21 @@ const EditQuestionPage = ({ intl }: any) => {
     const question = {
       ...data,
       tags: formatIntoArray(tags),
-      bounty: isBountyOn ? data.bounty : -1,
-      bountyDueDate: isBountyOn ? data.bountyDueDate : undefined
+      // bounty: isBountyOn ? data.bounty : -1,
+      // bountyDueDate: isBountyOn ? data.bountyDueDate : undefined
     };
-    try {
-      setPostInProgress(true);
-      await questionAPI.addNewQuestion(question);
-      navigate('/', { replace: true });
-    } catch (error) {
-      const errorMessage = getErrorMessage(error);
-      setPostInProgress(false);
-      setErrorMessage(errorMessage);
-    }
+
+    console.log(data)
+
+    // try {
+    //   setPostInProgress(true);
+    //   await questionAPI.addNewQuestion(question);
+    //   navigate('/', { replace: true });
+    // } catch (error) {
+    //   const errorMessage = getErrorMessage(error);
+    //   setPostInProgress(false);
+    //   setErrorMessage(errorMessage);
+    // }
   };
 
   useEffect(() => {
@@ -185,6 +189,22 @@ const EditQuestionPage = ({ intl }: any) => {
     }
   }, [currentUser])
 
+  // useEffect(() => {
+  //   if (!isBountyOn) {
+  //     unregister(['bounty', 'bountyDueDate']);
+  //   } else {
+  //     register('bounty', { min: question.bounty, max: balance });
+  //     register('bountyDueDate');
+  //   }
+  // }, [isBountyOn])
+
+  const dateToYYYYMMDD = (date: Date | null) => {
+    if (date && isNaN(date.getTime())) {
+      return new Date().toISOString().split('T')[0];
+    }
+    return date?.toISOString().split('T')[0];
+  }
+
   useEffect(() => {
     questionAPI.getQuestionById(id)
       .then((res: any) => {
@@ -193,15 +213,13 @@ const EditQuestionPage = ({ intl }: any) => {
         const questionFromAPI: any = {
           title: question.questionTitle,
           tags: [...question.questionTag],
-          bounty: question.questionBounty === -1 ? 0 : question.questionBounty,
-          bountyDueDate: question.bountyDueDate,
+          // bounty: question.questionBounty === -1 ? 0 : question.questionBounty,
+          // bountyDueDate: new Date(question.bountyDueDate),
           body: questionContent,
         }
         setQuestion(questionFromAPI);
         setBody(questionContent);
         reset({ ...questionFromAPI });
-
-        console.log(questionFromAPI)
         setIsLoading(false);
       })
       .catch(error => {
@@ -294,7 +312,7 @@ const EditQuestionPage = ({ intl }: any) => {
                   </Col>
                 </Row>
 
-                <Row>
+                {/* <Row>
                   <FormInput
                     placeholder={addBountyInputPlaceholder}
                     name="bounty"
@@ -304,14 +322,23 @@ const EditQuestionPage = ({ intl }: any) => {
                 </Row>
 
                 <Row>
-                  <FormInput
-                    label={intl.formatMessage({ id: 'EditQuestionPage.bountyDueDateLabel' })}
-                    name="bountyDueDate"
-                    control={control}
-                    type="date"
-                    labelClassName={style.label}
-                  />
-                </Row>
+                  <Form.Group>
+                    <Form.Label>ad</Form.Label>
+                    <Controller
+                      control={control}
+                      name="bountyDueDate"
+                      render={({ field: { onChange, onBlur, value, ref } }) => (
+                        <Form.Control
+                          value={dateToYYYYMMDD(value)}
+                          type="date"
+                          onChange={e => onChange(new Date(e.target.value))}
+                          onBlur={onBlur}
+                          ref={ref}
+                        />
+                      )}
+                    />
+                  </Form.Group>
+                </Row> */}
               </Card.Body>
             </Card>
             : null
