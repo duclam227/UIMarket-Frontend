@@ -28,3 +28,4 @@ export { default as ThreeDotMenu } from './common/ThreeDotMenu/ThreeDotMenu';
 export { default as SideNav } from './common/SideNav/SideNav';
 export { default as OneToFivePage } from './common/OneToFivePage/OneToFivePage';
 export { default as UserAvatar } from './common/UserAvatar/UserAvatar';
+export { default as Table } from './common/Table/Table';

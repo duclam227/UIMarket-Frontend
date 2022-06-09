@@ -1,16 +1,31 @@
-import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-
-import { BsPerson, BsPersonCircle } from 'react-icons/bs';
-import { LogoIcon } from '../../';
-
-import style from './AdminNavbar.module.css';
+import { FC } from 'react';
+import { Link, useMatch, useResolvedPath } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+
+import { BsPersonCircle } from 'react-icons/bs';
+
+import { LogoIcon } from '../../';
+import { State } from '../../../redux/store';
+import style from './AdminNavbar.module.css';
+import { logOut } from '../../../redux';
 const AdminNavbar = () => {
-  const params = useParams();
-  const activeNavClassName = 'active bg-dark';
-  const inactiveNavClassName = 'text-dark';
-  const renderNavItems = () => {};
+  const userDropdownProfileLabel = (
+    <FormattedMessage
+      id="CommonNavbar.userDropdownProfileLabel"
+      defaultMessage="Profile"
+    />
+  );
+  const userDropdownLogoutBtnLabel = (
+    <FormattedMessage
+      id="CommonNavbar.userDropdownLogoutBtnLabel"
+      defaultMessage="Logout"
+    />
+  );
+
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state: State) => state.auth.user);
+
   const tabs = [
     {
       key: 'dashboard',
@@ -25,11 +40,15 @@ const AdminNavbar = () => {
       label: <FormattedMessage id="AdminNavbar.customerManagement" />,
     },
     {
+      key: 'shop-management',
+      label: <FormattedMessage id="AdminNavbar.shopManagement" />,
+    },
+    {
       key: 'invoice-management',
       label: <FormattedMessage id="AdminNavbar.invoiceManagement" />,
     },
     {
-      key: 'support-center',
+      key: 'reports',
       label: <FormattedMessage id="AdminNavbar.supportCenter" />,
     },
   ];
@@ -40,23 +59,75 @@ const AdminNavbar = () => {
         className={`nav nav-pills justify-content-center align-items-center ${style.navItemWrapper}`}
       >
         {tabs.map(tab => (
-          <li className={`nav-item`} key={tab.key}>
-            <Link to={`/admin/${tab.key}`}>
-              <span
-                className={`nav-link ${
-                  params.tab === tab.key ? activeNavClassName : inactiveNavClassName
-                }`}
-              >
-                {tab.label}
-              </span>
-            </Link>
-          </li>
+          <NavLink to={tab.key} key={tab.key} label={tab.label} />
         ))}
       </ul>
       <div className={`d-flex justify-content-center align-items-center`}>
-        <BsPersonCircle size={30} />
+        {currentUser && currentUser.customerAvatar ? (
+          <div className="nav-item dropdown p-1">
+            <a
+              className="nav-link dropdown-toggle p-0 d-flex align-items-center"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              <div className={style.avatarWrapper}>
+                <img
+                  src={currentUser.customerAvatar}
+                  className={style.userAvatar}
+                  alt="User profile"
+                />
+              </div>
+            </a>
+            <ul
+              className="dropdown-menu dropdown-menu-lg-end position-absolute mt-1"
+              aria-labelledby="navbarDropdown"
+            >
+              <li>
+                <Link to={`/user/${currentUser._id}`} className="dropdown-item">
+                  {userDropdownProfileLabel}
+                </Link>
+              </li>
+              <hr className="dropdown-divider" />
+              <li>
+                <button
+                  className={`${style.authButton}`}
+                  onClick={() => dispatch(logOut())}
+                >
+                  {userDropdownLogoutBtnLabel}
+                </button>
+              </li>
+            </ul>
+          </div>
+        ) : (
+          <BsPersonCircle size={30} />
+        )}
       </div>
     </nav>
+  );
+};
+interface NavLinkProps {
+  to: string;
+  label: any;
+}
+
+const NavLink: FC<NavLinkProps> = ({ to, children, label, ...props }) => {
+  const resolvedPath = useResolvedPath(to);
+  const isActive = useMatch({ path: resolvedPath.pathname });
+  const activeNavClassName = 'active bg-dark';
+  const inactiveNavClassName = 'text-dark';
+  return (
+    <li className={`nav-item`}>
+      <Link to={to} {...props}>
+        <span
+          className={`nav-link ${isActive ? activeNavClassName : inactiveNavClassName}`}
+        >
+          {label}
+        </span>
+      </Link>
+    </li>
   );
 };
 

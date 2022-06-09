@@ -5,8 +5,51 @@ const API_ENDPOINT = '/api/v1/admin';
 
 class Get {
   getAllUsers = (pageNumber: number | string, itemsPerPage: number) => {
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
     return axiosClient.get(
       `${API_ENDPOINT}/users?page=${pageNumber}&limit=${itemsPerPage}`,
+      config,
+    );
+  };
+  getAllShops = (pageNumber: number | string, itemsPerPage: number) => {
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    return axiosClient.get(
+      `${API_ENDPOINT}/shops?page=${pageNumber}&limit=${itemsPerPage}`,
+      config,
+    );
+  };
+  getAllReports = (pageNumber: number | string, itemsPerPage: number) => {
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    return axiosClient.get(
+      `${API_ENDPOINT}/report/list/All?page=${pageNumber}&limit=${itemsPerPage}`,
+      config,
+    );
+  };
+  getReportDetails = (id: string, pageNumber?: number | string, itemsPerPage?: number) => {
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    return axiosClient.get(
+      `${API_ENDPOINT}/report/detail/${id}?page=${pageNumber}&limit=${itemsPerPage}`,
+      config,
     );
   };
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -50,7 +50,6 @@ import {
   ShopWalletPage,
   ViewLicensePage,
   BadRequestPage,
-  AdminUserManagementPage,
   RequestRefundPage,
   TagListPage,
 } from './pages';
@@ -157,7 +156,7 @@ function App() {
           }
         />
         <Route path="/refund/:id" element={<RequireUser><RequestRefundPage /></RequireUser>} />
-        <Route path="/admin/:tab" element={<AdminRoutes />} />
+        <Route path="/admin/*" element={<AdminRoutes />} />
         <Route path="/admin" element={<Navigate to="/admin/user-management" replace />} />
         <Route path="/wallet" element={<RequireUser><ShopWalletPage /></RequireUser>} />
         <Route path="/forbidden" element={<ForbiddenPage />} />
