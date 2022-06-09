@@ -63,7 +63,7 @@ export interface product {
   coverPicture?: string;
   productName: string;
   productPrice: number;
-  productCategory: string;
+  productCategory: any;
   productDescription: string;
   productPictures?: Array<string>;
   productFile?: string;
@@ -75,7 +75,7 @@ export interface product {
   shopId?: any;
   shop?: any;
   license?: string;
-	product?: string;
+  product?: string;
 }
 
 export interface shop {
@@ -111,7 +111,6 @@ export interface DataColumn {
   label: string;
   width?: number;
   bold?: boolean;
-
 }
 
 export interface CustomColumn {
