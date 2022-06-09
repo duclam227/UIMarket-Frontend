@@ -19,7 +19,7 @@ const CheckoutPage: FunctionComponent = () => {
   const navigate = useNavigate();
   const PAYPAL_CLIENT_ID = process.env.REACT_APP_PAYPAL_CLIENT_ID!;
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [cartProducts, setProducts] = useState<Array<any>>(state.products);
   const [buyerFee, setBuyerFee] = useState<number>(0);
@@ -30,7 +30,7 @@ const CheckoutPage: FunctionComponent = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    const products = cartProducts.map(product => product.product);
+    const products = cartProducts;
     setSubtotal(totalPrice());
     paymentAPI
       .checkOrder(products)
@@ -53,22 +53,22 @@ const CheckoutPage: FunctionComponent = () => {
 
   const renderItems = (cart: Array<any>) => {
     return cart.map((item: any) => {
-      const { product } = item;
-      const pLink = `/product/${product._id}`;
+      const { _id, productPictures, productName, productPrice } = item;
+      const pLink = `/product/${_id}`;
       return (
         <div
-          key={product._id}
+          key={_id}
           className="d-flex flex-wrap flex-lg-nowrap align-items-stretch py-4 border-bottom border-1 mb-4"
         >
           <Link className={styles.productimg} to={pLink}>
-            <img src={product.productPictures[0]} alt=".." />
+            <img src={productPictures[0]} alt=".." />
           </Link>
           <div className={'text-truncate m-2 flex-fill ' + styles.productTitle}>
-            {product.productName}
+            {productName}
           </div>
           <div className="flex-fill">
             <div className="text-end m-2">
-              <strong>${product.productPrice}</strong>
+              <strong>${productPrice}</strong>
             </div>
           </div>
         </div>
@@ -84,7 +84,7 @@ const CheckoutPage: FunctionComponent = () => {
   const totalPrice = () => {
     let price = 0;
 
-    const products = cartProducts.map(product => product.product);
+    const products = cartProducts;
     price = products.reduce(
       (previousValue: any, currentValue: any) =>
         previousValue + currentValue.productPrice,
@@ -96,7 +96,7 @@ const CheckoutPage: FunctionComponent = () => {
 
   const handleFreeCheckout = () => {
     setIsLoading(true);
-    const products = cartProducts.map(product => product.product);
+    const products = cartProducts;
     paymentAPI
       .checkout(products, total)
       .then((res: any) => {
@@ -144,10 +144,7 @@ const CheckoutPage: FunctionComponent = () => {
             onClick={handleFreeCheckout}
             disabled={cartProducts.length < 1}
           >
-            <FormattedMessage
-              id="CheckoutPage.FreeBtn"
-              defaultMessage="Get For FREE"
-            />
+            <FormattedMessage id="CheckoutPage.FreeBtn" defaultMessage="Get For FREE" />
           </Button>
         ) : (
           <PayPalScriptProvider
@@ -157,11 +154,11 @@ const CheckoutPage: FunctionComponent = () => {
           >
             <PayPalButtons
               createOrder={(data, action) => {
-                const products = cartProducts.map(product => product.product);
+                const products = cartProducts;
                 return paymentAPI
                   .checkout(products, total)
                   .then((res: any) => {
-                    const { paypal_link, invoiceId} = res;
+                    const { paypal_link, invoiceId } = res;
                     _invoiceId = invoiceId;
                     return paypal_link;
                   })
