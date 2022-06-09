@@ -150,7 +150,7 @@ function App() {
             </RequireUser>
           }
         />
-        <Route path="/admin/:tab" element={<AdminRoutes />} />
+        <Route path="/admin/*" element={<AdminRoutes />} />
         <Route path="/admin" element={<Navigate to="/admin/user-management" replace />} />
         <Route path="/wallet" element={<RequireUser><ShopWalletPage /></RequireUser>} />
         <Route path="/forbidden" element={<ForbiddenPage />} />
