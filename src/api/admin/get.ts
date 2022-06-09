@@ -36,7 +36,19 @@ class Get {
       },
     };
     return axiosClient.get(
-      `${API_ENDPOINT}/report/list/EC?page=${pageNumber}&limit=${itemsPerPage}`,
+      `${API_ENDPOINT}/report/list/All?page=${pageNumber}&limit=${itemsPerPage}`,
+      config,
+    );
+  };
+  getReportDetails = (id: string, pageNumber?: number | string, itemsPerPage?: number) => {
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    return axiosClient.get(
+      `${API_ENDPOINT}/report/detail/${id}?page=${pageNumber}&limit=${itemsPerPage}`,
       config,
     );
   };

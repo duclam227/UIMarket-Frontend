@@ -40,6 +40,27 @@ class Put {
     };
     return axiosClient.put(`${API_ENDPOINT}/shops/${shopId}/deactive`, null, config);
   };
+  acceptReport = (reportId: string) => {
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    return axiosClient.put(`${API_ENDPOINT}/report/accept/${reportId}`, null, config);
+  };
+  rejectReport = (reportId: string) => {
+    const jwt = getJwt();
+    const data = {
+      rejectReason: 'Admin rejected',
+    };
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    return axiosClient.put(`${API_ENDPOINT}/report/reject/${reportId}`, data, config);
+  };
 }
 
 export default new Put();
