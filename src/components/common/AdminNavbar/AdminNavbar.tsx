@@ -1,4 +1,5 @@
-import { Link, useParams } from 'react-router-dom';
+import { FC } from 'react';
+import { Link, useMatch, useResolvedPath } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
@@ -21,10 +22,8 @@ const AdminNavbar = () => {
       defaultMessage="Logout"
     />
   );
-  const params = useParams();
+
   const dispatch = useDispatch();
-  const activeNavClassName = 'active bg-dark';
-  const inactiveNavClassName = 'text-dark';
   const currentUser = useSelector((state: State) => state.auth.user);
 
   const tabs = [
@@ -60,17 +59,7 @@ const AdminNavbar = () => {
         className={`nav nav-pills justify-content-center align-items-center ${style.navItemWrapper}`}
       >
         {tabs.map(tab => (
-          <li className={`nav-item`} key={tab.key}>
-            <Link to={`/admin/${tab.key}`}>
-              <span
-                className={`nav-link ${
-                  params.tab === tab.key ? activeNavClassName : inactiveNavClassName
-                }`}
-              >
-                {tab.label}
-              </span>
-            </Link>
-          </li>
+          <NavLink to={tab.key} key={tab.key} label={tab.label} />
         ))}
       </ul>
       <div className={`d-flex justify-content-center align-items-center`}>
@@ -113,17 +102,32 @@ const AdminNavbar = () => {
             </ul>
           </div>
         ) : (
-          // <div className={style.avatarWrapper}>
-          //   <img
-          //     src={currentUser?.customerAvatar}
-          //     className={style.userAvatar}
-          //     alt="User profile"
-          //   />
-          // </div>
           <BsPersonCircle size={30} />
         )}
       </div>
     </nav>
+  );
+};
+interface NavLinkProps {
+  to: string;
+  label: any;
+}
+
+const NavLink: FC<NavLinkProps> = ({ to, children, label, ...props }) => {
+  const resolvedPath = useResolvedPath(to);
+  const isActive = useMatch({ path: resolvedPath.pathname });
+  const activeNavClassName = 'active bg-dark';
+  const inactiveNavClassName = 'text-dark';
+  return (
+    <li className={`nav-item`}>
+      <Link to={to} {...props}>
+        <span
+          className={`nav-link ${isActive ? activeNavClassName : inactiveNavClassName}`}
+        >
+          {label}
+        </span>
+      </Link>
+    </li>
   );
 };
 
