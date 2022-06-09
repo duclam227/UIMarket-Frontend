@@ -13,7 +13,6 @@ import { BsCheckCircleFill, BsXCircleFill } from 'react-icons/bs';
 
 import adminAPI from '../../api/admin';
 import { getErrorMessage } from '../../app/util';
-import style from './AdminReportDetailPage.module.css';
 import { Paginator } from '../../components';
 
 const ITEMS_PER_PAGE = 3;
@@ -109,7 +108,7 @@ const AdminReportDetailPage = () => {
   return (
     <Container className={`p-0`}>
       <Row className={`bg-white p-4 border`}>
-        <h2 className={style.title}>{pageTitleLabel}</h2>
+        <h2>{pageTitleLabel}</h2>
       </Row>
       {reportDetails ? (
         <>
