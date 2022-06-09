@@ -4,6 +4,7 @@ export interface question {
 	tags: string[];
 	bounty: number;
 	question: string;
+	bountyDueDate?: Date;
 }
 
 export interface navigatorTabItem {
