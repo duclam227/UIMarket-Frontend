@@ -35,7 +35,6 @@ const UsersTable: FC<Props> = props => {
     id: 'AdminUserManagementPage.actionTableHeaderLabel',
   });
   const columns: Column[] = [
-    { key: 'check', content: () => null, width: 10 },
     { path: 'customerName', label: nameTableHeaderLabel, bold: true },
     { path: 'customerEmail', label: emailTableHeaderLabel, width: 50 },
     {
