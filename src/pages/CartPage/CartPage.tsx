@@ -1,5 +1,5 @@
 import { FunctionComponent, useEffect, useState } from 'react';
-import { Spinner, Button, Col, Row } from 'react-bootstrap';
+import { Spinner, Button, Col, Row, Form } from 'react-bootstrap';
 import { PageWithNavbar } from '../../components';
 import Container from 'react-bootstrap/Container';
 
@@ -10,11 +10,14 @@ import { FormattedMessage } from 'react-intl';
 import illustration from '../../app/assets/cart-empty.png';
 
 import styles from './CartPage.module.css';
+import { Link, useNavigate } from 'react-router-dom';
 
 const CartPage: FunctionComponent = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [cartProducts, setProducts] = useState<Array<any>>([]);
+  const [selectedProducts, setSelectedProducts] = useState<Array<any>>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setIsLoading(true);
@@ -34,25 +37,34 @@ const CartPage: FunctionComponent = () => {
 
   const handleCheckoutCart = () => {
     setIsLoading(true);
-    const checkoutArray = cartProducts.map(item => {
-      return {
-        product: item.product._id,
-        shop: item.product.shopId,
-      };
-    });
 
     paymentAPI
-      .checkout(checkoutArray)
+      .checkout(selectedProducts)
       .then((res: any) => {
+        const { paypal_link, invoiceId, isFree } = res;
         console.log(res);
-        const { paypal_link, invoiceId } = res;
-        saveMostRecentInvoiceId(invoiceId);
-        window.location.replace(paypal_link);
+        if (!isFree) {
+          saveMostRecentInvoiceId(invoiceId);
+          window.location.replace(paypal_link);
+        } else {
+          navigate('/purchases');
+        }
       })
       .catch(error => {
         console.log(error);
       });
   };
+
+  const handleToggleProduct = (product: any) => {
+    const selectedProductIds = selectedProducts.map(product => product.product);
+    if (selectedProductIds && selectedProductIds.includes(product._id)) {
+      setSelectedProducts([...selectedProducts.filter(pro => pro.product !== product._id)]);
+    } else {
+      setSelectedProducts([...selectedProducts,
+      { product: product._id, shop: product.shopId, price: product.productPrice }
+      ]);
+    }
+  }
 
   const renderItems = (cart: Array<any>) => {
     const handleRemoveItem = (removedItem: any) => {
@@ -63,6 +75,7 @@ const CartPage: FunctionComponent = () => {
             return item.product._id !== removedItem._id;
           });
           setProducts(newList);
+          setSelectedProducts([...selectedProducts.filter(pro => pro.product !== removedItem._id)])
         })
         .catch(error => {
           const errorMsg = getErrorMessage(error);
@@ -72,15 +85,25 @@ const CartPage: FunctionComponent = () => {
 
     return cart.map((item: any) => {
       const { product } = item;
-      const pLink = `./product/${product._id}`;
+      const pLink = `/product/${product._id}`;
       return (
         <div
           key={product._id}
           className="d-flex flex-wrap flex-lg-nowrap align-items-stretch py-4 border-bottom border-1 mb-4"
         >
-          <a className={styles.productimg} href={pLink}>
+          <div className={'d-flex m-1 align-items-center justify-content-center'}>
+            <Form>
+              <Form.Check
+                inline
+                type="checkbox"
+                className={`me-5`}
+                onChange={() => handleToggleProduct(product)}
+              />
+            </Form>
+          </div>
+          <Link className={styles.productimg} to={pLink}>
             <img src={product.productPictures[0]} alt=".." />
-          </a>
+          </Link>
           <div className={'text-truncate m-2 flex-fill ' + styles.productTitle}>
             {product.productName}
           </div>
@@ -105,9 +128,9 @@ const CartPage: FunctionComponent = () => {
   const totalPrice = (cart: any) => {
     let price = 0;
 
-    price = cart.reduce(
+    price = selectedProducts.reduce(
       (previousValue: any, currentValue: any) =>
-        previousValue + currentValue.product.productPrice,
+        previousValue + currentValue.price,
       price,
     );
     return price;
@@ -125,13 +148,13 @@ const CartPage: FunctionComponent = () => {
               id="CartPage.numOfItems"
               defaultMessage="{length} items"
               values={{
-                length: cart.length,
+                length: selectedProducts.length,
               }}
             />
           </span>
           <strong>{totalPrice(cart)}$</strong>
         </div>
-        <Button className="m-2" onClick={handleCheckoutCart}>
+        <Button className="m-2" onClick={handleCheckoutCart} disabled={selectedProducts.length < 1}>
           <FormattedMessage
             id="CartPage.checkoutBtnLabel"
             defaultMessage="Checkout with Paypal"
@@ -162,7 +185,6 @@ const CartPage: FunctionComponent = () => {
             <img src={illustration} alt="empty cart" className="m-5"></img>
             <FormattedMessage
               id="CartPage.NoItems"
-              defaultMessage="Looks like you haven't bought anything."
             ></FormattedMessage>
             <Button href="/products" className="m-5">
               Continue shopping

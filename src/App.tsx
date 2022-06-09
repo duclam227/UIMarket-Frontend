@@ -50,9 +50,12 @@ import {
   ShopWalletPage,
   ViewLicensePage,
   BadRequestPage,
+  RequestRefundPage,
+  TagListPage,
 } from './pages';
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
+import ProductListPageByCategory from './pages/ProductListPage/ProductListPageByCategory';
 
 function App() {
   const dispatch = useDispatch();
@@ -121,6 +124,7 @@ function App() {
         <Route path="/payment/*" element={<RequireUser><ConfirmPaymentPage /></RequireUser>} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/products" element={<ProductListPage />} />
+        <Route path="/products/category/:id" element={<ProductListPageByCategory />} />
         <Route path="/products/add" element={<RequireUser><AddAProductPage /></RequireUser>} />
         <Route path="/product/:id" element={<ViewProductPage />} />
         <Route path="/product/:id/edit" element={<RequireUser><EditProductPage /></RequireUser>} />
@@ -139,6 +143,7 @@ function App() {
         <Route path="/questions/bountied" element={<BountiedQuestionListsPage />} />
         <Route path="/questions/popular" element={<PopularQuestionListsPage />} />
         <Route path="/questions/search/*" element={<SearchQuestionsPage />} />
+        <Route path="/questions/tags" element={<TagListPage />} />
         <Route path="/questions/tag/:id" element={<QuestionListsPageByTag />} />
         <Route path="/questions/*" element={<Navigate replace to="/questions/all" />} />
         <Route path="/question/:id" element={<ViewQuestionPage />} />
@@ -150,6 +155,7 @@ function App() {
             </RequireUser>
           }
         />
+        <Route path="/refund/:id" element={<RequireUser><RequestRefundPage /></RequireUser>} />
         <Route path="/admin/*" element={<AdminRoutes />} />
         <Route path="/admin" element={<Navigate to="/admin/user-management" replace />} />
         <Route path="/wallet" element={<RequireUser><ShopWalletPage /></RequireUser>} />

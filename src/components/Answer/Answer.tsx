@@ -38,6 +38,8 @@ const Answer: FC<SectionAnswerProps> = props => {
   const [reply, setReply] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
+  const [isReload, setIsReload] = useState<boolean>(false);
+
   const handleShowReportModal = () => {
     setShowReportModal(true);
   };
@@ -51,7 +53,7 @@ const Answer: FC<SectionAnswerProps> = props => {
       setCommentPage(res.page);
       setCommentTotalPages(res.totalPages);
     });
-  }, []);
+  }, [isReload]);
 
   if (!answer || !answerContent) {
     return null;
@@ -74,6 +76,7 @@ const Answer: FC<SectionAnswerProps> = props => {
     commentAPI
       .addNewComment(reply, question._id, answer._id, 'Answer')
       .then(res => {
+        setIsReload(!isReload);
         setIsReply(false);
       })
       .catch(error => {

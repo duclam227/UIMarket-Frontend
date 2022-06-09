@@ -191,11 +191,11 @@ const UserProfilePage = () => {
                 {activityTabNavBtnLabel}
               </Nav.Link>
             </Nav.Item>
-            <Nav.Item>
+            {/* <Nav.Item>
               <Nav.Link as={Link} to="./products" eventKey="products">
                 {productTabNavBtnLabel}
               </Nav.Link>
-            </Nav.Item>
+            </Nav.Item> */}
           </Nav>
         </Row>
 

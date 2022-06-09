@@ -35,7 +35,7 @@ const EditProductPage: React.FC = () => {
   const isDescriptionFilled = !!(
     product &&
     product.productName &&
-    product.productPrice &&
+    product.productPrice >= 0 &&
     product.productCategory &&
     product.productDescription
   );

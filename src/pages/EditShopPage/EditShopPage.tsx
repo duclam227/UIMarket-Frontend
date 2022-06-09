@@ -13,9 +13,8 @@ import s3API from '../../api/amazonS3';
 import { useDispatch } from 'react-redux';
 import { logInWithJWT } from '../../redux/index';
 import { ToastContainer, toast } from 'react-toastify';
-import Joi from 'joi';
-import { joiResolver } from '@hookform/resolvers/joi';
-import { MdWrongLocation } from 'react-icons/md';
+import { injectIntl, IntlShape } from 'react-intl';
+import { genericAvatarUrl } from '../../app/util/const';
 
 export interface ShopInfo {
   _id?: string;
@@ -26,7 +25,21 @@ export interface ShopInfo {
   shopPhone: string;
 }
 
-const EditShopPage: FunctionComponent = () => {
+interface IProps {
+  intl: IntlShape;
+}
+
+const EditShopPage: FunctionComponent<IProps> = props => {
+  const { intl } = props;
+  const editNameBtnLabel = intl.formatMessage({ id: 'EditShopPage.EditNameBtnLabel' });
+  const shopNameRequiredMsg = intl.formatMessage({ id: 'EditShopPage.ShopNameRequired' });
+  const shopEmailRequiredMsg = intl.formatMessage({
+    id: 'EditShopPage.ShopEmailRequired',
+  });
+  const phoneErrMsg = intl.formatMessage({
+    id: 'EditShopPage.PhoneErrMsg',
+  });
+
   const [shopInfo, setShopInfo] = useState<ShopInfo>({
     shopName: '',
     shopDescription: '',
@@ -41,6 +54,7 @@ const EditShopPage: FunctionComponent = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const imageInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
+  const [shopAvatar, setShopAvatar] = useState<string>('');
 
   const currentUser = useSelector((state: State) => state.auth.user);
 
@@ -69,12 +83,17 @@ const EditShopPage: FunctionComponent = () => {
   };
 
   useEffect(() => {
+    if (!id) {
+      return;
+    }
     shopAPI
       .getShopById(id as string)
       .then((res: any) => {
         const { shop }: any = res;
         setShopInfo(shop);
         reset(shop);
+        const { customerAvatar } = shop.userId;
+        setShopAvatar(customerAvatar);
       })
       .catch(error => {
         console.log('Get shop info error: ', error);
@@ -148,7 +167,7 @@ const EditShopPage: FunctionComponent = () => {
             }}
           >
             <FormattedMessage
-              id="AddShopBanner"
+              id="EditShopPage.AddShopBanner"
               defaultMessage={
                 'Update your cover to showcase your business. Recommended size @ 1320 x 320'
               }
@@ -184,9 +203,13 @@ const EditShopPage: FunctionComponent = () => {
 
             <div className={styles.avatarWrapper}>
               <img
-                src="https://d3ui957tjb5bqd.cloudfront.net/images/users/132/1321/1321357/avatar-75-75-r.jpg?1619119787"
+                src={shopAvatar || genericAvatarUrl}
                 className={styles.avatarImage}
                 alt={shopInfo.shopName}
+                onError={({ currentTarget }) => {
+                  currentTarget.onerror = null; // prevents looping
+                  currentTarget.src = genericAvatarUrl;
+                }}
               />
             </div>
           </div>
@@ -197,7 +220,7 @@ const EditShopPage: FunctionComponent = () => {
                 <h3 className="text-center mx-2">{shopInfo.shopName}</h3>
                 <i
                   className="bi-pencil-fill btn p-0"
-                  title="Edit shop name"
+                  title={editNameBtnLabel}
                   onClick={handleEnableEditMode}
                 ></i>
               </div>
@@ -210,10 +233,15 @@ const EditShopPage: FunctionComponent = () => {
                   id="shopName"
                   placeholder="Your Shop Name"
                   {...register('shopName', {
-                    required: 'Please enter your shop name',
+                    required: shopNameRequiredMsg,
                   })}
                 />
-                <label htmlFor="floatingInputValue">Shop Name</label>
+                <label htmlFor="floatingInputValue">
+                  <FormattedMessage
+                    id="EditShopPage.ShopNameLabel"
+                    defaultMessage={'Shop Name'}
+                  ></FormattedMessage>
+                </label>
               </div>
             )}
             <div className={'form-floating mw-100 my-2'}>
@@ -224,7 +252,10 @@ const EditShopPage: FunctionComponent = () => {
                 style={{ height: '100px' }}
               ></textarea>
               <label htmlFor="floatingTextarea">
-                Write a tagline to describe your shop
+                <FormattedMessage
+                  id="EditShopPage.TagLineLabel"
+                  defaultMessage={'Write a tagline'}
+                ></FormattedMessage>
               </label>
             </div>
 
@@ -235,10 +266,15 @@ const EditShopPage: FunctionComponent = () => {
                 id="shopEmail"
                 placeholder="Your shop email"
                 {...register('shopEmail', {
-                  required: 'Please enter your shop email',
+                  required: shopEmailRequiredMsg,
                 })}
               />
-              <label htmlFor="floatingInputValue">Shop Email</label>
+              <label htmlFor="floatingInputValue">
+                <FormattedMessage
+                  id="EditShopPage.ShopEmailLabel"
+                  defaultMessage={'Shop email'}
+                ></FormattedMessage>
+              </label>
             </div>
 
             <div className="form-floating my-2">
@@ -251,11 +287,16 @@ const EditShopPage: FunctionComponent = () => {
                   pattern: {
                     value:
                       /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/,
-                    message: 'Please input a valid phone number',
+                    message: phoneErrMsg,
                   },
                 })}
               />
-              <label htmlFor="floatingInputValue">Shop Phone</label>
+              <label htmlFor="floatingInputValue">
+                <FormattedMessage
+                  id="EditShopPage.PhoneLabel"
+                  defaultMessage={'Shop phone'}
+                ></FormattedMessage>
+              </label>
             </div>
           </div>
         </Container>
@@ -269,16 +310,22 @@ const EditShopPage: FunctionComponent = () => {
           <div className="hidden"></div>
           <div className="flex-shrink-1">
             <FormattedMessage
-              id="EditShopPage.editMsg"
+              id="EditShopPage.EditMsg"
               defaultMessage={'You are currently editing your shop'}
             ></FormattedMessage>
           </div>
           <div className="d-flex">
             <Button variant="dark" href={`/shop/${shopInfo._id}`} className="m-2">
-              View shop
+              <FormattedMessage
+                id="EditShopPage.ViewBtnLabel"
+                defaultMessage={'View shop'}
+              ></FormattedMessage>
             </Button>
             <Button variant="primary" className="m-2" type="submit" disabled={!isDirty}>
-              Save changes
+              <FormattedMessage
+                id="EditShopPage.SaveBtnLabel"
+                defaultMessage={'Save changes'}
+              ></FormattedMessage>
             </Button>
           </div>
         </div>
@@ -287,4 +334,4 @@ const EditShopPage: FunctionComponent = () => {
   );
 };
 
-export default EditShopPage;
+export default injectIntl(EditShopPage);

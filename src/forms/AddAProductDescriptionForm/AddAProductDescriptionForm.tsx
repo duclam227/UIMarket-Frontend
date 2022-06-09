@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { IntlShape, injectIntl, FormattedMessage } from "react-intl";
 import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import Joi from "joi";
+import { joiResolver } from "@hookform/resolvers/joi";
 
-import { RichTextEditor } from "../../components";
+import { RichTextEditor, FormInput } from "../../components";
 
 import categoryAPI from "../../api/category";
 
@@ -43,6 +47,28 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
   const productDescriptionLabel = intl.formatMessage({ id: 'AddAProduct.ProductDescriptionLabel' });
   const productDescriptionPlaceholder = intl.formatMessage({ id: 'AddAProduct.ProductDescriptionPlaceholder' });
 
+  const schema = Joi.object({
+    productName: Joi.string().required().label('Product name').min(10),
+    productPrice: Joi.number().required().label('Product price').min(0).allow(0),
+    productDescription: Joi.string().required().label('Product description').min(20),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    control,
+    getFieldState,
+  } = useForm<any>({
+    resolver: joiResolver(schema),
+    mode: 'onTouched',
+    defaultValues: {
+      productName: initialValue?.productName || null,
+      productPrice: initialValue?.productPrice >= 0 ? initialValue?.productPrice : null,
+      productDescription: initialValue?.productDescription || null,
+    }
+  });
+
   return (
     <Form
       name='AddAProductDescriptionForm'
@@ -55,27 +81,23 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
     >
       <div className={style.formTitle}><FormattedMessage id={isEdit ? 'EditProduct.TabDescriptionTitle' : 'AddAProduct.TabDescriptionTitle'} /></div>
 
-      <Form.Group className="mb-3">
-        <Form.Label className={style.label}>{productNameLabel}</Form.Label>
-        <Form.Control
-          id="productName"
-          type="text"
-          placeholder={productNamePlaceholder}
-          required={true}
-          defaultValue={initialValue?.productName || null}
-        />
-      </Form.Group>
+      <FormInput
+        label={productNameLabel}
+        placeholder={productNamePlaceholder}
+        name="productName"
+        control={control}
+        className="mb-3"
+        labelClassName={style.label}
+      />
 
-      <Form.Group className="mb-3">
-        <Form.Label className={style.label}>{productPriceLabel}</Form.Label>
-        <Form.Control
-          id="productPrice"
-          type="number"
-          placeholder={productPricePlaceholder}
-          required={true}
-          defaultValue={initialValue?.productPrice || null}
-        />
-      </Form.Group>
+      <FormInput
+        label={productPriceLabel}
+        placeholder={productPricePlaceholder}
+        name="productPrice"
+        control={control}
+        className="mb-3"
+        labelClassName={style.label}
+      />
 
       <Form.Group className="mb-3">
         <Form.Label className={style.label}>{productCategoryLabel}</Form.Label>
@@ -84,6 +106,9 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
           aria-label="Default select example"
           defaultValue={initialValue?.productCategory || null}
         >
+          <option selected disabled={true}>
+            {intl.formatMessage({ id: 'AddAProduct.ProductCategoryPlaceholder' })}
+          </option>
           {categories && categories.map(cat => (
             <option value={cat._id}>{cat.categoryName}</option>
           ))
@@ -93,16 +118,35 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
 
       <Form.Group className="mb-3">
         <Form.Label className={style.label}>{productDescriptionLabel}</Form.Label>
-        <RichTextEditor
+        <Controller
+          control={control}
+          name="productDescription"
+          render={({ field: { onChange, onBlur, value } }) => (
+            <RichTextEditor
+              onChange={(e: any) => {
+                props.updateProductInfo({
+                  productDescription: e
+                });
+              }}
+              onBlur={onBlur}
+              initialValue={value}
+            />
+          )}
+        />
+        {errors.productDescription && (
+          <Alert variant="danger" className="mt-2">
+            {errors.productDescription.message}
+          </Alert>
+        )}
+        {/* <RichTextEditor
           onChange={(e: any) => {
             props.updateProductInfo({
               productDescription: e
             })
           }}
           initialValue={initialValue?.productDescription || null}
-        />
+        /> */}
       </Form.Group>
-
     </Form >
   )
 }

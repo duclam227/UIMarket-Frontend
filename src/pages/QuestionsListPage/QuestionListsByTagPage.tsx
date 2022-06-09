@@ -48,7 +48,6 @@ const QuestionListsByTagPage: FC = () => {
 			.getQuestionsByTags([id], 1, ITEMS_PER_PAGE)
 			.then((res: any) => {
 				const { totalPages, questions, page } = res;
-				console.log(res);
 				setCurrentPage(page);
 				setQuestions(questions);
 				setTotalPages(totalPages);

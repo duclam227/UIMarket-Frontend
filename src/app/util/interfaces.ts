@@ -74,6 +74,8 @@ export interface product {
   productRating?: number;
   shopId?: any;
   shop?: any;
+  license?: string;
+	product?: string;
 }
 
 export interface shop {
@@ -109,6 +111,7 @@ export interface DataColumn {
   label: string;
   width?: number;
   bold?: boolean;
+
 }
 
 export interface CustomColumn {

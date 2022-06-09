@@ -72,21 +72,19 @@ const CreateAShopForm: React.FC<Props> = (props) => {
 
   const handleCreateShop = () => {
     const banner = images.length && images[0];
-    console.log(banner);
-    // shopAPI.createShop({
-    //   ...shopInfo,
-    //   shopBanner: banner,
-    // })
-    //   .then((res: any) => {
-    //     console.log(res);
-    //     const { token }: { token: string } = res;
-    //     setJwt(token);
+    shopAPI.createShop({
+      ...shopInfo,
+      shopBanner: banner,
+    })
+      .then((res: any) => {
+        const { token }: { token: string } = res;
+        setJwt(token);
 
-    //     dispatch(logInWithJWT(token));
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   })
+        dispatch(logInWithJWT(token));
+      })
+      .catch(error => {
+        console.log(error);
+      })
   }
 
   const schema = Joi.object({

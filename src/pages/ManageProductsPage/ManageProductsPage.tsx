@@ -42,7 +42,6 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
       shopAPI
         .getAllProductsOfShop(shopId)
         .then((res: any) => {
-          console.log(res);
           const { products } = res;
           const manageProductItems = products.map((product: product) => ({
             isSelected: false,

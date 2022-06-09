@@ -97,7 +97,7 @@ const AdminUserManagementPage: FC<Props> = props => {
           <Form.Control
             type="text"
             placeholder={searchBarPlaceholder}
-            // onChange={e => handleChange(e as any)}
+          // onChange={e => handleChange(e as any)}
           />
         </div>
       </Form>

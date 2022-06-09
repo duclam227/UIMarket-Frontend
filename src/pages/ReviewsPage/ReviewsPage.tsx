@@ -30,7 +30,9 @@ const ReviewsPage: FC<IProps> = props => {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isReload, setIsReload] = useState<boolean>(false);
   const [reviews, setReviews] = useState<Array<any> | null>(null);
+
 
   useEffect(() => {
     setIsLoading(true);
@@ -46,7 +48,7 @@ const ReviewsPage: FC<IProps> = props => {
         const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
         toast.error(intl.formatMessage({ id: `LoginForm.${errorCode}` }));
       });
-  }, []);
+  }, [isReload]);
 
   return (
     <OneToFivePage>
@@ -68,7 +70,7 @@ const ReviewsPage: FC<IProps> = props => {
             ) : reviews && reviews.length > 0 ? (
               <div className={style.productList}>
                 {reviews.map((review: any) => (
-                  <Review review={review} />
+                  <Review handleReload={() => setIsReload(!isReload)} review={review} />
                 ))}
               </div>
             ) : (

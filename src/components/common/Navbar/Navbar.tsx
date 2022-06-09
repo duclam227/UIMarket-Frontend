@@ -64,15 +64,28 @@ const NavBar: FC<IProps> = props => {
 
   const handleProductSearch = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate(`/products?keyword=${searchQuery}`);
+    const encodedQuery = encodeURIComponent(searchQuery);
+    navigate(`/products?keyword=${encodedQuery}`);
   };
+
+  const handleQuestionSearch = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const encodedQuery = encodeURIComponent(searchQuery);
+    navigate(`/questions/search?title=${encodedQuery}`);
+  };
+
   return (
     <>
       <nav className={style.mainNavbar}>
         <section className={style.leftSideNav}>
           <LogoIcon className={style.logo} />
 
-          <Form className={style.searchBarWrapper} onSubmit={e => handleProductSearch(e)}>
+          <Form className={style.searchBarWrapper}
+            onSubmit={branch === config.navbarBranches.shop
+              ? e => handleProductSearch(e)
+              : e => handleQuestionSearch(e)
+            }
+          >
             <div className={style.searchBar}>
               <BsSearch className={style.searchIcon} />
               <Form.Control

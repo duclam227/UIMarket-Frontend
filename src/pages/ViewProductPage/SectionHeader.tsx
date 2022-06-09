@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner, Badge } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -18,15 +18,16 @@ interface Props {
   onShowReportModal?: Function;
   product: product;
   currentUser: customer;
+  isBought: boolean | null;
   intl: IntlShape;
 }
 
 const SectionHeader: React.FC<Props> = props => {
-  const { product, currentUser, intl, onShowReportModal } = props;
+  const { product, currentUser, isBought, intl } = props;
   const isCurrentUserSeller = currentUser?.customerEmail === product.shopId.customerEmail;
   const navigate = useNavigate();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (action?: string) => {
     if (!currentUser) {
       navigate('/signup');
       return;
@@ -38,6 +39,13 @@ const SectionHeader: React.FC<Props> = props => {
         //handle finish
         toast.success(
           intl.formatMessage({ id: 'ViewProductPage.AddToCartSuccessMessage' }),
+          {
+            onOpen: () => {
+              if (action && action === 'now') {
+                navigate('/cart');
+              }
+            }
+          }
         );
       })
       .catch(error => {
@@ -45,7 +53,6 @@ const SectionHeader: React.FC<Props> = props => {
       });
   };
 
-  console.log(product)
   const renderStars = (productRating: number) => {
     const starArray: Array<any> = [];
     let rating = productRating;
@@ -67,6 +74,7 @@ const SectionHeader: React.FC<Props> = props => {
 
   return (
     <section className={style.header}>
+      <Link to={`/products/category/${product.productCategory._id}`} className={style.categoryPill}><Badge pill bg='primary'>{product.productCategory.categoryName}</Badge></Link>
       <h1 className={style.title}>{product.productName}</h1>
       <div className={style.subtitle}>
         {renderStars(product.productRating!)}
@@ -77,31 +85,48 @@ const SectionHeader: React.FC<Props> = props => {
       </div>
 
       <section className={style.buyPanel}>
-        <div className={style.priceRow}>
-          <span><FormattedMessage id='ViewProductPage.priceLabel' /></span>
-          <span>
-            <FormattedMessage
-              id='ViewProductPage.price'
-              values={{ money: product.productPrice }}
-            />
-          </span>
-        </div>
-        <Button
-          className={style.button}
-          onClick={handleAddToCart}
-          disabled={isCurrentUserSeller}
-        >
-          <FormattedMessage id="ViewProductPage.BuyNow" />
-        </Button>
-        <Button
-          className={style.button}
-          onClick={handleAddToCart}
-          disabled={isCurrentUserSeller}
-          variant='outline-primary'
-        >
-          <AiOutlineShoppingCart />
-          <FormattedMessage id="ViewProductPage.AddToCart" />
-        </Button>
+        {isBought === null
+          ? <Spinner animation='border' />
+          : <><div className={style.priceRow}>
+            <span><FormattedMessage id='ViewProductPage.priceLabel' /></span>
+            <span>
+              <FormattedMessage
+                id='ViewProductPage.price'
+                values={{ money: product.productPrice }}
+              />
+            </span>
+          </div>
+            {isBought === true
+              ? <Link to='/purchases'><Button
+                className={style.button}
+              >
+                <FormattedMessage id="ViewProductPage.AlreadyOwned" />
+              </Button></Link>
+              : <>
+                <Button
+                  className={style.button}
+                  onClick={() => {
+                    handleAddToCart('now');
+                  }}
+                  disabled={isCurrentUserSeller}
+                >
+                  <FormattedMessage id="ViewProductPage.BuyNow" />
+                </Button>
+                <Button
+                  className={style.button}
+                  onClick={() => handleAddToCart()}
+                  disabled={isCurrentUserSeller}
+                  variant='outline-primary'
+                >
+                  <AiOutlineShoppingCart />
+                  <FormattedMessage id="ViewProductPage.AddToCart" />
+                </Button>
+              </>
+
+            }
+
+          </>
+        }
       </section>
 
       {/* <div className={style.buttonRow}>

@@ -91,7 +91,11 @@ const ReviewProduct: FC<IProps> = (props) => {
     })
       .then((res: any) => {
         props.handleClose();
-        toast.success(intl.formatMessage({ id: 'ReviewProduct.successMessage' }));
+        toast.success(intl.formatMessage({ id: 'ReviewProduct.successMessage' }),
+          {
+            onOpen: () => navigate(`/product/${productId}`)
+          }
+        );
       })
       .catch(error => {
         console.log(error);

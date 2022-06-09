@@ -38,8 +38,6 @@ const SectionSeller: React.FC<Props> = props => {
       .finally(() => setIsLoading(false))
   }, [])
 
-  console.log(shop)
-
   return (
     <section className={style.seller}>
       {

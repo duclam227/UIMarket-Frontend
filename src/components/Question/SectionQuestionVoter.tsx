@@ -1,6 +1,9 @@
 import { FC, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
+import { debounce, throttle } from 'lodash';
+import { toast } from "react-toastify";
+import { injectIntl, IntlShape } from "react-intl";
 
 import { getErrorMessage } from "../../app/util";
 import { customer, voteStatus } from "../../app/util/interfaces";
@@ -21,10 +24,11 @@ interface VoterProps {
   voteStatus: voteStatus | null;
   currentUser: customer | null;
   handleVoteStatus: Function;
+  intl: IntlShape;
 }
 
 const SectionQuestionVoter: FC<VoterProps> = (props) => {
-  const { question, voteStatus, currentUser } = props;
+  const { question, voteStatus, currentUser, intl } = props;
   const [upvote, setUpvote] = useState(question.totalUpvote);
   const [downvote, setDownvote] = useState(question.totalDownvote);
   const navigate = useNavigate();
@@ -44,6 +48,7 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
     }
 
     if (isCurrentUserAuthor) {
+      toast.warning(intl.formatMessage({ id: 'Question.authorCantVote' }))
       return;
     }
 
@@ -109,12 +114,12 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
   }
 
   const upvoteIcon = voteStatus && voteStatus.upvote
-    ? <BsArrowUpCircleFill onClick={handleUpvote} className={upvoteActiveStyle} />
-    : <BsArrowUpCircle onClick={handleUpvote} className={upvoteStyle} />
+    ? <BsArrowUpCircleFill onClick={debounce(handleUpvote, 200)} className={upvoteActiveStyle} />
+    : <BsArrowUpCircle onClick={debounce(handleUpvote, 200)} className={upvoteStyle} />
 
   const downvoteIcon = voteStatus && voteStatus.downvote
-    ? <BsArrowDownCircleFill onClick={handleDownvote} className={downvoteActiveStyle} />
-    : <BsArrowDownCircle onClick={handleDownvote} className={downvoteStyle} />
+    ? <BsArrowDownCircleFill onClick={debounce(handleDownvote, 200)} className={downvoteActiveStyle} />
+    : <BsArrowDownCircle onClick={debounce(handleDownvote, 200)} className={downvoteStyle} />
 
   return (
     <div className={style.voter}>
@@ -129,4 +134,4 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
   )
 }
 
-export default SectionQuestionVoter;
+export default injectIntl(SectionQuestionVoter);
