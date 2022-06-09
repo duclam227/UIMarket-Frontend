@@ -31,6 +31,7 @@
   "AdminNavbar.invoiceManagement": "Invoice Management",
   "AdminNavbar.supportCenter": "Support Center",
   "AdminNavbar.shopManagement": "Shop Management",
+  "AdminReportDetailPage.goBackButtonLabel": "Back to Support Center",
   "AdminReportDetailPage.pageTitleLabel": "Report Details",
   "AdminReportDetailPage.reportIdLabel": "Report Object ID: ",
   "AdminReportDetailPage.reportObjectNumberLabel": "Report No.",

@@ -9,7 +9,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import Spinner from 'react-bootstrap/Spinner';
 import Button from 'react-bootstrap/Button';
 
-import { BsCheckCircleFill, BsXCircleFill } from 'react-icons/bs';
+import { BsCheckCircleFill, BsXCircleFill, BsChevronLeft } from 'react-icons/bs';
 
 import adminAPI from '../../api/admin';
 import { getErrorMessage } from '../../app/util';
@@ -27,6 +27,9 @@ interface ReportDetails {
 }
 
 const AdminReportDetailPage = () => {
+  const goBackButtonLabel = (
+    <FormattedMessage id="AdminReportDetailPage.goBackButtonLabel" />
+  );
   const pageTitleLabel = <FormattedMessage id="AdminReportDetailPage.pageTitleLabel" />;
   const reportIdLabel = <FormattedMessage id="AdminReportDetailPage.reportIdLabel" />;
   const reportObjectNumberLabel = (
@@ -108,7 +111,17 @@ const AdminReportDetailPage = () => {
   return (
     <Container className={`p-0`}>
       <Row className={`bg-white p-4 border`}>
-        <h2>{pageTitleLabel}</h2>
+        <Link
+          to="/admin/reports"
+          className="d-flex align-items-center"
+          style={{ width: 'fit-content' }}
+        >
+          <div className="d-flex align-items-center justify-content center me-2">
+            <BsChevronLeft />
+          </div>
+          <span>{goBackButtonLabel}</span>
+        </Link>
+        <h2 className="mt-3">{pageTitleLabel}</h2>
       </Row>
       {reportDetails ? (
         <>
