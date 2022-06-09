@@ -1,6 +1,6 @@
-import React from 'react';
 import { FC } from 'react';
 import { FormattedMessage, IntlShape, injectIntl, FormattedDate } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import Button from 'react-bootstrap/Button';
 
@@ -72,13 +72,15 @@ const ReportsTable: FC<Props> = props => {
       label: actionTableHeaderLabel,
       width: 15,
       content: (report: ReportObject) => (
-        <Button
-          variant="light"
-          className={`${style.actionBtn} d-flex align-items-center justify-content-center`}
-        >
-          <span className={`me-2`}>{viewDetailsBtnlabel}</span>
-          <BsCardList />
-        </Button>
+        <Link to={`/admin/reports/${report.reportObject}`}>
+          <Button
+            variant="light"
+            className={`${style.actionBtn} d-flex align-items-center justify-content-center`}
+          >
+            <span className={`me-2`}>{viewDetailsBtnlabel}</span>
+            <BsCardList />
+          </Button>
+        </Link>
       ),
     },
   ];
