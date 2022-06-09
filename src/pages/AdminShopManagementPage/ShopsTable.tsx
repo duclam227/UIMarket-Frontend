@@ -64,16 +64,16 @@ const ShopsTable: FC<Props> = props => {
           >
             <li>
               {shop.shopStatus > 0 ? (
-                <span
+                <button
                   onClick={() => onDeactivateShop(shop._id)}
                   className="dropdown-item"
                 >
                   {deactivateDropdownLabel}
-                </span>
+                </button>
               ) : (
-                <span onClick={() => onActivateShop(shop._id)} className="dropdown-item">
+                <button onClick={() => onActivateShop(shop._id)} className="dropdown-item">
                   {activateDropdownLabel}
-                </span>
+                </button>
               )}
             </li>
           </ul>

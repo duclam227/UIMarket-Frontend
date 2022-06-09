@@ -59,16 +59,16 @@ const UsersTable: FC<Props> = props => {
           >
             <li>
               {user.customerStatus > 0 ? (
-                <span
+                <button
                   onClick={() => onDeactivateUser(user._id)}
                   className="dropdown-item"
                 >
                   {deactivateDropdownLabel}
-                </span>
+                </button>
               ) : (
-                <span onClick={() => onActivateUser(user._id)} className="dropdown-item">
+                <button onClick={() => onActivateUser(user._id)} className="dropdown-item">
                   {activateDropdownLabel}
-                </span>
+                </button>
               )}
             </li>
           </ul>
