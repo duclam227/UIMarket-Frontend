@@ -1,8 +1,12 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
-import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import { toast } from 'react-toastify';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -10,29 +14,37 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 
-import { question } from '../../app/util/interfaces';
-import { PageWithNavbar } from '../../components';
+import { FormInput, PageWithNavbar } from '../../components';
+import { RichTextEditor } from '../../components';
 import { getErrorMessage } from '../../app/util';
+import { navbarBranches } from '../../app/util/config';
 import { errors as errorCodes } from '../../app/util/errors';
+
+import questionAPI from '../../api/question';
+import profileAPI from '../../api/profile';
+import { State } from '../../redux/store';
 
 import './EditQuestionPage.css';
 import style from './EditQuestionPage.module.css';
-import questionAPI from '../../api/question';
-import { RichTextEditor } from '../../components';
-import { navbarBranches } from '../../app/util/config';
 
-interface Props {
-  intl: IntlShape,
-}
+const EditQuestionPage = ({ intl }: any) => {
 
-const EditQuestionPage: FC<Props> = (props) => {
-  const { intl } = props;
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [body, setBody] = useState<string>('');
+  const [question, setQuestion] = useState<any>(null);
+  const [balance, setBalance] = useState<number>(0);
+  const [isBountyOn, setIsBountyOn] = useState<boolean>(false);
+  const [postInProgress, setPostInProgress] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const { id = '' } = useParams();
 
+  const currentUser = useSelector((state: State) => state.auth.user);
   const formGroupClassName = 'mb-3';
-  const cardClassName = 'mb-4';
+  const cardClassName = 'mb-4 d-flex flex-column';
   const containerClassName = classNames(style.pageContainer, 'w-75');
   const postQuestionButtonClassName = 'mb-3';
   const topUpButtonClassName = 'mb-3';
@@ -42,15 +54,13 @@ const EditQuestionPage: FC<Props> = (props) => {
   const pageTitle = (
     <FormattedMessage
       id="EditQuestionPage.pageTitle"
-      defaultMessage="Edit question"
+      defaultMessage="Ask a question"
     />
   );
-  const questionTitle = (
-    <FormattedMessage
-      id="EditQuestionPage.questionTitle"
-      defaultMessage="Title"
-    />
-  );
+  const questionTitle = intl.formatMessage({
+    id: 'EditQuestionPage.questionTitle',
+    defaultMessage: 'Title',
+  });
   const questionTitlePlaceholder = intl.formatMessage({
     id: 'EditQuestionPage.questionTitlePlaceholder',
     defaultMessage: 'e.g How do I...',
@@ -61,12 +71,11 @@ const EditQuestionPage: FC<Props> = (props) => {
       defaultMessage="Body"
     />
   );
-  const questionTags = (
-    <FormattedMessage
-      id="EditQuestionPage.questionTags"
-      defaultMessage="Tags"
-    />
-  );
+  const questionTags = intl.formatMessage({
+    id: 'EditQuestionPage.questionTags',
+    defaultMessage: 'Tags',
+  });
+
   const questionTagsPlaceholder = intl.formatMessage({
     id: 'EditQuestionPage.questionTagsPlaceholder',
     defaultMessage: 'e.g UI, color, alignment, ...',
@@ -74,7 +83,7 @@ const EditQuestionPage: FC<Props> = (props) => {
   const addBountyLabel = (
     <FormattedMessage
       id="EditQuestionPage.addBountyLabel"
-      defaultMessage="Adjust bounty"
+      defaultMessage="Add a bounty"
     />
   );
   const addBountyDescription = (
@@ -105,50 +114,55 @@ const EditQuestionPage: FC<Props> = (props) => {
       defaultMessage="Post Question"
     />
   );
-
+  interface Question {
+    title: string;
+    body: string;
+    tags: string;
+    bounty: number;
+    bountyDueDate: Date;
+  }
   const navigate = useNavigate();
-  const { id = '' } = useParams();
-
-  const [question, setQuestion] = useState<question>({
-    title: '',
-    body: '',
-    tags: [],
-    bounty: 0,
-    question: '',
+  const schema = Joi.object({
+    title: Joi.string().min(10).max(100).required().label('Title'),
+    body: Joi.string().min(20).required().label('Body'),
+    tags: Joi.string().allow('', null).label('Tags'),
+    bounty: Joi.number().min(question?.bounty || 150).max(balance).label('Bounty amount'),
+    bountyDueDate: Joi.date().min(question?.bountyDueDate || new Date()).label('Due date'),
   });
-  const [body, setBody] = useState<string>('');
-  const [balance, setBalance] = useState<number>(0);
-  const [postInProgress, setPostInProgress] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
 
-  const handleChange = ({ target: input }: ChangeEvent<HTMLInputElement>) => {
-    setQuestion({
-      ...question,
-      [input.id]: input.value,
-    });
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty, isValid },
+    control,
+    reset,
+  } = useForm<Question>({
+    resolver: joiResolver(schema),
+    mode: 'onTouched',
+    defaultValues: {
+      title: question?.title || '',
+      body: body || '',
+      tags: '',
+      bounty: question?.bounty <= 0 ? 0 : question?.bounty,
+      bountyDueDate: question?.bountyDueDate || new Date(),
+    },
+  });
 
-  const handleBodyChange = (text: string) => {
-    setBody(text);
-  };
+  const formatIntoArray = (input: string) =>
+    input.replace(/\s+/g, '').split(',');
 
-  const handleTagsChange = ({
-    currentTarget: input,
-  }: ChangeEvent<HTMLInputElement>) => {
-    const tags = input.value.replace(/\s+/g, '').split(',');
-    setQuestion({ ...question, tags });
-  };
-
-  const handleSubmit = async () => {
+  const handlePostQuestion: SubmitHandler<Question> = async data => {
+    const { tags } = data;
+    const question = {
+      ...data,
+      tags: formatIntoArray(tags),
+      bounty: isBountyOn ? data.bounty : -1,
+      bountyDueDate: isBountyOn ? data.bountyDueDate : undefined
+    };
     try {
       setPostInProgress(true);
-      const res: any = await questionAPI.updateQuestion({
-        questionTitle: question.title,
-        questionContent: body,
-        questionBounty: question.bounty,
-        questionTag: question.tags,
-      }, id);
-      navigate(`/question/${id}`, { replace: true });
+      await questionAPI.addNewQuestion(question);
+      navigate('/', { replace: true });
     } catch (error) {
       const errorMessage = getErrorMessage(error);
       setPostInProgress(false);
@@ -157,18 +171,38 @@ const EditQuestionPage: FC<Props> = (props) => {
   };
 
   useEffect(() => {
+    if (currentUser?._id) {
+      profileAPI.getUserProfileInfoById(currentUser?._id!)
+        .then((res: any) => {
+          const { user } = res;
+          setBalance(user.customerWallet.point);
+        })
+        .catch(error => {
+          const errorMsg = getErrorMessage(error);
+          const errorCode: any = errorCodes.profile[errorMsg as keyof typeof errorCodes.profile];
+          toast.error(intl.formatMessage({ id: `Profile.${errorCode}` }));
+        })
+    }
+  }, [currentUser])
+
+  useEffect(() => {
     questionAPI.getQuestionById(id)
       .then((res: any) => {
         const { question } = res;
-        const questionFromAPI: question = {
+        const { questionContent } = question;
+        const questionFromAPI: any = {
           title: question.questionTitle,
-          body: '',
           tags: [...question.questionTag],
           bounty: question.questionBounty === -1 ? 0 : question.questionBounty,
-          question: ''
+          bountyDueDate: question.bountyDueDate,
+          body: questionContent,
         }
         setQuestion(questionFromAPI);
-        setBody(question.questionContent);
+        setBody(questionContent);
+        reset({ ...questionFromAPI });
+
+        console.log(questionFromAPI)
+        setIsLoading(false);
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
@@ -182,99 +216,130 @@ const EditQuestionPage: FC<Props> = (props) => {
       <Container className={containerClassName}>
         <h1 className={style.pageTitle}>{pageTitle}</h1>
 
-        <Card className={cardClassName}>
-          <Card.Body>
-            <Form>
-              <Form.Group className={formGroupClassName} controlId="title">
-                <Form.Label>
-                  <h4>{questionTitle}</h4>
-                </Form.Label>
-                <Form.Control
-                  placeholder={questionTitlePlaceholder}
-                  type="text"
-                  onChange={e => handleChange(e as any)}
-                  defaultValue={question.title}
-                />
-              </Form.Group>
+        <Form onSubmit={handleSubmit(handlePostQuestion)} className='d-flex flex-column'>
+          <Card className={cardClassName}>
+            <Card.Body>
+              <FormInput
+                label={questionTitle}
+                placeholder={questionTitlePlaceholder}
+                name="title"
+                control={control}
+                className={formGroupClassName}
+                labelClassName={style.label}
+              />
 
               <Form.Group className={formGroupClassName}>
                 <Form.Label htmlFor="body">
                   <h4>{questionBody}</h4>
                 </Form.Label>
-                <RichTextEditor
-                  onChange={handleBodyChange}
-                  initialValue={body}
+                <Controller
+                  control={control}
+                  name="body"
+                  render={({ field: { onChange, onBlur } }) => (
+                    <RichTextEditor
+                      onChange={onChange}
+                      onBlur={onBlur}
+                      initialValue={body}
+                    // initialValue={question.body}
+                    />
+                  )}
                 />
+                {errors.body && (
+                  <Alert variant="danger" className="mt-2">
+                    {errors.body.message}
+                  </Alert>
+                )}
               </Form.Group>
 
-              <Form.Group className={formGroupClassName}>
-                <Form.Label>
-                  <h4>{questionTags}</h4>
-                </Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder={questionTagsPlaceholder}
-                  onChange={e => handleTagsChange(e as any)}
-                  defaultValue={question.tags.join(', ')}
-                />
-              </Form.Group>
-            </Form>
-          </Card.Body>
-        </Card>
+              <FormInput
+                label={questionTags}
+                placeholder={questionTagsPlaceholder}
+                name="tags"
+                control={control}
+                className={formGroupClassName}
+                labelClassName={style.label}
+              />
+              <Form.Text muted>
+                Each tag should only be a word, multiple tags should be
+                separated by a comma
+              </Form.Text>
+            </Card.Body>
+          </Card>
 
-        <Card className={cardClassName}>
-          <Card.Body>
-            <Row>
-              <Col md={8}>
-                <h4>{addBountyLabel}</h4>
-                <p className="text-muted">{addBountyDescription}</p>
-              </Col>
-              <Col md={4} className={topUpGroupClassName}>
-                <h4>
-                  {addBountyBalanceLabel}
-                  {balance}
-                </h4>
-                <Button variant="warning" className={topUpButtonClassName}>
-                  {addBountyTopUpBtnText}
-                </Button>
-              </Col>
-            </Row>
+          <Button
+            id="checkBounty"
+            variant={isBountyOn ? 'primary' : 'outline-primary'}
+            onClick={() => setIsBountyOn(!isBountyOn)}
+            className={style.checkBountyButton}
+          >
+            {isBountyOn
+              ? <FormattedMessage id='EditQuestionPage.removeBountyLabel' />
+              : <FormattedMessage id='EditQuestionPage.addBountyLabel' />
+            }
+          </Button>
 
-            <Row>
-              <Form.Group controlId="bounty">
-                <Form.Control
-                  type="number"
-                  placeholder={addBountyInputPlaceholder}
-                  onChange={e => handleChange(e as any)}
-                  defaultValue={question.bounty}
-                />
-              </Form.Group>
-            </Row>
-          </Card.Body>
-        </Card>
+          {isBountyOn
+            ? <Card className={cardClassName}>
+              <Card.Body>
+                <Row>
+                  <Col md={8}>
+                    <h4>{addBountyLabel}</h4>
+                    <p className="text-muted">{addBountyDescription}</p>
+                  </Col>
+                  <Col md={4} className={topUpGroupClassName}>
+                    <h4>
+                      {addBountyBalanceLabel}
+                      {balance}
+                    </h4>
+                  </Col>
+                </Row>
 
-        <Alert
-          variant="danger"
-          onClose={() => setErrorMessage('')}
-          show={errorMessage ? true : false}
-          dismissible
-        >
-          <Alert.Heading>Something went wrong!</Alert.Heading>
-          {errorMessage}
-        </Alert>
+                <Row>
+                  <FormInput
+                    placeholder={addBountyInputPlaceholder}
+                    name="bounty"
+                    control={control}
+                    type="number"
+                  />
+                </Row>
 
-        <Button
-          variant="primary"
-          className={postQuestionButtonClassName}
-          onClick={handleSubmit}
-          disabled={postInProgress}
-        >
-          {postInProgress ? (
-            <Spinner animation="border" variant="light" size="sm" />
-          ) : (
-            submitBtnText
-          )}
-        </Button>
+                <Row>
+                  <FormInput
+                    label={intl.formatMessage({ id: 'EditQuestionPage.bountyDueDateLabel' })}
+                    name="bountyDueDate"
+                    control={control}
+                    type="date"
+                    labelClassName={style.label}
+                  />
+                </Row>
+              </Card.Body>
+            </Card>
+            : null
+          }
+
+          <Alert
+            variant="danger"
+            onClose={() => setErrorMessage('')}
+            show={errorMessage ? true : false}
+            dismissible
+          >
+            <Alert.Heading>Something went wrong!</Alert.Heading>
+            {errorMessage}
+          </Alert>
+
+          <Button
+            variant="primary"
+            type="submit"
+            className={postQuestionButtonClassName}
+            disabled={postInProgress || !isDirty || !isValid}
+          >
+            {postInProgress ? (
+              <Spinner animation="border" variant="light" size="sm" />
+            ) : (
+              submitBtnText
+            )}
+          </Button>
+        </Form>
       </Container>
     </PageWithNavbar>
   );
