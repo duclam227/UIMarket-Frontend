@@ -17,7 +17,7 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom';
 const CheckoutPage: FunctionComponent = () => {
   const { state } = useLocation() as any;
   const navigate = useNavigate();
-  const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID!;
+  const PAYPAL_CLIENT_ID = process.env.REACT_APP_PAYPAL_CLIENT_ID!;
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
