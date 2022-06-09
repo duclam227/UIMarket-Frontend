@@ -57,6 +57,7 @@ import {
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
 import ProductListPageByCategory from './pages/ProductListPage/ProductListPageByCategory';
+import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -122,6 +123,7 @@ function App() {
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactUsPage />} />
         <Route path="/cart" element={<RequireUser><CartPage /></RequireUser>} />
+        <Route path="/checkout" element={<RequireUser><CheckoutPage /></RequireUser>} />
         <Route path="/payment/*" element={<RequireUser><ConfirmPaymentPage /></RequireUser>} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/products" element={<ProductListPage />} />

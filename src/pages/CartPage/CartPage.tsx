@@ -25,6 +25,7 @@ const CartPage: FunctionComponent = () => {
       .getAllCartProducts()
       .then((res: any) => {
         const { cart } = res;
+        console.log(cart);
         setProducts(cart);
         setIsLoading(false);
       })
@@ -38,21 +39,24 @@ const CartPage: FunctionComponent = () => {
   const handleCheckoutCart = () => {
     setIsLoading(true);
 
-    paymentAPI
-      .checkout(selectedProducts)
-      .then((res: any) => {
-        const { paypal_link, invoiceId, isFree } = res;
-        console.log(res);
-        if (!isFree) {
-          saveMostRecentInvoiceId(invoiceId);
-          window.location.replace(paypal_link);
-        } else {
-          navigate('/purchases');
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    navigate('/checkout', { state: {
+      products: cartProducts
+    }})
+    // paymentAPI
+    //   .checkout(selectedProducts)
+    //   .then((res: any) => {
+    //     const { paypal_link, invoiceId, isFree } = res;
+    //     console.log(res);
+    //     if (!isFree) {
+    //       saveMostRecentInvoiceId(invoiceId);
+    //       window.location.replace(paypal_link);
+    //     } else {
+    //       navigate('/purchases');
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   };
 
   const handleToggleProduct = (product: any) => {
@@ -157,7 +161,7 @@ const CartPage: FunctionComponent = () => {
         <Button className="m-2" onClick={handleCheckoutCart} disabled={selectedProducts.length < 1}>
           <FormattedMessage
             id="CartPage.checkoutBtnLabel"
-            defaultMessage="Checkout with Paypal"
+            defaultMessage="Checkout"
           />
         </Button>
       </div>
