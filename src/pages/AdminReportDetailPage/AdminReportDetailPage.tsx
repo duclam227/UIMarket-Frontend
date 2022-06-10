@@ -1,7 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FC } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { FormattedDate, FormattedMessage, FormattedTime } from 'react-intl';
+import {
+  FormattedDate,
+  FormattedMessage,
+  FormattedTime,
+  IntlShape,
+  injectIntl,
+} from 'react-intl';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -26,7 +32,12 @@ interface ReportDetails {
   _id: string;
 }
 
-const AdminReportDetailPage = () => {
+interface Props {
+  intl: IntlShape;
+}
+
+const AdminReportDetailPage: FC<Props> = props => {
+  const { intl } = props;
   const goBackButtonLabel = (
     <FormattedMessage id="AdminReportDetailPage.goBackButtonLabel" />
   );
@@ -42,6 +53,9 @@ const AdminReportDetailPage = () => {
   const reasonLabel = <FormattedMessage id="AdminReportDetailPage.reasonLabel" />;
   const approveBtnLabel = <FormattedMessage id="AdminReportDetailPage.approveBtnLabel" />;
   const rejectBtnLabel = <FormattedMessage id="AdminReportDetailPage.rejectBtnLabel" />;
+  const cannotGetDataErrorMsg = intl.formatMessage({
+    id: 'ErrorMessage.cannotGetDataErrorMsg',
+  });
 
   const params = useParams();
   const navigate = useNavigate();
@@ -59,7 +73,7 @@ const AdminReportDetailPage = () => {
         setCurrentPage(page);
         setTotalPages(totalPages);
       } catch (e) {
-        toast.error('Cannot get data! An error has occurred');
+        toast.error(cannotGetDataErrorMsg);
         console.log(getErrorMessage(e));
       }
     };
@@ -103,7 +117,7 @@ const AdminReportDetailPage = () => {
       setCurrentPage(page);
       setTotalPages(totalPages);
     } catch (error) {
-      toast.error('Cannot get data! An error has occurred');
+      toast.error(cannotGetDataErrorMsg);
       console.log(error);
     }
   };
@@ -190,4 +204,4 @@ const AdminReportDetailPage = () => {
   );
 };
 
-export default AdminReportDetailPage;
+export default injectIntl(AdminReportDetailPage);

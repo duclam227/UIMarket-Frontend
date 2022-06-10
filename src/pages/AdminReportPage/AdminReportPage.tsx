@@ -25,7 +25,9 @@ const AdminReportPage: FC<Props> = props => {
     id: 'CommonNavbar.searchBarPlaceholder',
     defaultMessage: 'Search',
   });
-
+  const cannotGetDataErrorMsg = intl.formatMessage({
+    id: 'ErrorMessage.cannotGetDataErrorMsg',
+  });
   const [reports, setReports] = useState<ReportObject[] | null>(null);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -39,7 +41,7 @@ const AdminReportPage: FC<Props> = props => {
         setCurrentPage(page);
         setTotalPages(totalPages);
       } catch (error) {
-        toast.error('Cannot get data! An error has occurred');
+        toast.error(cannotGetDataErrorMsg);
         console.log(error);
       }
     };
@@ -54,7 +56,7 @@ const AdminReportPage: FC<Props> = props => {
       setCurrentPage(pageNumber);
       setTotalPages(totalPages);
     } catch (error) {
-      toast.error('Cannot get data! An error has occurred');
+      toast.error(cannotGetDataErrorMsg);
       console.log(error);
     }
   };

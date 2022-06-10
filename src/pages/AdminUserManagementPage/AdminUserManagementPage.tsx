@@ -25,7 +25,9 @@ const AdminUserManagementPage: FC<Props> = props => {
     id: 'CommonNavbar.searchBarPlaceholder',
     defaultMessage: 'Search',
   });
-
+  const cannotGetDataErrorMsg = intl.formatMessage({
+    id: 'ErrorMessage.cannotGetDataErrorMsg',
+  });
   const [users, setUsers] = useState<customer[] | null>(null);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -38,7 +40,7 @@ const AdminUserManagementPage: FC<Props> = props => {
         setCurrentPage(page);
         setTotalPages(totalPages);
       } catch (error) {
-        toast.error('Cannot get data! An error has occurred');
+        toast.error(cannotGetDataErrorMsg);
         console.log(error);
       }
     };
@@ -54,7 +56,7 @@ const AdminUserManagementPage: FC<Props> = props => {
       setCurrentPage(pageNumber);
       setTotalPages(totalPages);
     } catch (error) {
-      toast.error('Cannot get data! An error has occurred');
+      toast.error(cannotGetDataErrorMsg);
       console.log(error);
     }
   };

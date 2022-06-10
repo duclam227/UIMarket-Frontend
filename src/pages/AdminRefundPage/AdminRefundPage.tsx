@@ -57,6 +57,9 @@ const AdminRefundPage: FC<Props> = props => {
     id: 'AdminRefundPage.filterOptionSolved',
   });
 
+  const cannotGetDataErrorMsg = intl.formatMessage({
+    id: 'ErrorMessage.cannotGetDataErrorMsg',
+  });
   const filterOptions = [
     // (STATUS_ALL = 'all'),
     // (STATUS_PENDING = 'pending'),
@@ -86,13 +89,12 @@ const AdminRefundPage: FC<Props> = props => {
           searchParams.get('filter'),
           searchParams.get('sort'),
         );
-        console.log(res);
         const { refunds, totalPages, page } = res;
         setRefunds(refunds);
         setCurrentPage(page);
         setTotalPages(totalPages);
       } catch (error) {
-        toast.error('Cannot get data! An error has occurred');
+        toast.error(cannotGetDataErrorMsg);
         console.log(error);
       }
     };
@@ -108,7 +110,7 @@ const AdminRefundPage: FC<Props> = props => {
       setCurrentPage(pageNumber);
       setTotalPages(totalPages);
     } catch (error) {
-      toast.error('Cannot get data! An error has occurred');
+      toast.error(cannotGetDataErrorMsg);
       console.log(error);
     }
   };
