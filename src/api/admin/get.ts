@@ -40,7 +40,11 @@ class Get {
       config,
     );
   };
-  getReportDetails = (id: string, pageNumber?: number | string, itemsPerPage?: number) => {
+  getReportDetails = (
+    id: string,
+    pageNumber?: number | string,
+    itemsPerPage?: number,
+  ) => {
     const jwt = getJwt();
     const config = {
       headers: {
@@ -49,6 +53,23 @@ class Get {
     };
     return axiosClient.get(
       `${API_ENDPOINT}/report/detail/${id}?page=${pageNumber}&limit=${itemsPerPage}`,
+      config,
+    );
+  };
+  getAllRefunds = (
+    pageNumber: number | string,
+    itemsPerPage: number,
+    filter?: string | null,
+    sort?: string | null,
+  ) => {
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    return axiosClient.get(
+      `${API_ENDPOINT}/refund?filter=${filter}&sort=${sort}&page=${pageNumber}&limit=${itemsPerPage}`,
       config,
     );
   };

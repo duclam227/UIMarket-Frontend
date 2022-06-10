@@ -5,6 +5,7 @@ const adminAPI = {
   getAllShops: get.getAllShops,
   getAllReports: get.getAllReports,
   getReportDetails: get.getReportDetails,
+  getAllRefunds: get.getAllRefunds,
 
   activateUser: put.activateUser,
   deactivateUser: put.deactivateUser,
