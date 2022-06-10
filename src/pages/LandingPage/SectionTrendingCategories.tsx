@@ -1,32 +1,32 @@
 import { FormattedMessage } from 'react-intl';
 import style from './LandingPage.module.css';
+import fontimg from './images/categories/fonts.png';
+import webthemes from './images/categories/webthemes.png';
+import uikits from './images/categories/uikits.png';
+import illustrations from './images/categories/illustrations.png';
+import mockups from './images/categories/mockups.png';
 
 const SectionTrendingCategories = () => {
   const categories = [
     {
-      label: 'One',
-      cover:
-        'https://scontent.fsgn2-1.fna.fbcdn.net/v/t39.30808-6/273521795_2145114342303326_7930307173132119773_n.jpg?_nc_cat=107&ccb=1-6&_nc_sid=09cbfe&_nc_ohc=i2GLBCzWWIEAX_EL5-h&tn=i3yw3qEmSJxwXx1f&_nc_ht=scontent.fsgn2-1.fna&oh=00_AT-fj32SEee5N48EKY_QyoBPYtbsK_ahf4JcaIq7-0bkDQ&oe=62813B51',
+      label: 'Fonts',
+      cover: fontimg,
     },
     {
-      label: 'Two',
-      cover:
-        'https://scontent.fsgn2-1.fna.fbcdn.net/v/t39.30808-6/273521795_2145114342303326_7930307173132119773_n.jpg?_nc_cat=107&ccb=1-6&_nc_sid=09cbfe&_nc_ohc=i2GLBCzWWIEAX_EL5-h&tn=i3yw3qEmSJxwXx1f&_nc_ht=scontent.fsgn2-1.fna&oh=00_AT-fj32SEee5N48EKY_QyoBPYtbsK_ahf4JcaIq7-0bkDQ&oe=62813B51',
+      label: 'Web Themes',
+      cover: webthemes,
     },
     {
-      label: 'Three',
-      cover:
-        'https://scontent.fsgn2-1.fna.fbcdn.net/v/t39.30808-6/273521795_2145114342303326_7930307173132119773_n.jpg?_nc_cat=107&ccb=1-6&_nc_sid=09cbfe&_nc_ohc=i2GLBCzWWIEAX_EL5-h&tn=i3yw3qEmSJxwXx1f&_nc_ht=scontent.fsgn2-1.fna&oh=00_AT-fj32SEee5N48EKY_QyoBPYtbsK_ahf4JcaIq7-0bkDQ&oe=62813B51',
+      label: 'UI Kits',
+      cover: uikits,
     },
     {
-      label: 'Four',
-      cover:
-        'https://scontent.fsgn2-1.fna.fbcdn.net/v/t39.30808-6/273521795_2145114342303326_7930307173132119773_n.jpg?_nc_cat=107&ccb=1-6&_nc_sid=09cbfe&_nc_ohc=i2GLBCzWWIEAX_EL5-h&tn=i3yw3qEmSJxwXx1f&_nc_ht=scontent.fsgn2-1.fna&oh=00_AT-fj32SEee5N48EKY_QyoBPYtbsK_ahf4JcaIq7-0bkDQ&oe=62813B51',
+      label: 'Illustrations',
+      cover: illustrations,
     },
     {
-      label: 'Five',
-      cover:
-        'https://scontent.fsgn2-1.fna.fbcdn.net/v/t39.30808-6/273521795_2145114342303326_7930307173132119773_n.jpg?_nc_cat=107&ccb=1-6&_nc_sid=09cbfe&_nc_ohc=i2GLBCzWWIEAX_EL5-h&tn=i3yw3qEmSJxwXx1f&_nc_ht=scontent.fsgn2-1.fna&oh=00_AT-fj32SEee5N48EKY_QyoBPYtbsK_ahf4JcaIq7-0bkDQ&oe=62813B51',
+      label: 'Mockups',
+      cover: mockups,
     },
   ];
 
@@ -45,7 +45,11 @@ const SectionTrendingCategories = () => {
         <div className={style.sectionTrendingCategoriesList}>
           {categories.map(cate => (
             <div key={cate.label} className={style.categoryCard}>
-              <img src={cate.cover} className={style.categoryCardCover} />
+              <img
+                src={cate.cover}
+                className={style.categoryCardCover}
+                alt={cate.label}
+              />
               <div className={style.categoryCardTitle}>{cate.label}</div>
             </div>
           ))}
