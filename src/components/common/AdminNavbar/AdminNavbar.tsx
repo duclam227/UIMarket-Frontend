@@ -44,8 +44,8 @@ const AdminNavbar = () => {
       label: <FormattedMessage id="AdminNavbar.shopManagement" />,
     },
     {
-      key: 'invoice-management',
-      label: <FormattedMessage id="AdminNavbar.invoiceManagement" />,
+      key: 'refunds',
+      label: <FormattedMessage id="AdminNavbar.refunds" />,
     },
     {
       key: 'reports',
