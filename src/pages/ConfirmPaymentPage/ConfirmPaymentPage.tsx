@@ -5,7 +5,6 @@ import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { State } from '../../redux/store';
 
 import { getMostRecentInvoiceId } from '../../app/util';
-import paymentAPI from '../../api/payment';
 
 import { PageWithNavbar } from '../../components';
 import cover from './successIllustration.png';
@@ -21,16 +20,6 @@ const ConfirmPaymentPage = () => {
   const token = searchParams.get('token');
   const invoiceId = getMostRecentInvoiceId();
 
-  useEffect(() => {
-    setIsLoading(true);
-    paymentAPI.confirmOrder(token!, invoiceId!)
-      .then((res: any) => {
-        setIsLoading(false);
-      })
-      .catch(error => {
-        console.log(error);
-      })
-  }, [])
 
   return isLoading
     ? <PageWithNavbar>

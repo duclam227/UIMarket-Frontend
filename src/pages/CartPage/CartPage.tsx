@@ -38,33 +38,21 @@ const CartPage: FunctionComponent = () => {
   const handleCheckoutCart = () => {
     setIsLoading(true);
 
-    paymentAPI
-      .checkout(selectedProducts)
-      .then((res: any) => {
-        const { paypal_link, invoiceId, isFree } = res;
-        console.log(res);
-        if (!isFree) {
-          saveMostRecentInvoiceId(invoiceId);
-          window.location.replace(paypal_link);
-        } else {
-          navigate('/purchases');
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    navigate('/checkout', {
+      state: {
+        products: selectedProducts,
+      },
+    });
   };
 
   const handleToggleProduct = (product: any) => {
-    const selectedProductIds = selectedProducts.map(product => product.product);
+    const selectedProductIds = selectedProducts.map(product => product._id);
     if (selectedProductIds && selectedProductIds.includes(product._id)) {
-      setSelectedProducts([...selectedProducts.filter(pro => pro.product !== product._id)]);
+      setSelectedProducts([...selectedProducts.filter(pro => pro._id !== product._id)]);
     } else {
-      setSelectedProducts([...selectedProducts,
-      { product: product._id, shop: product.shopId, price: product.productPrice }
-      ]);
+      setSelectedProducts([...selectedProducts, { ...product }]);
     }
-  }
+  };
 
   const renderItems = (cart: Array<any>) => {
     const handleRemoveItem = (removedItem: any) => {
@@ -75,7 +63,9 @@ const CartPage: FunctionComponent = () => {
             return item.product._id !== removedItem._id;
           });
           setProducts(newList);
-          setSelectedProducts([...selectedProducts.filter(pro => pro.product !== removedItem._id)])
+          setSelectedProducts([
+            ...selectedProducts.filter(pro => pro._id !== removedItem._id),
+          ]);
         })
         .catch(error => {
           const errorMsg = getErrorMessage(error);
@@ -125,18 +115,17 @@ const CartPage: FunctionComponent = () => {
     });
   };
 
-  const totalPrice = (cart: any) => {
+  const totalPrice = () => {
     let price = 0;
-
     price = selectedProducts.reduce(
       (previousValue: any, currentValue: any) =>
-        previousValue + currentValue.price,
+        previousValue + currentValue.productPrice,
       price,
     );
     return price;
   };
 
-  const renderSummary = (cart: any) => {
+  const renderSummary = () => {
     return (
       <div className="d-flex flex-column p-4 bg-white border rounded">
         <h4 className="m-2">
@@ -152,13 +141,14 @@ const CartPage: FunctionComponent = () => {
               }}
             />
           </span>
-          <strong>{totalPrice(cart)}$</strong>
+          <strong>{totalPrice()}$</strong>
         </div>
-        <Button className="m-2" onClick={handleCheckoutCart} disabled={selectedProducts.length < 1}>
-          <FormattedMessage
-            id="CartPage.checkoutBtnLabel"
-            defaultMessage="Checkout with Paypal"
-          />
+        <Button
+          className="m-2"
+          onClick={handleCheckoutCart}
+          disabled={selectedProducts.length < 1}
+        >
+          <FormattedMessage id="CartPage.checkoutBtnLabel" defaultMessage="Checkout" />
         </Button>
       </div>
     );
@@ -178,14 +168,12 @@ const CartPage: FunctionComponent = () => {
               {renderItems(cartProducts)}
             </Col>
             <Col lg="1"></Col>
-            <Col lg="4">{renderSummary(cartProducts)}</Col>
+            <Col lg="4">{renderSummary()}</Col>
           </Row>
         ) : (
           <Container fluid className="d-flex flex-column align-items-center mb-5">
             <img src={illustration} alt="empty cart" className="m-5"></img>
-            <FormattedMessage
-              id="CartPage.NoItems"
-            ></FormattedMessage>
+            <FormattedMessage id="CartPage.NoItems"></FormattedMessage>
             <Button href="/products" className="m-5">
               Continue shopping
             </Button>
