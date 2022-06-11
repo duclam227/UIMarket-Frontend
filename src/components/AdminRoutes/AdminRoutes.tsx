@@ -10,6 +10,7 @@ import {
   AdminShopManagementPage,
   AdminUserManagementPage,
   AdminRefundPage,
+  AdminRefundDetailPage,
 } from '../../pages';
 
 const AdminRoutes = () => {
@@ -21,6 +22,7 @@ const AdminRoutes = () => {
   return (
     <PageWithNavbar branch="admin">
       <Routes>
+        <Route path="/refunds/:id" element={<AdminRefundDetailPage />} />
         <Route path="/refunds" element={<AdminRefundPage />} />
         <Route path="/shop-management" element={<AdminShopManagementPage />} />
         <Route path="/reports/:id" element={<AdminReportDetailPage />} />
