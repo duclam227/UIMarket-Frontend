@@ -73,6 +73,15 @@ class Get {
       config,
     );
   };
+  getRefundDetails = (refundId: string) => {
+    const jwt = getJwt();
+    const config = {
+      headers: {
+        Authorization: `Bearer ${jwt}`,
+      },
+    };
+    return axiosClient.get(`${API_ENDPOINT}/refund/${refundId}`, config);
+  };
 }
 
 export default new Get();
