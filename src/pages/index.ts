@@ -6,10 +6,15 @@ export { default as AccountVerifiedPage } from './AccountVerifiedPage/AccountVer
 export { default as AddAProductPage } from './AddAProductPage/AddAProductPage';
 export { default as AdminRefundDetailPage } from './AdminRefundDetailPage/AdminRefundDetailPage';
 export { default as AdminRefundPage } from './AdminRefundPage/AdminRefundPage';
+export { default as AdminDashboardPage } from './AdminDashboardPage/AdminDashboardPage';
 export { default as AdminReportDetailPage } from './AdminReportDetailPage/AdminReportDetailPage';
 export { default as AdminReportPage } from './AdminReportPage/AdminReportPage';
-export { default as AdminShopManagementPage } from './AdminShopManagementPage/AdminShopManagementPage';
-export { default as AdminUserManagementPage } from './AdminUserManagementPage/AdminUserManagementPage';
+export {
+	default as AdminShopManagementPage,
+} from './AdminShopManagementPage/AdminShopManagementPage';
+export {
+	default as AdminUserManagementPage,
+} from './AdminUserManagementPage/AdminUserManagementPage';
 export { default as AskAQuestionPage } from './AskAQuestionPage/AskAQuestionPage';
 export { default as AuthenticationPage } from './AuthenticationPage/AuthenticationPage';
 export { default as BadRequestPage } from './BadRequestPage/BadRequestPage';
