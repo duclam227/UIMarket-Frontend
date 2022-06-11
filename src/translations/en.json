@@ -37,6 +37,7 @@
   "AdminRefundDetailPage.shopNameLabel": "Sold by: ",
   "AdminRefundDetailPage.requestDetailHeader": "Request Detail",
   "AdminRefundDetailPage.refundStatusLabel": "Request status: ",
+  "AdminRefundDetailPage.refundAmountLabel": "Refund amount: ",
   "AdminRefundDetailPage.requestedByLabel": "Requested by: ",
   "AdminRefundDetailPage.requestedTimeLabel": "Requested time: ",
   "AdminRefundDetailPage.reasonLabel": "Reason: ",

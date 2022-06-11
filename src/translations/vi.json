@@ -37,6 +37,7 @@
   "AdminRefundDetailPage.shopNameLabel": "Người bán: ",
   "AdminRefundDetailPage.requestDetailHeader": "Thông Tin",
   "AdminRefundDetailPage.refundStatusLabel": "Trạng thái: ",
+  "AdminRefundDetailPage.refundAmountLabel": "Số tiền phải hoàn: ",
   "AdminRefundDetailPage.requestedByLabel": "Người yêu cầu: ",
   "AdminRefundDetailPage.requestedTimeLabel": "Thời gian gửi: ",
   "AdminRefundDetailPage.reasonLabel": "Lý do: ",

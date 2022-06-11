@@ -25,6 +25,7 @@ interface Props {
 }
 interface RefundDetail {
   _id: string;
+  refundAmount: number;
   userId: {
     _id: string;
     customerName: string;
@@ -60,17 +61,36 @@ const AdminRefundDetailPage: FC<Props> = props => {
     id: 'ErrorMessage.cannotGetDataErrorMsg',
   });
   const pageTitle = <FormattedMessage id="AdminRefundDetailPage.pageTitle" />;
-  const productInfoHeader = <FormattedMessage id="AdminRefundDetailPage.productInfoHeader" />;
-  const productNameLabel = <FormattedMessage id="AdminRefundDetailPage.productNameLabel" />;
+  const productInfoHeader = (
+    <FormattedMessage id="AdminRefundDetailPage.productInfoHeader" />
+  );
+  const productNameLabel = (
+    <FormattedMessage id="AdminRefundDetailPage.productNameLabel" />
+  );
   const shopNameLabel = <FormattedMessage id="AdminRefundDetailPage.shopNameLabel" />;
-  const requestDetailHeader = <FormattedMessage id="AdminRefundDetailPage.requestDetailHeader" />;
-  const refundStatusLabel = <FormattedMessage id="AdminRefundDetailPage.refundStatusLabel" />;
-  const requestedByLabel = <FormattedMessage id="AdminRefundDetailPage.requestedByLabel" />;
-  const requestedTimeLabel = <FormattedMessage id="AdminRefundDetailPage.requestedTimeLabel" />;
+  const requestDetailHeader = (
+    <FormattedMessage id="AdminRefundDetailPage.requestDetailHeader" />
+  );
+  const refundStatusLabel = (
+    <FormattedMessage id="AdminRefundDetailPage.refundStatusLabel" />
+  );
+  const refundAmountLabel = (
+    <FormattedMessage id="AdminRefundDetailPage.refundAmountLabel" />
+  );
+  const requestedByLabel = (
+    <FormattedMessage id="AdminRefundDetailPage.requestedByLabel" />
+  );
+  const requestedTimeLabel = (
+    <FormattedMessage id="AdminRefundDetailPage.requestedTimeLabel" />
+  );
   const reasonLabel = <FormattedMessage id="AdminRefundDetailPage.reasonLabel" />;
   const evidenceLabel = <FormattedMessage id="AdminRefundDetailPage.evidenceLabel" />;
-  const approveRefundLabel = <FormattedMessage id="AdminRefundDetailPage.approveRefundLabel" />;
-  const rejectRefundLabel = <FormattedMessage id="AdminRefundDetailPage.rejectRefundLabel" />;
+  const approveRefundLabel = (
+    <FormattedMessage id="AdminRefundDetailPage.approveRefundLabel" />
+  );
+  const rejectRefundLabel = (
+    <FormattedMessage id="AdminRefundDetailPage.rejectRefundLabel" />
+  );
   useEffect(() => {
     const getRefundDetail = async () => {
       try {
@@ -123,11 +143,9 @@ const AdminRefundDetailPage: FC<Props> = props => {
       {refundDetail ? (
         <Row className={`my-4`}>
           <Col lg={9} className={`bg-white p-4 border`}>
-            <h4>
-              {productInfoHeader}
-            </h4>
+            <h4>{productInfoHeader}</h4>
             <p>
-             {productNameLabel}
+              {productNameLabel}
               <Link to={`/product/${refundDetail?.licenseIds[0].product._id}`}>
                 {refundDetail?.licenseIds[0].product.productName}
               </Link>
@@ -140,7 +158,12 @@ const AdminRefundDetailPage: FC<Props> = props => {
             </p>
 
             <h4>{requestDetailHeader}</h4>
-            <p>{refundStatusLabel} {refundDetail?.refundStatus}</p>
+            <p>
+              {refundStatusLabel} {refundDetail?.refundStatus}
+            </p>
+            <p>
+              {refundAmountLabel} {refundDetail?.refundAmount}$
+            </p>
             <p>
               {requestedByLabel}{' '}
               <Link to={`/user/${refundDetail?.userId._id}`}>
@@ -148,10 +171,13 @@ const AdminRefundDetailPage: FC<Props> = props => {
               </Link>
             </p>
             <p>
-              {requestedTimeLabel}<FormattedDate value={refundDetail?.createdAt} />{' '}
+              {requestedTimeLabel}
+              <FormattedDate value={refundDetail?.createdAt} />{' '}
               <FormattedTime value={refundDetail?.createdAt} />
             </p>
-            <p>{reasonLabel} {refundDetail?.refundReason} </p>
+            <p>
+              {reasonLabel} {refundDetail?.refundReason}{' '}
+            </p>
             <p>{evidenceLabel} </p>
             <div className={`${style.evidencePicturesContainer}`}>
               {refundDetail?.refundEvidences.map((imageUrl, index) => (
@@ -172,7 +198,7 @@ const AdminRefundDetailPage: FC<Props> = props => {
                 variant="primary"
                 className={`d-flex mb-3 align-items-center justify-content-evenly`}
                 onClick={handleApproveRefund}
-                disabled={refundIsResolved}
+                disabled={refundIsResolved || refundDetail.refundAmount <= 0}
               >
                 <BsCheckCircleFill />
                 <span className="ms-1">{approveRefundLabel}</span>
@@ -181,7 +207,7 @@ const AdminRefundDetailPage: FC<Props> = props => {
                 variant="secondary"
                 className={`d-flex align-items-center justify-content-evenly`}
                 onClick={handleRejectRefund}
-                disabled={refundIsResolved}
+                disabled={refundIsResolved || refundDetail.refundAmount <= 0}
               >
                 <BsXCircleFill />
                 <span className="ms-1">{rejectRefundLabel}</span>
