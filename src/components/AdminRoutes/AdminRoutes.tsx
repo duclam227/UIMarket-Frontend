@@ -11,6 +11,7 @@ import {
   AdminUserManagementPage,
   AdminRefundPage,
   AdminRefundDetailPage,
+  AdminDashboardPage,
 } from '../../pages';
 
 const AdminRoutes = () => {
@@ -28,7 +29,8 @@ const AdminRoutes = () => {
         <Route path="/reports/:id" element={<AdminReportDetailPage />} />
         <Route path="/reports" element={<AdminReportPage />} />
         <Route path="/user-management" element={<AdminUserManagementPage />} />
-        <Route path="/" element={<Navigate to="/user-management" replace />} />
+        <Route path="/dashboard" element={<AdminDashboardPage />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </PageWithNavbar>
   );
