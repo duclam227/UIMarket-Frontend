@@ -3,10 +3,7 @@ import { getJwt } from './authHelpers';
 
 const sdk = new ChartsEmbedSDK({
 	baseUrl: process.env.REACT_APP_MONGO_CHART_BASE_URL,
-	getUserToken: () => {
-		const token = getJwt();
-		return token;
-	},
+	getUserToken: () => getJwt()
 });
 
 export default sdk;
