@@ -1,7 +1,7 @@
-import { FC, useEffect, useState } from "react";
-import { Alert, Button, Form } from "react-bootstrap";
-import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
-import { useDispatch, useSelector } from "react-redux";
+import { FC, useEffect, useState } from 'react';
+import { Alert, Button, Form } from 'react-bootstrap';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -18,7 +18,7 @@ import style from './LoginForm.module.css';
 import { FormInput } from '../../components';
 import authAPI from '../../api/auth';
 import { getErrorMessage } from '../../app/util';
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 interface loginFormProps {
   intl: IntlShape;
@@ -30,9 +30,7 @@ const LoginForm: FC<loginFormProps> = props => {
   const location = useLocation();
 
   //general login form labels
-  const title = (
-    <FormattedMessage id="LoginForm.title" defaultMessage="Sign in" />
-  );
+  const title = <FormattedMessage id="LoginForm.title" defaultMessage="Sign in" />;
   const forgotPasswordMessage = (
     <FormattedMessage
       id="LoginForm.forgotPassword"
@@ -45,9 +43,7 @@ const LoginForm: FC<loginFormProps> = props => {
   const signUpMessage = (
     <FormattedMessage id="LoginForm.signUp" defaultMessage="Sign up." />
   );
-  const dividerMesage = (
-    <FormattedMessage id="LoginForm.divider" defaultMessage="Or" />
-  );
+  const dividerMesage = <FormattedMessage id="LoginForm.divider" defaultMessage="Or" />;
 
   //button labels
   const submitMessage = (
@@ -110,7 +106,6 @@ const LoginForm: FC<loginFormProps> = props => {
       dispatch(loginSuccess({ ...customer }));
       const { state: locationState }: { state: any } = location;
       window.location = locationState ? locationState.from.pathname : '/';
-
     } catch (e: any) {
       if (e.response && e.response.data.msg === 'account-inactived') {
         const { userId } = e.response.data;
@@ -118,7 +113,7 @@ const LoginForm: FC<loginFormProps> = props => {
       } else {
         const errorMsg = getErrorMessage(e);
         const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
-        toast.error(intl.formatMessage({ id: `LoginForm.${errorCode}` }))
+        toast.error(intl.formatMessage({ id: `LoginForm.${errorCode}` }));
       }
     }
   };
@@ -127,12 +122,10 @@ const LoginForm: FC<loginFormProps> = props => {
     const { tokenId } = data;
     try {
       dispatch(logInWithGoogle(tokenId));
-      const { state: locationState }: { state: any } = location;
-      window.location = locationState ? locationState.from.pathname : '/';
     } catch (error) {
       const errorMsg = getErrorMessage(error);
       const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
-      toast.error(intl.formatMessage({ id: `LoginForm.${errorCode}` }))
+      toast.error(intl.formatMessage({ id: `LoginForm.${errorCode}` }));
     }
   };
 
@@ -140,7 +133,7 @@ const LoginForm: FC<loginFormProps> = props => {
 
   useEffect(() => {
     dispatch(setError(null));
-  }, [])
+  }, []);
 
   return (
     <>
@@ -150,8 +143,13 @@ const LoginForm: FC<loginFormProps> = props => {
           <GoogleLogin
             clientId={CLIENT_ID!}
             buttonText={continueWithGoogleLabel}
-            onSuccess={(res: any) => handleGoogleLogin(res)}
-            onFailure={(res: any) => toast.error(intl.formatMessage({ id: 'LoginForm.actionFailed' }))}
+            onSuccess={(res: any) => {
+              console.log(res);
+              handleGoogleLogin(res);
+            }}
+            onFailure={(res: any) =>
+              toast.error(intl.formatMessage({ id: 'LoginForm.actionFailed' }))
+            }
             cookiePolicy={'single_host_origin'}
           />
         </div>
@@ -168,9 +166,7 @@ const LoginForm: FC<loginFormProps> = props => {
             className={`mb-3`}
           />
           <Form.Group className="mb-3" controlId="customerPassword">
-            <Form.Label className={style.label}>
-              {loginFormPasswordLabel}
-            </Form.Label>
+            <Form.Label className={style.label}>{loginFormPasswordLabel}</Form.Label>
             <Form.Control
               type="password"
               placeholder={loginFormPasswordPlaceholder}
@@ -189,11 +185,7 @@ const LoginForm: FC<loginFormProps> = props => {
             )}
           </Form.Group>
 
-          <Button
-            variant="primary"
-            type="submit"
-            className={style.submitButton}
-          >
+          <Button variant="primary" type="submit" className={style.submitButton}>
             {submitMessage}
           </Button>
         </Form>
