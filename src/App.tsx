@@ -159,7 +159,7 @@ function App() {
         />
         <Route path="/refund/:id" element={<RequireUser><RequestRefundPage /></RequireUser>} />
         <Route path="/admin/*" element={<AdminRoutes />} />
-        <Route path="/admin" element={<Navigate to="/admin/user-management" replace />} />
+        <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
         <Route path="/wallet" element={<RequireUser><ShopWalletPage /></RequireUser>} />
         <Route path="/forbidden" element={<ForbiddenPage />} />
         <Route path="/bad-request" element={<BadRequestPage />} />
