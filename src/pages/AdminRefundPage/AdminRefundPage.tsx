@@ -71,8 +71,8 @@ const AdminRefundPage: FC<Props> = props => {
     { value: 'solved', label: filterOptionSolved },
   ];
   const sortOptions = [
-    { value: 'newest', label: sortOptionNewest },
     { value: 'oldest', label: sortOptionOldest },
+    { value: 'newest', label: sortOptionNewest },
   ];
   const [searchParams, setSearchParams] = useSearchParams();
   const [refunds, setRefunds] = useState<RefundObject[] | null>(null);
@@ -136,7 +136,11 @@ const AdminRefundPage: FC<Props> = props => {
           <h6 className="text-nowrap me-3 p-0 m-0">{sortBySelectLabel} </h6>
           <Form.Select name="sort" onChange={e => handleChange(e)} className={`bg-light`}>
             {sortOptions.map(option => (
-              <option key={option.value} value={option.value}>
+              <option
+                key={option.value}
+                value={option.value}
+                selected={searchParams.get('sort') === option.value}
+              >
                 {option.label}
               </option>
             ))}
@@ -150,7 +154,11 @@ const AdminRefundPage: FC<Props> = props => {
             className={`bg-light`}
           >
             {filterOptions.map(option => (
-              <option key={option.value} value={option.value}>
+              <option
+                key={option.value}
+                value={option.value}
+                selected={searchParams.get('filter') === option.value}
+              >
                 {option.label}
               </option>
             ))}
