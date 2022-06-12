@@ -14,7 +14,7 @@ interface Props {
   purchase: any;
 }
 
-const DAYS_TO_REFUND = 6;
+const DAYS_TO_REFUND = 3;
 
 const Product: React.FC<Props> = props => {
   const { purchase } = props;
@@ -89,20 +89,23 @@ const Product: React.FC<Props> = props => {
 
         <Dropdown.Menu className={style.dropdown}>
           {!purchase.isReview ? (
-            <>
-              <Dropdown.Item onClick={() => setIsReviewing(true)}>
-                <FormattedMessage id="PurchaseHistoryPage.reviewButtonLabel" />
-              </Dropdown.Item>
-              <Dropdown.Divider />
-            </>
-          ) : null}
+            <Dropdown.Item onClick={() => setIsReviewing(true)}>
+              <FormattedMessage id="PurchaseHistoryPage.reviewButtonLabel" />
+            </Dropdown.Item>
+          ) : <Dropdown.Item>
+            <Link to={`/product/${product._id}`}>
+              <FormattedMessage id="PurchaseHistoryPage.alreadyReviewed" />
+            </Link>
+          </Dropdown.Item>}
 
           {!purchase.isInvoiceRefunded && daySinceBought < DAYS_TO_REFUND ? (
-            <Dropdown.Item>
-              <Link to={`/refund/${purchase.invoiceId}`}>
-                <FormattedMessage id="PurchaseHistoryPage.reportButtonLabel" />
-              </Link>
-            </Dropdown.Item>
+            <><Dropdown.Divider />
+              <Dropdown.Item>
+                <Link to={`/refund/${purchase.invoiceId}`}>
+                  <FormattedMessage id="PurchaseHistoryPage.reportButtonLabel" />
+                </Link>
+              </Dropdown.Item>
+            </>
           ) : null}
         </Dropdown.Menu>
       </Dropdown>
