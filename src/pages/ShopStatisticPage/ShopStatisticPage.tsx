@@ -9,14 +9,11 @@ import style from './ShopStatisticPage.module.css';
 const ShopStatisticPage = () => {
   const mainChartRef = useRef(null);
 
-  const currentUser = useSelector((state: State) => state.auth.user);
-
   useEffect(() => {
     if (mainChartRef) {
       const mainChart = chartSDK.createChart({
         chartId: '62a20f25-8f99-4d67-8714-195c351ad566',
       })
-      mainChart.setFilter({ "shop": currentUser?.shopId });
       mainChart.render(mainChartRef.current!);
     }
   }, [])
