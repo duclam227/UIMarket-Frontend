@@ -8,7 +8,6 @@ import { State } from '../../redux/store';
 import { getErrorMessage, getMostRecentInvoiceId } from '../../app/util';
 import { errors as errorCodes } from '../../app/util/errors';
 import paymentAPI from '../../api/payment';
-import { getMostRecentInvoiceId } from '../../app/util';
 
 import { PageWithNavbar } from '../../components';
 import cover from './successIllustration.png';
@@ -24,7 +23,8 @@ const ConfirmPaymentPage: FC<IProps> = (props) => {
   const { intl } = props;
 
   const currentUser = useSelector((state: State) => state.auth.user);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const token = searchParams.get('token');
   const invoiceId = getMostRecentInvoiceId();
