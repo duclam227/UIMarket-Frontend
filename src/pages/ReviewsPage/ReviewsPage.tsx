@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { Button, Form, Spinner } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -85,9 +85,13 @@ const ReviewsPage: FC<IProps> = props => {
                     id="ReviewsPage.noReviewsMessage"
                     defaultMessage="Looks like you haven't bought anything."
                   ></FormattedMessage>
-                  <Button href="/products" className="m-4">
-                    Continue shopping
-                  </Button>
+                  <Link to='/products'>
+                    <Button className="m-4">
+                      <FormattedMessage
+                        id="PurchaseHistoryPage.continueShoppingMessage"
+                      ></FormattedMessage>
+                    </Button>
+                  </Link>
                 </div>
               </div>
             )}

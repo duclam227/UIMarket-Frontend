@@ -7,10 +7,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+
 import s3API from '../../api/amazonS3';
 import invoiceAPI from '../../api/invoice';
 import paymentAPI from '../../api/payment';
 import { product } from '../../app/util/interfaces';
+import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
 
 import { FormInput, ImageInput, PageWithNavbar } from '../../components';
 import Product from './Product';
@@ -69,7 +72,9 @@ const RequestRefundPage: FC<IProps> = (props) => {
 
       }
       catch (error) {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.upload[errorMsg as keyof typeof errorCodes.upload];
+        toast.error(intl.formatMessage({ id: `Upload.${errorCode}` }));
       }
     }
 
@@ -95,7 +100,9 @@ const RequestRefundPage: FC<IProps> = (props) => {
         })
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.payment[errorMsg as keyof typeof errorCodes.payment];
+        toast.error(intl.formatMessage({ id: `Payment.${errorCode}` }));
       })
   };
 
@@ -110,7 +117,9 @@ const RequestRefundPage: FC<IProps> = (props) => {
           setProductList([...productList]);
         })
         .catch(error => {
-          console.log(error);
+          const errorMsg = getErrorMessage(error);
+          const errorCode: any = errorCodes.invoice[errorMsg as keyof typeof errorCodes.invoice];
+          toast.error(intl.formatMessage({ id: `Invoice.${errorCode}` }));
         })
         .finally(() => {
           setIsLoading(false);
@@ -131,8 +140,8 @@ const RequestRefundPage: FC<IProps> = (props) => {
             </section>
             <section className={style.container}>
               {productList && productList.length > 0
-                ? productList.map(product => <Product
-                  key={product._id}
+                ? productList.map((product, index) => <Product
+                  key={index}
                   product={product}
                   handleToggleProduct={(id: string) => onToggleProductSelect(id)}
                 />)

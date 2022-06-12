@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Spinner } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { FormattedMessage } from 'react-intl';
+import { toast } from 'react-toastify';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { useParams, Link } from 'react-router-dom';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaPen } from 'react-icons/fa';
@@ -10,6 +11,8 @@ import { BsFlag, BsExclamationOctagon } from 'react-icons/bs';
 import { State } from '../../redux/store';
 import { product } from '../../app/util/interfaces';
 import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
+
 import { PageWithNavbar, ReportModal } from '../../components';
 
 import productAPI from '../../api/product';
@@ -25,7 +28,12 @@ import SectionSeller from './SectionSeller';
 
 const ITEMS_PER_PAGE = 10;
 
-const ViewProductPage: React.FC = () => {
+interface IProps {
+  intl: IntlShape
+}
+
+const ViewProductPage: React.FC<IProps> = (props) => {
+  const { intl } = props;
   const { id } = useParams();
 
   const currentUser = useSelector((state: State) => state.auth.user);
@@ -75,7 +83,9 @@ const ViewProductPage: React.FC = () => {
         setIsBought(res.isBought);
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
+        toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
       });
 
     reviewAPI
@@ -85,7 +95,9 @@ const ViewProductPage: React.FC = () => {
         setIsLoading(false);
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.review[errorMsg as keyof typeof errorCodes.review];
+        toast.error(intl.formatMessage({ id: `Review.${errorCode}` }));
       });
   }, [id]);
 
@@ -145,4 +157,4 @@ const ViewProductPage: React.FC = () => {
   );
 };
 
-export default ViewProductPage;
+export default injectIntl(ViewProductPage);

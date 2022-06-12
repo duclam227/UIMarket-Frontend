@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import { toast } from 'react-toastify';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
@@ -12,21 +14,33 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { FormInput, PageWithNavbar } from '../../components';
+import { RichTextEditor } from '../../components';
 import { getErrorMessage } from '../../app/util';
+import { navbarBranches } from '../../app/util/config';
+import { errors as errorCodes } from '../../app/util/errors';
+
+import questionAPI from '../../api/question';
+import profileAPI from '../../api/profile';
+import { State } from '../../redux/store';
 
 import './AskAQuestionPage.css';
 import style from './AskAQuestionPage.module.css';
-import questionAPI from '../../api/question';
-import { RichTextEditor } from '../../components';
-import { navbarBranches } from '../../app/util/config';
 
 const AskAQuestionPage = ({ intl }: any) => {
+
+  const [balance, setBalance] = useState<number>(0);
+  const [isBountyOn, setIsBountyOn] = useState<boolean>(false);
+  const [postInProgress, setPostInProgress] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  const currentUser = useSelector((state: State) => state.auth.user);
   const formGroupClassName = 'mb-3';
-  const cardClassName = 'mb-4';
+  const cardClassName = 'mb-4 d-flex flex-column';
   const containerClassName = classNames(style.pageContainer, 'w-75');
   const postQuestionButtonClassName = 'mb-3';
   const topUpButtonClassName = 'mb-3';
@@ -101,13 +115,15 @@ const AskAQuestionPage = ({ intl }: any) => {
     body: string;
     tags: string;
     bounty: number;
+    bountyDueDate: Date;
   }
   const navigate = useNavigate();
   const schema = Joi.object({
     title: Joi.string().min(10).max(100).required().label('Title'),
     body: Joi.string().min(20).required().label('Body'),
     tags: Joi.string().allow('', null).label('Tags'),
-    bounty: Joi.number().min(0).label('Bounty amount'),
+    bounty: Joi.number().min(0).max(balance).label('Bounty amount'),
+    bountyDueDate: Joi.date().min(new Date()).label('Due date'),
   });
 
   const {
@@ -125,16 +141,18 @@ const AskAQuestionPage = ({ intl }: any) => {
       bounty: 0,
     },
   });
-  const [balance, setBalance] = useState<number>(0);
-  const [postInProgress, setPostInProgress] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const formatIntoArray = (input: string) =>
     input.replace(/\s+/g, '').split(',');
 
   const handlePostQuestion: SubmitHandler<Question> = async data => {
     const { tags } = data;
-    const question = { ...data, tags: formatIntoArray(tags) };
+    const question = {
+      ...data,
+      tags: formatIntoArray(tags),
+      bounty: isBountyOn ? data.bounty : -1,
+      bountyDueDate: isBountyOn ? data.bountyDueDate : undefined
+    };
     try {
       setPostInProgress(true);
       await questionAPI.addNewQuestion(question);
@@ -145,12 +163,28 @@ const AskAQuestionPage = ({ intl }: any) => {
       setErrorMessage(errorMessage);
     }
   };
+
+  useEffect(() => {
+    if (currentUser?._id) {
+      profileAPI.getUserProfileInfoById(currentUser?._id!)
+        .then((res: any) => {
+          const { user } = res;
+          setBalance(user.customerWallet.point);
+        })
+        .catch(error => {
+          const errorMsg = getErrorMessage(error);
+          const errorCode: any = errorCodes.profile[errorMsg as keyof typeof errorCodes.profile];
+          toast.error(intl.formatMessage({ id: `Profile.${errorCode}` }));
+        })
+    }
+  }, [currentUser])
+
   return (
     <PageWithNavbar branch={navbarBranches.question}>
       <Container className={containerClassName}>
         <h1 className={style.pageTitle}>{pageTitle}</h1>
 
-        <Form onSubmit={handleSubmit(handlePostQuestion)}>
+        <Form onSubmit={handleSubmit(handlePostQuestion)} className='d-flex flex-column'>
           <Card className={cardClassName}>
             <Card.Body>
               <FormInput
@@ -199,47 +233,56 @@ const AskAQuestionPage = ({ intl }: any) => {
             </Card.Body>
           </Card>
 
-          <Card className={cardClassName}>
-            <Card.Body>
-              <Row>
-                <Col md={8}>
-                  <h4>{addBountyLabel}</h4>
-                  <p className="text-muted">{addBountyDescription}</p>
-                </Col>
-                <Col md={4} className={topUpGroupClassName}>
-                  <h4>
-                    {addBountyBalanceLabel}
-                    {balance}
-                  </h4>
-                  <Button variant="warning" className={topUpButtonClassName}>
-                    {addBountyTopUpBtnText}
-                  </Button>
-                </Col>
-              </Row>
+          <Button
+            id="checkBounty"
+            variant={isBountyOn ? 'primary' : 'outline-primary'}
+            onClick={() => setIsBountyOn(!isBountyOn)}
+            className={style.checkBountyButton}
+          >
+            {isBountyOn
+              ? <FormattedMessage id='AskAQuestionPage.removeBountyLabel' />
+              : <FormattedMessage id='AskAQuestionPage.addBountyLabel' />
+            }
+          </Button>
 
-              <Row>
-                <FormInput
-                  placeholder={addBountyInputPlaceholder}
-                  name="bounty"
-                  control={control}
-                  type="number"
-                />
-                {/* <Form.Group controlId="bounty">
-                  <Form.Control
-                    type="number"
+          {isBountyOn
+            ? <Card className={cardClassName}>
+              <Card.Body>
+                <Row>
+                  <Col md={8}>
+                    <h4>{addBountyLabel}</h4>
+                    <p className="text-muted">{addBountyDescription}</p>
+                  </Col>
+                  <Col md={4} className={topUpGroupClassName}>
+                    <h4>
+                      {addBountyBalanceLabel}
+                      {balance}
+                    </h4>
+                  </Col>
+                </Row>
+
+                <Row>
+                  <FormInput
                     placeholder={addBountyInputPlaceholder}
-                    {...register('bounty')}
-                    isInvalid={errors.bounty ? true : false}
+                    name="bounty"
+                    control={control}
+                    type="number"
                   />
-                  {errors.bounty && (
-                    <Alert variant="danger" className="mt-2">
-                      {errors.bounty.message}
-                    </Alert>
-                  )}
-                </Form.Group> */}
-              </Row>
-            </Card.Body>
-          </Card>
+                </Row>
+
+                <Row>
+                  <FormInput
+                    label={intl.formatMessage({ id: 'AskAQuestionPage.bountyDueDateLabel' })}
+                    name="bountyDueDate"
+                    control={control}
+                    type="date"
+                    labelClassName={style.label}
+                  />
+                </Row>
+              </Card.Body>
+            </Card>
+            : null
+          }
 
           <Alert
             variant="danger"

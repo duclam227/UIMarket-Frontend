@@ -7,6 +7,7 @@ const shopAPI = {
 	createShop: post.createShop,
 	updateShop: put.updateShop,
 	getShopById: get.getShopById,
+	searchProduct: get.searchProduct,
 };
 
 export default shopAPI;

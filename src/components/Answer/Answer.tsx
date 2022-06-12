@@ -1,9 +1,12 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
+import { toast } from 'react-toastify';
 import parse from 'html-react-parser';
 
 import { customer, voteStatus } from '../../app/util/interfaces';
+import { errors as errorCodes } from '../../app/util/errors';
+import { getErrorMessage } from '../../app/util';
 
 import { Paginator, ThreeDotMenu, Comment, ReportModal } from '../../components';
 
@@ -14,9 +17,9 @@ import { FaCheck } from 'react-icons/fa';
 
 import SectionAnswerVoter from './SectionAnswerVoter';
 import SectionEditAnswer from './SectionEditAnswer';
+import UserAvatar from '../common/UserAvatar/UserAvatar';
 
 import style from './Answer.module.css';
-import UserAvatar from '../common/UserAvatar/UserAvatar';
 
 interface SectionAnswerProps {
   answer: any;
@@ -80,7 +83,9 @@ const Answer: FC<SectionAnswerProps> = props => {
         setIsReply(false);
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
+        toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }));
       });
   };
 
@@ -95,7 +100,9 @@ const Answer: FC<SectionAnswerProps> = props => {
         setAnswerContent(newContent);
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
+        toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }))
       });
   };
 
@@ -151,7 +158,9 @@ const Answer: FC<SectionAnswerProps> = props => {
                 setAnswerContent('');
               })
               .catch(error => {
-                console.log(error);
+                const errorMsg = getErrorMessage(error);
+                const errorCode: any = errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
+                toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }))
               });
           }}
         >
@@ -176,7 +185,9 @@ const Answer: FC<SectionAnswerProps> = props => {
         props.handleMarkBestAnswer();
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
+        toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }))
       });
   };
 

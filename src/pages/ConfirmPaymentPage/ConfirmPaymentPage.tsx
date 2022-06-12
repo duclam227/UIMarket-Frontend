@@ -1,33 +1,39 @@
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Spinner, Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { State } from '../../redux/store';
 
+import { getErrorMessage, getMostRecentInvoiceId } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
+import paymentAPI from '../../api/payment';
 import { getMostRecentInvoiceId } from '../../app/util';
 
 import { PageWithNavbar } from '../../components';
 import cover from './successIllustration.png';
 
 import style from './ConfirmPaymentPage.module.css';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 
-const ConfirmPaymentPage = () => {
+interface IProps {
+  intl: IntlShape;
+}
+
+const ConfirmPaymentPage: FC<IProps> = (props) => {
+  const { intl } = props;
 
   const currentUser = useSelector((state: State) => state.auth.user);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const token = searchParams.get('token');
   const invoiceId = getMostRecentInvoiceId();
 
-
-  return isLoading
-    ? <PageWithNavbar>
-      <Spinner animation='border' />
-    </PageWithNavbar>
-    : <PageWithNavbar>
-      <div className={style.wrapper}>
-        <div className={style.content}>
+  return <PageWithNavbar>
+    <div className={style.wrapper}>
+      {isLoading
+        ? <Spinner animation='border' />
+        : <div className={style.content}>
           <img src={cover} alt='Picture of a person with a cup' />
           <h3><FormattedMessage id='ConfirmPaymentPage.successMessage' /></h3>
           <div className={style.buttonRow}>
@@ -43,8 +49,9 @@ const ConfirmPaymentPage = () => {
             </Link>
           </div>
         </div>
-      </div>
-    </PageWithNavbar>
+      }
+    </div>
+  </PageWithNavbar>
 }
 
-export default ConfirmPaymentPage;
+export default injectIntl(ConfirmPaymentPage);

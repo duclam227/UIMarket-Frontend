@@ -1,11 +1,12 @@
 import { any, string } from 'joi';
 import { FormattedMessage } from 'react-intl';
 export interface question {
-  title: string;
-  body: string;
-  tags: string[];
-  bounty: number;
-  question: string;
+	title: string;
+	body: string;
+	tags: string[];
+	bounty: number;
+	question: string;
+	bountyDueDate?: Date;
 }
 
 export interface navigatorTabItem {

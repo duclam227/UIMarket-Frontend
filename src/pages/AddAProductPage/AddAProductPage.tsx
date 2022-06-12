@@ -1,7 +1,8 @@
 import JSZip from 'jszip';
 import React, { useEffect, useState } from 'react';
 import { Button, Nav, Tab, TabContainer, Tabs } from 'react-bootstrap';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import s3API from '../../api/amazonS3';
@@ -9,6 +10,8 @@ import categoryAPI from '../../api/category';
 import productAPI from '../../api/product';
 import { createCommonLicenseFile } from '../../app/util';
 import { product } from '../../app/util/interfaces';
+import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
 
 import { OneToFivePage, PageWithNavbar } from '../../components';
 import {
@@ -21,7 +24,12 @@ import { State } from '../../redux/store';
 // import './AddAProductPage.css'
 import style from './AddAProductPage.module.css';
 
-const AddAProductPage: React.FC = () => {
+interface IProps {
+  intl: IntlShape
+}
+
+const AddAProductPage: React.FC<IProps> = (props) => {
+  const { intl } = props;
   const currentUser = useSelector((state: State) => state.auth.user);
   const [product, setProduct] = useState<product | null>(null);
   const [productFiles, setProductFiles] = useState<Array<File>>([]);
@@ -94,7 +102,9 @@ const AddAProductPage: React.FC = () => {
                 navigate(`/product/${_id}`);
               })
               .catch(error => {
-                console.log(error);
+                const errorMsg = getErrorMessage(error);
+                const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
+                toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
               });
           })
           .catch(error => {
@@ -102,7 +112,9 @@ const AddAProductPage: React.FC = () => {
           });
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.upload[errorMsg as keyof typeof errorCodes.upload];
+        toast.error(intl.formatMessage({ id: `Upload.${errorCode}` }))
       });
   };
 
@@ -163,4 +175,4 @@ const AddAProductPage: React.FC = () => {
   );
 };
 
-export default AddAProductPage;
+export default injectIntl(AddAProductPage);

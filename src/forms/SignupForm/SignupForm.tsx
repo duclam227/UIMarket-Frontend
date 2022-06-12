@@ -118,7 +118,6 @@ const SignupForm: FC<SignupFormProps> = props => {
         `/signup/verify-prompt?email=${data.customerEmail}&userId=${res.userId}`,
       );
     } catch (error) {
-      console.log(error)
       const errorMsg = getErrorMessage(error);
       const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
       toast.error(intl.formatMessage({ id: `SignupForm.${errorCode}` }))

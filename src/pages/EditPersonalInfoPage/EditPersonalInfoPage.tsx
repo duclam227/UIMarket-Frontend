@@ -1,6 +1,7 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
+import { toast } from 'react-toastify';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { useDispatch } from 'react-redux';
 import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
@@ -18,7 +19,11 @@ import { BsPencil } from 'react-icons/bs';
 
 import { logInWithJWT } from '../../redux/index';
 import { OneToFivePage } from '../../components';
+
 import profileAPI from '../../api/profile';
+import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
+
 import style from './EditPersonalInfoPage.module.css';
 
 export interface UserInfo {
@@ -26,7 +31,14 @@ export interface UserInfo {
   dob: Date | null;
   phone: string;
 }
-const EditPersonalInfoPage = () => {
+
+interface IProps {
+  intl: IntlShape;
+}
+
+const EditPersonalInfoPage: FC<IProps> = (props) => {
+  const { intl } = props;
+
   const pageTitle = (
     <FormattedMessage
       id="EditPersonalInfoPage.pageTitle"
@@ -144,7 +156,9 @@ const EditPersonalInfoPage = () => {
             : 'No phone number added yet',
         });
       } catch (error) {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.profile[errorMsg as keyof typeof errorCodes.profile];
+        toast.error(intl.formatMessage({ id: `Profile.${errorCode}` }));
       }
     };
     getUserProfile(id);
@@ -378,4 +392,4 @@ const EditPersonalInfoPage = () => {
   );
 };
 
-export default EditPersonalInfoPage;
+export default injectIntl(EditPersonalInfoPage);

@@ -15,6 +15,7 @@ import { logInWithJWT } from '../../redux/index';
 import { ToastContainer, toast } from 'react-toastify';
 import { injectIntl, IntlShape } from 'react-intl';
 import { genericAvatarUrl } from '../../app/util/const';
+import { Link } from 'react-router-dom';
 
 export interface ShopInfo {
   _id?: string;
@@ -298,37 +299,25 @@ const EditShopPage: FunctionComponent<IProps> = props => {
                 ></FormattedMessage>
               </label>
             </div>
+
+            <div className="d-flex justify-content-center">
+              <Link to={`/shop/${shopInfo._id}`}>
+                <Button variant="dark" className="m-2">
+                  <FormattedMessage
+                    id="EditShopPage.ViewBtnLabel"
+                    defaultMessage={'View shop'}
+                  ></FormattedMessage>
+                </Button>
+              </Link>
+              <Button variant="primary" className="m-2" type="submit" disabled={!isDirty}>
+                <FormattedMessage
+                  id="EditShopPage.SaveBtnLabel"
+                  defaultMessage={'Save changes'}
+                ></FormattedMessage>
+              </Button>
+            </div>
           </div>
         </Container>
-
-        {/* sticky footer */}
-        <div
-          className={
-            'container d-flex justify-content-between align-items-center text-center fixed-bottom p-2 bg-secondary text-light'
-          }
-        >
-          <div className="hidden"></div>
-          <div className="flex-shrink-1">
-            <FormattedMessage
-              id="EditShopPage.EditMsg"
-              defaultMessage={'You are currently editing your shop'}
-            ></FormattedMessage>
-          </div>
-          <div className="d-flex">
-            <Button variant="dark" href={`/shop/${shopInfo._id}`} className="m-2">
-              <FormattedMessage
-                id="EditShopPage.ViewBtnLabel"
-                defaultMessage={'View shop'}
-              ></FormattedMessage>
-            </Button>
-            <Button variant="primary" className="m-2" type="submit" disabled={!isDirty}>
-              <FormattedMessage
-                id="EditShopPage.SaveBtnLabel"
-                defaultMessage={'Save changes'}
-              ></FormattedMessage>
-            </Button>
-          </div>
-        </div>
       </form>
     </OneToFivePage>
   );

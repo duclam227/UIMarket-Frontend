@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { injectIntl, IntlShape } from "react-intl";
 
 import { getErrorMessage } from "../../app/util";
+import { errors as errorCodes } from "../../app/util/errors";
 import { customer, voteStatus } from "../../app/util/interfaces";
 
 import {
@@ -73,7 +74,8 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
       })
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
-        console.log(error);
+        const errorCode: any = errorCodes.voting[errorMsg as keyof typeof errorCodes.voting];
+        toast.error(intl.formatMessage({ id: `Voting.${errorCode}` }));
       })
   }
 
@@ -108,8 +110,8 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
       })
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
-        console.log(error);
-
+        const errorCode: any = errorCodes.voting[errorMsg as keyof typeof errorCodes.voting];
+        toast.error(intl.formatMessage({ id: `Voting.${errorCode}` }));
       })
   }
 

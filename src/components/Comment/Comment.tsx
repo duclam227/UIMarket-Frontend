@@ -1,9 +1,11 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 import JsxParser from 'react-jsx-parser';
 import parse from 'html-react-parser';
 import { customer, voteStatus } from '../../app/util/interfaces';
+import { errors as errorCodes } from '../../app/util/errors';
 import answerAPI from '../../api/answer';
 
 import { Paginator, ReportModal, ThreeDotMenu } from '..';
@@ -13,6 +15,7 @@ import SectionEditComment from './SectionEditComment';
 import style from './Comment.module.css';
 import commentAPI from '../../api/comment';
 import UserAvatar from '../common/UserAvatar/UserAvatar';
+import { getErrorMessage } from '../../app/util';
 
 interface Props {
   answer: any;
@@ -57,7 +60,9 @@ const Comment: FC<Props> = props => {
         setCommentContent(newContent);
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.comment[errorMsg as keyof typeof errorCodes.comment];
+        toast.error(intl.formatMessage({ id: `Comment.${errorCode}` }));
       });
   };
 
@@ -113,7 +118,9 @@ const Comment: FC<Props> = props => {
                 setCommentContent('');
               })
               .catch(error => {
-                console.log(error);
+                const errorMsg = getErrorMessage(error);
+                const errorCode: any = errorCodes.comment[errorMsg as keyof typeof errorCodes.comment];
+                toast.error(intl.formatMessage({ id: `Comment.${errorCode}` }));
               });
           }}
         >

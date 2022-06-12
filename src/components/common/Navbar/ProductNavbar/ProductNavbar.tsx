@@ -1,14 +1,22 @@
 import classNames from 'classnames';
-import { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import { Link } from 'react-router-dom';
 
 import { BsFillLightningChargeFill } from 'react-icons/bs';
-import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
 import categoryAPI from '../../../../api/category';
+import { getErrorMessage } from '../../../../app/util';
+import { errors as errorCodes } from '../../../../app/util/errors';
 
 import style from './ProductNavbar.module.css';
 
-const ProductNavbar = () => {
+interface IProps {
+  intl: IntlShape;
+}
+
+const ProductNavbar: FC<IProps> = (props) => {
+  const { intl } = props;
   const [categories, setCategories] = useState<Array<any>>([]);
 
   useEffect(() => {
@@ -18,7 +26,9 @@ const ProductNavbar = () => {
         setCategories([...res.categories]);
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.category[errorMsg as keyof typeof errorCodes.category];
+        toast.error(intl.formatMessage({ id: `Category.${errorCode}` }));
       });
   }, []);
 
@@ -31,7 +41,7 @@ const ProductNavbar = () => {
         </button>
         <div className={style.categoryList}>
           {categories.map((category: any) => (
-            <Link to={`/products/category/${category._id}`}>
+            <Link key={category._id} to={`/products/category/${category._id}`}>
               <button key={category._id} className={style.button} >
                 {category.categoryName}
               </button>
@@ -51,4 +61,4 @@ const ProductNavbar = () => {
   );
 };
 
-export default ProductNavbar;
+export default injectIntl(ProductNavbar);

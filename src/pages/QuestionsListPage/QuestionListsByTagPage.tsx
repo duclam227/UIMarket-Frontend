@@ -9,7 +9,7 @@ import { QuestionList, PageWithNavbar, Paginator } from '../../components';
 import questionAPI from '../../api/question/index';
 
 import style from './QuestionListsPage.module.css';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { State } from '../../redux/store';
@@ -102,7 +102,7 @@ const QuestionListsByTagPage: FC = () => {
 					</div>
 
 					<div className={style.questionsList}>
-						{isLoading ? <p>loading...</p> : <QuestionList questionsList={questions} />}
+						{isLoading ? <Spinner animation='border' /> : <QuestionList questionsList={questions} />}
 
 						<Paginator
 							totalNumberOfPages={totalPages}

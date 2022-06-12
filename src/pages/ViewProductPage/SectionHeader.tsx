@@ -10,6 +10,8 @@ import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaPen } from 'react-icons/fa';
 
 import { customer, product } from '../../app/util/interfaces';
+import { getErrorMessage } from '../../app/util';
+import { errors as errorCodes } from '../../app/util/errors';
 import cartAPI from '../../api/cart';
 
 import style from './ViewProductPage.module.css';
@@ -49,7 +51,9 @@ const SectionHeader: React.FC<Props> = props => {
         );
       })
       .catch(error => {
-        console.log(error);
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.cart[errorMsg as keyof typeof errorCodes.cart];
+        toast.error(intl.formatMessage({ id: `Cart.${errorCode}` }));
       });
   };
 

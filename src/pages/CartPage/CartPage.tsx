@@ -4,15 +4,22 @@ import { PageWithNavbar } from '../../components';
 import Container from 'react-bootstrap/Container';
 
 import { getErrorMessage, saveMostRecentInvoiceId } from '../../app/util/index';
+import { errors as errorCodes } from '../../app/util/errors';
 import cartAPI from '../../api/cart';
 import paymentAPI from '../../api/payment';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import illustration from '../../app/assets/cart-empty.png';
 
 import styles from './CartPage.module.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-const CartPage: FunctionComponent = () => {
+interface IProps {
+  intl: IntlShape;
+}
+
+const CartPage: FunctionComponent<IProps> = (props) => {
+  const { intl } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [cartProducts, setProducts] = useState<Array<any>>([]);
@@ -173,10 +180,16 @@ const CartPage: FunctionComponent = () => {
         ) : (
           <Container fluid className="d-flex flex-column align-items-center mb-5">
             <img src={illustration} alt="empty cart" className="m-5"></img>
-            <FormattedMessage id="CartPage.NoItems"></FormattedMessage>
-            <Button href="/products" className="m-5">
-              Continue shopping
-            </Button>
+            <FormattedMessage
+              id="CartPage.NoItems"
+            ></FormattedMessage>
+            <Link to='/products'>
+              <Button className="m-5">
+                <FormattedMessage
+                  id="PurchaseHistoryPage.continueShoppingMessage"
+                ></FormattedMessage>
+              </Button>
+            </Link>
           </Container>
         )}
       </Container>
@@ -184,4 +197,4 @@ const CartPage: FunctionComponent = () => {
   );
 };
 
-export default CartPage;
+export default injectIntl(CartPage);

@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Button } from 'react-bootstrap';
+import { Button, Spinner } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import { getErrorMessage } from '../../app/util/index';
@@ -84,7 +84,7 @@ const PopularQuestionListsPage: FC = () => {
 
 					<div className={style.questionsList}>
 						{isLoading
-							? <p>loading...</p>
+							? <Spinner animation='border' />
 							: <QuestionList questionsList={questions} />
 						}
 
