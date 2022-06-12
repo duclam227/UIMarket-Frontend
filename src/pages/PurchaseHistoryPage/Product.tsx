@@ -14,6 +14,8 @@ interface Props {
   purchase: any;
 }
 
+const DAYS_TO_REFUND = 6;
+
 const Product: React.FC<Props> = props => {
   const { purchase } = props;
 
@@ -86,7 +88,7 @@ const Product: React.FC<Props> = props => {
         <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
 
         <Dropdown.Menu className={style.dropdown}>
-          {!purchase.isReview && daySinceBought < 3 ? (
+          {!purchase.isReview ? (
             <>
               <Dropdown.Item onClick={() => setIsReviewing(true)}>
                 <FormattedMessage id="PurchaseHistoryPage.reviewButtonLabel" />
@@ -95,7 +97,7 @@ const Product: React.FC<Props> = props => {
             </>
           ) : null}
 
-          {!purchase.isInvoiceRefunded ? (
+          {!purchase.isInvoiceRefunded && daySinceBought < DAYS_TO_REFUND ? (
             <Dropdown.Item>
               <Link to={`/refund/${purchase.invoiceId}`}>
                 <FormattedMessage id="PurchaseHistoryPage.reportButtonLabel" />
