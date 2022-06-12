@@ -359,6 +359,7 @@
   "ShopWalletPage.transactionProductId": " sản phẩm #{id}...",
   "ShopWalletPage.receivedMoneyMessage": "Nhận ${money} từ",
   "ShopWalletPage.successMessage": "Rút tiền thành công!",
+  "ShopWalletPage.refundedMoneyMessage": "Bị hoàn ${money} từ",
   "ShopWalletPage.withdrawnMoneyMessage": "Rút ${money}",
   "ShopWalletPage.withdrawCurrentBalance": "Bạn đang có ${money}",
   "ShopWalletPage.withdrawModalAmountPlaceholder": "$100",
