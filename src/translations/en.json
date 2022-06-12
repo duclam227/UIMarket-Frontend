@@ -89,7 +89,6 @@
   "AskAQuestionPage.addBountyTopUpBtnText": "Top up",
   "AskAQuestionPage.addBountyInputPlaceholder": "$10",
   "AskAQuestionPage.submitBtnText": "Post Question",
-
   "CartPage.Title": "My Cart",
   "CartPage.checkoutBtnLabel": "Checkout",
   "CartPage.Summary": "Summary",
@@ -374,6 +373,7 @@
   "ShopWalletPage.withdrawModalTitle": "Withdraw with PayPal",
   "ShopWalletPage.missingPayPalEmail": "You need to set up your PayPal email in your shop profile!",
   "ShopWalletPage.actionFailed": "Please try a gain later!",
+  "SideNav.shopStatisticLabel": "Statistics",
   "SideNav.myProfileNavGroupLabel": "My Profile",
   "SideNav.editProfileNavLinkLabel": "Edit Profile",
   "SideNav.changePasswordNavLinkLabel": "Change password",

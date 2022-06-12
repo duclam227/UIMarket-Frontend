@@ -373,6 +373,7 @@
   "ShopWalletPage.withdrawModalTitle": "Rút tiền về PayPal",
   "ShopWalletPage.missingPayPalEmail": "Bạn chưa cung cấp email PayPal trong thông tin cửa hàng!",
   "ShopWalletPage.actionFailed": "Xin vui lòng thử lại sau!",
+  "SideNav.shopStatisticLabel": "Thống kê",
   "SideNav.myProfileNavGroupLabel": "Hồ sơ của tôi",
   "SideNav.editProfileNavLinkLabel": "Chỉnh sửa thông tin",
   "SideNav.changePasswordNavLinkLabel": "Đổi mật khẩu",

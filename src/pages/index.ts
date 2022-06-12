@@ -44,6 +44,7 @@ export { default as ReviewsPage } from './ReviewsPage/ReviewsPage';
 export { default as RequestRefundPage } from './RequestRefundPage/RequestRefundPage';
 export { default as SearchQuestionsPage } from './SearchQuestionsPage/SearchQuestionsPage';
 export { default as ShopHomePage } from './ShopHomePage/ShopHomePage';
+export { default as ShopStatisticPage } from './ShopStatisticPage/ShopStatisticPage';
 export { default as ShopWalletPage } from './ShopWalletPage/ShopWalletPage';
 export { default as TagListPage } from './TagListPage/TagListPage';
 export { default as VerifyPromptPage } from './VerifyPromptPage/VerifyPromptPage';
