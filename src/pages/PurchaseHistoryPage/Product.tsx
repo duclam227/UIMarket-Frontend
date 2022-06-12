@@ -17,7 +17,10 @@ interface Props {
 const Product: React.FC<Props> = props => {
   const { purchase } = props;
 
-  const { product, shop } = purchase;
+  const { product, shop, boughtTime } = purchase;
+  const boughtTimeAsDate = new Date(boughtTime);
+  const timeSinceBought = new Date().getTime() - boughtTimeAsDate.getTime();
+  const daySinceBought = timeSinceBought / (1000 * 60 * 60 * 24);
 
   const [isReviewing, setIsReviewing] = useState<boolean>(false);
 
@@ -29,15 +32,16 @@ const Product: React.FC<Props> = props => {
     const afterSplit = productUrl.split('/');
     const productId = afterSplit.at(-1);
 
-    s3API.downloadFile('products', true, productId, product.productName)
+    s3API
+      .downloadFile('products', true, productId, product.productName)
       .then((res: any) => {
         const { url } = res;
         window.open(url, '_blank');
       })
       .catch(error => {
         console.log(error);
-      })
-  }
+      });
+  };
 
   return (
     <div className={style.product}>
@@ -82,7 +86,7 @@ const Product: React.FC<Props> = props => {
         <Dropdown.Toggle split variant="primary" id="dropdown-split-basic" />
 
         <Dropdown.Menu className={style.dropdown}>
-          {!purchase.isReview ? (
+          {!purchase.isReview && daySinceBought < 3 ? (
             <>
               <Dropdown.Item onClick={() => setIsReviewing(true)}>
                 <FormattedMessage id="PurchaseHistoryPage.reviewButtonLabel" />
@@ -91,11 +95,13 @@ const Product: React.FC<Props> = props => {
             </>
           ) : null}
 
-          <Dropdown.Item>
-            <Link to={`/refund/${purchase.invoiceId}`}>
-              <FormattedMessage id="PurchaseHistoryPage.reportButtonLabel" />
-            </Link>
-          </Dropdown.Item>
+          {!purchase.isInvoiceRefunded ? (
+            <Dropdown.Item>
+              <Link to={`/refund/${purchase.invoiceId}`}>
+                <FormattedMessage id="PurchaseHistoryPage.reportButtonLabel" />
+              </Link>
+            </Dropdown.Item>
+          ) : null}
         </Dropdown.Menu>
       </Dropdown>
 
