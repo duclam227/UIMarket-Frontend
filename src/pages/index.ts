@@ -6,10 +6,15 @@ export { default as AccountVerifiedPage } from './AccountVerifiedPage/AccountVer
 export { default as AddAProductPage } from './AddAProductPage/AddAProductPage';
 export { default as AdminRefundDetailPage } from './AdminRefundDetailPage/AdminRefundDetailPage';
 export { default as AdminRefundPage } from './AdminRefundPage/AdminRefundPage';
+export { default as AdminDashboardPage } from './AdminDashboardPage/AdminDashboardPage';
 export { default as AdminReportDetailPage } from './AdminReportDetailPage/AdminReportDetailPage';
 export { default as AdminReportPage } from './AdminReportPage/AdminReportPage';
-export { default as AdminShopManagementPage } from './AdminShopManagementPage/AdminShopManagementPage';
-export { default as AdminUserManagementPage } from './AdminUserManagementPage/AdminUserManagementPage';
+export {
+	default as AdminShopManagementPage,
+} from './AdminShopManagementPage/AdminShopManagementPage';
+export {
+	default as AdminUserManagementPage,
+} from './AdminUserManagementPage/AdminUserManagementPage';
 export { default as AskAQuestionPage } from './AskAQuestionPage/AskAQuestionPage';
 export { default as AuthenticationPage } from './AuthenticationPage/AuthenticationPage';
 export { default as BadRequestPage } from './BadRequestPage/BadRequestPage';
@@ -39,6 +44,7 @@ export { default as ReviewsPage } from './ReviewsPage/ReviewsPage';
 export { default as RequestRefundPage } from './RequestRefundPage/RequestRefundPage';
 export { default as SearchQuestionsPage } from './SearchQuestionsPage/SearchQuestionsPage';
 export { default as ShopHomePage } from './ShopHomePage/ShopHomePage';
+export { default as ShopStatisticPage } from './ShopStatisticPage/ShopStatisticPage';
 export { default as ShopWalletPage } from './ShopWalletPage/ShopWalletPage';
 export { default as TagListPage } from './TagListPage/TagListPage';
 export { default as VerifyPromptPage } from './VerifyPromptPage/VerifyPromptPage';

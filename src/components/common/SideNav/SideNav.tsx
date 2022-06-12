@@ -129,6 +129,9 @@ const SideNav: FC<Props> = props => {
         <Link to='/wallet'>
           <li className={style.navLinkItem}>{deexWalletNavLinkLabel}</li>
         </Link>
+        <Link to='/shop-statistic'>
+          <li className={style.navLinkItem}><FormattedMessage id='SideNav.shopStatisticLabel' /></li>
+        </Link>
       </ul>
     </div>
   );

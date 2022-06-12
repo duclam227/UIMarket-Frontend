@@ -91,7 +91,6 @@
   "AskAQuestionPage.addBountyInputPlaceholder": "10",
   "AskAQuestionPage.removeBountyLabel": "Remove bounty",
   "AskAQuestionPage.submitBtnText": "Post Question",
-
   "CartPage.Title": "My Cart",
   "CartPage.checkoutBtnLabel": "Checkout",
   "CartPage.Summary": "Summary",
@@ -235,6 +234,7 @@
   "ManageProductsPage.Product.saleLabel": "sale",
   "ManageProductsPage.Product.revenueLabel": "revenue",
   "NavBar.openShop": "Sell your art",
+  "PurchaseHistoryPage.alreadyReviewed": "You've rated this product",
   "PurchaseHistoryPage.downloadButtonLabel": "Download",
   "PurchaseHistoryPage.noProductsMessage": "You have yet to buy any products.",
   "PurchaseHistoryPage.reportButtonLabel": "Request refund",
@@ -377,6 +377,7 @@
   "ShopWalletPage.withdrawModalTitle": "Withdraw with PayPal",
   "ShopWalletPage.missingPayPalEmail": "You need to set up your PayPal email in your shop profile!",
   "ShopWalletPage.actionFailed": "Please try a gain later!",
+  "SideNav.shopStatisticLabel": "Statistics",
   "SideNav.myProfileNavGroupLabel": "My Profile",
   "SideNav.editProfileNavLinkLabel": "Edit Profile",
   "SideNav.changePasswordNavLinkLabel": "Change password",

@@ -52,6 +52,7 @@ import {
   BadRequestPage,
   RequestRefundPage,
   TagListPage,
+  ShopStatisticPage,
 } from './pages';
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
@@ -158,8 +159,9 @@ function App() {
           }
         />
         <Route path="/refund/:id" element={<RequireUser><RequestRefundPage /></RequireUser>} />
+        <Route path="/shop-statistic" element={<ShopStatisticPage />} />
         <Route path="/admin/*" element={<AdminRoutes />} />
-        <Route path="/admin" element={<Navigate to="/admin/user-management" replace />} />
+        <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
         <Route path="/wallet" element={<RequireUser><ShopWalletPage /></RequireUser>} />
         <Route path="/forbidden" element={<ForbiddenPage />} />
         <Route path="/bad-request" element={<BadRequestPage />} />
