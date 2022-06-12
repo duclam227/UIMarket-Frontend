@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 
 import Spinner from 'react-bootstrap/Spinner';
+import { FormattedMessage } from 'react-intl';
 
 import { Column } from '../../../app/util/interfaces';
 import style from './Table.module.css';
@@ -29,11 +30,19 @@ const TableBody: FC<Props> = props => {
   return (
     <tbody>
       {data ? (
-        data.map((item: any) => (
-          <tr key={item[rowKeyPath]}>
-            {columns.map(column => renderTableData(item, column))}
+        data.length > 0 ? (
+          data.map((item: any) => (
+            <tr key={item[rowKeyPath]}>
+              {columns.map(column => renderTableData(item, column))}
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan={columns.length} className={`text-center pt-4 ${style.td}`}>
+              <FormattedMessage id="TableBody.noDataLabel" />
+            </td>
           </tr>
-        ))
+        )
       ) : (
         <tr>
           <td colSpan={columns.length} className={`text-center pt-4 ${style.td}`}>

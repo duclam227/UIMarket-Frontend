@@ -1,5 +1,5 @@
-import React, { FC, useEffect, useState } from 'react';
-import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
+import { FC, useEffect, useState } from 'react';
+import { injectIntl, IntlShape } from 'react-intl';
 import { toast } from 'react-toastify';
 
 import Container from 'react-bootstrap/Container';
@@ -10,7 +10,7 @@ import { BsSearch } from 'react-icons/bs';
 import { Paginator } from '../../components';
 import style from './AdminReportPage.module.css';
 import adminAPI from '../../api/admin';
-import { ReportObject, shop } from '../../app/util/interfaces';
+import { ReportObject } from '../../app/util/interfaces';
 import ReportsTable from './ReportsTable';
 
 const ITEMS_PER_PAGE = 5;
@@ -25,7 +25,9 @@ const AdminReportPage: FC<Props> = props => {
     id: 'CommonNavbar.searchBarPlaceholder',
     defaultMessage: 'Search',
   });
-
+  const cannotGetDataErrorMsg = intl.formatMessage({
+    id: 'ErrorMessage.cannotGetDataErrorMsg',
+  });
   const [reports, setReports] = useState<ReportObject[] | null>(null);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -39,7 +41,7 @@ const AdminReportPage: FC<Props> = props => {
         setCurrentPage(page);
         setTotalPages(totalPages);
       } catch (error) {
-				toast.error('Cannot get data! An error has occurred');
+        toast.error(cannotGetDataErrorMsg);
         console.log(error);
       }
     };
@@ -54,7 +56,7 @@ const AdminReportPage: FC<Props> = props => {
       setCurrentPage(pageNumber);
       setTotalPages(totalPages);
     } catch (error) {
-      toast.error('Cannot get data! An error has occurred');
+      toast.error(cannotGetDataErrorMsg);
       console.log(error);
     }
   };
@@ -70,9 +72,7 @@ const AdminReportPage: FC<Props> = props => {
           />
         </div>
       </Form>
-      <ReportsTable
-        reports={reports}
-      />
+      <ReportsTable reports={reports} />
       <Paginator
         totalNumberOfPages={totalPages}
         currentPage={currentPage}
