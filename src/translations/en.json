@@ -231,6 +231,7 @@
   "ManageProductsPage.Product.saleLabel": "sale",
   "ManageProductsPage.Product.revenueLabel": "revenue",
   "NavBar.openShop": "Sell your art",
+  "PurchaseHistoryPage.alreadyReviewed": "You've rated this product",
   "PurchaseHistoryPage.downloadButtonLabel": "Download",
   "PurchaseHistoryPage.noProductsMessage": "You have yet to buy any products.",
   "PurchaseHistoryPage.reportButtonLabel": "Request refund",
