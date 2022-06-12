@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
 import { Routes, Route, Navigate } from 'react-router-dom';
@@ -50,13 +50,13 @@ import {
   ShopWalletPage,
   ViewLicensePage,
   BadRequestPage,
-  AdminUserManagementPage,
   RequestRefundPage,
   TagListPage,
 } from './pages';
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
 import ProductListPageByCategory from './pages/ProductListPage/ProductListPageByCategory';
+import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -122,6 +122,7 @@ function App() {
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/contact" element={<ContactUsPage />} />
         <Route path="/cart" element={<RequireUser><CartPage /></RequireUser>} />
+        <Route path="/checkout" element={<RequireUser><CheckoutPage /></RequireUser>} />
         <Route path="/payment/*" element={<RequireUser><ConfirmPaymentPage /></RequireUser>} />
         <Route path="/pricing" element={<PricingPage />} />
         <Route path="/products" element={<ProductListPage />} />
@@ -157,7 +158,7 @@ function App() {
           }
         />
         <Route path="/refund/:id" element={<RequireUser><RequestRefundPage /></RequireUser>} />
-        <Route path="/admin/:tab" element={<AdminRoutes />} />
+        <Route path="/admin/*" element={<AdminRoutes />} />
         <Route path="/admin" element={<Navigate to="/admin/user-management" replace />} />
         <Route path="/wallet" element={<RequireUser><ShopWalletPage /></RequireUser>} />
         <Route path="/forbidden" element={<ForbiddenPage />} />

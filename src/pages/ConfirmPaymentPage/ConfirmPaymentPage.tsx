@@ -8,6 +8,7 @@ import { State } from '../../redux/store';
 import { getErrorMessage, getMostRecentInvoiceId } from '../../app/util';
 import { errors as errorCodes } from '../../app/util/errors';
 import paymentAPI from '../../api/payment';
+import { getMostRecentInvoiceId } from '../../app/util';
 
 import { PageWithNavbar } from '../../components';
 import cover from './successIllustration.png';
@@ -27,19 +28,6 @@ const ConfirmPaymentPage: FC<IProps> = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const token = searchParams.get('token');
   const invoiceId = getMostRecentInvoiceId();
-
-  useEffect(() => {
-    setIsLoading(true);
-    paymentAPI.confirmOrder(token!, invoiceId!)
-      .then((res: any) => {
-        setIsLoading(false);
-      })
-      .catch(error => {
-        const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.payment[errorMsg as keyof typeof errorCodes.payment];
-        toast.error(intl.formatMessage({ id: `Payment.${errorCode}` }));
-      })
-  }, [])
 
   return <PageWithNavbar>
     <div className={style.wrapper}>

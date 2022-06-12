@@ -4,7 +4,7 @@ import { getJwt } from '../../app/util/authHelpers';
 const PAYMENT_ENDPOINT = 'api/v1/payment';
 
 class Post {
-	checkoutCart = (productList: any) => {
+	checkoutCart = (productList: any, totalAmount: number) => {
 		const jwt = getJwt();
 		const config = {
 			headers: {
@@ -14,8 +14,9 @@ class Post {
 
 		const data = {
 			productList,
+			totalAmount,
 		};
-		return axiosClient.post(`${PAYMENT_ENDPOINT}/create-order`, data, config);
+		return axiosClient.post(`${PAYMENT_ENDPOINT}/create-order/paypal`, data, config);
 	};
 
 	withdrawMoney = (amountValue: number) => {
@@ -52,6 +53,20 @@ class Post {
 			refundEvidences,
 		};
 		return axiosClient.post(`${PAYMENT_ENDPOINT}/request/refund`, data, config);
+	};
+
+	checkOrder = (productList: any) => {
+		const jwt = getJwt();
+		const config = {
+			headers: {
+				Authorization: `Bearer ${jwt}`,
+			},
+		};
+
+		const data = {
+			productList,
+		};
+		return axiosClient.post(`${PAYMENT_ENDPOINT}/check-order`, data, config);
 	};
 }
 

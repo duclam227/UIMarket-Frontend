@@ -1,0 +1,8 @@
+.floatingButtonsContainer {
+  position: sticky;
+  top: 16em;
+}
+
+.evidencePicture {
+  max-width: 100%;
+}

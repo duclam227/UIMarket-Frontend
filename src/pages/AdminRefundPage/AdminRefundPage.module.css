@@ -4,7 +4,6 @@
   display: flex;
   align-items: center;
   padding: 5px 0;
-
   width: 50%;
   height: 100%;
 }
@@ -37,24 +36,4 @@
 .searchBar input:focus {
   background-color: #f7f7f8;
   border: 0px;
-}
-
-.thead {
-  border-bottom: 1px dashed var(--gray-300);
-}
-.th {
-  padding: 1em;
-}
-.td {
-  padding: 1em;
-}
-.actionBtn {
-  width: fit-content;
-  float: right;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--gray-100);
-  padding: 0.4em 1em;
-  border-radius: 0.3em;
 }
