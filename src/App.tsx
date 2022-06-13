@@ -70,7 +70,6 @@ function App() {
   };
 
   useEffect(() => {
-    console.log(process.env);
     initialGetUserFromBrowser();
   }, []);
 
