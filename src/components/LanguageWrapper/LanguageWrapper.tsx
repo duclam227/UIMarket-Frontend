@@ -4,7 +4,10 @@ import { IntlProvider, MessageFormatElement } from 'react-intl';
 import vi from '../../translations/vi.json';
 import en from '../../translations/en.json';
 
-export const LanguageContext = createContext({});
+export const LanguageContext = createContext({
+  locale: 'vi-VN',
+  changeLanguage: (locale: string) => { }
+});
 
 const defaultLocale = navigator.language;
 let defaultLanguage:
