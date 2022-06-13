@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { logOut, setUserToNull } from '../../redux';
 import store from '../../redux/store';
 
@@ -16,6 +17,7 @@ export const getErrorMessage = (error: any) => {
 
 	if (msg === EXPIRED_TOKEN_MSG) {
 		store.dispatch(setUserToNull());
+		toast('Login session timed out. Please log in again!');
 	}
 
 	if (msg) return msg;
