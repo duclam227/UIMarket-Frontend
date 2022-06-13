@@ -16,6 +16,7 @@ export const getErrorMessage = (error: any) => {
 	console.error(msg, error);
 
 	if (msg === EXPIRED_TOKEN_MSG) {
+		localStorage.clear();
 		store.dispatch(setUserToNull());
 		toast('Login session timed out. Please log in again!');
 	}
