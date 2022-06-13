@@ -21,6 +21,7 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 interface LicenseInfo {
+  _id: string;
   shopName: string;
   customerEmail: string;
   productId: string;
@@ -41,7 +42,9 @@ const ViewLicensePage = () => {
     const getLicense = async () => {
       try {
         const res: any = await licenseAPI.getLicenseById(params.id!);
+        console.log(res);
         setLicenseInfo({
+          _id: res._id,
           shopName: res.shop.shopName,
           customerEmail: res.userId.customerEmail,
           productId: res.product._id,
@@ -66,9 +69,13 @@ const ViewLicensePage = () => {
         {/* Table */}
         <div className={`bg-white py-3 px-4`}>
           <LogoIcon className={style.logo} />
-          <div id='license'>
-            <table className={`${style.table}`} >
+          <div id="license">
+            <table className={`${style.table}`}>
               <tbody>
+                <tr className={`${style.tr}`}>
+                  <th className={`text-primary ${style.th}`}>License ID: </th>
+                  <td className={`${style.td}`}>{licenseInfo?._id}</td>
+                </tr>
                 <tr className={`${style.tr}`}>
                   <th className={`text-primary ${style.th}`}>Licensor: </th>
                   <td className={`${style.td}`}>{licenseInfo?.shopName}</td>
@@ -84,9 +91,7 @@ const ViewLicensePage = () => {
                 <tr className={`${style.tr}`}>
                   <th className={`text-primary ${style.th}`}>Asset URL: </th>
                   <td className={`${style.td}`}>
-                    <Link
-                      to={`/product/${licenseInfo?.productId}`}
-                    >
+                    <Link to={`/product/${licenseInfo?.productId}`}>
                       {`${process.env.REACT_APP_BASE_CLIENT_URL}/product/${licenseInfo?.productId}`}
                     </Link>
                   </td>
@@ -106,7 +111,7 @@ const ViewLicensePage = () => {
             </table>
 
             {/* License description section */}
-            <section className={`mt-2 px-1`} >
+            <section className={`mt-2 px-1`}>
               <p>
                 The DeeX License grants the user an ongoing, non-exclusive, worldwide
                 license to utilize the digital work (“Licensed Asset”).
@@ -131,15 +136,15 @@ const ViewLicensePage = () => {
               <strong>What you cannot do</strong>
               <ul className={`${style.notAllowedUnorderedList}`}>
                 <li className={`${style.notAllowedListItem}`}>
-                  Resell or sub-license the Asset in a way that is directly competitive with
-                  it
+                  Resell or sub-license the Asset in a way that is directly competitive
+                  with it
                 </li>
                 <li className={`${style.notAllowedListItem}`}>
                   Resell any modification of the Asset on its own
                 </li>
                 <li className={`${style.notAllowedListItem}`}>
-                  Make the Asset public or share the Asset in any way that allows others to
-                  download, extract, or redistribute it as a standalone filet
+                  Make the Asset public or share the Asset in any way that allows others
+                  to download, extract, or redistribute it as a standalone filet
                 </li>
                 <li className={`${style.notAllowedListItem}`}>
                   Falsely represent authorship and/or ownership of the Asset
@@ -151,7 +156,10 @@ const ViewLicensePage = () => {
       </div>
       {/* Download button */}
       <span>
-        <Button className={`px-5 py-2 d-flex align-items-center`} onClick={() => createPDFFile()}>
+        <Button
+          className={`px-5 py-2 d-flex align-items-center`}
+          onClick={() => createPDFFile()}
+        >
           <span className={`me-2 text-nowrap`}>{downloadButtonLabel}</span>
           <BsDownload />
         </Button>
@@ -162,15 +170,14 @@ const ViewLicensePage = () => {
   const createPDFFile = async () => {
     const license = document.getElementById('license');
 
-    html2canvas(license!)
-      .then((canvas: any) => {
-        const imgData = canvas.toDataURL('image/png');
-        const pdf = new jsPDF();
-        pdf.addImage(logo, 'JPEG', 0, 0, 0, 0)
-        pdf.addImage(imgData, 'JPEG', 0, 20, 210, 0);
-        pdf.save(`${licenseInfo?.productId}_${licenseInfo?.customerEmail}.pdf`);
-      })
-  }
+    html2canvas(license!).then((canvas: any) => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF();
+      pdf.addImage(logo, 'JPEG', 0, 0, 0, 0);
+      pdf.addImage(imgData, 'JPEG', 0, 20, 210, 0);
+      pdf.save(`${licenseInfo?.productId}_${licenseInfo?.customerEmail}.pdf`);
+    });
+  };
 
   return (
     <PageWithSideNav>
