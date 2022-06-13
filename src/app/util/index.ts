@@ -1,19 +1,27 @@
+import { logOut, setUserToNull } from '../../redux';
+import store from '../../redux/store';
+
 const INVOICE_ID = 'invoiceId';
+export const EXPIRED_TOKEN_MSG = 'expired-access-token';
 
-export function getErrorMessage (error: any) {
+export const getErrorMessage = (error: any) => {
 	const { response, status } = error;
-
-	console.error(error);
 
 	if (!response || status >= 500) {
 		return 'action-failed';
 	}
 
 	const { msg } = response.data;
+	console.error(msg, error);
+
+	if (msg === EXPIRED_TOKEN_MSG) {
+		store.dispatch(setUserToNull());
+	}
+
 	if (msg) return msg;
 	if (error instanceof Error) return error.message;
 	return String(error);
-}
+};
 
 export const createCommonLicenseFile = (
 	productName: string,
