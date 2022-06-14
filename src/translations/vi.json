@@ -110,6 +110,7 @@
   "CommonNavbar.itemLoginBtnLabel": "Đăng nhập",
   "CommonNavbar.itemSignupBtnLabel": "Đăng ký",
   "CommonNavbar.userDropdownProfileLabel": "Tài khoản",
+  "CommonNavbar.userDropdownStoreLabel": "Cửa hàng",
   "CommonNavbar.userDropdownLogoutBtnLabel": "Đăng xuất",
   "Comment.confirmDelete": "Bạn chắc chứ?",
   "Comment.confirmDeleteContent": "Bạn muốn xóa bình luận này?",
@@ -259,6 +260,8 @@
   "ProductListPage.priceFilterOption4059": "40$ - 59$",
   "ProductListPage.priceFilterOption6079": "60$ - 79$",
   "ProductListPage.priceFilterOption80": "Trên 80$",
+  "ProductListPage.noItems": "Không có sản phẩm nào phù hợp yêu cầu của bạn.",
+
   "ProductNavBar.Trending": "Xu hướng",
   "ProductNavBar.Forum": "Diễn đàn DeeX",
   "QuestionList.numberOfAnswers": "{count, plural, =0 {# trả lời} one {# trả lời} other {# trả lời}}",

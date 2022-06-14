@@ -11,7 +11,7 @@ import Spinner from 'react-bootstrap/Spinner';
 import productAPI from '../../api/product/index';
 
 import { getErrorMessage } from '../../app/util/index';
-import { ProductList, PageWithNavbar, Paginator } from '../../components';
+import { ProductList, PageWithNavbar, Paginator, EmptyState } from '../../components';
 import style from './ProductListPage.module.css';
 import Sidebar from './Sidebar';
 
@@ -30,7 +30,6 @@ const ProductListPage: FC<Props> = props => {
       defaultMessage="Showing search results for "
     />
   );
-
 
   const [searchParams, setSearchParams] = useSearchParams();
   const searchKeyword = searchParams.get('keyword');
@@ -140,8 +139,16 @@ const ProductListPage: FC<Props> = props => {
               <Row className={`mt-5 d-flex justify-content-center`}>
                 <Spinner animation="border" />
               </Row>
-            ) : (
+            ) : products && products.length > 0 ? (
               <ProductList productList={products} />
+            ) : (
+              <EmptyState
+                img="error-nothing"
+                messageId="ProductListPage.noItems"
+                btn={true}
+                btnMessageId="PurchaseHistoryPage.continueShoppingMessage"
+                btnDestination="/products"
+              />
             )}
 
             <Paginator

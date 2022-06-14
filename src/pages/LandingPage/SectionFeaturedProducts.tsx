@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MdKeyboardArrowRight } from 'react-icons/md';
@@ -17,32 +16,29 @@ interface IProps {
   link: string;
 }
 
-const SectionFeaturedProducts: React.FC<IProps> = (props) => {
-  const {
-    products,
-    title,
-    subtitle,
-    link,
-  } = props;
+const SectionFeaturedProducts: React.FC<IProps> = props => {
+  const { products, title, subtitle, link } = props;
 
-  return products && (
-    <section className={style.sectionWrapper}>
-      <div className={style.sectionFeaturedProducts}>
-        <div className={style.sectionFeaturedProductsHeader}>
-          <div className={style.sectionFeaturedProductsTitle}>
-            <h4>{title}</h4>
-            <span>{subtitle}</span>
+  return (
+    products && (
+      <section className={style.sectionWrapper}>
+        <div className={style.sectionFeaturedProducts}>
+          <div className={style.sectionFeaturedProductsHeader}>
+            <div className={style.sectionFeaturedProductsTitle}>
+              <h4>{title}</h4>
+              <span>{subtitle}</span>
+            </div>
+
+            <Link to={link} className={style.sectionFeaturedProductsExploreButton}>
+              <FormattedMessage id="LandingPage.ExploreAllLabel" />
+              <MdKeyboardArrowRight />
+            </Link>
           </div>
-
-          <Link to={link} className={style.sectionFeaturedProductsExploreButton}>
-            <FormattedMessage id='LandingPage.ExploreAllLabel' />
-            <MdKeyboardArrowRight />
-          </Link>
+          <ProductList productList={products} />
         </div>
-        <ProductList productList={products} />
-      </div>
-    </section>
-  )
-}
+      </section>
+    )
+  );
+};
 
 export default SectionFeaturedProducts;

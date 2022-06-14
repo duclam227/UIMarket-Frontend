@@ -2,12 +2,12 @@
 @import url('../../app/util/propertySet.css');
 
 :root {
-  --sideMargins: 150px;
+  --sideMargins: 120px;
 }
 
 .sectionWrapper {
-  margin-top: 50px;
-  padding: 10px var(--sideMargins);
+  margin-top: 24px;
+  padding: 10px 30px;
 }
 
 .sectionHero {
@@ -15,6 +15,8 @@
   flex-direction: row;
 
   min-height: 60vh;
+  padding-top: 24px;
+  padding-bottom: 24px;
 
   background-color: #ffeff7;
 }
@@ -25,8 +27,7 @@
   justify-content: center;
   align-items: flex-start;
 
-  margin-left: var(--sideMargins);
-  margin-right: 100px;
+  margin-left: 30px;
 }
 
 .sectionHeroTitle {
@@ -63,8 +64,7 @@
   justify-content: center;
   align-items: center;
 
-  margin-left: auto;
-  margin-right: var(--sideMargins);
+  margin-right: 30px;
 }
 
 .sectionHeroRight img {
@@ -107,15 +107,17 @@
 .sectionExploreForum {
   display: flex;
   flex-direction: row;
-
   min-height: 60vh;
 }
 
 .sectionExploreForumLeft {
-  margin-right: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .sectionExploreForumLeft img {
+  min-width: 240px;
   width: 25vw;
   object-fit: cover;
 }
@@ -161,6 +163,7 @@
 .sectionTrendingCategoriesList {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 40px;
   width: 100%;
@@ -195,16 +198,15 @@
 .sectionStartEarning {
   display: flex;
   flex-direction: row;
-
-  min-height: 60vh;
+  min-height: 40vh;
 }
 
 .sectionStartEarningLeft {
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-
   margin-right: 100px;
 }
 
@@ -238,13 +240,49 @@
 
 .sectionStartEarningRight {
   display: flex;
+  flex-grow: 1;
   justify-content: center;
   align-items: center;
-
-  margin-left: auto;
 }
 
 .sectionStartEarningRight img {
+  min-width: 240px;
   width: 25vw;
   object-fit: cover;
+}
+
+@media screen and (min-width: 992px) {
+  .sectionWrapper {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 10px var(--sideMargins);
+  }
+
+  .sectionHeroLeft {
+    margin-left: var(--sideMargins);
+    margin-right: 100px;
+  }
+
+  .sectionHeroRight {
+    margin-left: auto;
+    margin-right: var(--sideMargins);
+  }
+
+  .sectionStartEarning {
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sectionStartEarningLeft {
+    margin-right: 100px;
+  }
+
+  .sectionStartEarningRight {
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .sectionExploreForumLeft {
+    margin-right: 100px;
+  }
 }

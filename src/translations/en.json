@@ -110,6 +110,7 @@
   "CommonNavbar.itemLoginBtnLabel": "Log In",
   "CommonNavbar.itemSignupBtnLabel": "Sign Up",
   "CommonNavbar.userDropdownProfileLabel": "Profile",
+  "CommonNavbar.userDropdownStoreLabel": "My Store",
   "CommonNavbar.userDropdownLogoutBtnLabel": "Logout",
   "Comment.confirmDelete": "Are you sure?",
   "Comment.confirmDeleteContent": "You are deleting a comment, are you sure?",
@@ -259,6 +260,8 @@
   "ProductListPage.priceFilterOption4059": "40$ - 59$",
   "ProductListPage.priceFilterOption6079": "60$ - 79$",
   "ProductListPage.priceFilterOption80": "Over 80$",
+  "ProductListPage.noItems": "Nothing matches what you are looking for.",
+
   "ProductNavBar.Trending": "Trending",
   "ProductNavBar.Forum": "DeeX Forum",
   "QuestionList.numberOfAnswers": "{count, plural, =0 {# answer} one {# answer} other {# answers}}",

@@ -1,6 +1,6 @@
 import { FunctionComponent, useEffect, useState } from 'react';
 import { Spinner, Button, Col, Row, Form } from 'react-bootstrap';
-import { PageWithNavbar } from '../../components';
+import { EmptyState, PageWithNavbar } from '../../components';
 import Container from 'react-bootstrap/Container';
 
 import { getErrorMessage, saveMostRecentInvoiceId } from '../../app/util/index';
@@ -18,7 +18,7 @@ interface IProps {
   intl: IntlShape;
 }
 
-const CartPage: FunctionComponent<IProps> = (props) => {
+const CartPage: FunctionComponent<IProps> = props => {
   const { intl } = props;
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -178,19 +178,13 @@ const CartPage: FunctionComponent<IProps> = (props) => {
             <Col lg="4">{renderSummary()}</Col>
           </Row>
         ) : (
-          <Container fluid className="d-flex flex-column align-items-center mb-5">
-            <img src={illustration} alt="empty cart" className="m-5"></img>
-            <FormattedMessage
-              id="CartPage.NoItems"
-            ></FormattedMessage>
-            <Link to='/products'>
-              <Button className="m-5">
-                <FormattedMessage
-                  id="PurchaseHistoryPage.continueShoppingMessage"
-                ></FormattedMessage>
-              </Button>
-            </Link>
-          </Container>
+          <EmptyState
+            img="empty-cart"
+            messageId="CartPage.NoItems"
+            btn={true}
+            btnMessageId="PurchaseHistoryPage.continueShoppingMessage"
+            btnDestination="/products"
+          />
         )}
       </Container>
     </PageWithNavbar>
