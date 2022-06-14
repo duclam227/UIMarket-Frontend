@@ -5,7 +5,7 @@ export const errors = {
 		'invalid-authentication': 'invalidAuthentication',
 		'missing-req-body': 'actionFailed',
 		'validation-failed': 'actionFailed',
-		'invalid-googleid': 'actionFailed',
+		'invalid-googleid': 'invalidGoogleId',
 		'action-failed': 'actionFailed',
 	},
 	answer: {
@@ -13,10 +13,17 @@ export const errors = {
 		'invalid-answer-id': 'actionFailed',
 		'invalid-credentials': 'notPriviledged',
 		failed: 'actionFailed',
+		'missing-req-body': 'actionFailed',
 		'already-gone': 'answerDeleted',
 		'action-failed': 'actionFailed',
 	},
-	cart: {},
+	cart: {
+		'missing-req-body': 'actionFailed',
+		'invalid-product-id': 'invalidProduct',
+		'key-duplicated': 'alreadyInCart',
+		failed: 'actionFailed',
+		'action-failed': 'actionFailed',
+	},
 	category: {},
 	comment: {
 		'invalid-question-id': 'actionFailed',
@@ -29,9 +36,13 @@ export const errors = {
 		'missing-req-body': 'actionFailed',
 		'action-failed': 'actionFailed',
 	},
-	invoice: {},
+	invoice: {
+		'action-failed': 'actionFailed',
+	},
 	payment: {
+		'invalid-shop-id': 'noShop',
 		'invalid-paypal': 'missingPayPalEmail',
+		failed: 'actionFailed',
 		'action-failed': 'actionFailed',
 	},
 	product: {
@@ -40,7 +51,10 @@ export const errors = {
 		'invalid-product-id': 'actionFailed',
 		'action-failed': 'actionFailed',
 	},
-	profile: {},
+	profile: {
+		'invalid-user-id': 'actionFailed',
+		'action-failed': 'actionFailed',
+	},
 	question: {
 		'invalid-question-id': 'questionNotFound',
 		'missing-req-body': 'actionFailed',
@@ -51,28 +65,34 @@ export const errors = {
 		'invalid-tag-id': 'actionFailed',
 		'action-failed': 'actionFailed',
 	},
-	review: {},
+	review: {
+		'invalid-invoice-id': 'actionFailed',
+		'missing-req-body': 'actionFailed',
+		'missing-body': 'actionFailed',
+		'action-failed': 'actionFailed',
+	},
 	shop: {
 		'invalid-authentication': 'notPriviledged',
 		'invalid-shop-id': 'shopNotFound',
 		'invalid-product-id': 'productNotFound',
 		'invalid-credentials': 'notPriviledged',
 		failed: 'actionFailed',
-		'already-gone': 'actionFailed',
+		'already-gone': 'shopGone',
 		'action-failed': 'actionFailed',
 	},
-	upload: {},
+	upload: {
+		'missing-req-body': 'actionFailed',
+		'action-failed': 'actionFailed',
+	},
 	user: {
 		'invalid-user-id': 'userNotFound',
 		'action-failed': 'actionFailed',
 	},
 	//Vote.id
 	voting: {
-		'invalid-authentication': 'notPriviledged',
 		'invalid-answer-id': 'answerNotFound',
 		'invalid-comment-id': 'commentNotFound',
 		'invalid-question-id': 'questionNotFound',
-		'invalid-credentials': 'notPriviledged',
 		'missing-req-body': 'actionFailed',
 		failed: 'actionFailed',
 		'already-gone': 'actionFailed',

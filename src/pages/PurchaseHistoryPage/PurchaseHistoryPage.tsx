@@ -64,8 +64,7 @@ const PurchaseHistoryPage: FC<IProps> = props => {
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.invoice[errorMsg as keyof typeof errorCodes.invoice];
-        toast.error(intl.formatMessage({ id: `Invoice.${errorCode}` }));
+        toast.error(intl.formatMessage({ id: `Invoice.actionFailed` }));
       });
   }
 
@@ -82,8 +81,7 @@ const PurchaseHistoryPage: FC<IProps> = props => {
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.invoice[errorMsg as keyof typeof errorCodes.invoice];
-        toast.error(intl.formatMessage({ id: `Invoice.${errorCode}` }));
+        toast.error(intl.formatMessage({ id: `Invoice.actionFailed` }));
       });
   }, [params]);
 

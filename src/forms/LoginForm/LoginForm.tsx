@@ -113,7 +113,7 @@ const LoginForm: FC<loginFormProps> = props => {
       } else {
         const errorMsg = getErrorMessage(e);
         const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
-        toast.error(intl.formatMessage({ id: `LoginForm.${errorCode}` }));
+        toast.error(intl.formatMessage({ id: `Auth.${errorCode}` }));
       }
     }
   };
@@ -125,7 +125,7 @@ const LoginForm: FC<loginFormProps> = props => {
     } catch (error) {
       const errorMsg = getErrorMessage(error);
       const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
-      toast.error(intl.formatMessage({ id: `LoginForm.${errorCode}` }));
+      toast.error(intl.formatMessage({ id: `Auth.${errorCode}` }));
     }
   };
 

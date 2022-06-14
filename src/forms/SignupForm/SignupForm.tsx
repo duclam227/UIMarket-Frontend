@@ -120,7 +120,7 @@ const SignupForm: FC<SignupFormProps> = props => {
     } catch (error) {
       const errorMsg = getErrorMessage(error);
       const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
-      toast.error(intl.formatMessage({ id: `SignupForm.${errorCode}` }))
+      toast.error(intl.formatMessage({ id: `Auth.${errorCode}` }))
     }
   };
 
@@ -131,7 +131,7 @@ const SignupForm: FC<SignupFormProps> = props => {
     } catch (error) {
       const errorMsg = getErrorMessage(error);
       const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
-      toast.error(intl.formatMessage({ id: `SignupForm.${errorCode}` }))
+      toast.error(intl.formatMessage({ id: `Auth.${errorCode}` }))
     }
     navigate('/');
   };
