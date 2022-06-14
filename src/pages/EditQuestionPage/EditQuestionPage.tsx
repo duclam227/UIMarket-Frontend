@@ -32,30 +32,15 @@ import './EditQuestionPage.css';
 import style from './EditQuestionPage.module.css';
 
 const EditQuestionPage = ({ intl }: any) => {
-
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [body, setBody] = useState<string>('');
-  const [question, setQuestion] = useState<any>(null);
-  const [balance, setBalance] = useState<number>(0);
-  const [isBountyOn, setIsBountyOn] = useState<boolean>(false);
-  const [postInProgress, setPostInProgress] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>('');
-  const { id = '' } = useParams();
-
-  const currentUser = useSelector((state: State) => state.auth.user);
   const formGroupClassName = 'mb-3';
   const cardClassName = 'mb-4 d-flex flex-column';
   const containerClassName = classNames(style.pageContainer, 'w-75');
   const postQuestionButtonClassName = 'mb-3';
   const topUpButtonClassName = 'mb-3';
-  const topUpGroupClassName =
-    'd-flex flex-column align-items-end justify-content-evenly';
+  const topUpGroupClassName = 'd-flex flex-column align-items-end justify-content-evenly';
 
   const pageTitle = (
-    <FormattedMessage
-      id="EditQuestionPage.pageTitle"
-      defaultMessage="Ask a question"
-    />
+    <FormattedMessage id="EditQuestionPage.pageTitle" defaultMessage="Ask a question" />
   );
   const questionTitle = intl.formatMessage({
     id: 'EditQuestionPage.questionTitle',
@@ -66,10 +51,7 @@ const EditQuestionPage = ({ intl }: any) => {
     defaultMessage: 'e.g How do I...',
   });
   const questionBody = (
-    <FormattedMessage
-      id="EditQuestionPage.questionBody"
-      defaultMessage="Body"
-    />
+    <FormattedMessage id="EditQuestionPage.questionBody" defaultMessage="Body" />
   );
   const questionTags = intl.formatMessage({
     id: 'EditQuestionPage.questionTags',
@@ -118,21 +100,40 @@ const EditQuestionPage = ({ intl }: any) => {
     title: string;
     body: string;
     tags: string;
-    // bounty: number;
-    // bountyDueDate: Date;
+    bounty: number | null;
+    bountyDueDate: Date | null;
   }
+
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [body, setBody] = useState<string>('');
+  const [questionFromAPI, setQuestionFromAPI] = useState<any>(null);
+  const [balance, setBalance] = useState<number>(0);
+  const [currentBounty, setCurrentBounty] = useState<number>(0);
+  const [currentDueDate, setCurrentDueDate] = useState<Date>(new Date());
+  const [isBountyOn, setIsBountyOn] = useState<boolean>(false);
+  const [postInProgress, setPostInProgress] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const { id = '' } = useParams();
+
+  const currentUser = useSelector((state: State) => state.auth.user);
   const navigate = useNavigate();
   const schema = Joi.object({
     title: Joi.string().min(10).max(100).required().label('Title'),
     body: Joi.string().min(20).required().label('Body'),
     tags: Joi.string().allow('', null).label('Tags'),
-    // bounty: Joi.number().min(question?.bounty || 150).max(balance).label('Bounty amount'),
-    // bountyDueDate: Joi.date().min(question?.bountyDueDate || new Date()).label('Due date'),
-  })
+    bounty: Joi.number()
+      .allow(null)
+      .min(currentBounty)
+      .max(balance)
+      .label('Bounty amount'),
+    bountyDueDate: Joi.date()
+      .allow(null)
+      .min(currentDueDate || new Date())
+      .label('Due date'),
+  });
 
   const {
-    register,
-    unregister,
+    setValue,
     handleSubmit,
     formState: { errors, isDirty, isValid },
     control,
@@ -141,53 +142,32 @@ const EditQuestionPage = ({ intl }: any) => {
     resolver: joiResolver(schema),
     mode: 'onTouched',
     defaultValues: {
-      title: question?.title || '',
+      title: questionFromAPI?.title || '',
       body: body || '',
       tags: '',
+      bounty: 0,
+      bountyDueDate: null,
       // bounty: question?.bounty <= 0 ? 0 : question?.bounty,
       // bountyDueDate: question?.bountyDueDate || new Date(),
     },
   });
 
-  const formatIntoArray = (input: string) =>
-    input.replace(/\s+/g, '').split(',');
-
-  const handlePostQuestion: SubmitHandler<Question> = async data => {
-    const { tags } = data;
-    const question = {
-      ...data,
-      tags: formatIntoArray(tags),
-      // bounty: isBountyOn ? data.bounty : -1,
-      // bountyDueDate: isBountyOn ? data.bountyDueDate : undefined
-    };
-
-    console.log(data)
-
-    // try {
-    //   setPostInProgress(true);
-    //   await questionAPI.addNewQuestion(question);
-    //   navigate('/', { replace: true });
-    // } catch (error) {
-    //   const errorMessage = getErrorMessage(error);
-    //   setPostInProgress(false);
-    //   setErrorMessage(errorMessage);
-    // }
-  };
-
   useEffect(() => {
     if (currentUser?._id) {
-      profileAPI.getUserProfileInfoById(currentUser?._id!)
+      profileAPI
+        .getUserProfileInfoById(currentUser?._id!)
         .then((res: any) => {
           const { user } = res;
           setBalance(user.customerWallet.point);
         })
         .catch(error => {
           const errorMsg = getErrorMessage(error);
-          const errorCode: any = errorCodes.profile[errorMsg as keyof typeof errorCodes.profile];
+          const errorCode: any =
+            errorCodes.profile[errorMsg as keyof typeof errorCodes.profile];
           toast.error(intl.formatMessage({ id: `Profile.${errorCode}` }));
-        })
+        });
     }
-  }, [currentUser])
+  }, [currentUser]);
 
   // useEffect(() => {
   //   if (!isBountyOn) {
@@ -198,43 +178,91 @@ const EditQuestionPage = ({ intl }: any) => {
   //   }
   // }, [isBountyOn])
 
-  const dateToYYYYMMDD = (date: Date | null) => {
-    if (date && isNaN(date.getTime())) {
-      return new Date().toISOString().split('T')[0];
-    }
-    return date?.toISOString().split('T')[0];
-  }
-
   useEffect(() => {
-    questionAPI.getQuestionById(id)
+    questionAPI
+      .getQuestionById(id)
       .then((res: any) => {
         const { question } = res;
         const { questionContent } = question;
+        const tags = question.questionTag.map((tag: any) => tag.tagName).join(', ');
         const questionFromAPI: any = {
           title: question.questionTitle,
-          tags: [...question.questionTag],
+          tags: tags,
           // bounty: question.questionBounty === -1 ? 0 : question.questionBounty,
           // bountyDueDate: new Date(question.bountyDueDate),
           body: questionContent,
-        }
-        setQuestion(questionFromAPI);
+        };
+        setCurrentDueDate(
+          question.bountyDueDate ? new Date(question.bountyDueDate) : new Date(),
+        );
+        setCurrentBounty(question.questionBounty === -1 ? 0 : question.questionBounty);
+        setQuestionFromAPI(question);
         setBody(questionContent);
         reset({ ...questionFromAPI });
         setIsLoading(false);
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.question[errorMsg as keyof typeof errorCodes.question];
+        const errorCode: any =
+          errorCodes.question[errorMsg as keyof typeof errorCodes.question];
         toast.error(intl.formatMessage({ id: `Question.${errorCode}` }));
-      })
-  }, [])
+      });
+  }, []);
+
+  const handleToggleAdjustBounty = () => {
+    if (isBountyOn) {
+      setValue('bounty', null);
+      setValue('bountyDueDate', null);
+    } else {
+      setValue('bounty', currentBounty <= 0 ? 0 : currentBounty);
+      setValue('bountyDueDate', currentDueDate);
+    }
+
+    setIsBountyOn(!isBountyOn);
+  };
+
+  const formatIntoArray = (input: string) =>
+    input
+      .replace(/\s+/g, '')
+      .split(',')
+      .filter(item => item !== '');
+  const handlePostQuestion: SubmitHandler<Question> = async data => {
+    const { tags } = data;
+    const question = {
+      ...data,
+      tags: formatIntoArray(tags),
+      // bounty: isBountyOn ? data.bounty : -1,
+      // bountyDueDate: isBountyOn ? data.bountyDueDate : undefined
+    };
+
+    // console.log(question);
+
+    try {
+      setPostInProgress(true);
+      console.log(questionFromAPI);
+      await questionAPI.updateQuestion(question, questionFromAPI._id);
+      toast.success('Question edited successfully');
+      navigate(`/question/${questionFromAPI._id}`, { replace: true });
+    } catch (error) {
+      const errorMessage = getErrorMessage(error);
+      setPostInProgress(false);
+      setErrorMessage(errorMessage);
+    }
+  };
+
+  const dateToYYYYMMDD = (date: Date | null) => {
+    if (date && isNaN(date.getTime())) {
+      return new Date().toISOString().split('T')[0];
+    }
+    return date?.toISOString().split('T')[0];
+  };
 
   return (
     <PageWithNavbar branch={navbarBranches.question}>
       <Container className={containerClassName}>
         <h1 className={style.pageTitle}>{pageTitle}</h1>
 
-        <Form onSubmit={handleSubmit(handlePostQuestion)} className='d-flex flex-column'>
+        <Form onSubmit={handleSubmit(handlePostQuestion)} className="d-flex flex-column">
           <Card className={cardClassName}>
             <Card.Body>
               <FormInput
@@ -248,7 +276,7 @@ const EditQuestionPage = ({ intl }: any) => {
 
               <Form.Group className={formGroupClassName}>
                 <Form.Label htmlFor="body">
-                  <h4>{questionBody}</h4>
+                  <div className={`${style.label}`}>{questionBody}</div>
                 </Form.Label>
                 <Controller
                   control={control}
@@ -258,7 +286,7 @@ const EditQuestionPage = ({ intl }: any) => {
                       onChange={onChange}
                       onBlur={onBlur}
                       initialValue={body}
-                    // initialValue={question.body}
+                      // initialValue={question.body}
                     />
                   )}
                 />
@@ -278,26 +306,27 @@ const EditQuestionPage = ({ intl }: any) => {
                 labelClassName={style.label}
               />
               <Form.Text muted>
-                Each tag should only be a word, multiple tags should be
-                separated by a comma
+                Each tag should only be a word, multiple tags should be separated by a
+                comma
               </Form.Text>
             </Card.Body>
           </Card>
 
           <Button
             id="checkBounty"
-            variant={isBountyOn ? 'primary' : 'outline-primary'}
-            onClick={() => setIsBountyOn(!isBountyOn)}
+            variant={isBountyOn ? 'secondary' : 'outline-primary'}
+            onClick={() => handleToggleAdjustBounty()}
             className={style.checkBountyButton}
           >
-            {isBountyOn
-              ? <FormattedMessage id='EditQuestionPage.removeBountyLabel' />
-              : <FormattedMessage id='EditQuestionPage.addBountyLabel' />
-            }
+            {isBountyOn ? (
+              <FormattedMessage id="EditQuestionPage.removeBountyLabel" />
+            ) : (
+              <FormattedMessage id="EditQuestionPage.addBountyLabel" />
+            )}
           </Button>
 
-          {isBountyOn
-            ? <Card className={cardClassName}>
+          {isBountyOn ? (
+            <Card className={cardClassName}>
               <Card.Body>
                 <Row>
                   <Col md={8}>
@@ -312,7 +341,7 @@ const EditQuestionPage = ({ intl }: any) => {
                   </Col>
                 </Row>
 
-                {/* <Row>
+                <Row>
                   <FormInput
                     placeholder={addBountyInputPlaceholder}
                     name="bounty"
@@ -323,7 +352,7 @@ const EditQuestionPage = ({ intl }: any) => {
 
                 <Row>
                   <Form.Group>
-                    <Form.Label>ad</Form.Label>
+                    <Form.Label className={`${style.label}`}>Due date</Form.Label>
                     <Controller
                       control={control}
                       name="bountyDueDate"
@@ -338,11 +367,10 @@ const EditQuestionPage = ({ intl }: any) => {
                       )}
                     />
                   </Form.Group>
-                </Row> */}
+                </Row>
               </Card.Body>
             </Card>
-            : null
-          }
+          ) : null}
 
           <Alert
             variant="danger"
@@ -358,7 +386,7 @@ const EditQuestionPage = ({ intl }: any) => {
             variant="primary"
             type="submit"
             className={postQuestionButtonClassName}
-            disabled={postInProgress || !isDirty || !isValid}
+            disabled={postInProgress || !isValid || !isDirty}
           >
             {postInProgress ? (
               <Spinner animation="border" variant="light" size="sm" />
