@@ -184,8 +184,8 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
       </div>
     </OneToFivePage>
   ) : (
+    //Manage Product
     <OneToFivePage>
-      (//Manage Product
       <div className={style.wrapperK}>
         <div className={style.contentK}>
           <Container className={`p-0`}>
