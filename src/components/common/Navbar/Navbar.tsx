@@ -193,7 +193,7 @@ const NavBar: FC<IProps> = props => {
           </div>
         </Container>
       </nav>
-      <div className="d-none d-lg-block">
+      <div className="d-lg-block">
         {branch === config.navbarBranches.question ? (
           <QuestionNavbar />
         ) : (

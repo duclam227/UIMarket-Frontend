@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { Link } from 'react-router-dom';
 
-import { BsFillLightningChargeFill } from 'react-icons/bs';
+import { BsFillLightningChargeFill, BsJournalBookmarkFill } from 'react-icons/bs';
 import categoryAPI from '../../../../api/category';
 import { getErrorMessage } from '../../../../app/util';
 import { errors as errorCodes } from '../../../../app/util/errors';
@@ -36,9 +36,11 @@ const ProductNavbar: FC<IProps> = (props) => {
     <nav className={style.subNavbar}>
       <section className={style.leftSide}>
         <button className={classNames(style.button, style.trendButton)}>
-          <BsFillLightningChargeFill />
-          <FormattedMessage id="ProductNavBar.Trending" defaultMessage="Trending" />
+          <Link to="/questions">
+            <FormattedMessage id="ProductNavBar.Forum" defaultMessage="DeeX Forum" />
+          </Link>
         </button>
+
         <div className={style.categoryList}>
           {categories.map((category: any) => (
             <Link key={category._id} to={`/products/category/${category._id}`}>
@@ -50,14 +52,7 @@ const ProductNavbar: FC<IProps> = (props) => {
         </div>
       </section>
 
-      <section className={style.rightSide}>
-        <Link to="/questions">
-          <button className={style.button}>
-            <FormattedMessage id="ProductNavBar.Forum" defaultMessage="DeeX Forum" />
-          </button>
-        </Link>
-      </section>
-    </nav>
+    </nav >
   );
 };
 

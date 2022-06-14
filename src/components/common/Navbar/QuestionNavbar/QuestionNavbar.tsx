@@ -10,6 +10,16 @@ const QuestionNavbar = () => {
   return (
     <nav className={style.subNavbar}>
       <section className={style.leftSide}>
+
+        <Link to="/products">
+          <button className={classNames(style.button, style.trendButton)}>
+            <FormattedMessage
+              id="QuestionNavBar.Marketplace"
+              defaultMessage="DeeX Marketplace"
+            />
+          </button>
+        </Link>
+
         <Link to="/questions">
           <button className={style.button}>
             <FormattedMessage
@@ -21,17 +31,6 @@ const QuestionNavbar = () => {
         <Link to="/questions/tags">
           <button className={style.button}>
             <FormattedMessage id="QuestionNavBar.tagsBtn" defaultMessage="Tags" />
-          </button>
-        </Link>
-      </section>
-
-      <section className={style.rightSide}>
-        <Link to="/products">
-          <button className={style.button}>
-            <FormattedMessage
-              id="QuestionNavBar.Marketplace"
-              defaultMessage="DeeX Marketplace"
-            />
           </button>
         </Link>
       </section>
