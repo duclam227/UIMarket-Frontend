@@ -165,6 +165,10 @@
 	gap: 10px;
 }
 
+.sideContent a {
+	width: 100%;
+}
+
 .reviewContent {
 	display: flex;
 	flex-direction: column;

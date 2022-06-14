@@ -22,7 +22,7 @@ const QuestionList: FC<Props> = (props) => {
     return (
       <div className={style.authorName}>
         <FormattedMessage id="QuestionList.postedBy" />
-        {author.customerName}
+        <Link to={`/user/${author._id}`}>{author.customerName}</Link>
       </div>
     )
   }

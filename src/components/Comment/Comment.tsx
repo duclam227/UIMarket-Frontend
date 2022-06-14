@@ -16,6 +16,7 @@ import style from './Comment.module.css';
 import commentAPI from '../../api/comment';
 import UserAvatar from '../common/UserAvatar/UserAvatar';
 import { getErrorMessage } from '../../app/util';
+import { Link } from 'react-router-dom';
 
 interface Props {
   answer: any;
@@ -138,7 +139,9 @@ const Comment: FC<Props> = props => {
       </div>
       <div className={style.content}>
         <div className={style.authorInfo + "text-nowrap"}>
-          {comment.userId.customerName}
+          <Link to={`/user/${comment.userId._id}`}>
+            {comment.userId.customerName}
+          </Link>
           <ThreeDotMenu menuItems={menuItems} />
         </div>
         {isEdit ? (
