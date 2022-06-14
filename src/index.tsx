@@ -8,9 +8,9 @@ import App from './App';
 import { LanguageWrapper } from './components';
 import store from './redux/store';
 
-import './index.css';
 import './custom.scss';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
