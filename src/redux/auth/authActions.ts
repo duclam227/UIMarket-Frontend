@@ -60,7 +60,7 @@ const logIn = (credentials: authCredentials) => {
 			.catch(error => {
 				console.log('Login error redux', error);
 				const errorMsg = getErrorMessage(error);
-				dispatch(setError(errorMsg));
+				dispatch(setError(errorMsg!));
 			});
 	};
 };
@@ -78,7 +78,7 @@ const logInWithJWT = (jwt: string) => {
 			})
 			.catch(error => {
 				const errorMsg = getErrorMessage(error);
-				dispatch(setError(errorMsg));
+				dispatch(setError(errorMsg!));
 			});
 	};
 };
@@ -115,7 +115,7 @@ const signUp = (credentials: authCredentials) => {
 			})
 			.catch(error => {
 				const errorMsg = getErrorMessage(error);
-				dispatch(setError(errorMsg));
+				dispatch(setError(errorMsg!));
 			});
 	};
 };
@@ -127,4 +127,13 @@ const logOut = () => {
 	};
 };
 
-export { signUp, logIn, logInWithJWT, logInWithGoogle, logOut, loginSuccess, setError };
+export {
+	signUp,
+	logIn,
+	logInWithJWT,
+	logInWithGoogle,
+	logOut,
+	loginSuccess,
+	setError,
+	setUserToNull,
+};

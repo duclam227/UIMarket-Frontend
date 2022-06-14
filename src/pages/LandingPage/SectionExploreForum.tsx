@@ -9,25 +9,28 @@ const SectionExploreForum = () => {
   return (
     <section className={classNames(style.sectionWrapper, style.sectionExploreForum)}>
       <div className={style.sectionExploreForumLeft}>
-        <img src={cover} alt='Picture of 2 people talking' />
+        <img src={cover} alt="2 people talking" className="d-none d-lg-block" />
       </div>
       <div className={style.sectionExploreForumRight}>
         <h1 className={style.sectionExploreForumTitle}>
           <FormattedMessage
-            id='LandingPage.SectionExploreForumTitle'
+            id="LandingPage.SectionExploreForumTitle"
             values={{
               br: <br />,
-            }} />
+            }}
+          />
         </h1>
         <h3 className={style.sectionExploreForumSubtitle}>
-          <FormattedMessage id='LandingPage.SectionExploreForumSubtitle' />
+          <FormattedMessage id="LandingPage.SectionExploreForumSubtitle" />
         </h3>
-        <Link to='/questions'><button className={style.sectionExploreForumButton}>
-          <FormattedMessage id='LandingPage.ExploreForumLabel' />
-        </button></Link>
+        <Link to="/questions">
+          <button className={style.sectionExploreForumButton}>
+            <FormattedMessage id="LandingPage.ExploreForumLabel" />
+          </button>
+        </Link>
       </div>
     </section>
-  )
-}
+  );
+};
 
 export default SectionExploreForum;

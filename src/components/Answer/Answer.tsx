@@ -20,6 +20,7 @@ import SectionEditAnswer from './SectionEditAnswer';
 import UserAvatar from '../common/UserAvatar/UserAvatar';
 
 import style from './Answer.module.css';
+import { Link } from 'react-router-dom';
 
 interface SectionAnswerProps {
   answer: any;
@@ -207,7 +208,9 @@ const Answer: FC<SectionAnswerProps> = props => {
       </div>
       <div className={style.content}>
         <div className={style.authorInfo + " text-nowrap"}>
-          {answer.customerInfo[0].customerName}
+          <Link to={`/user/${answer.customerInfo[0]._id}`}>
+            {answer.customerInfo[0].customerName}
+          </Link>
           <ThreeDotMenu menuItems={menuItems} />
         </div>
         {isEdit ? (

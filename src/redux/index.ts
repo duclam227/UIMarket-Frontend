@@ -1,9 +1,10 @@
 export {
-  signUp,
-  setError,
-  logIn,
-  logInWithJWT,
-  logInWithGoogle,
-  logOut,
-  loginSuccess,
+	signUp,
+	setError,
+	setUserToNull,
+	logIn,
+	logInWithJWT,
+	logInWithGoogle,
+	logOut,
+	loginSuccess,
 } from './auth/authActions';

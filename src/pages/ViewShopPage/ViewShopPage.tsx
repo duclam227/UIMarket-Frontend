@@ -60,7 +60,7 @@ const EditShopPage: FunctionComponent = () => {
 
   return (
     <PageWithNavbar>
-      <Container>
+      <Container className="my-4">
         <div>
           <div className={styles.bannerImageWrapper}>
             <img

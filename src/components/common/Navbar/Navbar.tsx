@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState, FC, ChangeEvent, FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +17,7 @@ import ProductNavbar from './ProductNavbar/ProductNavbar';
 import LogoIcon from '../LogoIcon/LogoIcon';
 
 import style from './Navbar.module.css';
+import { Container } from 'react-bootstrap';
 
 interface IProps {
   branch?: string;
@@ -37,6 +39,12 @@ const NavBar: FC<IProps> = props => {
     <FormattedMessage
       id="CommonNavbar.userDropdownProfileLabel"
       defaultMessage="Profile"
+    />
+  );
+  const userDropdownStoreLabel = (
+    <FormattedMessage
+      id="CommonNavbar.userDropdownStoreLabel"
+      defaultMessage="My Store"
     />
   );
   const userDropdownLogoutBtnLabel = (
@@ -76,37 +84,53 @@ const NavBar: FC<IProps> = props => {
 
   return (
     <>
-      <nav className={style.mainNavbar}>
-        <section className={style.leftSideNav}>
-          <LogoIcon className={style.logo} />
+      <nav className="navbar navbar-expand-lg navbar-light bg-white">
+        <Container fluid className="d-flex justify-content-between">
+          <div className={style.leftSideNav}>
+            <LogoIcon className={style.logo} />
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+          </div>
 
-          <Form className={style.searchBarWrapper}
-            onSubmit={branch === config.navbarBranches.shop
-              ? e => handleProductSearch(e)
-              : e => handleQuestionSearch(e)
-            }
+          <div
+            className="collapse navbar-collapse justify-content-end mb-2 mb-lg-0"
+            id="navbarSupportedContent"
           >
-            <div className={style.searchBar}>
-              <BsSearch className={style.searchIcon} />
-              <Form.Control
-                type="text"
-                placeholder={searchBarPlaceholder}
-                onChange={e => handleChange(e as any)}
-              />
-            </div>
-          </Form>
-        </section>
+            <div className="navbar-nav justify-content-center align-items-center">
+              <Form
+                className={style.searchBarWrapper}
+                onSubmit={
+                  branch === config.navbarBranches.shop
+                    ? e => handleProductSearch(e)
+                    : e => handleQuestionSearch(e)
+                }
+              >
+                <div className={style.searchBar}>
+                  <BsSearch className={style.searchIcon} />
+                  <Form.Control
+                    type="text"
+                    placeholder={searchBarPlaceholder}
+                    onChange={e => handleChange(e as any)}
+                  />
+                </div>
+              </Form>
 
-        <section className={style.rightSideNav}>
-          <div className={style.buttonRow}>
-            <Link to={currentUser ? '/products/add' : '/signup'}>
-              <button className={style.sellButton}>
-                <FormattedMessage id="NavBar.openShop" defaultMessage="Sell your art" />
-              </button>
-            </Link>
+              <Link className="nav-link" to={currentUser ? '/products/add' : '/signup'}>
+                <button className={style.sellButton}>
+                  <FormattedMessage id="NavBar.openShop" defaultMessage="Sell your art" />
+                </button>
+              </Link>
 
-            {currentUser ? (
-              <>
+              {currentUser ? (
                 <div className="nav-item dropdown p-1">
                   <a
                     className="nav-link dropdown-toggle p-0 d-flex align-items-center"
@@ -126,12 +150,18 @@ const NavBar: FC<IProps> = props => {
                     {currentUser.customerName}
                   </a>
                   <ul
-                    className="dropdown-menu dropdown-menu-lg-end position-absolute mt-1"
+                    className="dropdown-menu dropdown-menu-lg-end"
                     aria-labelledby="navbarDropdown"
                   >
                     <li>
                       <Link to={`/user/${currentUser._id}`} className="dropdown-item">
                         {userDropdownProfileLabel}
+                      </Link>
+                    </li>
+                    <hr className="dropdown-divider" />
+                    <li>
+                      <Link to={`/shop/${currentUser.shopId}`} className="dropdown-item">
+                        {userDropdownStoreLabel}
                       </Link>
                     </li>
                     <hr className="dropdown-divider" />
@@ -142,28 +172,34 @@ const NavBar: FC<IProps> = props => {
                     </li>
                   </ul>
                 </div>
-              </>
-            ) : (
-              <>
-                <Link to="/login">
-                  <button className={style.authButton}>{itemLoginBtnLabel}</button>
-                </Link>
-                <Link to="/signup">
-                  <button className={style.authButton}>{itemSignupBtnLabel}</button>
-                </Link>
-              </>
-            )}
+              ) : (
+                <>
+                  <Link className="nav-link" to="/login">
+                    <button className={style.authButton}>{itemLoginBtnLabel}</button>
+                  </Link>
+                  <Link className="nav-link" to="/signup">
+                    <button className={style.authButton}>{itemSignupBtnLabel}</button>
+                  </Link>
+                </>
+              )}
 
-            <div className={style.separator}></div>
-            <Link to="/cart">
-              <button className={style.authButton}>
-                <BsCart className={style.cartIcon} />
-              </button>
-            </Link>
+              <div className={'nav-item d-none d-lg-block ' + style.separator}></div>
+              <Link className="nav-link" to="/cart">
+                <button className={style.authButton}>
+                  <BsCart className={style.cartIcon} />
+                </button>
+              </Link>
+            </div>
           </div>
-        </section>
+        </Container>
       </nav>
-      {branch === config.navbarBranches.question ? <QuestionNavbar /> : <ProductNavbar />}
+      <div className="d-none d-lg-block">
+        {branch === config.navbarBranches.question ? (
+          <QuestionNavbar />
+        ) : (
+          <ProductNavbar />
+        )}
+      </div>
     </>
   );
 };

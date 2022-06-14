@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FormattedMessage, IntlShape, injectIntl } from 'react-intl';
 import JsxParser from 'react-jsx-parser';
 import parse from 'html-react-parser';
@@ -151,7 +151,9 @@ const Question: FC<QuestionProps> = props => {
               <FormattedMessage id="Question.askedBy" />
             </div>
             <UserAvatar image={question.userId.customerAvatar} />
-            <div className="text-nowrap">{question.userId.customerName}</div>
+            <Link to={`/user/${question.userId._id}`} className="text-nowrap">
+              {question.userId.customerName}
+            </Link>
           </div>
         </div>
         <div className={style.content}>{parse(question.questionContent)}</div>

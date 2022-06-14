@@ -10,6 +10,7 @@ export { default as ReportModal } from './ReportModal/ReportModal';
 /* =============== Common =============== */
 export { default as AuthenticationLayout } from './common/AuthenticationLayout/AuthenticationLayout';
 export { default as AdminNavbar } from './common/AdminNavbar/AdminNavbar';
+export { default as EmptyState } from './common/EmptyState/EmptyState';
 export { default as Footer } from './common/Footer/Footer';
 export { default as FormInput } from './common/FormInput/FormInput';
 export { default as FileInput } from './common/FileInput/FileInput';
