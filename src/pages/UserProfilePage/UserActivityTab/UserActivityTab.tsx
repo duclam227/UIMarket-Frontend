@@ -46,38 +46,22 @@ const UserActivityTab: FC<Props> = props => {
     />
   );
   const answerStatItemLabel = (
-    <FormattedMessage
-      id="UserActivityTab.answerStatItemLabel"
-      defaultMessage="Answers"
-    />
+    <FormattedMessage id="UserActivityTab.answerStatItemLabel" defaultMessage="Answers" />
   );
   const upvoteStatItemLabel = (
-    <FormattedMessage
-      id="UserActivityTab.upvoteStatItemLabel"
-      defaultMessage="Upvotes"
-    />
+    <FormattedMessage id="UserActivityTab.upvoteStatItemLabel" defaultMessage="Upvotes" />
   );
 
-  const pointStatItemLabel = (
-    <FormattedMessage
-      id="UserActivityTab.pointStatItemLabel"
-    />
-  );
+  const pointStatItemLabel = <FormattedMessage id="UserActivityTab.pointStatItemLabel" />;
 
   const tagsLabel = (
     <FormattedMessage id="UserActivityTab.tagsLabel" defaultMessage="Tags" />
   );
   const seeAllLinkLabel = (
-    <FormattedMessage
-      id="UserActivityTab.seeAllLinkLabel"
-      defaultMessage="See all"
-    />
+    <FormattedMessage id="UserActivityTab.seeAllLinkLabel" defaultMessage="See all" />
   );
   const topAnswersLabel = (
-    <FormattedMessage
-      id="UserActivityTab.topAnswersLabel"
-      defaultMessage="Top Answers"
-    />
+    <FormattedMessage id="UserActivityTab.topAnswersLabel" defaultMessage="Top Answers" />
   );
   const topQuestionsLabel = (
     <FormattedMessage
@@ -110,8 +94,7 @@ const UserActivityTab: FC<Props> = props => {
     />
   );
 
-  const statItemClassName =
-    'my-2 my-md-0 d-flex align-items-center flex-column';
+  const statItemClassName = 'my-2 my-md-0 d-flex align-items-center flex-column';
 
   return (
     <Container>
@@ -158,19 +141,23 @@ const UserActivityTab: FC<Props> = props => {
             </Col>
           </Row>{' '}
           <InfoCardContainer className="p-3" style={{ maxHeight: '30em' }}>
-            <>
-              {profileTagStats?.slice(0, 4).map(tagStat => (
-                <Row className="mb-2 justify-content-between" key={tagStat._id}>
-                  <Col sm={6}>
-                    <Badge bg="primary">{tagStat.tagName}</Badge>
-                  </Col>
-                  <Col sm={4} className="d-lg-flex justify-content-between">
-                    <div className="text-nowrap">{tagStat.numOfPosts} post</div>
-                    <div className="text-nowrap">{tagStat.upvote} upvotes</div>
-                  </Col>
-                </Row>
-              ))}
-            </>
+            {profileTopAnswers && profileTopAnswers.length > 0 ? (
+              <>
+                {profileTagStats?.slice(0, 4).map(tagStat => (
+                  <Row className="mb-2 justify-content-between" key={tagStat._id}>
+                    <Col sm={6}>
+                      <Badge bg="primary">{tagStat.tagName}</Badge>
+                    </Col>
+                    <Col sm={4} className="d-lg-flex justify-content-between">
+                      <div className="text-nowrap">{tagStat.numOfPosts} post</div>
+                      <div className="text-nowrap">{tagStat.upvote} upvotes</div>
+                    </Col>
+                  </Row>
+                ))}
+              </>
+            ) : (
+              <div className={`p-2`}>This user has no such data</div>
+            )}
           </InfoCardContainer>
         </Col>
       </Row>
@@ -188,18 +175,22 @@ const UserActivityTab: FC<Props> = props => {
       </Row>
       <Row className="gx-0">
         <InfoCardContainer style={{ maxHeight: '25em' }}>
-          <>
-            {profileTopAnswers?.slice(0, 4).map(answer => (
-              <QuestionItem
-                answerId={answer._id}
-                questionId={answer.questionId._id}
-                questionTitle={answer.questionId.questionTitle}
-                key={answer._id}
-                questionPoints={answer.totalUpvote}
-                statVariant="point"
-              />
-            ))}
-          </>
+          {profileTopAnswers && profileTopAnswers.length > 0 ? (
+            <>
+              {profileTopAnswers?.slice(0, 4).map(answer => (
+                <QuestionItem
+                  answerId={answer._id}
+                  questionId={answer.questionId._id}
+                  questionTitle={answer.questionId.questionTitle}
+                  key={answer._id}
+                  questionPoints={answer.totalUpvote}
+                  statVariant="point"
+                />
+              ))}
+            </>
+          ) : (
+            <div className={`p-3`}>This user has no such data</div>
+          )}
         </InfoCardContainer>
       </Row>
 
@@ -216,17 +207,21 @@ const UserActivityTab: FC<Props> = props => {
       </Row>
       <Row className="gx-0">
         <InfoCardContainer style={{ maxHeight: '25em' }}>
-          <>
-            {profileTopQuestions?.slice(0, 4).map(question => (
-              <QuestionItem
-                questionId={question._id}
-                questionTitle={question.questionTitle}
-                questionPoints={question.totalUpvote}
-                statVariant="point"
-                key={question._id}
-              />
-            ))}
-          </>
+          {profileTopQuestions && profileTopQuestions.length > 0 ? (
+            <>
+              {profileTopQuestions.slice(0, 4).map(question => (
+                <QuestionItem
+                  questionId={question._id}
+                  questionTitle={question.questionTitle}
+                  questionPoints={question.totalUpvote}
+                  statVariant="point"
+                  key={question._id}
+                />
+              ))}
+            </>
+          ) : (
+            <div className={`p-3`}>This user has no such data</div>
+          )}
         </InfoCardContainer>
       </Row>
 
@@ -236,11 +231,7 @@ const UserActivityTab: FC<Props> = props => {
           <h3>{bountiedQuestionsLabel}</h3>
         </Col>
         <Col className="d-flex justify-content-end align-items-center">
-          <Nav
-            variant="pills"
-            defaultActiveKey="active"
-            className="flex-nowrap"
-          >
+          <Nav variant="pills" defaultActiveKey="active" className="flex-nowrap">
             <Nav.Item>
               <Nav.Link eventKey="active">{activeBountyNavBtnLabel}</Nav.Link>
             </Nav.Item>
@@ -255,17 +246,21 @@ const UserActivityTab: FC<Props> = props => {
       </Row>
       <Row className="mt-3 gx-0">
         <InfoCardContainer style={{ maxHeight: '25em' }}>
-          <>
-            {profileBountiedQuestions?.slice(0, 4).map(question => (
-              <QuestionItem
-                questionId={question._id}
-                questionTitle={question.questionTitle}
-                questionPoints={question.questionBounty}
-                statVariant="bounty"
-                key={question._id}
-              />
-            ))}
-          </>
+          {profileBountiedQuestions && profileBountiedQuestions.length > 0 ? (
+            <>
+              {profileBountiedQuestions?.slice(0, 4).map(question => (
+                <QuestionItem
+                  questionId={question._id}
+                  questionTitle={question.questionTitle}
+                  questionPoints={question.questionBounty}
+                  statVariant="bounty"
+                  key={question._id}
+                />
+              ))}
+            </>
+          ) : (
+            <div className={`p-3`}>This user has no such data</div>
+          )}
         </InfoCardContainer>
       </Row>
     </Container>
