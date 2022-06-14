@@ -33,4 +33,9 @@
 
 .activeImage {
 	max-height: 80vh;
+	max-width: 80vw;
+
+	@media (min-width: 768px) {
+		max-height: 80vh;
+	}
 }
