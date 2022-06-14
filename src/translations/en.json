@@ -1,7 +1,6 @@
 {
   "AboutPage.Title": "About Us",
   "AboutPage.Description": "Hello! We are a team of software developers from University of Science, HCMC, Viet Nam. <br></br> With our love with design and art, we want to create a playground where anyone can participate and ask questions, especially beginners in UI/UX and creative arts.",
-
   "AccountNotVerifiedPage.title": "Account has not been activated",
   "AccountNotVerifiedPage.notVerifiedMessage": "Your account need to be activated before you can login!",
   "AccountNotVerifiedPage.sentEmailMessage": "We've sent a link to activate your account to your registered email.",
@@ -264,7 +263,6 @@
   "ProductListPage.priceFilterOption6079": "60$ - 79$",
   "ProductListPage.priceFilterOption80": "Over 80$",
   "ProductListPage.noItems": "Nothing matches what you are looking for.",
-
   "ProductNavBar.Trending": "Trending",
   "ProductNavBar.Forum": "DeeX Forum",
   "QuestionList.numberOfAnswers": "{count, plural, =0 {# answer} one {# answer} other {# answers}}",
@@ -337,7 +335,7 @@
   "SearchQuestionsPage.searchPlaceholder": "Search for a question...",
   "SearchQuestionsPage.noResult": "No results",
   "SectionBountyHeader.bountyAmount": "Answers to this question are eligible for a <b>{amount} bounty.</b>",
-  "SectionBountyHeader.bountyDuration": "<b>{user} placed a bounty that expires in ...</b>",
+  "SectionBountyHeader.bountyDuration": "<b>{user} placed a bounty that expires on </b>",
   "SignupForm.divider": "Or",
   "SignupForm.emailLabel": "Email",
   "SignupForm.emailPlaceholder": "example@email.com",

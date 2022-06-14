@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Alert } from "react-bootstrap";
-import { FormattedMessage } from "react-intl";
+import { FormattedDate, FormattedMessage } from "react-intl";
 
 import style from './Question.module.css';
 
@@ -22,11 +22,14 @@ const SectionBountyHeader: FC<BountyHeaderProps> = (props) => {
         <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
       </svg>
       <div className={style.bountyContent}>
-        <FormattedMessage id='SectionBountyHeader.bountyDuration'
-          values={{
-            user: question.userId.customerName,
-            b: (word: string) => <b>{word}</b>
-          }} />
+        <div>
+          <FormattedMessage id='SectionBountyHeader.bountyDuration'
+            values={{
+              user: question.userId.customerName,
+              b: (word: string) => <b>{word}</b>
+            }} />
+          <FormattedDate value={question.bountyDueDate} />.
+        </div>
         <div>
 
           <FormattedMessage id='SectionBountyHeader.bountyAmount'
