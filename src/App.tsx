@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 import './App.css';
 
@@ -59,6 +59,15 @@ import { logInWithJWT } from './redux/index';
 import ProductListPageByCategory from './pages/ProductListPage/ProductListPageByCategory';
 import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
 
+const useRedirectToHttps = () => {
+  let location = useLocation()
+  useEffect(() => {
+    if (window.location.protocol !== "https:") {
+      window.location.replace(process.env.REACT_APP_BASE_CLIENT_URL + location.pathname);
+    }
+  })
+};
+
 function App() {
   const dispatch = useDispatch();
 
@@ -68,6 +77,8 @@ function App() {
       dispatch(logInWithJWT(authToken));
     }
   };
+
+  useRedirectToHttps();
 
   useEffect(() => {
     initialGetUserFromBrowser();
