@@ -148,7 +148,7 @@ const LoginForm: FC<loginFormProps> = props => {
               handleGoogleLogin(res);
             }}
             onFailure={(res: any) =>
-              toast.error(intl.formatMessage({ id: 'LoginForm.actionFailed' }))
+              toast.error(intl.formatMessage({ id: 'Auth.actionFailed' }))
             }
             cookiePolicy={'single_host_origin'}
           />
