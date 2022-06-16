@@ -93,6 +93,7 @@ export const errors = {
 		'invalid-answer-id': 'answerNotFound',
 		'invalid-comment-id': 'commentNotFound',
 		'invalid-question-id': 'questionNotFound',
+		'invalid-amount': 'actionFailed',
 		'missing-req-body': 'actionFailed',
 		failed: 'actionFailed',
 		'already-gone': 'actionFailed',
