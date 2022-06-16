@@ -61,6 +61,7 @@ const NavBar: FC<IProps> = props => {
   const navigate = useNavigate();
 
   const currentUser = useSelector((state: State) => state.auth.user);
+  const isCurrentUserShop = !!currentUser?.shopId;
   const [searchQuery, setSearchQuery] = useState('');
   const handleChange = ({ target: input }: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(input.value);
@@ -160,7 +161,7 @@ const NavBar: FC<IProps> = props => {
                     </li>
                     <hr className="dropdown-divider" />
                     <li>
-                      <Link to={`/shop/${currentUser.shopId}`} className="dropdown-item">
+                      <Link to={isCurrentUserShop ? `/shop/${currentUser.shopId}` : `/user/${currentUser._id}/shop`} className="dropdown-item">
                         {userDropdownStoreLabel}
                       </Link>
                     </li>
