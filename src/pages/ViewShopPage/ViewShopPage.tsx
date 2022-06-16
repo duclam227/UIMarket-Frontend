@@ -1,10 +1,11 @@
 import { FunctionComponent, useEffect, useState } from 'react';
-import { Container, Spinner } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+import { Container, Spinner, Modal, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import shopAPI from '../../api/shop/index';
 import { State } from '../../redux/store';
 import bannerPlaceholder from '../../app/assets/banner-placeholder.png';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import PageWithNavbar from '../../components/common/PageWithNavbar/PageWithNavbar';
 import styles from './ViewShopPage.module.css';
 import { FormattedMessage } from 'react-intl';
@@ -21,6 +22,7 @@ export interface ShopInfo {
 }
 
 const EditShopPage: FunctionComponent = () => {
+  const navigate = useNavigate();
   const [shopInfo, setShopInfo] = useState<ShopInfo>({
     shopName: '',
     shopDescription: '',
@@ -31,6 +33,7 @@ const EditShopPage: FunctionComponent = () => {
   const [shopAvatar, setShopAvatar] = useState<string>('');
   const [products, setProducts] = useState<Array<any>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const { id } = useParams();
   const currentUser = useSelector((state: State) => state.auth.user);
 
@@ -44,7 +47,11 @@ const EditShopPage: FunctionComponent = () => {
         setShopAvatar(customerAvatar);
       })
       .catch(error => {
-        console.log('Get shop info error: ', error);
+        if (error.response && error.response.data.msg === 'shop-deactivated')
+          setShowModal(true);
+        else if (error.response && error.response.status === 404)
+          toast.error('Shop does not exist');
+        else console.log('Get shop info error: ', error);
       });
 
     productAPI
@@ -58,6 +65,12 @@ const EditShopPage: FunctionComponent = () => {
       });
   }, []);
 
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+  const handleGoBack = () => {
+    setShowModal(false);
+    navigate(-1);
+  };
   return (
     <PageWithNavbar>
       <Container className="my-4">
@@ -104,6 +117,29 @@ const EditShopPage: FunctionComponent = () => {
           )}
         </div>
       </Container>
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <FormattedMessage id="ViewShopPage.deactivatedModalTitle" />
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <FormattedMessage id="ViewShopPage.deactivatedModalBody1" />
+          </div>
+          <div>
+            <FormattedMessage id="ViewShopPage.deactivatedModalBody2" />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            <FormattedMessage id="ReportModal.closeBtnLabel" />
+          </Button>
+          <Button variant="primary" onClick={handleGoBack}>
+            <FormattedMessage id="ViewShopPage.deactivatedModalBackBtnLabel" />
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </PageWithNavbar>
   );
 };

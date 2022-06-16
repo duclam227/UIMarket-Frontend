@@ -1,5 +1,5 @@
 import { ChangeEvent, FunctionComponent, useEffect, useRef, useState } from 'react';
-import { Button, Container, Form, ProgressBar } from 'react-bootstrap';
+import { Button, Container, Form, ProgressBar, Modal } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import Navbar from '../../components/common/Navbar/Navbar';
@@ -15,7 +15,7 @@ import { logInWithJWT } from '../../redux/index';
 import { ToastContainer, toast } from 'react-toastify';
 import { injectIntl, IntlShape } from 'react-intl';
 import { genericAvatarUrl } from '../../app/util/const';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 export interface ShopInfo {
   _id?: string;
@@ -41,6 +41,8 @@ const EditShopPage: FunctionComponent<IProps> = props => {
     id: 'EditShopPage.PhoneErrMsg',
   });
 
+  const navigate = useNavigate();
+  const params = useParams();
   const [shopInfo, setShopInfo] = useState<ShopInfo>({
     shopName: '',
     shopDescription: '',
@@ -52,6 +54,7 @@ const EditShopPage: FunctionComponent<IProps> = props => {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [isUploading, setIsUploading] = useState(false);
   const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const imageInput = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
@@ -97,7 +100,9 @@ const EditShopPage: FunctionComponent<IProps> = props => {
         setShopAvatar(customerAvatar);
       })
       .catch(error => {
-        console.log('Get shop info error: ', error);
+        if (error.response && error.response.data.msg === 'shop-deactivated')
+          setShowModal(true);
+        else console.log('Get shop info error: ', error);
       });
   }, [id, reset]);
 
@@ -152,7 +157,12 @@ const EditShopPage: FunctionComponent<IProps> = props => {
       dispatch(logInWithJWT(authToken));
     }
   };
-
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+  const handleGoBack = () => {
+    setShowModal(false);
+    navigate(`/user/${params.id}`);
+  };
   return (
     <OneToFivePage>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -301,14 +311,19 @@ const EditShopPage: FunctionComponent<IProps> = props => {
             </div>
 
             <div className="d-flex justify-content-center">
-              <Link to={`/shop/${shopInfo._id}`}>
-                <Button variant="dark" className="m-2">
-                  <FormattedMessage
-                    id="EditShopPage.ViewBtnLabel"
-                    defaultMessage={'View shop'}
-                  ></FormattedMessage>
-                </Button>
-              </Link>
+              {/* <Link to={`/shop/${shopInfo._id}`}> */}
+              <Button
+                variant="dark"
+                className="m-2"
+                disabled={!shopInfo._id}
+                onClick={() => navigate(`/shop/${shopInfo._id}`)}
+              >
+                <FormattedMessage
+                  id="EditShopPage.ViewBtnLabel"
+                  defaultMessage={'View shop'}
+                ></FormattedMessage>
+              </Button>
+              {/* </Link> */}
               <Button variant="primary" className="m-2" type="submit" disabled={!isDirty}>
                 <FormattedMessage
                   id="EditShopPage.SaveBtnLabel"
@@ -317,6 +332,29 @@ const EditShopPage: FunctionComponent<IProps> = props => {
               </Button>
             </div>
           </div>
+          <Modal show={showModal} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>
+                <FormattedMessage id="ViewShopPage.deactivatedModalTitle" />
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div>
+                <FormattedMessage id="ViewShopPage.deactivatedModalBody1" />
+              </div>
+              <div>
+                <FormattedMessage id="ViewShopPage.deactivatedModalBody2" />
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                <FormattedMessage id="ReportModal.closeBtnLabel" />
+              </Button>
+              <Button variant="primary" onClick={handleGoBack}>
+                <FormattedMessage id="ViewShopPage.deactivatedModalBackBtnLabel" />
+              </Button>
+            </Modal.Footer>
+          </Modal>
         </Container>
       </form>
     </OneToFivePage>
