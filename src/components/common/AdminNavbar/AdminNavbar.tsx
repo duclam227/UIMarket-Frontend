@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Link, useMatch, useResolvedPath } from 'react-router-dom';
+import { Link, useMatch, useNavigate, useResolvedPath } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 
@@ -24,8 +24,12 @@ const AdminNavbar = () => {
   );
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const currentUser = useSelector((state: State) => state.auth.user);
-
+  const handleLogout = () => {
+    dispatch(logOut());
+    navigate('/');
+  };
   const tabs = [
     {
       key: 'dashboard',
@@ -88,10 +92,7 @@ const AdminNavbar = () => {
               </li>
               <hr className="dropdown-divider" />
               <li>
-                <button
-                  className={`${style.authButton}`}
-                  onClick={() => dispatch(logOut())}
-                >
+                <button className={`${style.authButton}`} onClick={handleLogout}>
                   {userDropdownLogoutBtnLabel}
                 </button>
               </li>
