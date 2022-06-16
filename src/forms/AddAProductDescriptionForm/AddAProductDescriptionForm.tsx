@@ -105,6 +105,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
           as="select"
           id="productCategory"
           aria-label="Default select example"
+          disabled={initialValue?.productCategory ? true : false}
         >
           <option selected={initialValue?.productCategory ? false : true} disabled={true}>
             {intl.formatMessage({ id: 'AddAProduct.ProductCategoryPlaceholder' })}
