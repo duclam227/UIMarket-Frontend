@@ -63,23 +63,11 @@ const SideNav: FC<Props> = props => {
 
   const { className } = props;
   const currentUser = useSelector((state: State) => state.auth.user);
+  const isCurrentUserShop = !!currentUser?.shopId;
 
   return (
     //Sidenav only for logged in users?
     <div className={`${style.sideNavWrapper} ${className}`}>
-      {/* Current user display
-      <div className={style.currentUserRow}>
-        <div className={style.currentUser}>
-          <div className={style.profilePictureWrapper}>
-            <img
-              className={style.profilePicture}
-              src={currentUser?.customerAvatar || genericAvatarUrl}
-              alt="Current user"
-            />
-          </div>
-          <div className={style.username}>{currentUser?.customerName}</div>
-        </div>
-      </div> */}
       {/* Profile nav group */}
       <ul className={style.navGroup}>
         <div className={style.navGroupName}>
@@ -123,15 +111,20 @@ const SideNav: FC<Props> = props => {
             {myStoreNavGroupLabel}
           </Link>
         </div>
-        <Link to={`/user/${currentUser?._id}/products`}>
-          <li className={style.navLinkItem}>{productsNavLinkLabel}</li>
-        </Link>
-        <Link to='/wallet'>
-          <li className={style.navLinkItem}>{deexWalletNavLinkLabel}</li>
-        </Link>
-        <Link to='/shop-statistic'>
-          <li className={style.navLinkItem}><FormattedMessage id='SideNav.shopStatisticLabel' /></li>
-        </Link>
+        {isCurrentUserShop
+          ? <>
+            <Link to={`/user/${currentUser?._id}/products`}>
+              <li className={style.navLinkItem}>{productsNavLinkLabel}</li>
+            </Link>
+            <Link to='/wallet'>
+              <li className={style.navLinkItem}>{deexWalletNavLinkLabel}</li>
+            </Link>
+            <Link to='/shop-statistic'>
+              <li className={style.navLinkItem}><FormattedMessage id='SideNav.shopStatisticLabel' /></li>
+            </Link>
+          </>
+          : null}
+
       </ul>
     </div>
   );

@@ -32,6 +32,7 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
   const { question, voteStatus, currentUser, intl } = props;
   const [upvote, setUpvote] = useState(question.totalUpvote);
   const [downvote, setDownvote] = useState(question.totalDownvote);
+  const [voteInProgress, setVoteInProgress] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const isAuthenticated = !!currentUser;
@@ -43,13 +44,16 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
   const downvoteActiveStyle = classNames(style.voteButton, style.downvote, style.active);
 
   const handleUpvote = () => {
+    setVoteInProgress(true);
+
     if (!isAuthenticated) {
       navigate('/login');
       return;
     }
 
     if (isCurrentUserAuthor) {
-      toast.warning(intl.formatMessage({ id: 'Question.authorCantVote' }))
+      toast.warning(intl.formatMessage({ id: 'Question.authorCantVote' }));
+      setVoteInProgress(false);
       return;
     }
 
@@ -75,17 +79,23 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
         const errorCode: any = errorCodes.voting[errorMsg as keyof typeof errorCodes.voting];
-        toast.error(intl.formatMessage({ id: `Voting.${errorCode}` }));
+        toast.error(intl.formatMessage({ id: `Vote.${errorCode}` }));
+      })
+      .finally(() => {
+        setVoteInProgress(false);
       })
   }
 
   const handleDownvote = () => {
+    setVoteInProgress(true);
     if (!isAuthenticated) {
       navigate('/login');
       return;
     }
 
     if (isCurrentUserAuthor) {
+      toast.warning(intl.formatMessage({ id: 'Question.authorCantVote' }));
+      setVoteInProgress(false);
       return;
     }
 
@@ -111,17 +121,20 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
         const errorCode: any = errorCodes.voting[errorMsg as keyof typeof errorCodes.voting];
-        toast.error(intl.formatMessage({ id: `Voting.${errorCode}` }));
+        toast.error(intl.formatMessage({ id: `Vote.${errorCode}` }));
+      })
+      .finally(() => {
+        setVoteInProgress(false);
       })
   }
 
   const upvoteIcon = voteStatus && voteStatus.upvote
-    ? <BsArrowUpCircleFill onClick={debounce(handleUpvote, 200)} className={upvoteActiveStyle} />
-    : <BsArrowUpCircle onClick={debounce(handleUpvote, 200)} className={upvoteStyle} />
+    ? <BsArrowUpCircleFill onClick={voteInProgress ? () => { } : handleUpvote} className={upvoteActiveStyle} />
+    : <BsArrowUpCircle onClick={voteInProgress ? () => { } : handleUpvote} className={upvoteStyle} />
 
   const downvoteIcon = voteStatus && voteStatus.downvote
-    ? <BsArrowDownCircleFill onClick={debounce(handleDownvote, 200)} className={downvoteActiveStyle} />
-    : <BsArrowDownCircle onClick={debounce(handleDownvote, 200)} className={downvoteStyle} />
+    ? <BsArrowDownCircleFill onClick={voteInProgress ? () => { } : handleDownvote} className={downvoteActiveStyle} />
+    : <BsArrowDownCircle onClick={voteInProgress ? () => { } : handleDownvote} className={downvoteStyle} />
 
   return (
     <div className={style.voter}>

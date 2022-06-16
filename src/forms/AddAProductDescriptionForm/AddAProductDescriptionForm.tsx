@@ -102,16 +102,19 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
       <Form.Group className="mb-3">
         <Form.Label className={style.label}>{productCategoryLabel}</Form.Label>
         <Form.Select
+          as="select"
           id="productCategory"
           aria-label="Default select example"
-          defaultValue={initialValue?.productCategory || null}
+          disabled={initialValue?.productCategory ? true : false}
         >
-          <option selected disabled={true}>
+          <option selected={initialValue?.productCategory ? false : true} disabled={true}>
             {intl.formatMessage({ id: 'AddAProduct.ProductCategoryPlaceholder' })}
           </option>
-          {categories && categories.map(cat => (
-            <option value={cat._id}>{cat.categoryName}</option>
-          ))
+          {categories && categories.map(cat => {
+            return (
+              <option value={cat._id} selected={cat._id === initialValue?.productCategory._id ? true : false}>{cat.categoryName}</option>
+            )
+          })
           }
         </Form.Select>
       </Form.Group>

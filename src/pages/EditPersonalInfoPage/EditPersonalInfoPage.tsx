@@ -93,8 +93,12 @@ const EditPersonalInfoPage: FC<IProps> = (props) => {
       ? `${date.getDate()}/${date.getUTCMonth() + 1}/${date.getFullYear()}`
       : '';
   //Function to format Date object into YYYY-MM-DD
-  const dateToYYYYMMDD = (date: Date | null) =>
-    date ? date.toISOString().split('T')[0] : '';
+  const dateToYYYYMMDD = (date: Date | null) => {
+    if (date && isNaN(date.getTime())) {
+      return new Date().toISOString().split('T')[0];
+    }
+    return date?.toISOString().split('T')[0];
+  };
 
   const params = useParams();
   const dispatch = useDispatch();
