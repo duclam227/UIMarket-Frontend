@@ -4,7 +4,7 @@ import { Button, Nav, Tab, TabContainer, Tabs } from 'react-bootstrap';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import s3API from '../../api/amazonS3';
 import categoryAPI from '../../api/category';
 import productAPI from '../../api/product';
@@ -30,7 +30,9 @@ interface IProps {
 
 const AddAProductPage: React.FC<IProps> = (props) => {
   const { intl } = props;
+
   const currentUser = useSelector((state: State) => state.auth.user);
+
   const [product, setProduct] = useState<product | null>(null);
   const [productFiles, setProductFiles] = useState<Array<File>>([]);
 
@@ -118,6 +120,12 @@ const AddAProductPage: React.FC<IProps> = (props) => {
       });
   };
 
+  useEffect(() => {
+    if (currentUser && !currentUser.shopId) {
+      navigate(`/user/${currentUser?._id}/shop`);
+    }
+  }, [currentUser])
+
   return (
     <OneToFivePage>
       <div className={style.wrapper}>
@@ -171,8 +179,7 @@ const AddAProductPage: React.FC<IProps> = (props) => {
           </Button>
         </div>
       </div>
-    </OneToFivePage>
-  );
+    </OneToFivePage>)
 };
 
 export default injectIntl(AddAProductPage);
