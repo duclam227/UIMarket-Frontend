@@ -105,11 +105,13 @@ const LoginForm: FC<loginFormProps> = props => {
       const customer: customer = { ...user };
       dispatch(loginSuccess({ ...customer }));
       const { state: locationState }: { state: any } = location;
-      window.location = locationState ? locationState.from.pathname : '/';
+      navigate(locationState ? locationState.from.pathname : '/');
     } catch (e: any) {
       if (e.response && e.response.data.msg === 'account-inactived') {
         const { userId } = e.response.data;
         navigate(`/login/not-verified?userId=${userId}`);
+      } else if (e.response && e.response.data.msg === 'account-banned') {
+        navigate(`/account-banned`);
       } else {
         const errorMsg = getErrorMessage(e);
         const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
