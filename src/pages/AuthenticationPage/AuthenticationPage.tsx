@@ -12,6 +12,7 @@ import loginImage from '../../app/assets/illust-sign-in.png';
 import signupImage from '../../app/assets/illust-sign-up.png';
 
 import style from './AuthenticationPage.module.css';
+import { Container } from 'react-bootstrap';
 
 const Forms = {
   login: <LoginForm />,
@@ -27,6 +28,10 @@ const AuthenticationPage: FC<AuthenticationPageProps> = props => {
   const { destination } = props;
 
   const sideImage = destination === 'login' ? loginImage : signupImage;
+  const imageMessage =
+    destination === 'login'
+      ? 'Discover creatives & better product design'
+      : 'Explore new ideas for better experiences';
 
   const renderForm = (formType: string): JSX.Element => {
     return Forms[formType as keyof typeof Forms];
@@ -34,16 +39,26 @@ const AuthenticationPage: FC<AuthenticationPageProps> = props => {
   return (
     <>
       <PageWithNavbar>
-        <div className={style.loginPageContainer}>
-          <div className={style.loginPageCover}>
+        <Container fluid className={'m-0 ' + style.loginPageContainer}>
+          <div className={'d-none d-lg-flex ' + style.loginPageCover}>
+            <h2 className={style.loginPageCoverTitle}>{imageMessage}</h2>
             <img
               className={style.sideImage}
               alt="Illustration for authentication"
               src={sideImage}
             />
           </div>
+
+          <div className="d-lg-none my-2">
+            <img
+              className={style.sideImage}
+              alt="Illustration for authentication"
+              src={sideImage}
+            />
+          </div>
+
           <div className={style.loginForm}>{renderForm(destination)}</div>
-        </div>
+        </Container>
       </PageWithNavbar>
     </>
   );
