@@ -130,6 +130,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
                 props.updateProductInfo({
                   productDescription: e
                 });
+                return onChange(e);
               }}
               onBlur={onBlur}
               initialValue={value}
