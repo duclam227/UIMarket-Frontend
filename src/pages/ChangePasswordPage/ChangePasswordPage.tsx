@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import Joi from 'joi';
 import { joiResolver } from '@hookform/resolvers/joi';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { toast } from 'react-toastify';
 
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/Container';
@@ -65,9 +66,7 @@ const ChangePasswordPage: FC<{ intl: IntlShape }> = ({ intl }) => {
     },
   });
 
-  const onChangePassword: SubmitHandler<
-    ChangePasswordRHFProps
-  > = async data => {
+  const onChangePassword: SubmitHandler<ChangePasswordRHFProps> = async data => {
     const { id: userId } = params;
     if (!userId) return;
 
@@ -76,8 +75,18 @@ const ChangePasswordPage: FC<{ intl: IntlShape }> = ({ intl }) => {
         userId,
         newPassword: data.newPassword,
       });
+      toast.success(
+        intl.formatMessage({
+          id: 'ResetForgetPasswordForm.actionCompleted',
+        }),
+      );
       navigate(`/user/${userId}`, { replace: true });
     } catch (error) {
+      toast.error(
+        intl.formatMessage({
+          id: 'AccountVerifiedPage.failedTitle',
+        }),
+      );
       console.log(error);
     }
   };
