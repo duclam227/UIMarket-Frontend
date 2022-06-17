@@ -3,7 +3,7 @@ import { getJwt } from '../../app/util/authHelpers';
 
 const QUESTIONS_ENDPOINT = 'api/v1/questions';
 const TAGS_ENDPOINT = 'api/v1/questionTags';
-const jwt = getJwt();
+
 
 class Get {
 	getAllQuestionsByPageNumber = (pageNumber: number | string, itemsPerPage: number) => {
@@ -23,6 +23,7 @@ class Get {
 	};
 
 	getQuestionById = (id: string) => {
+		const jwt = getJwt();
 		const config = {
 			headers: {
 				Authorization: `Bearer ${jwt}`,
@@ -50,6 +51,7 @@ class Get {
 	};
 
 	getTagListByPage = (pageNumber: number | string, itemsPerPage: number) => {
+		const jwt = getJwt();
 		const config = {
 			headers: {
 				Authorization: `Bearer ${jwt}`,

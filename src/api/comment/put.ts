@@ -2,7 +2,6 @@ import axiosClient from '..';
 import { getJwt } from '../../app/util/authHelpers';
 
 const COMMENTS_ENDPOINT = 'api/v1/comments';
-const jwt = getJwt();
 
 class Put {
 	updateComment = (commentContent: string, commentId: string) => {

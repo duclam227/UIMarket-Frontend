@@ -3,10 +3,9 @@ import { getJwt } from '../../app/util/authHelpers';
 
 const CART_ENDPOINT = 'api/v1/carts';
 
-const jwt = getJwt();
-
 class Get {
   getAllCartProducts = () => {
+    const jwt = getJwt();
     const config = {
       headers: {
         Authorization: `Bearer ${jwt}`,
