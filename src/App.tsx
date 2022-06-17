@@ -53,6 +53,7 @@ import {
   RequestRefundPage,
   TagListPage,
   ShopStatisticPage,
+  AccountBannedPage,
 } from './pages';
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
@@ -98,6 +99,7 @@ function App() {
         />
 
         <Route path="/verify" element={<RequireAnonymous><AccountVerifiedPage /></RequireAnonymous>} />
+        <Route path="/account-banned" element={<RequireAnonymous><AccountBannedPage /></RequireAnonymous>} />
         <Route path="/login/not-verified" element={<RequireAnonymous><AccountNotVerifiedPage /></RequireAnonymous>} />
         <Route path="/signup/verify-prompt" element={<RequireAnonymous><VerifyPromptPage /></RequireAnonymous>} />
         <Route path="/signup" element={<RequireAnonymous><AuthenticationPage destination="signup" /></RequireAnonymous>} />
