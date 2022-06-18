@@ -107,7 +107,7 @@
 
 .sectionExploreForum {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	min-height: 60vh;
 }
 
@@ -198,8 +198,9 @@
 
 .sectionStartEarning {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column-reverse;
 	min-height: 40vh;
+	margin-bottom: 1rem;
 }
 
 .sectionStartEarningLeft {
@@ -286,6 +287,7 @@
 	}
 
 	.sectionStartEarning {
+		flex-direction: row;
 		align-items: center;
 		justify-content: space-between;
 	}
@@ -297,6 +299,12 @@
 	.sectionStartEarningRight {
 		justify-content: flex-end;
 		align-items: center;
+	}
+
+	.sectionExploreForum {
+		display: flex;
+		flex-direction: column;
+		min-height: 60vh;
 	}
 
 	.sectionExploreForumLeft {
