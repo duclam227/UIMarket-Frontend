@@ -10,6 +10,7 @@ import {
   RequireUser,
   RequireAuthenticated,
   AdminRoutes,
+  GoToTopButton,
 } from './components';
 
 import {
@@ -179,6 +180,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <GoToTopButton />
     </div>
   );
 }
