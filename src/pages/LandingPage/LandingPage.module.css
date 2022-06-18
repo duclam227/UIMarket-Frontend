@@ -2,287 +2,312 @@
 @import url('../../app/util/propertySet.css');
 
 :root {
-  --sideMargins: 120px;
+	--sideMargins: 120px;
 }
 
 .sectionWrapper {
-  margin-top: 24px;
-  padding: 10px 30px;
+	margin-top: 24px;
+	padding: 10px 30px;
 }
 
 .sectionHero {
-  display: flex;
-  flex-direction: row;
+	display: flex;
+	flex-direction: row;
 
-  min-height: 60vh;
-  padding-top: 24px;
-  padding-bottom: 24px;
+	min-height: 60vh;
+	padding-top: 24px;
+	padding-bottom: 24px;
 
-  background-color: #ffeff7;
+	background-color: #ffeff7;
 }
 
 .sectionHeroLeft {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
 
-  margin-left: 30px;
+	margin-left: 30px;
 }
 
 .sectionHeroTitle {
-  color: var(--themeColor);
-  font-weight: 650;
-  font-size: 45px;
+	color: var(--themeColor);
+	font-weight: 650;
+	font-size: 45px;
 }
 
 .sectionHeroSubtitle {
-  margin-top: 15px;
-  font-weight: 600;
-  font-size: 25px;
+	margin-top: 15px;
+	font-weight: 600;
+	font-size: 25px;
 }
 
 .sectionHeroButton {
-  margin-top: 20px;
+	margin-top: 20px;
 
-  width: 250px;
-  height: fit-content;
+	width: 250px;
+	height: fit-content;
 
-  padding: 15px 0px;
-  color: white;
-  background-color: var(--pink-500);
-  border: none;
-  border-radius: 40px;
+	padding: 15px 0px;
+	color: white;
+	background-color: var(--pink-500);
+	/* background-image: linear-gradient(to right, #a770ef, #cf8bf3, #f64f59); */
+	border: none;
+	border-radius: 40px;
 }
 
 .sectionHeroButton:hover {
-  background-color: var(--pink-400);
+	background-color: var(--pink-400);
 }
 
 .sectionHeroRight {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 
-  margin-right: 30px;
+	margin-right: 30px;
 }
 
 .sectionHeroRight img {
-  width: 25vw;
-  object-fit: cover;
+	width: 25vw;
+	object-fit: cover;
 }
 
 .sectionFeaturedProducts {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .sectionFeaturedProductsHeader {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
+	display: flex;
+	flex-direction: row;
+	align-items: flex-end;
 }
 
 .sectionFeaturedProductsTitle {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .sectionFeaturedProductsTitle h4 {
-  font-weight: 600;
+	font-weight: 600;
 }
 
 .sectionFeaturedProductsExploreButton {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  gap: 10px;
+	display: flex;
+	align-items: center;
+	flex-direction: row;
+	gap: 10px;
 
-  margin-left: auto;
+	margin-left: auto;
 
-  color: var(--themeColor);
-  font-weight: 550;
+	color: var(--themeColor);
+	font-weight: 550;
 }
 
 .sectionExploreForum {
-  display: flex;
-  flex-direction: row;
-  min-height: 60vh;
+	display: flex;
+	flex-direction: column;
+	min-height: 60vh;
 }
 
 .sectionExploreForumLeft {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .sectionExploreForumLeft img {
-  min-width: 240px;
-  width: 25vw;
-  object-fit: cover;
+	min-width: 240px;
+	width: 25vw;
+	object-fit: cover;
 }
 
 .sectionExploreForumRight {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  text-align: right;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-end;
+	text-align: right;
 
-  margin-left: auto;
+	margin-left: auto;
 }
 
 .sectionExploreForumTitle {
-  font-weight: 650;
-  font-size: 35px;
+	font-weight: 650;
+	font-size: 35px;
 }
 
 .sectionExploreForumSubtitle {
-  margin-top: 15px;
-  font-weight: 550;
-  font-size: 20px;
+	margin-top: 15px;
+	font-weight: 550;
+	font-size: 20px;
 }
 
 .sectionExploreForumButton {
-  margin-top: 20px;
+	margin-top: 20px;
 
-  width: 250px;
-  height: fit-content;
+	width: 250px;
+	height: fit-content;
 
-  padding: 15px 0px;
-  color: white;
-  background-color: var(--pink-600);
-  border: none;
-  border-radius: 4px;
+	padding: 15px 0px;
+	color: white;
+	background-color: var(--pink-600);
+	border: none;
+	border-radius: 4px;
 }
 
 .sectionExploreForumButton:hover {
-  background-color: var(--pink-500);
+	background-color: var(--pink-500);
 }
 
 .sectionTrendingCategoriesList {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 40px;
-  width: 100%;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 40px;
+	width: 100%;
 
-  margin-top: 20px;
-  margin-bottom: 10px;
+	margin-top: 20px;
+	margin-bottom: 10px;
 }
 
 .categoryCard {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin-top: 24px;
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+	margin-top: 24px;
 }
 
 .categoryCardCover {
-  width: 120px;
-  object-fit: cover;
+	width: 120px;
+	object-fit: cover;
 }
 
 .categoryCardTitle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 24px;
 
-  font-weight: 550;
+	font-weight: 550;
 }
 
 .sectionStartEarning {
-  display: flex;
-  flex-direction: row;
-  min-height: 40vh;
+	display: flex;
+	flex-direction: column-reverse;
+	min-height: 40vh;
+	margin-bottom: 1rem;
 }
 
 .sectionStartEarningLeft {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  margin-right: 100px;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+	margin-right: 100px;
 }
 
 .sectionStartEarningTitle {
-  font-weight: 650;
-  font-size: 40px;
+	font-weight: 650;
+	font-size: 40px;
 }
 
 .sectionStartEarningSubtitle {
-  margin-top: 15px;
-  font-weight: 550;
-  font-size: 20px;
+	margin-top: 15px;
+	font-weight: 550;
+	font-size: 20px;
 }
 
 .sectionStartEarningButton {
-  margin-top: 20px;
+	margin-top: 20px;
 
-  width: 250px;
-  height: fit-content;
+	width: 250px;
+	height: fit-content;
 
-  padding: 15px 0px;
-  color: white;
-  background-color: var(--pink-600);
-  border: none;
-  border-radius: 4px;
+	padding: 15px 0px;
+	color: white;
+	background-color: var(--pink-600);
+	border: none;
+	border-radius: 4px;
 }
 
 .sectionStartEarningButton:hover {
-  background-color: var(--pink-400);
+	background-color: var(--pink-400);
 }
 
 .sectionStartEarningRight {
-  display: flex;
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
+	display: flex;
+	flex-grow: 1;
+	justify-content: center;
+	align-items: center;
 }
 
 .sectionStartEarningRight img {
-  min-width: 240px;
-  width: 25vw;
-  object-fit: cover;
+	min-width: 240px;
+	width: 25vw;
+	object-fit: cover;
+}
+
+.show {
+	position: relative;
+	top: 0px;
+
+	opacity: 1;
+	transition: 400ms;
+}
+
+.hide {
+	position: relative;
+	top: -5rem;
+
+	opacity: 0;
+	transition: 400ms;
 }
 
 @media screen and (min-width: 992px) {
-  .sectionWrapper {
-    margin-top: 40px;
-    margin-bottom: 40px;
-    padding: 10px var(--sideMargins);
-  }
+	.sectionWrapper {
+		margin-top: 40px;
+		margin-bottom: 40px;
+		padding: 10px var(--sideMargins);
+	}
 
-  .sectionHeroLeft {
-    margin-left: var(--sideMargins);
-    margin-right: 100px;
-  }
+	.sectionHeroLeft {
+		margin-left: var(--sideMargins);
+		margin-right: 100px;
+	}
 
-  .sectionHeroRight {
-    margin-left: auto;
-    margin-right: var(--sideMargins);
-  }
+	.sectionHeroRight {
+		margin-left: auto;
+		margin-right: var(--sideMargins);
+	}
 
-  .sectionStartEarning {
-    align-items: center;
-    justify-content: space-between;
-  }
+	.sectionStartEarning {
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+	}
 
-  .sectionStartEarningLeft {
-    margin-right: 100px;
-  }
+	.sectionStartEarningLeft {
+		margin-right: 100px;
+	}
 
-  .sectionStartEarningRight {
-    justify-content: flex-end;
-    align-items: center;
-  }
+	.sectionStartEarningRight {
+		justify-content: flex-end;
+		align-items: center;
+	}
 
-  .sectionExploreForumLeft {
-    margin-right: 100px;
-  }
+	.sectionExploreForum {
+		display: flex;
+		flex-direction: column;
+		min-height: 60vh;
+	}
+
+	.sectionExploreForumLeft {
+		margin-right: 100px;
+	}
 }

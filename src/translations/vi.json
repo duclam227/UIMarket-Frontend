@@ -334,7 +334,7 @@
   "SearchForm.searchPlaceholder": "Nhập để tìm kiếm...",
   "SearchQuestionsPage.searchPlaceholder": "Tìm một câu hỏi...",
   "SearchQuestionsPage.noResult": "Không có kết quả",
-  "SectionBountyHeader.bountyAmount": "Trả lời đúng có thể nhận được phần thưởng trị giá <b>{amount}.</b>",
+  "SectionBountyHeader.bountyAmount": "Trả lời đúng có thể nhận được phần thưởng trị giá <b>{amount}</b> điểm.",
   "SectionBountyHeader.bountyDuration": "<b>Câu hỏi này được treo thưởng đến ngày </b>",
   "SignupForm.divider": "Hoặc",
   "SignupForm.emailLabel": "Email",

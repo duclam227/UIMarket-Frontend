@@ -334,7 +334,7 @@
   "SearchForm.searchPlaceholder": "Type to start searching...",
   "SearchQuestionsPage.searchPlaceholder": "Search for a question...",
   "SearchQuestionsPage.noResult": "No results",
-  "SectionBountyHeader.bountyAmount": "Answers to this question are eligible for a <b>{amount} bounty.</b>",
+  "SectionBountyHeader.bountyAmount": "Answers to this question are eligible for a bounty of <b>{amount} points.</b>",
   "SectionBountyHeader.bountyDuration": "<b>{user} placed a bounty that expires on </b>",
   "SignupForm.divider": "Or",
   "SignupForm.emailLabel": "Email",
