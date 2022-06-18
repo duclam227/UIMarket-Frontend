@@ -15,6 +15,7 @@ import { BsChevronLeft } from 'react-icons/bs';
 
 import { FormInput } from '../../components';
 import authAPI from '../../api/auth';
+import { toast } from 'react-toastify';
 
 interface UpdatePasswordRHFProps {
   password: string;
@@ -95,9 +96,19 @@ const ResetForgetPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
     };
     try {
       await authAPI.resetPassword(credentials);
+      toast.success(
+        intl.formatMessage({
+          id: 'ResetForgetPasswordForm.actionCompleted',
+        }),
+      );
       navigate('/login');
     } catch (e) {
       console.log('Reset password API call failed: ', e);
+      toast.error(
+        intl.formatMessage({
+          id: 'AccountVerifiedPage.failedTitle',
+        }),
+      );
     }
   };
 

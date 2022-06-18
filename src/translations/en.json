@@ -313,6 +313,7 @@
   "ResetForgetPasswordForm.newPasswordPlaceholder": "New password",
   "ResetForgetPasswordForm.confirmPasswordLabel": "Confirm password",
   "ResetForgetPasswordForm.confirmPasswordPlaceholder": "Confirm password",
+  "ResetForgetPasswordForm.actionCompleted": "Action completed successfully!",
   "ReviewsPage.editReviewLabel": "Edit",
   "ReviewsPage.reviewItemTitle": "You reviewed",
   "ReviewsPage.reviewItemTitleConnectingWord": "on",

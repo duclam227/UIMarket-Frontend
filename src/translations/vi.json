@@ -313,6 +313,7 @@
   "ResetForgetPasswordForm.newPasswordPlaceholder": "Mật khẩu mới",
   "ResetForgetPasswordForm.confirmPasswordLabel": "Xác nhận mật khẩu",
   "ResetForgetPasswordForm.confirmPasswordPlaceholder": "Xác nhận lại mật khẩu",
+  "ResetForgetPasswordForm.actionCompleted": "Thành công!",
   "ReviewsPage.editReviewLabel": "Chỉnh sửa",
   "ReviewsPage.reviewItemTitle": "Bạn đã đánh giá",
   "ReviewsPage.reviewItemTitleConnectingWord": "vào ngày",
