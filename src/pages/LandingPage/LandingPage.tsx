@@ -34,7 +34,6 @@ const LandingPage: React.FC<IProps> = props => {
   const [trendingProducts, setTrendingProducts] = useState<Array<product> | null>(null);
   const [themeProducts, setThemeProducts] = useState<Array<product> | null>(null);
 
-  const sectionIntroRef = useRef<HTMLDivElement | null>(null);
   const sectionTrendingProductsRef = useRef(null);
   const sectionTrendingCategoriesRef = useRef(null);
   const sectionFeaturedProductsRef = useRef(null);
@@ -92,7 +91,6 @@ const LandingPage: React.FC<IProps> = props => {
     }
   }
 
-  useIntersectionObserver(sectionIntroRef, checkAnimation, VIEW_THRESHOLD);
   useIntersectionObserver(sectionTrendingProductsRef, checkAnimation, VIEW_THRESHOLD);
   useIntersectionObserver(sectionTrendingCategoriesRef, checkAnimation, VIEW_THRESHOLD);
   useIntersectionObserver(sectionFeaturedProductsRef, checkAnimation, VIEW_THRESHOLD);
@@ -101,9 +99,7 @@ const LandingPage: React.FC<IProps> = props => {
 
   return (
     <PageWithNavbar>
-      <div ref={sectionIntroRef} className={style.hide}>
-        <SectionHero currentUser={currentUser} />
-      </div>
+      <SectionHero currentUser={currentUser} />
       <div ref={sectionTrendingProductsRef} className={style.hide}>
         <SectionFeaturedProducts
           products={trendingProducts}
