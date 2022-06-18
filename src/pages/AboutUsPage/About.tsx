@@ -23,12 +23,12 @@ const About = () => {
             }}
           />
         </h5>
-        <div className="d-flex justify-content-center my-5">
+        <div className={`${styles.row} + d-flex justify-content-center my-5`}>
           <Person name="Kim" image={Kim} title="Front-end Developer"></Person>
           <Person name="Đức" image={Duc} title="Front-end Developer"></Person>
           <Person name="Khoa" image={Khoa} title="Front-end Developer"></Person>
         </div>
-        <div className="d-flex justify-content-center my-5">
+        <div className={`${styles.row} + d-flex justify-content-center my-5`}>
           <Person name="Lâm" image={Lam} title="Back-end Developer"></Person>
           <Person name="Tân" image={Tan} title="Back-end Developer"></Person>
         </div>

@@ -1,15 +1,29 @@
 .imgWrapper {
-  text-align: center;
-  width: 240px;
-  height: 240px;
+	text-align: center;
+	width: 240px;
+	height: 240px;
 }
 
 .img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .description {
-  line-height: 28px;
+	line-height: 28px;
+}
+
+.row {
+	display: flex;
+	flex-direction: column;
+
+	align-items: center;
+	justify-content: center;
+}
+
+@media (min-width: 1024px) {
+	.row {
+		flex-direction: row;
+	}
 }
