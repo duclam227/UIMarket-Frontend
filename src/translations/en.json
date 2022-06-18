@@ -1,6 +1,9 @@
 {
   "AboutPage.Title": "About Us",
   "AboutPage.Description": "Hello! We are a team of software developers from University of Science, HCMC, Viet Nam. <br></br> With our love with design and art, we want to create a playground where anyone can participate and ask questions, especially beginners in UI/UX and creative arts.",
+  "AccountBannedPage.pageTitle": "Account banned",
+  "AccountBannedPage.accountBannedMessage": "This account has been banned!",
+  "AccountBannedPage.contactUsMessage": "If you are the owner of this account and think there has been a mistake. Please contact us to resolve this inconvenience",
   "AccountNotVerifiedPage.title": "Account has not been activated",
   "AccountNotVerifiedPage.notVerifiedMessage": "Your account need to be activated before you can login!",
   "AccountNotVerifiedPage.sentEmailMessage": "We've sent a link to activate your account to your registered email.",
