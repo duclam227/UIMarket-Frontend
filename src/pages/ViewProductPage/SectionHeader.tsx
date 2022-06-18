@@ -46,8 +46,8 @@ const SectionHeader: React.FC<Props> = props => {
               if (action && action === 'now') {
                 navigate('/cart');
               }
-            }
-          }
+            },
+          },
         );
       })
       .catch(error => {
@@ -57,18 +57,37 @@ const SectionHeader: React.FC<Props> = props => {
       });
   };
 
+  const handleCheckout = () => {
+    if (!currentUser) {
+      navigate('/signup');
+      return;
+    }
+
+    const checkoutProducts = [
+      {
+        _id: product._id,
+        shopId: product.shopId._id,
+        productPrice: product.productPrice,
+        productName: product.productName,
+        productPictures: product.productPictures,
+      },
+    ];
+
+    navigate('/checkout', {
+      state: {
+        products: checkoutProducts,
+      },
+    });
+  };
+
   const renderStars = (productRating: number) => {
     const starArray: Array<any> = [];
     let rating = productRating;
     for (let key = 1; key <= 5; key++) {
       if (rating > 0) {
-        starArray.push(
-          <i className={'bi-star-fill ' + style.yellowStar} key={key} />,
-        );
+        starArray.push(<i className={'bi-star-fill ' + style.yellowStar} key={key} />);
       } else {
-        starArray.push(
-          <i className={'bi-star-fill ' + style.grayStar} key={key} />,
-        );
+        starArray.push(<i className={'bi-star-fill ' + style.grayStar} key={key} />);
       }
       rating = rating - 1;
     }
@@ -78,39 +97,57 @@ const SectionHeader: React.FC<Props> = props => {
 
   return (
     <section className={style.header}>
-      <Link to={`/products/category/${product.productCategory._id}`} className={style.categoryPill}><Badge pill bg='primary'>{product.productCategory.categoryName}</Badge></Link>
+      <Link
+        to={`/products/category/${product.productCategory._id}`}
+        className={style.categoryPill}
+      >
+        <Badge pill bg="primary">
+          {product.productCategory.categoryName}
+        </Badge>
+      </Link>
       <h1 className={style.title}>{product.productName}</h1>
       <div className={style.subtitle}>
         {renderStars(product.productRating!)}
         <div className={style.columnDivider}></div>
-        <FormattedMessage id='ViewProductPage.totalReviews' values={{ count: product.totalReview }} />
+        <FormattedMessage
+          id="ViewProductPage.totalReviews"
+          values={{ count: product.totalReview }}
+        />
         <div className={style.columnDivider}></div>
-        <FormattedMessage id='ViewProductPage.totalSold' values={{ count: product.totalSold }} />
+        <FormattedMessage
+          id="ViewProductPage.totalSold"
+          values={{ count: product.totalSold }}
+        />
       </div>
 
       <section className={style.buyPanel}>
-        {isBought === null
-          ? <Spinner animation='border' />
-          : <><div className={style.priceRow}>
-            <span><FormattedMessage id='ViewProductPage.priceLabel' /></span>
-            <span>
-              <FormattedMessage
-                id='ViewProductPage.price'
-                values={{ money: product.productPrice }}
-              />
-            </span>
-          </div>
-            {isBought === true
-              ? <Link to='/purchases'><Button
-                className={style.button}
-              >
-                <FormattedMessage id="ViewProductPage.AlreadyOwned" />
-              </Button></Link>
-              : <>
+        {isBought === null ? (
+          <Spinner animation="border" />
+        ) : (
+          <>
+            <div className={style.priceRow}>
+              <span>
+                <FormattedMessage id="ViewProductPage.priceLabel" />
+              </span>
+              <span>
+                <FormattedMessage
+                  id="ViewProductPage.price"
+                  values={{ money: product.productPrice }}
+                />
+              </span>
+            </div>
+            {isBought === true ? (
+              <Link to="/purchases">
+                <Button className={style.button}>
+                  <FormattedMessage id="ViewProductPage.AlreadyOwned" />
+                </Button>
+              </Link>
+            ) : (
+              <>
                 <Button
                   className={style.button}
                   onClick={() => {
-                    handleAddToCart('now');
+                    handleCheckout();
                   }}
                   disabled={isCurrentUserSeller}
                 >
@@ -120,17 +157,15 @@ const SectionHeader: React.FC<Props> = props => {
                   className={style.button}
                   onClick={() => handleAddToCart()}
                   disabled={isCurrentUserSeller}
-                  variant='outline-primary'
+                  variant="outline-primary"
                 >
                   <AiOutlineShoppingCart />
                   <FormattedMessage id="ViewProductPage.AddToCart" />
                 </Button>
               </>
-
-            }
-
+            )}
           </>
-        }
+        )}
       </section>
 
       {/* <div className={style.buttonRow}>
@@ -162,7 +197,6 @@ const SectionHeader: React.FC<Props> = props => {
           </Button>
         )}
       </div> */}
-
     </section>
   );
 };
