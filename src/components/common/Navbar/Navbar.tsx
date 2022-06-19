@@ -159,7 +159,6 @@ const NavBar: FC<IProps> = props => {
                         {userDropdownProfileLabel}
                       </Link>
                     </li>
-                    <hr className="dropdown-divider" />
                     <li>
                       <Link
                         to={
