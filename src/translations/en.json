@@ -268,6 +268,7 @@
   "ProductListPage.noItems": "Nothing matches what you are looking for.",
   "ProductNavBar.Trending": "Trending",
   "ProductNavBar.Forum": "DeeX Forum",
+  "ProductNavBar.AllProducts": "All products",
   "QuestionList.numberOfAnswers": "{count, plural, =0 {# answer} one {# answer} other {# answers}}",
   "QuestionList.numberOfVotes": "{count, plural, =0 {# vote} one {# vote} other {# votes}}",
   "QuestionList.numberOfViews": "{count, plural, =0 {# view} one {# view} other {# views}}",
