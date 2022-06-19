@@ -29,10 +29,10 @@ import SectionSeller from './SectionSeller';
 const ITEMS_PER_PAGE = 10;
 
 interface IProps {
-  intl: IntlShape
+  intl: IntlShape;
 }
 
-const ViewProductPage: React.FC<IProps> = (props) => {
+const ViewProductPage: React.FC<IProps> = props => {
   const { intl } = props;
   const { id } = useParams();
 
@@ -46,14 +46,15 @@ const ViewProductPage: React.FC<IProps> = (props) => {
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
   const [isBought, setIsBought] = useState<boolean | null>(null);
 
-  const isCurrentUserSeller = currentUser?.customerEmail === product?.shopId.customerEmail;
+  const isCurrentUserSeller =
+    currentUser?.customerEmail === product?.shopId.customerEmail;
 
   const handleShowReportModal = () => {
     setShowReportModal(true);
   };
   const handleCloseReportModal = () => {
     setShowReportModal(false);
-  }
+  };
 
   const goToPage = (pageNumber: number) => {
     setIsLoading(true);
@@ -84,7 +85,8 @@ const ViewProductPage: React.FC<IProps> = (props) => {
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
+        const errorCode: any =
+          errorCodes.product[errorMsg as keyof typeof errorCodes.product];
         toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
       });
 
@@ -96,7 +98,8 @@ const ViewProductPage: React.FC<IProps> = (props) => {
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.review[errorMsg as keyof typeof errorCodes.review];
+        const errorCode: any =
+          errorCodes.review[errorMsg as keyof typeof errorCodes.review];
         toast.error(intl.formatMessage({ id: `Review.${errorCode}` }));
       });
   }, [id]);
@@ -109,15 +112,14 @@ const ViewProductPage: React.FC<IProps> = (props) => {
     </PageWithNavbar>
   ) : (
     <PageWithNavbar>
-      {isCurrentUserSeller
-        ? <div className={style.centerWrapper}>
-          <Link to='edit' className={style.userManagePanel}>
-            <FormattedMessage id='ViewProductPage.ownerMessage' />
+      {isCurrentUserSeller ? (
+        <div className={style.centerWrapper}>
+          <Link to="edit" className={style.userManagePanel}>
+            <FormattedMessage id="ViewProductPage.ownerMessage" />
             <FaPen />
           </Link>
         </div>
-        : null
-      }
+      ) : null}
 
       <div className={style.wrapper}>
         <div className={style.content}>
@@ -143,19 +145,13 @@ const ViewProductPage: React.FC<IProps> = (props) => {
             onShowReportModal={handleShowReportModal}
             isBought={isBought}
           />
-          <SectionSeller
-            product={product!}
-            currentUser={currentUser!}
-          />
-          {
-            isCurrentUserSeller
-              ? null
-              :
-              <div className={style.reportPanel} onClick={() => handleShowReportModal!()}>
-                <BsFlag />
-                <FormattedMessage id='ViewProductPage.reportProduct' />
-              </div>
-          }
+          <SectionSeller product={product!} currentUser={currentUser!} />
+          {!isCurrentUserSeller ? (
+            <div className={style.reportPanel} onClick={() => handleShowReportModal!()}>
+              <BsFlag />
+              <FormattedMessage id="ViewProductPage.reportProduct" />
+            </div>
+          ) : null}
         </div>
       </div>
     </PageWithNavbar>
