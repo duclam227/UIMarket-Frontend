@@ -117,11 +117,12 @@ const Question: FC<QuestionProps> = props => {
             questionAPI
               .deleteQuestion(question._id)
               .then(res => {
-                navigate('/');
+                navigate('/questions');
               })
               .catch(error => {
                 const errorMsg = getErrorMessage(error);
-                const errorCode: any = errorCodes.question[errorMsg as keyof typeof errorCodes.question];
+                const errorCode: any =
+                  errorCodes.question[errorMsg as keyof typeof errorCodes.question];
                 toast.error(intl.formatMessage({ id: `Question.${errorCode}` }));
               });
           }}
