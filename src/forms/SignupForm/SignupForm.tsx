@@ -94,7 +94,7 @@ const SignupForm: FC<SignupFormProps> = props => {
       //tlds: Top-Level Domain Something, set this to false because it said that built-in TLD is disabled, idk :\
       .required()
       .label('Email'),
-    customerPassword: Joi.string().required().label('Password'), //Remember to add min(8) rule
+    customerPassword: Joi.string().required().label('Password').min(6), //Remember to add min(8) rule
   });
 
   const {
