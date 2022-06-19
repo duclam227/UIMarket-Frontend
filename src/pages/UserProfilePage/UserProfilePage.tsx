@@ -62,8 +62,12 @@ export interface UserProfileInfo {
   customerStatus: boolean;
   customerAvatar: string;
   _id: string;
+  shopId?: string;
 }
 const UserProfilePage = () => {
+  const viewShopBtnLabel = (
+    <FormattedMessage id="UserProfilePage.viewShopBtnLabel" defaultMessage="View shop" />
+  );
   const editProfileBtnLabel = (
     <FormattedMessage
       id="UserProfilePage.editProfileBtnLabel"
@@ -163,19 +167,27 @@ const UserProfilePage = () => {
           </Col>
 
           {/* Render Edit button */}
-          {currentUser?._id === params.id && (
-            <Col lg={2} md={4} className="d-flex justify-content-center">
-              <span>
+          <Col lg={2} md={4} className="d-flex justify-content-center flex-column gap-1">
+            <div className="d-flex justify-content-center align-items-stretch flex-column gap-1">
+              {currentUser?._id === params.id && (
                 <Button
-                  className="d-flex align-items-center"
+                  className="d-flex align-items-center justify-content-center"
                   onClick={() => navigate(`/user/${currentUser?._id}/edit`)}
                 >
                   <BsPencil className="me-1" />
                   <span className={`text-nowrap`}>{editProfileBtnLabel}</span>
                 </Button>
-              </span>
-            </Col>
-          )}
+              )}
+              {userProfileInfo?.shopId ? (
+                <Button
+                  className="d-flex align-items-center justify-content-center"
+                  onClick={() => navigate(`/shop/${currentUser?.shopId}`)}
+                >
+                  <span className={`text-nowrap`}>{viewShopBtnLabel}</span>
+                </Button>
+              ) : null}
+            </div>
+          </Col>
         </Row>
 
         {/* Tabbed Statistics */}

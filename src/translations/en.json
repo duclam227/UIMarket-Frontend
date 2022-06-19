@@ -415,6 +415,7 @@
   "UserActivityTab.offeredBountyNavBtnLabel": "Offered",
   "UserActivityTab.earnedBountyNavBtnLabel": "Earned",
   "UserProfilePage.editProfileBtnLabel": "Edit profile",
+  "UserProfilePage.viewShopBtnLabel": "View shop",
   "UserProfilePage.activityTabNavBtnLabel": "Activity",
   "UserProfilePage.productTabNavBtnLabel": "Products",
   "UserProfilePage.noBioMsg": "This user does not have a bio.",
