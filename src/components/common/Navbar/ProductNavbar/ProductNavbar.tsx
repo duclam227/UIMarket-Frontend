@@ -15,7 +15,7 @@ interface IProps {
   intl: IntlShape;
 }
 
-const ProductNavbar: FC<IProps> = (props) => {
+const ProductNavbar: FC<IProps> = props => {
   const { intl } = props;
   const [categories, setCategories] = useState<Array<any>>([]);
 
@@ -27,7 +27,8 @@ const ProductNavbar: FC<IProps> = (props) => {
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.category[errorMsg as keyof typeof errorCodes.category];
+        const errorCode: any =
+          errorCodes.category[errorMsg as keyof typeof errorCodes.category];
         toast.error(intl.formatMessage({ id: `Category.${errorCode}` }));
       });
   }, []);
@@ -42,17 +43,21 @@ const ProductNavbar: FC<IProps> = (props) => {
         </button>
 
         <div className={style.categoryList}>
+          <Link to={`/products`}>
+            <button className={style.button}>
+              <FormattedMessage id="ProductNavBar.AllProducts" />
+            </button>
+          </Link>
           {categories.map((category: any) => (
             <Link key={category._id} to={`/products/category/${category._id}`}>
-              <button key={category._id} className={style.button} >
+              <button key={category._id} className={style.button}>
                 {category.categoryName}
               </button>
             </Link>
           ))}
         </div>
       </section>
-
-    </nav >
+    </nav>
   );
 };
 
