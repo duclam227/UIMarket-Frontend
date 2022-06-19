@@ -134,6 +134,8 @@
   "CreateAShopForm.shopEmailPlaceholder": "How we can contact you",
   "CreateAShopForm.shopBannerLabel": "Cover",
   "CreateAShopForm.shopBannerSubtext": "A pretty picture to decorate your shop with!",
+  "ContactUs.Title": "Contact Us",
+  "ContactUs.Description": "We are very happy that you try our website out! <br></br>If you have any questions, please email us at deex.uimarket@gmail.com. We appreciate any feedback you have to improve our product.",  
   "EditPersonalInfoPage.pageTitle": "Personal Information",
   "EditPersonalInfoPage.pageSubTitle": "Provide information to protect your account",
   "EditPersonalInfoPage.emailLabel": "Email",
