@@ -9,7 +9,7 @@ const SectionExploreForum = () => {
   return (
     <section className={classNames(style.sectionWrapper, style.sectionExploreForum)}>
       <div className={style.sectionExploreForumLeft}>
-        <img src={cover} alt="2 people talking" className="d-lg-block" />
+        <img src={cover} alt="2 people talking" className="d-lg-block my-4 my-lg-0" />
       </div>
       <div className={style.sectionExploreForumRight}>
         <h1 className={style.sectionExploreForumTitle}>

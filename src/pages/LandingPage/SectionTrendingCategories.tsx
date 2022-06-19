@@ -5,28 +5,34 @@ import webthemes from './images/categories/webthemes.png';
 import uikits from './images/categories/uikits.png';
 import illustrations from './images/categories/illustrations.png';
 import mockups from './images/categories/mockups.png';
+import { Link } from 'react-router-dom';
 
 const SectionTrendingCategories = () => {
   const categories = [
     {
       label: 'Fonts',
       cover: fontimg,
+      link: '/products/category/62a45a3951ca7e1703f0b70b',
     },
     {
       label: 'Web Themes',
       cover: webthemes,
+      link: '/products/category/62a45a2551ca7e1703f0b6fe',
     },
     {
       label: 'UI Kits',
       cover: uikits,
+      link: '/products/category/62a45a5751ca7e1703f0b711',
     },
     {
       label: 'Illustrations',
       cover: illustrations,
+      link: '/products/category/62a45a4c51ca7e1703f0b70d',
     },
     {
       label: 'Mockups',
       cover: mockups,
+      link: '/products/category/62a45a5151ca7e1703f0b70f',
     },
   ];
 
@@ -44,14 +50,16 @@ const SectionTrendingCategories = () => {
 
         <div className={style.sectionTrendingCategoriesList}>
           {categories.map(cate => (
-            <div key={cate.label} className={style.categoryCard}>
-              <img
-                src={cate.cover}
-                className={style.categoryCardCover}
-                alt={cate.label}
-              />
-              <div className={style.categoryCardTitle}>{cate.label}</div>
-            </div>
+            <Link key={cate.label} to={cate.link} className={style.categoryCard}>
+              <div>
+                <img
+                  src={cate.cover}
+                  className={style.categoryCardCover}
+                  alt={cate.label}
+                />
+                <div className={style.categoryCardTitle}>{cate.label}</div>
+              </div>
+            </Link>
           ))}
         </div>
       </div>

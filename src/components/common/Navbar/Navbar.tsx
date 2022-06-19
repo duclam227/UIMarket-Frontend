@@ -86,7 +86,7 @@ const NavBar: FC<IProps> = props => {
   return (
     <>
       <nav className="navbar navbar-expand-lg navbar-light bg-white">
-        <Container fluid className="d-flex justify-content-between">
+        <div className="container-fluid d-flex justify-content-between">
           <div className={style.leftSideNav}>
             <LogoIcon className={style.logo} />
             <button
@@ -161,7 +161,14 @@ const NavBar: FC<IProps> = props => {
                     </li>
                     <hr className="dropdown-divider" />
                     <li>
-                      <Link to={isCurrentUserShop ? `/shop/${currentUser.shopId}` : `/user/${currentUser._id}/shop`} className="dropdown-item">
+                      <Link
+                        to={
+                          isCurrentUserShop
+                            ? `/shop/${currentUser.shopId}`
+                            : `/user/${currentUser._id}/shop`
+                        }
+                        className="dropdown-item"
+                      >
                         {userDropdownStoreLabel}
                       </Link>
                     </li>
@@ -192,7 +199,7 @@ const NavBar: FC<IProps> = props => {
               </Link>
             </div>
           </div>
-        </Container>
+        </div>
       </nav>
       <div className="d-lg-block">
         {branch === config.navbarBranches.question ? (
