@@ -1,6 +1,7 @@
 /*===Alphabetically arranged===*/
 
 export { default as AboutUsPage } from './AboutUsPage/About';
+export { default as AccountBannedPage } from './AccountBannedPage/AccountBannedPage';
 export { default as AccountNotVerifiedPage } from './AccountNotVerifiedPage/AccountNotVerifiedPage';
 export { default as AccountVerifiedPage } from './AccountVerifiedPage/AccountVerifiedPage';
 export { default as AddAProductPage } from './AddAProductPage/AddAProductPage';

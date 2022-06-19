@@ -70,7 +70,7 @@ const LandingPage: React.FC<IProps> = props => {
 
   useEffect(() => {
     productAPI
-      .getCategoryProductsByPageNumber(1, 4, '627bc2f599bc9a68d1105497')
+      .getCategoryProductsByPageNumber(1, 4, '62a45a3951ca7e1703f0b70b')
       .then((res: any) => {
         setThemeProducts(res.products);
       })
@@ -89,7 +89,7 @@ const LandingPage: React.FC<IProps> = props => {
       const entryElement = entry.target;
       entryElement.className = classNames(style.show);
     }
-  }
+  };
 
   useIntersectionObserver(sectionTrendingProductsRef, checkAnimation, VIEW_THRESHOLD);
   useIntersectionObserver(sectionTrendingCategoriesRef, checkAnimation, VIEW_THRESHOLD);

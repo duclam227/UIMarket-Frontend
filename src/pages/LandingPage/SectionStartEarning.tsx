@@ -24,7 +24,7 @@ const SectionStartEarning = () => {
       </div>
 
       <div className={style.sectionStartEarningRight}>
-        <img src={cover} alt="Desk with a computer" className="d-lg-block" />
+        <img src={cover} alt="Desk with a computer" className="d-lg-block my-4 my-lg-0" />
       </div>
     </section>
   );

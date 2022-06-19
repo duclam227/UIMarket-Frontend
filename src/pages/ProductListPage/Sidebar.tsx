@@ -95,6 +95,7 @@ const Sidebar: FC<Props> = props => {
             name="sort"
             value={option.value}
             onChange={e => handleChange(e)}
+            checked={searchParams.get('sort') === option.value}
           />
         </div>
       ))}
@@ -112,6 +113,7 @@ const Sidebar: FC<Props> = props => {
             name="filter"
             value={option.value}
             onChange={e => handleChange(e)}
+            checked={searchParams.get('filter') === option.value}
           />
         </div>
       ))}
