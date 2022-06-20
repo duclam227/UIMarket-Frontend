@@ -104,6 +104,7 @@ const UserProfilePage = () => {
   );
   //Missing features: Paginate see all page
   //Missing features: Sort question by upvotes
+  const urlParamsUserId = params.id;
   const [isFetchingData, setIsFetchingData] = useState<boolean>(true);
   useEffect(() => {
     const { id } = params;
@@ -131,7 +132,7 @@ const UserProfilePage = () => {
     };
 
     getUserProfile(id);
-  }, []);
+  }, [urlParamsUserId]);
 
   //mt = margin top; gy = gutters Oy
   const generalInfoRowClassname = 'mt-5 gy-3';
