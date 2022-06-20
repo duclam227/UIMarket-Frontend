@@ -112,8 +112,14 @@ const EditShopPage: FunctionComponent = () => {
 
           {isLoading ? (
             <Spinner animation="border" />
-          ) : (
+          ) : products.length > 0 ? (
             <ProductList productList={products} />
+          ): (
+            <div className='d-flex align-items-center justify-content-center'>
+              <h5>
+                <FormattedMessage id="ViewShopPage.NoItem" defaultMessage={'This shop has not published any products'} />
+              </h5>
+            </div>
           )}
         </div>
       </Container>
