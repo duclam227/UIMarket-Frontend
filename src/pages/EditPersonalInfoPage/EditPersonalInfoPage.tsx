@@ -95,7 +95,7 @@ const EditPersonalInfoPage: FC<IProps> = (props) => {
   //Function to format Date object into YYYY-MM-DD
   const dateToYYYYMMDD = (date: Date | null) => {
     if (date && isNaN(date.getTime())) {
-      return new Date().toISOString().split('T')[0];
+      return '00-00-0000';
     }
     return date?.toISOString().split('T')[0];
   };
