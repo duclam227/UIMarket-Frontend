@@ -5,11 +5,11 @@ import { useSelector } from 'react-redux';
 import shopAPI from '../../api/shop/index';
 import { State } from '../../redux/store';
 import bannerPlaceholder from '../../app/assets/banner-placeholder.png';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import PageWithNavbar from '../../components/common/PageWithNavbar/PageWithNavbar';
 import styles from './ViewShopPage.module.css';
 import { FormattedMessage } from 'react-intl';
-import { ProductList } from '../../components';
+import { EmptyState, ProductList } from '../../components';
 import productAPI from '../../api/product/index';
 import { genericAvatarUrl } from '../../app/util/const';
 import { BsPencil } from 'react-icons/bs';
@@ -48,6 +48,7 @@ const EditShopPage: FunctionComponent = () => {
         setShopInfo(shop);
         const { customerAvatar } = shop.userId;
         setShopAvatar(customerAvatar);
+        console.log(currentUser);
       })
       .catch(error => {
         if (error.response && error.response.data.msg === 'shop-deactivated')
@@ -106,26 +107,33 @@ const EditShopPage: FunctionComponent = () => {
         <div className={'my-2 ' + styles.shopInfo}>
           <h3 className="text-center mx-2">{shopInfo.shopName}</h3>
           <p className="text-center mx-2">{shopInfo.shopDescription}</p>
+          {currentUser?.shopId === id && (
+            <div className="d-flex justify-content-center">
+              <Button
+                variant="dark"
+                className="m-2"
+                onClick={() => navigate(`/user/${currentUser?._id}/shop/edit`)}
+              >
+                <BsPencil className="me-1" />
+                <FormattedMessage id="ViewShopPage.EditShop"></FormattedMessage>
+              </Button>
+              <Button
+                variant="primary"
+                className="m-2"
+                type="submit"
+                onClick={() => navigate('/products/add')}
+              >
+                <FormattedMessage
+                  id="ViewShopPage.AddNewProduct"
+                  defaultMessage={'Add new product'}
+                ></FormattedMessage>
+              </Button>
+            </div>
+          )}
         </div>
 
-        {currentUser?.shopId === shopInfo._id && (
-          <div className="d-flex align-items-center justify-content-center">
-            <Button
-              variant="dark"
-              className="m-2"
-              //disabled={shopInfo}
-              onClick={() => navigate(`/user/${currentUser._id}/shop/edit`)}
-            >
-              <BsPencil className="me-1" />
-              <FormattedMessage
-                id="ViewShopPage.EditShop"
-              ></FormattedMessage>
-            </Button>
-          </div>
-        )}
-
         <div>
-          <h3>
+          <h3 className="mt-4">
             <FormattedMessage id="ViewShopPage.Items" defaultMessage={'Items'} />
           </h3>
 
@@ -134,14 +142,11 @@ const EditShopPage: FunctionComponent = () => {
           ) : products.length > 0 ? (
             <ProductList productList={products} />
           ) : (
-            <div className="d-flex align-items-center justify-content-center">
-              <h5>
-                <FormattedMessage
-                  id="ViewShopPage.NoItem"
-                  defaultMessage={'This shop has not published any products'}
-                />
-              </h5>
-            </div>
+            <EmptyState
+              img="error-nothing"
+              btn={false}
+              messageId="ViewShopPage.NoItem"
+            ></EmptyState>
           )}
         </div>
       </Container>

@@ -44,13 +44,13 @@ const EmptyState: FunctionComponent<EmptyStateProps> = props => {
     <div className="d-flex flex-column align-items-center my-5">
       {showIllustration(props.img)}
       <div className="my-3"></div>
-      <h5 className="text-secondary">
+      <h5 className="text-secondary text-center">
         <FormattedMessage id={props.messageId}></FormattedMessage>
       </h5>
 
       {props.btn && (
         <Link to={props.btnDestination as string}>
-          <Button className="my-3">
+          <Button className="my-3 text-center">
             <FormattedMessage id={props.btnMessageId}></FormattedMessage>
           </Button>
         </Link>

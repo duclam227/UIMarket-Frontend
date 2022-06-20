@@ -1,6 +1,5 @@
 @import '../../app/util/colors.css';
 
-
 .bannerImageWrapper {
   position: relative;
   z-index: 1;
@@ -43,4 +42,28 @@
   margin: 0 auto;
   position: relative;
   max-width: 400px;
+}
+
+.userManagePanel {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  padding: 1rem;
+  margin: 10px 0;
+
+  width: 100%;
+
+  color: white;
+  background-color: rgba(var(--pink-rgb), 0.6);
+  border: 1pix solid var(--pink-500);
+
+  transition: 300ms;
+}
+
+.userManagePanel:hover {
+  color: white;
+  background-color: rgba(var(--pink-rgb), 0.65);
 }
