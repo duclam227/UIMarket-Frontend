@@ -217,12 +217,6 @@ const SignupForm: FC<SignupFormProps> = props => {
             />
           </Form.Group> */}
 
-          {authError ? (
-            <Form.Text>
-              <Alert variant="danger">{authError}</Alert>
-            </Form.Text>
-          ) : null}
-
           <Button
             variant="primary"
             type="submit"
