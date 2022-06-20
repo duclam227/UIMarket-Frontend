@@ -361,6 +361,7 @@
   "ShopHomePage.noShopSubtitle": "Start earning by creating a store now.",
   "ShopHomePage.noShopTitle": "No store yet!",
   "ShopHomePage.openShopButtonLabel": "Open your shop",
+  "ShopStatisticPage.Warning": "Data needs some time to be updated in charts.",
   "ShopWalletPage.balanceNumber": "${number}",
   "ShopWalletPage.canWithdraw": "Available for withdrawal",
   "ShopWalletPage.currentBalance": "Current Balance",
