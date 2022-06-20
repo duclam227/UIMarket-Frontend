@@ -62,6 +62,10 @@ export interface customer {
 export interface product {
   _id?: string;
   coverPicture?: string;
+  last30Days: {
+    totalRevenue: number;
+    totalSold: number;
+  };
   productName: string;
   productPrice: number;
   productCategory: any;

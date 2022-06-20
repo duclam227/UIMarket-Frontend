@@ -128,10 +128,7 @@ const Answer: FC<SectionAnswerProps> = props => {
     label: intl.formatMessage({ id: 'Answer.reportLabel' }),
     function: handleShowReportModal,
   };
-  const menuItems = isCurrentUserAuthor
-    ? [reportMenuItem, ...authorMenuItems]
-    : [reportMenuItem];
-
+  const menuItems = isCurrentUserAuthor ? authorMenuItems : [reportMenuItem];
   const confirmDeleteModal = (
     <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)}>
       <Modal.Header closeButton>

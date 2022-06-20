@@ -57,8 +57,7 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
         shopAPI
           .getAllProductsOfShop(shopId)
           .then((res: any) => {
-            const { products } = res;
-            const manageProductItems = products.map((product: product) => ({
+            const manageProductItems = res.map((product: product) => ({
               isSelected: false,
               product: { ...product },
             }));
@@ -66,24 +65,28 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
             setIsLoading(false);
           })
           .catch(error => {
+            console.log(error);
             const errorMsg = getErrorMessage(error);
-            const errorCode: any = errorCodes.shop[errorMsg as keyof typeof errorCodes.shop];
+            const errorCode: any =
+              errorCodes.shop[errorMsg as keyof typeof errorCodes.shop];
             toast.error(intl.formatMessage({ id: `Shop.${errorCode}` }));
           });
     } else {
-      shopAPI.searchProduct(query)
+      shopAPI
+        .searchProduct(query)
         .then((res: any) => {
           const { products } = res;
           const manageProductItems = products.map((product: product) => ({
             isSelected: false,
-            product: { ...product },
+            product: JSON.parse(JSON.stringify(product)),
           }));
           setProducts(manageProductItems);
           setIsLoading(false);
         })
         .catch(error => {
           const errorMsg = getErrorMessage(error);
-          const errorCode: any = errorCodes.shop[errorMsg as keyof typeof errorCodes.shop];
+          const errorCode: any =
+            errorCodes.shop[errorMsg as keyof typeof errorCodes.shop];
           toast.error(intl.formatMessage({ id: `Shop.${errorCode}` }));
         });
     }
@@ -103,9 +106,9 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
     const { checked } = e.target;
     const newProducts = products
       ? products.map(product => ({
-        ...product,
-        isSelected: checked,
-      }))
+          ...product,
+          isSelected: checked,
+        }))
       : null;
     setProducts(newProducts);
   };
@@ -172,9 +175,9 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
   const handleSearch = (value: string) => {
     const encodedKeyword = encodeURIComponent(value);
     Debounce(() => {
-      navigate(`/user/${currentUser?._id}/products?name=${encodedKeyword}`)
-    }, DEBOUNCE_TIME)
-  }
+      navigate(`/user/${currentUser?._id}/products?name=${encodedKeyword}`);
+    }, DEBOUNCE_TIME);
+  };
 
   return isLoading ? (
     //Loading
@@ -207,7 +210,7 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
                     placeholder={intl.formatMessage({
                       id: 'ManageProductsPage.searchPlaceholder',
                     })}
-                    onChange={(e) => handleSearch(e.target.value)}
+                    onChange={e => handleSearch(e.target.value)}
                   ></Form.Control>
                 </Form>
               </Col>
@@ -253,7 +256,10 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
               //Empty product
               <div className={style.wrapper}>
                 <div className={style.noProductsImage}>
-                  <img src={noProductsImage} alt="A picture telling there are no products" />
+                  <img
+                    src={noProductsImage}
+                    alt="A picture telling there are no products"
+                  />
                 </div>
                 <h4 className={style.title}>
                   <FormattedMessage id="ManageProductsPage.noProductsTitle" />
@@ -262,26 +268,28 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
                   <FormattedMessage id="ManageProductsPage.noProductsSubtitle" />
                 </h6>
               </div>
-            ) : <>
-              {/* {Product list} */}
-              <Row className={`mt-3 border bg-white`}>
-                {products.map(productItem => (
-                  <Product
-                    key={productItem.product._id!}
-                    isSelected={productItem.isSelected}
-                    product={productItem.product}
-                    onSelectProduct={handleSelectProduct}
-                    onDeleteProduct={handleDeleteProduct}
-                    onActivateProduct={handleActivateProduct}
-                    onDeactivateProduct={handleDeactivateProduct}
-                  />
-                ))}
-              </Row>
-            </>}
+            ) : (
+              <>
+                {/* {Product list} */}
+                <Row className={`mt-3 border bg-white`}>
+                  {products.map(productItem => (
+                    <Product
+                      key={productItem.product._id!}
+                      isSelected={productItem.isSelected}
+                      product={productItem.product}
+                      onSelectProduct={handleSelectProduct}
+                      onDeleteProduct={handleDeleteProduct}
+                      onActivateProduct={handleActivateProduct}
+                      onDeactivateProduct={handleDeactivateProduct}
+                    />
+                  ))}
+                </Row>
+              </>
+            )}
           </Container>
         </div>
       </div>
-    </OneToFivePage >
+    </OneToFivePage>
   );
 };
 
