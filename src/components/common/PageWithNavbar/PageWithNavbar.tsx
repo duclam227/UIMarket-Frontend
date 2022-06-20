@@ -15,7 +15,9 @@ const PageWithNavbar: FC<IProps> = props => {
   return (
     <>
       <div className={style.pageWrapper}>
-        {branch === 'admin' ? <AdminNavbar /> : <Navbar branch={branch} />}
+        <div className={style.nav}>
+          {branch === 'admin' ? <AdminNavbar /> : <Navbar branch={branch} />}
+        </div>
         <div className={style.pageContainer}>{children}</div>
         <Footer />
       </div>

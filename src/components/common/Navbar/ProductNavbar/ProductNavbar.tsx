@@ -10,6 +10,7 @@ import { getErrorMessage } from '../../../../app/util';
 import { errors as errorCodes } from '../../../../app/util/errors';
 
 import style from './ProductNavbar.module.css';
+import { Spinner } from 'react-bootstrap';
 
 interface IProps {
   intl: IntlShape;
@@ -18,8 +19,10 @@ interface IProps {
 const ProductNavbar: FC<IProps> = props => {
   const { intl } = props;
   const [categories, setCategories] = useState<Array<any>>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    setIsLoading(true);
     categoryAPI
       .getAllCategories()
       .then((res: any) => {
@@ -30,6 +33,9 @@ const ProductNavbar: FC<IProps> = props => {
         const errorCode: any =
           errorCodes.category[errorMsg as keyof typeof errorCodes.category];
         toast.error(intl.formatMessage({ id: `Category.${errorCode}` }));
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
@@ -48,13 +54,16 @@ const ProductNavbar: FC<IProps> = props => {
               <FormattedMessage id="ProductNavBar.AllProducts" />
             </button>
           </Link>
-          {categories.map((category: any) => (
-            <Link key={category._id} to={`/products/category/${category._id}`}>
-              <button key={category._id} className={style.button}>
-                {category.categoryName}
-              </button>
-            </Link>
-          ))}
+          {isLoading
+            ? <Spinner animation='border' />
+            : categories.map((category: any) => (
+              <Link key={category._id} to={`/products/category/${category._id}`}>
+                <button key={category._id} className={style.button}>
+                  {category.categoryName}
+                </button>
+              </Link>
+            ))
+          }
         </div>
       </section>
     </nav>
