@@ -31,6 +31,7 @@
 
 .searchbox {
 	margin-left: auto;
+	min-width: 300px;
 }
 
 .body {
