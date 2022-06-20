@@ -38,7 +38,7 @@ const CreateAShopForm: React.FC<Props> = (props) => {
 
       const responseUpload: any = await s3API.uploadToS3Bucket(signedUploadUrl, image[0]);
       const imageUrl = signedUploadUrl.split('?')[0];
-      setImages([...images, imageUrl]);
+      setImages([imageUrl]);
     }
     catch (error) {
       const errorMsg = getErrorMessage(error);

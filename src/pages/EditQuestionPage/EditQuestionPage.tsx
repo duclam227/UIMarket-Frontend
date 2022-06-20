@@ -252,7 +252,7 @@ const EditQuestionPage = ({ intl }: any) => {
 
   const dateToYYYYMMDD = (date: Date | null) => {
     if (date && isNaN(date.getTime())) {
-      return new Date().toISOString().split('T')[0];
+      return '00-00-0000';
     }
     return date?.toISOString().split('T')[0];
   };
@@ -286,7 +286,7 @@ const EditQuestionPage = ({ intl }: any) => {
                       onChange={onChange}
                       onBlur={onBlur}
                       initialValue={body}
-                      // initialValue={question.body}
+                    // initialValue={question.body}
                     />
                   )}
                 />

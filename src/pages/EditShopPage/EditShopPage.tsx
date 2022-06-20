@@ -1,5 +1,5 @@
 import { ChangeEvent, FunctionComponent, useEffect, useRef, useState } from 'react';
-import { Button, Container, Form, ProgressBar, Modal } from 'react-bootstrap';
+import { Button, Container, Form, ProgressBar, Modal, Spinner } from 'react-bootstrap';
 import { FormattedMessage } from 'react-intl';
 import { useSelector } from 'react-redux';
 import Navbar from '../../components/common/Navbar/Navbar';
@@ -51,6 +51,7 @@ const EditShopPage: FunctionComponent<IProps> = props => {
     shopPhone: '',
   });
 
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const [isUploading, setIsUploading] = useState(false);
   const [isSavingChanges, setIsSavingChanges] = useState<boolean>(false);
@@ -90,6 +91,8 @@ const EditShopPage: FunctionComponent<IProps> = props => {
     if (!id) {
       return;
     }
+
+    setIsLoading(true);
     shopAPI
       .getShopById(id as string)
       .then((res: any) => {
@@ -103,6 +106,9 @@ const EditShopPage: FunctionComponent<IProps> = props => {
         if (error.response && error.response.data.msg === 'shop-deactivated')
           setShowModal(true);
         else console.log('Get shop info error: ', error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [id, reset]);
 
@@ -165,198 +171,203 @@ const EditShopPage: FunctionComponent<IProps> = props => {
   };
   return (
     <OneToFivePage>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Container className={styles.mainContainer}>
-          {/*no cover*/}
-          <div
-            className={
-              'w-100 mt-4 p-4 text-center d-flex align-items-center justify-content-center ' +
-              styles.shopCover
-            }
-            onClick={() => {
-              imageInput.current?.click();
-            }}
-          >
-            <FormattedMessage
-              id="EditShopPage.AddShopBanner"
-              defaultMessage={
-                'Update your cover to showcase your business. Recommended size @ 1320 x 320'
+      <Container className={styles.mainContainer}>
+        {isLoading
+          ? <div className={styles.loadingContainer}> <Spinner animation='border' /></div>
+          :
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {/*no cover*/}
+            <div
+              className={
+                'w-100 mt-4 p-4 text-center d-flex align-items-center justify-content-center ' +
+                styles.shopCover
               }
-            ></FormattedMessage>
+              onClick={() => {
+                imageInput.current?.click();
+              }}
+            >
+              <FormattedMessage
+                id="EditShopPage.AddShopBanner"
+                defaultMessage={
+                  'Update your cover to showcase your business. Recommended size @ 1320 x 320'
+                }
+              ></FormattedMessage>
 
-            {/*with cover*/}
-          </div>
-          <Form>
-            <Form.Control
-              className={`d-none`}
-              onChange={e => handleChangeBanner(e as any)}
-              ref={imageInput}
-              type="file"
-              accept=".jpg,.jpeg,.png,"
-            ></Form.Control>
-          </Form>
-          {isUploading && (
-            <ProgressBar animated now={uploadProgress} className={`mt-2`} />
-          )}
-
-          <div>
-            <div className={styles.bannerImageWrapper}>
-              <img
-                className={styles.bannerImageElement}
-                src={shopInfo.shopBanner as string}
-                onError={({ currentTarget }) => {
-                  currentTarget.onerror = null; // prevents looping
-                  currentTarget.src = bannerPlaceholder;
-                }}
-                alt="banner"
-              />
+              {/*with cover*/}
             </div>
-
-            <div className={styles.avatarWrapper}>
-              <img
-                src={shopAvatar || genericAvatarUrl}
-                className={styles.avatarImage}
-                alt={shopInfo.shopName}
-                onError={({ currentTarget }) => {
-                  currentTarget.onerror = null; // prevents looping
-                  currentTarget.src = genericAvatarUrl;
-                }}
-              />
-            </div>
-          </div>
-
-          <div className={'my-2 ' + styles.shopInfo}>
-            {!isEditMode && (
-              <div className="d-flex align-items-baseline justify-content-center">
-                <h3 className="text-center mx-2">{shopInfo.shopName}</h3>
-                <i
-                  className="bi-pencil-fill btn p-0"
-                  title={editNameBtnLabel}
-                  onClick={handleEnableEditMode}
-                ></i>
-              </div>
+            <Form>
+              <Form.Control
+                className={`d-none`}
+                onChange={e => handleChangeBanner(e as any)}
+                ref={imageInput}
+                type="file"
+                accept=".jpg,.jpeg,.png,"
+              ></Form.Control>
+            </Form>
+            {isUploading && (
+              <ProgressBar animated now={uploadProgress} className={`mt-2`} />
             )}
-            {isEditMode && (
+
+            <div>
+              <div className={styles.bannerImageWrapper}>
+                <img
+                  className={styles.bannerImageElement}
+                  src={shopInfo.shopBanner as string}
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null; // prevents looping
+                    currentTarget.src = bannerPlaceholder;
+                  }}
+                  alt="banner"
+                />
+              </div>
+
+              <div className={styles.avatarWrapper}>
+                <img
+                  src={shopAvatar || genericAvatarUrl}
+                  className={styles.avatarImage}
+                  alt={shopInfo.shopName}
+                  onError={({ currentTarget }) => {
+                    currentTarget.onerror = null; // prevents looping
+                    currentTarget.src = genericAvatarUrl;
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className={'my-2 ' + styles.shopInfo}>
+              {!isEditMode && (
+                <div className="d-flex align-items-baseline justify-content-center">
+                  <h3 className="text-center mx-2">{shopInfo.shopName}</h3>
+                  <i
+                    className="bi-pencil-fill btn p-0"
+                    title={editNameBtnLabel}
+                    onClick={handleEnableEditMode}
+                  ></i>
+                </div>
+              )}
+              {isEditMode && (
+                <div className="form-floating my-2">
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="shopName"
+                    placeholder="Your Shop Name"
+                    {...register('shopName', {
+                      required: shopNameRequiredMsg,
+                    })}
+                  />
+                  <label htmlFor="floatingInputValue">
+                    <FormattedMessage
+                      id="EditShopPage.ShopNameLabel"
+                      defaultMessage={'Shop Name'}
+                    ></FormattedMessage>
+                  </label>
+                </div>
+              )}
+              <div className={'form-floating mw-100 my-2'}>
+                <textarea
+                  className={'form-control '}
+                  id="shopDescription"
+                  {...register('shopDescription')}
+                  style={{ height: '100px' }}
+                ></textarea>
+                <label htmlFor="floatingTextarea">
+                  <FormattedMessage
+                    id="EditShopPage.TagLineLabel"
+                    defaultMessage={'Write a tagline'}
+                  ></FormattedMessage>
+                </label>
+              </div>
+
+              <div className="form-floating my-2">
+                <input
+                  type="email"
+                  className="form-control"
+                  id="shopEmail"
+                  placeholder="Your shop email"
+                  {...register('shopEmail', {
+                    required: shopEmailRequiredMsg,
+                  })}
+                  autoFocus={false}
+                />
+                <label htmlFor="floatingInputValue">
+                  <FormattedMessage
+                    id="EditShopPage.ShopEmailLabel"
+                    defaultMessage={'Shop email'}
+                  ></FormattedMessage>
+                </label>
+              </div>
+
               <div className="form-floating my-2">
                 <input
                   type="text"
                   className="form-control"
-                  id="shopName"
-                  placeholder="Your Shop Name"
-                  {...register('shopName', {
-                    required: shopNameRequiredMsg,
+                  id="shopPhone"
+                  placeholder="Your shop phone"
+                  {...register('shopPhone', {
+                    pattern: {
+                      value:
+                        /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/,
+                      message: phoneErrMsg,
+                    },
                   })}
                 />
                 <label htmlFor="floatingInputValue">
                   <FormattedMessage
-                    id="EditShopPage.ShopNameLabel"
-                    defaultMessage={'Shop Name'}
+                    id="EditShopPage.PhoneLabel"
+                    defaultMessage={'Shop phone'}
                   ></FormattedMessage>
                 </label>
               </div>
-            )}
-            <div className={'form-floating mw-100 my-2'}>
-              <textarea
-                className={'form-control '}
-                id="shopDescription"
-                {...register('shopDescription')}
-                style={{ height: '100px' }}
-              ></textarea>
-              <label htmlFor="floatingTextarea">
-                <FormattedMessage
-                  id="EditShopPage.TagLineLabel"
-                  defaultMessage={'Write a tagline'}
-                ></FormattedMessage>
-              </label>
-            </div>
 
-            <div className="form-floating my-2">
-              <input
-                type="email"
-                className="form-control"
-                id="shopEmail"
-                placeholder="Your shop email"
-                {...register('shopEmail', {
-                  required: shopEmailRequiredMsg,
-                })}
-              />
-              <label htmlFor="floatingInputValue">
-                <FormattedMessage
-                  id="EditShopPage.ShopEmailLabel"
-                  defaultMessage={'Shop email'}
-                ></FormattedMessage>
-              </label>
-            </div>
-
-            <div className="form-floating my-2">
-              <input
-                type="text"
-                className="form-control"
-                id="shopPhone"
-                placeholder="Your shop phone"
-                {...register('shopPhone', {
-                  pattern: {
-                    value:
-                      /^\s*(?:\+?(\d{1,3}))?[-. (]*(\d{3})[-. )]*(\d{3})[-. ]*(\d{4})(?: *x(\d+))?\s*$/,
-                    message: phoneErrMsg,
-                  },
-                })}
-              />
-              <label htmlFor="floatingInputValue">
-                <FormattedMessage
-                  id="EditShopPage.PhoneLabel"
-                  defaultMessage={'Shop phone'}
-                ></FormattedMessage>
-              </label>
-            </div>
-
-            <div className="d-flex justify-content-center">
-              {/* <Link to={`/shop/${shopInfo._id}`}> */}
-              <Button
-                variant="dark"
-                className="m-2"
-                disabled={!shopInfo._id}
-                onClick={() => navigate(`/shop/${shopInfo._id}`)}
-              >
-                <FormattedMessage
-                  id="EditShopPage.ViewBtnLabel"
-                  defaultMessage={'View shop'}
-                ></FormattedMessage>
-              </Button>
-              {/* </Link> */}
-              <Button variant="primary" className="m-2" type="submit" disabled={!isDirty}>
-                <FormattedMessage
-                  id="EditShopPage.SaveBtnLabel"
-                  defaultMessage={'Save changes'}
-                ></FormattedMessage>
-              </Button>
-            </div>
-          </div>
-          <Modal show={showModal} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>
-                <FormattedMessage id="ViewShopPage.deactivatedModalTitle" />
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div>
-                <FormattedMessage id="ViewShopPage.deactivatedModalBody1" />
+              <div className="d-flex justify-content-center">
+                {/* <Link to={`/shop/${shopInfo._id}`}> */}
+                <Button
+                  variant="dark"
+                  className="m-2"
+                  disabled={!shopInfo._id}
+                  onClick={() => navigate(`/shop/${shopInfo._id}`)}
+                >
+                  <FormattedMessage
+                    id="EditShopPage.ViewBtnLabel"
+                    defaultMessage={'View shop'}
+                  ></FormattedMessage>
+                </Button>
+                {/* </Link> */}
+                <Button variant="primary" className="m-2" type="submit" disabled={!isDirty}>
+                  <FormattedMessage
+                    id="EditShopPage.SaveBtnLabel"
+                    defaultMessage={'Save changes'}
+                  ></FormattedMessage>
+                </Button>
               </div>
-              <div>
-                <FormattedMessage id="ViewShopPage.deactivatedModalBody2" />
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                <FormattedMessage id="ReportModal.closeBtnLabel" />
-              </Button>
-              <Button variant="primary" onClick={handleGoBack}>
-                <FormattedMessage id="ViewShopPage.deactivatedModalBackBtnLabel" />
-              </Button>
-            </Modal.Footer>
-          </Modal>
-        </Container>
-      </form>
+            </div>
+            <Modal show={showModal} onHide={handleClose}>
+              <Modal.Header closeButton>
+                <Modal.Title>
+                  <FormattedMessage id="ViewShopPage.deactivatedModalTitle" />
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div>
+                  <FormattedMessage id="ViewShopPage.deactivatedModalBody1" />
+                </div>
+                <div>
+                  <FormattedMessage id="ViewShopPage.deactivatedModalBody2" />
+                </div>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  <FormattedMessage id="ReportModal.closeBtnLabel" />
+                </Button>
+                <Button variant="primary" onClick={handleGoBack}>
+                  <FormattedMessage id="ViewShopPage.deactivatedModalBackBtnLabel" />
+                </Button>
+              </Modal.Footer>
+            </Modal>
+          </form>
+        }
+      </Container>
     </OneToFivePage>
   );
 };

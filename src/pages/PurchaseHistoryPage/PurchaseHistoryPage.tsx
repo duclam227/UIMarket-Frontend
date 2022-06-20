@@ -98,7 +98,7 @@ const PurchaseHistoryPage: FC<IProps> = props => {
                 <FormattedMessage id="PurchaseHistoryPage.subtitle" />
               </h6>
             </div>
-            <Form className={style.searchbox}>
+            <Form className={style.searchbox} onSubmit={(e: any) => { e.preventDefault() }}>
               <Form.Control
                 placeholder={intl.formatMessage({
                   id: 'PurchaseHistoryPage.searchPlaceholder',

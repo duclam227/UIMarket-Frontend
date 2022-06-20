@@ -147,10 +147,15 @@ const ViewProductPage: React.FC<IProps> = (props) => {
             product={product!}
             currentUser={currentUser!}
           />
-          <div className={style.reportPanel} onClick={() => handleShowReportModal!()}>
-            <BsFlag />
-            <FormattedMessage id='ViewProductPage.reportProduct' />
-          </div>
+          {
+            isCurrentUserSeller
+              ? null
+              :
+              <div className={style.reportPanel} onClick={() => handleShowReportModal!()}>
+                <BsFlag />
+                <FormattedMessage id='ViewProductPage.reportProduct' />
+              </div>
+          }
         </div>
       </div>
     </PageWithNavbar>

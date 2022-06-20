@@ -202,11 +202,10 @@ const ManageProductsPage: React.FC<{ intl: IntlShape }> = ({ intl }) => {
                 </div>
               </Col>
               <Col lg={3}>
-                <Form>
+                <Form onSubmit={(e: any) => { e.preventDefault() }}>
                   <Form.Control
                     placeholder={intl.formatMessage({
                       id: 'ManageProductsPage.searchPlaceholder',
-                      defaultMessage: 'Search by title or ID',
                     })}
                     onChange={(e) => handleSearch(e.target.value)}
                   ></Form.Control>
