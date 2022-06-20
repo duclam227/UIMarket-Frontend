@@ -427,6 +427,8 @@
   "VerifyPromptPage.checkSpamMessage": "Vui lòng kiểm tra hộp thư spam.",
   "ViewLicensePage.pagetitle": "Giấy phép bản quyền điện tử",
   "ViewShopPage.Items": "Danh sách",
+  "ViewShopPage.NoItem": "Shop này chưa đăng bán sản phẩm nào",
+  "ViewShopPage.EditShop": "Chỉnh sửa thông tin cửa hàng",
   "ViewShopPage.deactivatedModalTitle": "Cửa hàng đã bị đóng",
   "ViewShopPage.deactivatedModalBody1": "Cửa hàng này đã bị quản trị viên của chúng tôi đóng.",
   "ViewShopPage.deactivatedModalBody2": "Nếu bạn là chủ cửa hàng và nghĩ rằng đã có sự sai sót gì đó xin hãy liên hệ với chúng tôi để giải quyết.",

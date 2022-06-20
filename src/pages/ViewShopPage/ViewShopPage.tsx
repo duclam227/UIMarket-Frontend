@@ -12,6 +12,7 @@ import { FormattedMessage } from 'react-intl';
 import { ProductList } from '../../components';
 import productAPI from '../../api/product/index';
 import { genericAvatarUrl } from '../../app/util/const';
+import { BsPencil } from 'react-icons/bs';
 
 export interface ShopInfo {
   shopName: string;
@@ -19,6 +20,7 @@ export interface ShopInfo {
   shopBanner: string;
   shopEmail: string;
   shopPhone: string;
+  _id: string;
 }
 
 const EditShopPage: FunctionComponent = () => {
@@ -29,6 +31,7 @@ const EditShopPage: FunctionComponent = () => {
     shopBanner: '',
     shopEmail: '',
     shopPhone: '',
+    _id: '',
   });
   const [shopAvatar, setShopAvatar] = useState<string>('');
   const [products, setProducts] = useState<Array<any>>([]);
@@ -63,7 +66,7 @@ const EditShopPage: FunctionComponent = () => {
       .catch((error: any) => {
         console.log('Get shop products error: ', error);
       });
-  }, []);
+  }, [id]);
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
@@ -105,6 +108,22 @@ const EditShopPage: FunctionComponent = () => {
           <p className="text-center mx-2">{shopInfo.shopDescription}</p>
         </div>
 
+        {currentUser?.shopId === shopInfo._id && (
+          <div className="d-flex align-items-center justify-content-center">
+            <Button
+              variant="dark"
+              className="m-2"
+              //disabled={shopInfo}
+              onClick={() => navigate(`/user/${currentUser._id}/shop/edit`)}
+            >
+              <BsPencil className="me-1" />
+              <FormattedMessage
+                id="ViewShopPage.EditShop"
+              ></FormattedMessage>
+            </Button>
+          </div>
+        )}
+
         <div>
           <h3>
             <FormattedMessage id="ViewShopPage.Items" defaultMessage={'Items'} />
@@ -112,8 +131,17 @@ const EditShopPage: FunctionComponent = () => {
 
           {isLoading ? (
             <Spinner animation="border" />
-          ) : (
+          ) : products.length > 0 ? (
             <ProductList productList={products} />
+          ) : (
+            <div className="d-flex align-items-center justify-content-center">
+              <h5>
+                <FormattedMessage
+                  id="ViewShopPage.NoItem"
+                  defaultMessage={'This shop has not published any products'}
+                />
+              </h5>
+            </div>
           )}
         </div>
       </Container>
