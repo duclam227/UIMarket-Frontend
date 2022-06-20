@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { BsPersonCircle } from 'react-icons/bs';
 
-import { LogoIcon } from '../../';
+import { LogoIcon, UserAvatar } from '../../';
 import { State } from '../../../redux/store';
 import style from './AdminNavbar.module.css';
 import { logOut } from '../../../redux';
@@ -63,44 +63,38 @@ const AdminNavbar = () => {
         ))}
       </ul>
       <div className={`d-flex justify-content-center align-items-center`}>
-        {currentUser && currentUser.customerAvatar ? (
-          <div className="nav-item dropdown p-1">
-            <a
-              className="nav-link dropdown-toggle p-0 d-flex align-items-center"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <div className={style.avatarWrapper}>
-                <img
-                  src={currentUser.customerAvatar}
-                  className={style.userAvatar}
-                  alt="User profile"
-                />
-              </div>
-            </a>
-            <ul
-              className="dropdown-menu dropdown-menu-lg-end position-absolute mt-1"
-              aria-labelledby="navbarDropdown"
-            >
-              <li>
-                <Link to={`/user/${currentUser._id}`} className="dropdown-item">
-                  {userDropdownProfileLabel}
-                </Link>
-              </li>
-              <hr className="dropdown-divider" />
-              <li>
-                <button className={`${style.authButton}`} onClick={handleLogout}>
-                  {userDropdownLogoutBtnLabel}
-                </button>
-              </li>
-            </ul>
-          </div>
-        ) : (
-          <BsPersonCircle size={30} />
-        )}
+        <div className="nav-item dropdown p-1">
+          <a
+            className="nav-link dropdown-toggle p-0 d-flex align-items-center"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <div className={style.avatarWrapper}>
+              <UserAvatar
+                image={currentUser?.customerAvatar!}
+              />
+            </div>
+          </a>
+          <ul
+            className="dropdown-menu dropdown-menu-lg-end position-absolute mt-1"
+            aria-labelledby="navbarDropdown"
+          >
+            <li>
+              <Link to={`/user/${currentUser?._id}`} className="dropdown-item">
+                {userDropdownProfileLabel}
+              </Link>
+            </li>
+            <hr className="dropdown-divider" />
+            <li>
+              <button className={`${style.authButton}`} onClick={handleLogout}>
+                {userDropdownLogoutBtnLabel}
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     </nav>
   );
