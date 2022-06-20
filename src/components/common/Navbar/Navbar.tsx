@@ -125,11 +125,32 @@ const NavBar: FC<IProps> = props => {
                 </div>
               </Form>
 
-              <Link className="nav-link" to={currentUser ? '/products/add' : '/signup'}>
-                <button className={style.sellButton}>
-                  <FormattedMessage id="NavBar.openShop" defaultMessage="Sell your art" />
-                </button>
-              </Link>
+              {currentUser?.shopId ? (
+                <Link
+                  className="nav-link"
+                  to={
+                    isCurrentUserShop
+                      ? `/shop/${currentUser.shopId}`
+                      : `/user/${currentUser._id}/shop`
+                  }
+                >
+                  <button className={style.sellButton}>
+                    <FormattedMessage
+                      id="CommonNavbar.myStore"
+                      defaultMessage="My store"
+                    />
+                  </button>
+                </Link>
+              ) : (
+                <Link className="nav-link" to={currentUser ? '/products/add' : '/signup'}>
+                  <button className={style.sellButton}>
+                    <FormattedMessage
+                      id="CommonNavbar.openShop"
+                      defaultMessage="Sell your art"
+                    />
+                  </button>
+                </Link>
+              )}
 
               {currentUser ? (
                 <div className="nav-item dropdown p-1">
