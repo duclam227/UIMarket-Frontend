@@ -57,9 +57,9 @@ const ImageInput: React.FC<Props> = props => {
     }
 
     props.handleUploadImage(imagesAfterUpload);
-    setImages([...images, ...imagesAfterUpload]);
-    setPreviewImages([...previewImages, ...previewImagesAfterUpload]);
-    setPrevImages([...previewImages, ...previewImagesAfterUpload]);
+    setImages(multiple ? [...images, ...imagesAfterUpload] : [...imagesAfterUpload]);
+    setPreviewImages(multiple ? [...previewImages, ...previewImagesAfterUpload] : [...previewImagesAfterUpload]);
+    setPrevImages(multiple ? [...previewImages, ...previewImagesAfterUpload] : [...previewImagesAfterUpload]);
   };
 
   const handleDeleteImage = (e: any, index: number) => {
