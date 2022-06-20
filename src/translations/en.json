@@ -129,7 +129,7 @@
   "CreateAShopForm.shopNameLabel": "Shop name",
   "CreateAShopForm.shopNamePlaceholder": "Shop name should express who you are!",
   "CreateAShopForm.shopDescriptionLabel": "Describe your shop",
-  "CreateAShopForm.shopDescriptionPlaceholder": "Some lines that best tell us about your shop and what you sell!",
+  "CreateAShopForm.shopDescriptionPlaceholder": "Something that best tells us about your shop and what you sell!",
   "CreateAShopForm.shopEmailLabel": "Business email",
   "CreateAShopForm.shopEmailPlaceholder": "How we can contact you",
   "CreateAShopForm.shopBannerLabel": "Cover",
