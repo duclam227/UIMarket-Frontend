@@ -11,7 +11,7 @@ class Get {
 				Authorization: `Bearer ${jwt}`,
 			},
 		};
-		return axiosClient.get(`${SHOP_ENDPOINT}/product`, config);
+		return axiosClient.get(`${SHOP_ENDPOINT}/product/statistic`, config);
 	}
 
 	getShopById (id: string) {
