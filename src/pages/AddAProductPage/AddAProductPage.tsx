@@ -1,6 +1,6 @@
 import JSZip from 'jszip';
 import React, { useEffect, useState } from 'react';
-import { Button, Nav, Tab, TabContainer, Tabs } from 'react-bootstrap';
+import { Button, Nav, Spinner, Tab, TabContainer, Tabs } from 'react-bootstrap';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
@@ -35,6 +35,7 @@ const AddAProductPage: React.FC<IProps> = (props) => {
 
   const [product, setProduct] = useState<product | null>(null);
   const [productFiles, setProductFiles] = useState<Array<File>>([]);
+  const [postInProgress, setPostInProgress] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -83,6 +84,7 @@ const AddAProductPage: React.FC<IProps> = (props) => {
   };
 
   const handleSubmit = async () => {
+    setPostInProgress(true);
     const zippedFile = await zipFiles();
 
     s3API
@@ -117,6 +119,9 @@ const AddAProductPage: React.FC<IProps> = (props) => {
         const errorMsg = getErrorMessage(error);
         const errorCode: any = errorCodes.upload[errorMsg as keyof typeof errorCodes.upload];
         toast.error(intl.formatMessage({ id: `Upload.${errorCode}` }))
+      })
+      .finally(() => {
+        setPostInProgress(false);
       });
   };
 
@@ -172,10 +177,13 @@ const AddAProductPage: React.FC<IProps> = (props) => {
           </TabContainer>
 
           <Button
-            disabled={!isImagesFilled || !isDescriptionFilled || !isFilesFilled}
+            disabled={!isImagesFilled || !isDescriptionFilled || !isFilesFilled || postInProgress}
             onClick={handleSubmit}
           >
-            <FormattedMessage id="AddAProduct.submitBtn" />
+            {postInProgress
+              ? <Spinner animation='border' />
+              : <FormattedMessage id="AddAProduct.submitBtn" />
+            }
           </Button>
         </div>
       </div>
