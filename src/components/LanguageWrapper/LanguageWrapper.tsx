@@ -9,7 +9,7 @@ export const LanguageContext = createContext({
   changeLanguage: (locale: string) => { }
 });
 
-const defaultLocale = navigator.language;
+const defaultLocale = localStorage.getItem('locale') || navigator.language;
 let defaultLanguage:
   | Record<string, string>
   | Record<string, MessageFormatElement[]>
@@ -30,6 +30,7 @@ const LanguageWrapper: FC = props => {
   const [locale, setLocale] = useState(defaultLocale);
 
   const changeLanguage = (locale: string) => {
+    localStorage.setItem('locale', locale);
     setLocale(locale);
     switch (locale) {
       case 'vi-VN': {
