@@ -21,7 +21,7 @@ import style from './LandingPage.module.css';
 import classNames from 'classnames';
 import { useIntersectionObserver } from '../../app/util/customHooks';
 
-const VIEW_THRESHOLD = 0.7;
+const VIEW_THRESHOLD = 0.4;
 
 interface IProps {
   intl: IntlShape;
