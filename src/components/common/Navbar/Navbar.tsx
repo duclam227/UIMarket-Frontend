@@ -69,6 +69,7 @@ const NavBar: FC<IProps> = props => {
 
   const handleLogout = () => {
     dispatch(logOut());
+    navigate("/");
   };
 
   const handleProductSearch = (e: FormEvent<HTMLFormElement>) => {

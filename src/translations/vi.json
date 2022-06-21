@@ -363,6 +363,7 @@
   "ShopHomePage.noShopSubtitle": "Mở cửa hàng ngay để tăng thêm thu nhập.",
   "ShopHomePage.noShopTitle": "Chưa có cửa hàng!",
   "ShopHomePage.openShopButtonLabel": "Tạo cửa hàng",
+  "ShopStatisticPage.Warning": "Dữ liệu gần đây nhất sẽ được cập nhật vào bảng thống kê sau một khoảng thời gian.",
   "ShopWalletPage.balanceNumber": "${number}",
   "ShopWalletPage.canWithdraw": "Số tiền có thể rút",
   "ShopWalletPage.currentBalanceSubtitle": "Tiền nhận được đã trừ đi phí dịch vụ.",
