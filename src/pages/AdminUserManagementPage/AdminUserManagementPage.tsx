@@ -93,7 +93,7 @@ const AdminUserManagementPage: FC<Props> = props => {
   };
   return (
     <Container className={`bg-white w-75 py-4 px-4 mt-3 rounded ${style.container}`}>
-      <Form className={style.searchBarWrapper}>
+      {/* <Form className={style.searchBarWrapper}>
         <div className={style.searchBar}>
           <BsSearch className={style.searchIcon} />
           <Form.Control
@@ -102,7 +102,7 @@ const AdminUserManagementPage: FC<Props> = props => {
           // onChange={e => handleChange(e as any)}
           />
         </div>
-      </Form>
+      </Form> */}
       <UsersTable
         onActivateUser={handleActivateUser}
         onDeactivateUser={handleDeactivateUser}
