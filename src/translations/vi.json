@@ -115,7 +115,7 @@
   "CommonNavbar.itemLoginBtnLabel": "Đăng nhập",
   "CommonNavbar.itemSignupBtnLabel": "Đăng ký",
   "CommonNavbar.userDropdownProfileLabel": "Tài khoản",
-  "CommonNavbar.userDropdownStoreLabel": "Cửa hàng",
+  "CommonNavbar.userDropdownPurchasesLabel": "Sản phẩm đã mua",
   "CommonNavbar.userDropdownLogoutBtnLabel": "Đăng xuất",
   "CommonNavbar.openShop": "Mở bán sản phẩm",
   "CommonNavbar.myStore": "Cửa hàng của tôi",

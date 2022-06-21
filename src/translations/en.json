@@ -115,7 +115,7 @@
   "CommonNavbar.itemLoginBtnLabel": "Log In",
   "CommonNavbar.itemSignupBtnLabel": "Sign Up",
   "CommonNavbar.userDropdownProfileLabel": "Profile",
-  "CommonNavbar.userDropdownStoreLabel": "My Store",
+  "CommonNavbar.userDropdownPurchasesLabel": "My purchases",
   "CommonNavbar.userDropdownLogoutBtnLabel": "Logout",
   "CommonNavbar.openShop": "Sell your art",
   "CommonNavbar.myStore": "My store",

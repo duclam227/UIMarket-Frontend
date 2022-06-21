@@ -41,10 +41,9 @@ const NavBar: FC<IProps> = props => {
       defaultMessage="Profile"
     />
   );
-  const userDropdownStoreLabel = (
+  const userDropdownPurchasesLabel = (
     <FormattedMessage
-      id="CommonNavbar.userDropdownStoreLabel"
-      defaultMessage="My Store"
+      id="CommonNavbar.userDropdownPurchasesLabel"
     />
   );
   const userDropdownLogoutBtnLabel = (
@@ -183,14 +182,10 @@ const NavBar: FC<IProps> = props => {
                     </li>
                     <li>
                       <Link
-                        to={
-                          isCurrentUserShop
-                            ? `/shop/${currentUser.shopId}`
-                            : `/user/${currentUser._id}/shop`
-                        }
+                        to='/purchases'
                         className="dropdown-item"
                       >
-                        {userDropdownStoreLabel}
+                        {userDropdownPurchasesLabel}
                       </Link>
                     </li>
                     <hr className="dropdown-divider" />
