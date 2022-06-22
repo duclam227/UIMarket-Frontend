@@ -20,7 +20,7 @@ class Put {
         questionContent: question.body,
         questionTags: question.tags,
         questionBounty: question.bounty,
-        questionDueDate: question.bountyDueDate,
+        bountyDueDate: question.bountyDueDate,
       },
       config,
     );
