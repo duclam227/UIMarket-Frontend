@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, useLocation } from 'react-router-dom';
 
 import App from './App';
 import { LanguageWrapper } from './components';
@@ -12,11 +12,22 @@ import './custom.scss';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import './index.css';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <LanguageWrapper>
       <Provider store={store}>
         <BrowserRouter>
+          <ScrollToTop />
           <App />
         </BrowserRouter>
       </Provider>
