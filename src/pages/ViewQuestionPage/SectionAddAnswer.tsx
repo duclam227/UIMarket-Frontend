@@ -13,6 +13,7 @@ import { UserAvatar } from "../../components";
 
 import style from './ViewQuestionPage.module.css';
 import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
+import { Link } from "react-router-dom";
 interface AddAnswerProps {
   question: any;
   currentUser: customer | null;
@@ -29,7 +30,10 @@ const SectionAddAnswer: FC<AddAnswerProps> = (props) => {
   if (currentUser === null) {
     return (
       <div className={style.addCommentWrapper}>
-        Sign up or Log in to leave your answer.
+        <Link to='/signup'><FormattedMessage id='ViewQuestionPage.signUp' /></Link>
+        <FormattedMessage id='ViewQuestionPage.connectingWordOr' />
+        <Link to='/signup'><FormattedMessage id='ViewQuestionPage.logIn' /></Link>
+        <FormattedMessage id='ViewQuestionPage.leaveAnswerMsg' />
       </div>
     )
   }
