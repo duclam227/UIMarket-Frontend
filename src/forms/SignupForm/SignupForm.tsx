@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import GoogleLogin from 'react-google-login';
+import {GoogleLogin} from '@react-oauth/google';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
@@ -125,15 +125,14 @@ const SignupForm: FC<SignupFormProps> = props => {
   };
 
   const handleGoogleLogin = (data: any) => {
-    const { tokenId } = data;
+    const { credential } = data;
     try {
-      dispatch(logInWithGoogle(tokenId));
+      dispatch(logInWithGoogle(credential));
     } catch (error) {
       const errorMsg = getErrorMessage(error);
       const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
-      toast.error(intl.formatMessage({ id: `Auth.${errorCode}` }))
+      toast.error(intl.formatMessage({ id: `Auth.${errorCode}` }));
     }
-    navigate('/');
   };
 
   const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -143,12 +142,15 @@ const SignupForm: FC<SignupFormProps> = props => {
       <div className={style.signupFormContainer}>
         <h2 className={style.title}>{title}</h2>
         <div className={style.otherIdpButtonRow}>
-          <GoogleLogin
-            clientId={CLIENT_ID!}
-            buttonText={continueWithGoogleLabel}
-            onSuccess={(res: any) => handleGoogleLogin(res)}
-            onFailure={(res: any) => toast.error(intl.formatMessage({ id: 'LoginForm.actionFailed' }))}
-            cookiePolicy={'single_host_origin'}
+        <GoogleLogin
+            // buttonText={continueWithGoogleLabel}
+            text='continue_with'
+            theme="outline"
+            onSuccess={(res: any) => {
+              console.log(res);
+              handleGoogleLogin(res);
+            }}
+            onError={() => toast.error(intl.formatMessage({ id: 'Auth.actionFailed' }))}
           />
         </div>
         <div className={style.divider}>

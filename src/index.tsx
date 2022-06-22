@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, useLocation } from 'react-router-dom';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import App from './App';
 import { LanguageWrapper } from './components';
@@ -22,14 +23,18 @@ function ScrollToTop() {
   return null;
 }
 
+const CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+
 ReactDOM.render(
   <React.StrictMode>
     <LanguageWrapper>
       <Provider store={store}>
-        <BrowserRouter>
-          <ScrollToTop />
-          <App />
-        </BrowserRouter>
+        <GoogleOAuthProvider clientId={CLIENT_ID!}>
+          <BrowserRouter>
+            <ScrollToTop />
+            <App />
+          </BrowserRouter>
+        </GoogleOAuthProvider>
       </Provider>
     </LanguageWrapper>
   </React.StrictMode>,

@@ -8,7 +8,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Link } from 'react-router-dom';
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin, googleLogout, GoogleOAuthProvider } from '@react-oauth/google';
 import { errors as errorCodes } from '../../app/util/errors';
 import { authCredentials, customer } from '../../app/util/interfaces';
 import { logIn, logInWithGoogle, loginSuccess, setError } from '../../redux';
@@ -121,9 +121,9 @@ const LoginForm: FC<loginFormProps> = props => {
   };
 
   const handleGoogleLogin = (data: any) => {
-    const { tokenId } = data;
+    const { credential } = data;
     try {
-      dispatch(logInWithGoogle(tokenId));
+      dispatch(logInWithGoogle(credential));
     } catch (error) {
       const errorMsg = getErrorMessage(error);
       const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
@@ -143,16 +143,13 @@ const LoginForm: FC<loginFormProps> = props => {
         <h2 className={style.title}>{title}</h2>
         <div className={style.otherIdpButtonRow}>
           <GoogleLogin
-            clientId={CLIENT_ID!}
-            buttonText={continueWithGoogleLabel}
+            // buttonText={continueWithGoogleLabel}
+            theme="outline"
             onSuccess={(res: any) => {
               console.log(res);
               handleGoogleLogin(res);
             }}
-            onFailure={(res: any) =>
-              toast.error(intl.formatMessage({ id: 'Auth.actionFailed' }))
-            }
-            cookiePolicy={'single_host_origin'}
+            onError={() => toast.error(intl.formatMessage({ id: 'Auth.actionFailed' }))}
           />
         </div>
         <div className={style.divider}>
