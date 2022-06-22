@@ -12,7 +12,7 @@ import answerAPI from "../../api/answer";
 import { UserAvatar } from "../../components";
 
 import style from './ViewQuestionPage.module.css';
-import { injectIntl, IntlShape } from "react-intl";
+import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
 interface AddAnswerProps {
   question: any;
   currentUser: customer | null;
@@ -71,7 +71,7 @@ const SectionAddAnswer: FC<AddAnswerProps> = (props) => {
             type="button"
             onClick={handleSubmit}
           >
-            Add answer
+            <FormattedMessage id='ViewQuestionPage.addAnswer' />
           </Button>
         </Form>
       </div>

@@ -452,6 +452,7 @@
   "ViewProductPage.reportProduct": "Báo cáo vi phạm",
   "ViewProductPage.viewShopButton": "Xem cửa hàng",
   "ViewProductPage.ownerMessage": "Bạn là chủ sản phẩm này, nhấn để chỉnh sửa.",
+  "ViewQuestionPage.addAnswer": "Trả lời",
   "Auth.accountInactive": "Tài khoản này đã bị vô hiệu hóa.",
   "Auth.emailExisted": "Email này đã được sử dụng.",
   "Auth.invalidAuthentication": "Sai email hoặc mật khẩu.",
