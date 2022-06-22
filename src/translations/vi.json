@@ -301,6 +301,7 @@
   "RecoverPasswordForm.emailSmallText": "Nhập email mà bạn đã dùng để đăng ký tài khoản, chúng tôi sẽ gửi email kèm link để bạn đặt lại mật khẩu.",
   "RecoverPasswordForm.resetPasswordBtnLabel": "Đặt lại mật khẩu",
   "RecoverPasswordForm.resetEmailMessage": "Chúng tôi đã gửi mail để đặt lại mật khẩu tới",
+  "RecoverPasswordForm.pleaseWaitMessage": "Vui lòng đợi. Có thể sẽ mất 5 phút để mail đến hộp thư của bạn",
   "RecoverPasswordForm.resendBtnLabel": "Gửi lại",
   "RefundsTable.requestedBy": "NGƯỜI YÊU CẦU",
   "ReportModal.reportModalTitle": "Báo cáo ",

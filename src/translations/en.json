@@ -301,6 +301,7 @@
   "RecoverPasswordForm.emailSmallText": "Tell us the email address associated with your account, and we’ll send you an email with a link to reset your password.",
   "RecoverPasswordForm.resetPasswordBtnLabel": "Recover password",
   "RecoverPasswordForm.resetEmailMessage": "We've just sent a link to reset your password to",
+  "RecoverPasswordForm.pleaseWaitMessage":"Please wait. It may takes up to 5 minutes for the email to arrived.",
   "RecoverPasswordForm.resendBtnLabel": "Resend link",
   "RefundsTable.requestedBy": "REQUESTED BY",
   "ReportModal.reportModalTitle": "Report this",
