@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import React, { FC, useState } from "react";
+import { BiDotsHorizontalRounded } from 'react-icons/bi';
 
 import style from './ThreeDotMenu.module.css';
 
@@ -20,24 +21,26 @@ const ThreeDotMenu: FC<ThreeDotMenuProps> = (props) => {
 
   const wrapperClasses = className || classNames(style.wrapper);
 
-  const threeDotIcon = <svg
-    xmlns="http://www.w3.org/2000/svg"
-    className={style.threeDotIcon}
-    viewBox="0 0 16 16"
-    onClick={() => { setIsOpen(!isOpen) }}
-  >
-    <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
-  </svg>
-
   return (
     <div className={wrapperClasses}>
-      {threeDotIcon}
-      {isOpen &&
-        <div className={style.menuModal}>
-
+      <div className="nav-item dropdown p-1">
+        <a
+          className="nav-link dropdown-toggle p-0 d-flex align-items-center"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <BiDotsHorizontalRounded />
+        </a>
+        <ul
+          className="dropdown-menu dropdown-menu-lg-end"
+          aria-labelledby="navbarDropdown"
+        >
           {menuItems?.map(item => {
             return (
-              <div
+              <li
                 key={item.key}
                 className={style.menuItem}
                 onClick={() => {
@@ -46,11 +49,11 @@ const ThreeDotMenu: FC<ThreeDotMenuProps> = (props) => {
                 }}
               >
                 {item.label}
-              </div>
+              </li>
             )
           })}
-        </div>
-      }
+        </ul>
+      </div>
     </div>
   )
 }
