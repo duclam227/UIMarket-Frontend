@@ -177,6 +177,10 @@ const Answer: FC<SectionAnswerProps> = props => {
   };
 
   const markBestAnswer = () => {
+    if (isCurrentUserAuthor) {
+      return;
+    }
+
     answerAPI
       .markBestAnswer(question._id, answer._id)
       .then((res: any) => {
