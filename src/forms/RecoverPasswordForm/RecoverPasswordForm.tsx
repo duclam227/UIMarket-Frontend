@@ -66,6 +66,12 @@ const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
       defaultMessage="We've just sent a link to reset your password to"
     />
   );
+  const pleaseWaitMessage = (
+    <FormattedMessage
+      id="RecoverPasswordForm.pleaseWaitMessage"
+      defaultMessage="We've just sent a link to reset your password to"
+    />
+  );
   const resendBtnLabel = (
     <FormattedMessage
       id="RecoverPasswordForm.resendBtnLabel"
@@ -110,7 +116,6 @@ const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
   const sendRecoverPasswordRequest = async (data: RecoverCredentials) => {
     setResendCountdown(60);
     try {
-      console.log(data);
       await authAPI.sendRecoverPasswordRequest(data);
     } catch (error) {
       throw error;
@@ -161,10 +166,12 @@ const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
           <Row className={'flex-column justify-content-center align-items-center'}>
             <img src={NoMessage} alt="Check email" height={250}></img>
             <span className="text-center">{resetEmailMessage}</span>
-            <p className={`text-center fw-bold text-primary`}>
+            <span className={`text-center fw-bold text-primary`}>
               {submittedRecoverCredentials.email}
-            </p>
-            <span className={`text-center`}>
+            </span>
+            <span className="text-center">{pleaseWaitMessage}</span>
+
+            <span className={`text-center mt-3`}>
               <Button
                 variant={!!resendCountdown ? 'secondary' : 'primary'}
                 disabled={!!resendCountdown}
