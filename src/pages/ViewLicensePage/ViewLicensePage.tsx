@@ -42,7 +42,6 @@ const ViewLicensePage = () => {
     const getLicense = async () => {
       try {
         const res: any = await licenseAPI.getLicenseById(params.id!);
-        console.log(res);
         setLicenseInfo({
           _id: res._id,
           shopName: res.shop.shopName,
@@ -62,7 +61,7 @@ const ViewLicensePage = () => {
 
   const renderLicense = () => (
     <div
-      className={`mt-3 d-flex justify-content-between align-items-start ${style.licenseWrapper}`}
+      className={`my-3 d-flex justify-content-evenly align-items-start ${style.licenseWrapper}`}
     >
       <div className={`w-75`}>
         <div className={`${style.gradientTopBorder}`}></div>
@@ -71,7 +70,7 @@ const ViewLicensePage = () => {
           <LogoIcon className={style.logo} />
           <div id="license">
             <table className={`${style.table}`}>
-              <tbody>
+              <tbody className={`${style.tbody}`}>
                 <tr className={`${style.tr}`}>
                   <th className={`text-primary ${style.th}`}>License ID: </th>
                   <td className={`${style.td}`}>{licenseInfo?._id}</td>
@@ -180,8 +179,9 @@ const ViewLicensePage = () => {
           </div>
         </div>
       </div>
+
       {/* Download button */}
-      <span>
+      <div>
         <Button
           className={`px-5 py-2 d-flex align-items-center`}
           onClick={() => createPDFFile()}
@@ -189,7 +189,7 @@ const ViewLicensePage = () => {
           <span className={`me-2 text-nowrap`}>{downloadButtonLabel}</span>
           <BsDownload />
         </Button>
-      </span>
+      </div>
     </div>
   );
 

@@ -1,3 +1,8 @@
+.licenseWrapper {
+  flex-wrap: wrap;
+  align-content: space-between;
+  gap: 0.8em;
+}
 .content {
   width: 95%;
   height: 100%;
@@ -23,6 +28,13 @@
 .table {
   border-collapse: separate !important;
   border-spacing: 0.2em !important;
+  table-layout: fixed;
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+.tbody {
   width: 100%;
 }
 .th {
@@ -43,10 +55,6 @@
   list-style-type: none;
 }
 
-
-
 .notAllowedUnorderedList {
   list-style-type: none;
 }
-
-
