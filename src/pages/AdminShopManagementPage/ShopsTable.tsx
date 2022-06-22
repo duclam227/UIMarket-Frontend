@@ -22,8 +22,8 @@ const ShopsTable: FC<Props> = props => {
   const storeEmailTableHeaderLabel = intl.formatMessage({
     id: 'AdminShopManagementPage.storeEmailTableHeaderLabel',
   });
-  const ownerIdTableHeaderLabel = intl.formatMessage({
-    id: 'AdminShopManagementPage.ownerIdTableHeaderLabel',
+  const shopStatusTableHeaderLabel = intl.formatMessage({
+    id: 'AdminShopManagementPage.shopStatusTableHeaderLabel',
   });
   const actionDropdownPlaceholder = (
     <FormattedMessage id="AdminUserManagementPage.actionDropdownPlaceholder" />
@@ -41,7 +41,22 @@ const ShopsTable: FC<Props> = props => {
     { key: 'check', content: () => null, width: 5 },
     { path: 'shopName', label: storeNameTableHeaderLabel, width: 25, bold: true },
     { path: 'shopEmail', label: storeEmailTableHeaderLabel, width: 25 },
-    { path: 'userId', label: ownerIdTableHeaderLabel, width: 25, bold: true },
+    {
+      key: 'shopStatus',
+      label: shopStatusTableHeaderLabel,
+      width: 25,
+      content: (shop: shop) => {
+        console.log(shop.shopStatus)
+        switch (shop.shopStatus) {
+          case 1:
+            return <FormattedMessage id="AdminUserManagementPage.activeShopStatus" />;
+          case 0:
+            return <FormattedMessage id="AdminUserManagementPage.inactiveShopStatus" />;
+          default:
+            return null;
+        }
+      },
+    },
     {
       key: 'action',
       label: actionTableHeaderLabel,
@@ -71,7 +86,10 @@ const ShopsTable: FC<Props> = props => {
                   {deactivateDropdownLabel}
                 </button>
               ) : (
-                <button onClick={() => onActivateShop(shop._id)} className="dropdown-item">
+                <button
+                  onClick={() => onActivateShop(shop._id)}
+                  className="dropdown-item"
+                >
                   {activateDropdownLabel}
                 </button>
               )}
