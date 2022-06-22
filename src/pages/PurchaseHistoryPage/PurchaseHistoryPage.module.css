@@ -19,7 +19,7 @@
 
 .header {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	padding: 2rem 3rem;
 
 	width: 100%;
@@ -56,13 +56,18 @@
 }
 
 .product {
-	display: grid;
-	grid-template-columns: auto 3fr 1.2fr 1.2fr;
+	display: flex;
+	flex-direction: column;
 	align-items: center;
 	gap: 10px;
 	padding: 2rem 3rem;
 
 	width: 100%;
+	border-bottom: 1px solid var(--gray-300);
+}
+
+.product:last-child {
+	border-bottom: none;
 }
 
 .product:hover {
@@ -115,4 +120,19 @@
 
 .dropdown a {
 	color: black;
+}
+
+@media (min-width: 768px) {
+	.header {
+		flex-direction: row;
+	}
+	.product {
+		display: grid;
+		grid-template-columns: auto 3fr 1.2fr 1.2fr;
+		align-items: center;
+		gap: 10px;
+		padding: 2rem 3rem;
+
+		width: 100%;
+	}
 }
