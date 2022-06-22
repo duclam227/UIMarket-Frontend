@@ -205,7 +205,10 @@ const Answer: FC<SectionAnswerProps> = props => {
       {confirmDeleteModal}
       <div className={style.sideContent}>
         <UserAvatar image={answer.customerInfo[0].customerAvatar} />
-        <div className={style.markBestAnswer}>{bestAnswerIcon}</div>
+        {isCurrentUserAuthor
+          ? <div className={style.markBestAnswer}>{bestAnswerIcon}</div>
+          : null
+        }
       </div>
       <div className={style.content}>
         <div className={style.authorInfo + " text-nowrap"}>
