@@ -41,31 +41,34 @@ const ProductNavbar: FC<IProps> = props => {
 
   return (
     <nav className={style.subNavbar}>
-      <section className={style.leftSide}>
-        <button className={classNames(style.button, style.trendButton)}>
-          <Link to="/questions">
-            <FormattedMessage id="ProductNavBar.Forum" defaultMessage="DeeX Forum" />
-          </Link>
-        </button>
+      <div className="container-fluid d-flex align-items-center">
+        <section className={style.leftSide}>
+          <button className={classNames(style.button, style.trendButton)}>
+            <Link to="/questions">
+              <FormattedMessage id="ProductNavBar.Forum" defaultMessage="DeeX Forum" />
+            </Link>
+          </button>
 
-        <div className={style.categoryList}>
-          <Link to={`/products`}>
-            <button className={style.button}>
-              <FormattedMessage id="ProductNavBar.AllProducts" />
-            </button>
-          </Link>
-          {isLoading
-            ? <Spinner animation='border' />
-            : categories.map((category: any) => (
-              <Link key={category._id} to={`/products/category/${category._id}`}>
-                <button key={category._id} className={style.button}>
-                  {category.categoryName}
-                </button>
-              </Link>
-            ))
-          }
-        </div>
-      </section>
+          <div className={style.categoryList}>
+            <Link to={`/products`}>
+              <button className={style.button}>
+                <FormattedMessage id="ProductNavBar.AllProducts" />
+              </button>
+            </Link>
+            {isLoading ? (
+              <Spinner animation="border" />
+            ) : (
+              categories.map((category: any) => (
+                <Link key={category._id} to={`/products/category/${category._id}`}>
+                  <button key={category._id} className={style.button}>
+                    {category.categoryName}
+                  </button>
+                </Link>
+              ))
+            )}
+          </div>
+        </section>
+      </div>
     </nav>
   );
 };
