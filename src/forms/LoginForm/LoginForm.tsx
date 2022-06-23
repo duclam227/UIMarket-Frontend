@@ -120,14 +120,26 @@ const LoginForm: FC<loginFormProps> = props => {
     }
   };
 
-  const handleGoogleLogin = (data: any) => {
+  const handleGoogleLogin = async (data: any) => {
     const { credential } = data;
     try {
-      dispatch(logInWithGoogle(credential));
-    } catch (error) {
-      const errorMsg = getErrorMessage(error);
-      const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
-      toast.error(intl.formatMessage({ id: `Auth.${errorCode}` }));
+      //dispatch(logInWithGoogle(credential));
+
+      const res = (await authAPI.logInWithGoogle(credential)) as any;
+      const { user, accessToken } = res;
+      const customer: customer = { ...user };
+      localStorage.setItem('authToken', accessToken);
+      dispatch(loginSuccess({ ...customer }));
+
+    } catch (error: any) {
+      if (error.response && error.response.data.msg === 'account-banned') {
+        navigate(`/account-banned`);
+      }
+      else {
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
+        toast.error(intl.formatMessage({ id: `Auth.${errorCode}` }));
+      }
     }
   };
 
@@ -150,7 +162,7 @@ const LoginForm: FC<loginFormProps> = props => {
               handleGoogleLogin(res);
             }}
             onError={() => toast.error(intl.formatMessage({ id: 'Auth.actionFailed' }))}
-            allowed_parent_origin={["https://deex.tk", "https://www.deex.tk"]}
+            allowed_parent_origin={['https://deex.tk', 'https://www.deex.tk']}
           />
         </div>
         <div className={style.divider}>
