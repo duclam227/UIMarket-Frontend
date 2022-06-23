@@ -12,7 +12,7 @@
 
 	padding: 10px 20px;
 
-	width: 65%;
+	width: 90%;
 	min-height: 100%;
 	background-color: white;
 }
@@ -26,4 +26,10 @@
 
 .tabItem {
 	cursor: pointer;
+}
+
+@media (min-width: 768px) {
+	.container {
+		width: 65%;
+	}
 }
