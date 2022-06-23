@@ -59,6 +59,14 @@ input[type='checkbox'] {
 	border-radius: 5px !important;
 }
 
-input[type='checkbox']:checked {
+input[type='radio'] {
+	min-width: 20px;
+	min-height: 20px;
+	border: 1px solid var(--pink-500) !important;
+	border-radius: 50% !important;
+}
+
+input[type='checkbox']:checked,
+input[type='radio']:checked {
 	background-color: var(--pink-500) !important;
 }
