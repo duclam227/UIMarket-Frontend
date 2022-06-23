@@ -41,7 +41,7 @@ const AskAQuestionPage = ({ intl }: any) => {
   const currentUser = useSelector((state: State) => state.auth.user);
   const formGroupClassName = 'mb-3';
   const cardClassName = 'mb-4 d-flex flex-column';
-  const containerClassName = classNames(style.pageContainer, 'w-75');
+  const containerClassName = classNames(style.pageContainer, 'w-80');
   const postQuestionButtonClassName = 'mb-3';
   const topUpButtonClassName = 'mb-3';
   const topUpGroupClassName =
