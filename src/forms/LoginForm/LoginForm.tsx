@@ -63,9 +63,9 @@ const LoginForm: FC<loginFormProps> = props => {
   });
 
   //password
-  const loginFormPasswordLabel = (
-    <FormattedMessage id="LoginForm.passwordLabel" defaultMessage="Password" />
-  );
+  const loginFormPasswordLabel = intl.formatMessage({
+    id: 'LoginForm.passwordLabel',
+  });
   const loginFormPasswordPlaceholder = intl.formatMessage({
     id: 'LoginForm.passwordPlaceholder',
     defaultMessage: 'some-secret-password',
@@ -78,8 +78,20 @@ const LoginForm: FC<loginFormProps> = props => {
       .email({ tlds: { allow: false } })
       //tlds: Top-Level Domain Something, set this to false because it said that built-in TLD is disabled, idk :\
       .required()
+      .messages({
+        "string.base": intl.formatMessage({ id: "FormValidation.missingEmail" }),
+        "string.empty": intl.formatMessage({ id: "FormValidation.requiredEmail" }),
+        "string.email": intl.formatMessage({ id: "FormValidation.missingEmail" }),
+        "any.required": intl.formatMessage({ id: "FormValidation.requiredEmail" })
+      })
       .label('Email'),
-    customerPassword: Joi.string().required().label('Password').min(6), //Remember to add min(8) rule
+    customerPassword: Joi.string().required().label('Password').min(6)
+      .messages({
+        "string.base": intl.formatMessage({ id: "FormValidation.requiredPassword" }),
+        "string.empty": intl.formatMessage({ id: "FormValidation.requiredPassword" }),
+        "string.min": intl.formatMessage({ id: "FormValidation.minLengthPassword" }, { min: 6 }),
+        "any.required": intl.formatMessage({ id: "FormValidation.requiredPassword" })
+      }),
   });
 
   const {
@@ -90,12 +102,13 @@ const LoginForm: FC<loginFormProps> = props => {
     getFieldState,
   } = useForm<authCredentials>({
     resolver: joiResolver(schema),
-    mode: 'onTouched',
+    mode: 'onBlur',
     defaultValues: {
       customerEmail: '',
       customerPassword: '',
     },
   });
+  console.log(errors);
 
   const handleLogin: SubmitHandler<authCredentials> = async data => {
     try {
@@ -165,25 +178,20 @@ const LoginForm: FC<loginFormProps> = props => {
             control={control}
             className={`mb-3`}
           />
-          <Form.Group className="mb-3" controlId="customerPassword">
-            <Form.Label className={style.label}>{loginFormPasswordLabel}</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder={loginFormPasswordPlaceholder}
-              isInvalid={getFieldState('customerPassword').error ? true : false}
-              {...register('customerPassword')}
-            />
-            <Form.Text>
-              <Link to="/recover" className={style.forgetPasswordText}>
-                {forgotPasswordMessage}
-              </Link>
-            </Form.Text>
-            {errors.customerPassword && (
-              <Alert variant="danger" className="mt-1">
-                {errors.customerPassword.message}
-              </Alert>
-            )}
-          </Form.Group>
+
+          <FormInput
+            label={loginFormPasswordLabel}
+            placeholder={loginFormPasswordPlaceholder}
+            name="customerPassword"
+            control={control}
+            className={`mb-3`}
+            type="password"
+          />
+          <Form.Text>
+            <Link to="/recover" className={style.forgetPasswordText}>
+              {forgotPasswordMessage}
+            </Link>
+          </Form.Text>
 
           <Button variant="primary" type="submit" className={style.submitButton}>
             {submitMessage}

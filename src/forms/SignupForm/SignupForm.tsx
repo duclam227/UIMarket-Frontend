@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import {GoogleLogin} from '@react-oauth/google';
+import { GoogleLogin } from '@react-oauth/google';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
@@ -85,16 +85,33 @@ const SignupForm: FC<SignupFormProps> = props => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const authError = useSelector((state: State) => state.auth.error);
 
   const schema = Joi.object({
-    customerName: Joi.string().max(20).trim().required().label('Name'),
+    customerName: Joi.string().max(20).trim().required().label('Name')
+      .messages({
+        "string.base": intl.formatMessage({ id: "FormValidation.missingName" }),
+        "string.empty": intl.formatMessage({ id: "FormValidation.requiredName" }),
+        "string.max": intl.formatMessage({ id: "FormValidation.maxLengthName" }),
+        "any.required": intl.formatMessage({ id: "FormValidation.requiredName" })
+      }),
     customerEmail: Joi.string()
       .email({ tlds: { allow: false } })
       //tlds: Top-Level Domain Something, set this to false because it said that built-in TLD is disabled, idk :\
       .required()
+      .messages({
+        "string.base": intl.formatMessage({ id: "FormValidation.missingEmail" }),
+        "string.empty": intl.formatMessage({ id: "FormValidation.requiredEmail" }),
+        "string.email": intl.formatMessage({ id: "FormValidation.missingEmail" }),
+        "any.required": intl.formatMessage({ id: "FormValidation.requiredEmail" })
+      })
       .label('Email'),
-    customerPassword: Joi.string().required().label('Password').min(6), //Remember to add min(8) rule
+    customerPassword: Joi.string().required().label('Password').min(6)
+      .messages({
+        "string.base": intl.formatMessage({ id: "FormValidation.requiredPassword" }),
+        "string.empty": intl.formatMessage({ id: "FormValidation.requiredPassword" }),
+        "string.min": intl.formatMessage({ id: "FormValidation.minLengthPassword" }, { min: 6 }),
+        "any.required": intl.formatMessage({ id: "FormValidation.requiredPassword" })
+      }), //Remember to add min(8) rule
   });
 
   const {
@@ -103,7 +120,7 @@ const SignupForm: FC<SignupFormProps> = props => {
     control,
   } = useForm<authCredentials>({
     resolver: joiResolver(schema),
-    mode: 'onTouched',
+    mode: 'onBlur',
     defaultValues: {
       customerEmail: '',
       customerPassword: '',
@@ -142,7 +159,7 @@ const SignupForm: FC<SignupFormProps> = props => {
       <div className={style.signupFormContainer}>
         <h2 className={style.title}>{title}</h2>
         <div className={style.otherIdpButtonRow}>
-        <GoogleLogin
+          <GoogleLogin
             // buttonText={continueWithGoogleLabel}
             text='continue_with'
             theme="outline"

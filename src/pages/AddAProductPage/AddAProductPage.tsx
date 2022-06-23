@@ -132,7 +132,7 @@ const AddAProductPage: React.FC<IProps> = (props) => {
   }, [currentUser])
 
   return (
-    <OneToFivePage>
+    <PageWithNavbar>
       <div className={style.wrapper}>
         <div className={style.container}>
           <TabContainer defaultActiveKey="description">
@@ -187,7 +187,7 @@ const AddAProductPage: React.FC<IProps> = (props) => {
           </Button>
         </div>
       </div>
-    </OneToFivePage>)
+    </PageWithNavbar>)
 };
 
 export default injectIntl(AddAProductPage);
