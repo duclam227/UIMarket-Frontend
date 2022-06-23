@@ -51,3 +51,14 @@ input {
 input:focus {
 	border-bottom: 2px solid var(--pink-300) !important;
 }
+
+input[type='checkbox'] {
+	min-width: 20px;
+	min-height: 20px;
+	border: 1px solid var(--pink-500) !important;
+	border-radius: 5px !important;
+}
+
+input[type='checkbox']:checked {
+	background-color: var(--pink-500) !important;
+}
