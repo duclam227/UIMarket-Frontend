@@ -150,7 +150,7 @@ const EditShopPage: FunctionComponent = () => {
           )}
         </div>
       </Container>
-      <Modal show={showModal} onHide={handleClose}>
+      <Modal show={showModal} onHide={handleGoBack}>
         <Modal.Header closeButton>
           <Modal.Title>
             <FormattedMessage id="ViewShopPage.deactivatedModalTitle" />
@@ -165,9 +165,6 @@ const EditShopPage: FunctionComponent = () => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            <FormattedMessage id="ReportModal.closeBtnLabel" />
-          </Button>
           <Button variant="primary" onClick={handleGoBack}>
             <FormattedMessage id="ViewShopPage.deactivatedModalBackBtnLabel" />
           </Button>
