@@ -116,7 +116,7 @@ const LandingPage: React.FC<IProps> = props => {
           products={themeProducts}
           title={themeProductsTitle}
           subtitle={themeProductsSubtitle}
-          link="/products/category/627bc2f599bc9a68d1105497"
+          link="/products/category/62a45a3951ca7e1703f0b70b"
         />
       </div>
       <div ref={sectionExploreForumRef} className={style.hide}>
