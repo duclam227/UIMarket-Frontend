@@ -150,6 +150,7 @@ const LoginForm: FC<loginFormProps> = props => {
               handleGoogleLogin(res);
             }}
             onError={() => toast.error(intl.formatMessage({ id: 'Auth.actionFailed' }))}
+            allowed_parent_origin={["https://deex.tk", "https://www.deex.tk"]}
           />
         </div>
         <div className={style.divider}>
