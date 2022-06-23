@@ -182,7 +182,7 @@ const UserProfilePage = () => {
               {userProfileInfo?.shopId ? (
                 <Button
                   className="d-flex align-items-center justify-content-center"
-                  onClick={() => navigate(`/shop/${currentUser?.shopId}`)}
+                  onClick={() => navigate(`/shop/${userProfileInfo?.shopId}`)}
                 >
                   <span className={`text-nowrap`}>{viewShopBtnLabel}</span>
                 </Button>

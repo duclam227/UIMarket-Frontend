@@ -231,7 +231,7 @@ const EditProductPage: React.FC<IProps> = (props) => {
             >
               {postInProgress
                 ? <Spinner animation='border' />
-                : <FormattedMessage id="AddAProduct.submitBtn" />
+                : <FormattedMessage id="EditProductPage.submitBtn" />
               }
             </Button>
           </div>

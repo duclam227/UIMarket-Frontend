@@ -97,6 +97,11 @@ const ReportModal: FC<Props> = props => {
     setReportReason(value);
   };
 
+  const closeReport = () => {
+    setReportReason(null);
+    onClose();
+  };
+
   const handleSubmitReport = async () => {
     if (!reportReason) {
       toast.error(emptyReasonToastLabel);
@@ -112,7 +117,7 @@ const ReportModal: FC<Props> = props => {
   };
 
   return (
-    <Modal show={show} onHide={() => onClose()} centered>
+    <Modal show={show} onHide={() => closeReport()} centered>
       <Form>
         <Modal.Header closeButton>
           <Modal.Title>
@@ -137,10 +142,14 @@ const ReportModal: FC<Props> = props => {
           </Container>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => onClose()}>
+          <Button variant="secondary" onClick={() => closeReport()}>
             {closeBtnLabel}
           </Button>
-          <Button variant="primary" onClick={() => handleSubmitReport()}>
+          <Button
+            variant="primary"
+            onClick={() => handleSubmitReport()}
+            disabled={!reportReason}
+          >
             {sendReportBtnLabel}
           </Button>
         </Modal.Footer>
