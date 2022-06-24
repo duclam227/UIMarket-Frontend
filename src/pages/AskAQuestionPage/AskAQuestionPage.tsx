@@ -155,8 +155,9 @@ const AskAQuestionPage = ({ intl }: any) => {
     };
     try {
       setPostInProgress(true);
-      await questionAPI.addNewQuestion(question);
-      navigate('/', { replace: true });
+      const request: any = await questionAPI.addNewQuestion(question);
+      const questionId = request._id;
+      navigate(`/question/${questionId}`, { replace: true });
     } catch (error) {
       const errorMessage = getErrorMessage(error);
       setPostInProgress(false);

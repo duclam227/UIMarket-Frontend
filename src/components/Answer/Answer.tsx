@@ -43,6 +43,7 @@ const Answer: FC<SectionAnswerProps> = props => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
   const [isReload, setIsReload] = useState<boolean>(false);
+  const [isReplying, setIsReplying] = useState<boolean>(false);
 
   const handleShowReportModal = () => {
     setShowReportModal(true);
@@ -77,13 +78,16 @@ const Answer: FC<SectionAnswerProps> = props => {
   };
 
   const addReply = () => {
+    setIsReplying(true);
     commentAPI
       .addNewComment(reply, question._id, answer._id, 'Answer')
       .then(res => {
         setIsReload(!isReload);
         setIsReply(false);
+        setIsReplying(false);
       })
       .catch(error => {
+        setIsReplying(false);
         const errorMsg = getErrorMessage(error);
         const errorCode: any = errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
         toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }));
@@ -283,6 +287,7 @@ const Answer: FC<SectionAnswerProps> = props => {
                 variant="primary"
                 type="button"
                 onClick={addReply}
+                disabled={isReplying}
               >
                 Reply
               </Button>
