@@ -26,6 +26,7 @@ const SectionAddAnswer: FC<AddAnswerProps> = (props) => {
 
   const [answer, setAnswer] = useState<string>('');
   const [editor, setEditor] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   if (currentUser === null) {
     return (
@@ -39,15 +40,18 @@ const SectionAddAnswer: FC<AddAnswerProps> = (props) => {
   }
 
   const handleSubmit = () => {
+    setIsLoading(true);
     answerAPI.addNewAnswer(answer, question._id)
       .then((res: any) => {
         props.handleAddAnswer(res);
         editor.setData('');
+        setIsLoading(false);
       })
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
         const errorCode: any = errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
         toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }));
+        setIsLoading(false);
       })
   }
 
@@ -73,6 +77,7 @@ const SectionAddAnswer: FC<AddAnswerProps> = (props) => {
             className={style.addCommentButton}
             variant="primary"
             type="button"
+            disabled={isLoading}
             onClick={handleSubmit}
           >
             <FormattedMessage id='ViewQuestionPage.addAnswer' />
