@@ -29,7 +29,12 @@ const SectionHeader: React.FC<Props> = props => {
   const { product, currentUser, isBought, intl, isActive } = props;
   const isCurrentUserSeller = currentUser?.customerEmail === product.shopId.customerEmail;
   const navigate = useNavigate();
-  const title = isActive? `${product.productName}`: `${product.productName} [DEACTIVATED]`;
+  const title = isActive ? `${product.productName}`
+    : <>
+      {product.productName}
+      <br />
+      <Badge pill bg='secondary'>DEACTIVATED</Badge>
+    </>;
 
   const handleAddToCart = (action?: string) => {
     if (!currentUser) {
