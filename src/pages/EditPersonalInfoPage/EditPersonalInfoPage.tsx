@@ -103,7 +103,8 @@ const EditPersonalInfoPage: FC<IProps> = props => {
       .label('Email'),
     dob: Joi.date().iso().label('Birthday'),
     phone: Joi.string()
-      .max(10)
+      .allow(null, '')
+      .max(11)
       .pattern(/^[0-9]+$/, { name: 'phone numbers' }) // phone number pattern
       .label('Phone number'),
   });
@@ -141,7 +142,7 @@ const EditPersonalInfoPage: FC<IProps> = props => {
         reset({
           email: user.customerEmail,
           dob: date,
-          phone: user.customerPhone ? user.customerPhone : 'No phone number added yet',
+          phone: user.customerPhone ? user.customerPhone : '',
         });
       } catch (error) {
         const errorMsg = getErrorMessage(error);
@@ -222,6 +223,7 @@ const EditPersonalInfoPage: FC<IProps> = props => {
                   plaintext={!isEditMode}
                   readOnly={!isEditMode}
                   {...register('email')}
+                  disabled={true}
                 />
               </Col>
               {errors.email && (
@@ -230,18 +232,6 @@ const EditPersonalInfoPage: FC<IProps> = props => {
                     {errors.email.message}
                   </Alert>
                 </Col>
-              )}
-              {!isEditMode && (
-                <Form.Label
-                  className={`${style.textUnderlineHover} text-primary d-md-flex justify-content-end text-nowrap`}
-                  column
-                  sm={12}
-                  md={{ span: 2, offset: 3 }}
-                  lg={{ span: 2, offset: 3 }}
-                  onClick={handleEnableEditMode}
-                >
-                  {editBtnLabel}
-                </Form.Label>
               )}
             </Form.Group>
 
@@ -310,6 +300,7 @@ const EditPersonalInfoPage: FC<IProps> = props => {
               <Col sm={12} md={4} lg={5} className="d-flex align-items-center">
                 <Form.Control
                   type="text"
+                  placeholder='No phone number added yet'
                   plaintext={!isEditMode}
                   readOnly={!isEditMode}
                   {...register('phone')}
