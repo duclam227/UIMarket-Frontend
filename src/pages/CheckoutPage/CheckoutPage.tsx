@@ -206,6 +206,7 @@ const CheckoutPage: FunctionComponent = () => {
           </Container>
         )}
       </Container>
+      <div className="my-5"></div>
     </PageWithNavbar>
   );
 };
