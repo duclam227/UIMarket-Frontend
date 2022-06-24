@@ -1,0 +1,10 @@
+.title {
+    margin: 40px 0 25px 0;
+    font-weight: 600;
+  }
+
+  .formContainer {
+    display: flex;
+    flex-direction: column;
+    min-width: 50%;
+  }
