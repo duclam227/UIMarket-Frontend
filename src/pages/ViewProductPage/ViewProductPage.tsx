@@ -156,7 +156,7 @@ const ViewProductPage: React.FC<IProps> = props => {
             isActive={isActive}
           />
           <SectionSeller product={product!} currentUser={currentUser!} />
-          {!isCurrentUserSeller ? (
+          {(!isCurrentUserSeller && isActive) ? (
             <div className={style.reportPanel} onClick={() => handleShowReportModal!()}>
               <BsFlag />
               <FormattedMessage id="ViewProductPage.reportProduct" />
