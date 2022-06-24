@@ -11,7 +11,7 @@ interface IProps {
   handleReload: Function;
 }
 
-const Review: React.FC<IProps> = (props) => {
+const Review: React.FC<IProps> = props => {
   const { review } = props;
   const { product } = review;
 
@@ -22,13 +22,9 @@ const Review: React.FC<IProps> = (props) => {
     let rating = productRating;
     for (let key = 1; key <= 5; key++) {
       if (rating > 0) {
-        starArray.push(
-          <i className={'bi-star-fill ' + style.yellowStar} key={key} />,
-        );
+        starArray.push(<i className={'bi-star-fill ' + style.yellowStar} key={key} />);
       } else {
-        starArray.push(
-          <i className={'bi-star-fill ' + style.grayStar} key={key} />,
-        );
+        starArray.push(<i className={'bi-star-fill ' + style.grayStar} key={key} />);
       }
       rating = rating - 1;
     }
@@ -39,52 +35,60 @@ const Review: React.FC<IProps> = (props) => {
   return (
     <div key={review._id} className={style.review}>
       <div className={style.reviewContent}>
-        <div className={style.authorInfo}>
-          <FormattedMessage id='ReviewsPage.reviewItemTitle' />
-          <Link to={`/product/${product._id}`}>
-            <div className={style.productName}>{product.productName}</div>
-          </Link>
-          <FormattedMessage id='ReviewsPage.reviewItemTitleConnectingWord' />
-          <span><FormattedDate value={review.createdAt} /></span>
-          <div className={style.ratingHeader}>
-            {renderStars(review.productRating)}
+        <div className="d-flex justify-content-between align-items-center">
+          <div className={style.authorInfo}>
+            <FormattedMessage id="ReviewsPage.reviewItemTitle" />
+            <div className="w-100 d-block">
+              <Link to={`/product/${product._id}`}>
+                <div className={'w-100 d-block text-truncate ' + style.productName}>
+                  {product.productName}
+                </div>
+              </Link>
+            </div>
+            <div className="w-100">
+              <FormattedMessage id="ReviewsPage.reviewItemTitleConnectingWord" />
+              <span className="ms-1">
+                <FormattedDate value={review.createdAt} />
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <Button variant="primary" onClick={() => setIsEditing(true)}>
+              <FormattedMessage id="ReviewsPage.editReviewLabel" />
+            </Button>
           </div>
         </div>
 
-        {review.productReview
-          ?
-          <div className={style.reviewBody}>
-            <FormattedMessage id='ReviewsPage.reviewPrefix' /> {review.productReview}
-          </div>
-          : null
-        }
-        {review.reviewPictures
-          ?
+        <div className={style.reviewBody}>
+          <div>{renderStars(review.productRating)}</div>
+          {review.productReview && (
+            <div>
+              <FormattedMessage id="ReviewsPage.reviewPrefix" /> {review.productReview}
+            </div>
+          )}
+        </div>
+
+        {review.reviewPictures ? (
           <div className={style.reviewImages}>
-            {review.reviewPictures.map((img: string) => <img src={img} key={img} />)}
+            {review.reviewPictures.map((img: string) => (
+              <img src={img} key={img} />
+            ))}
           </div>
-          : null
-        }
-        <div className={style.footerContent}>
-          <Button variant='primary' className={style.menuButton} onClick={() => setIsEditing(true)}>
-            <FormattedMessage id='ReviewsPage.editReviewLabel' />
-          </Button>
-        </div>
-
+        ) : null}
       </div>
 
-      {isEditing
-        ? <ReviewProduct
+      {isEditing ? (
+        <ReviewProduct
           review={review}
           handleClose={() => {
             setIsEditing(false);
             props.handleReload();
           }}
         />
-        : null
-      }
-    </div >
-  )
+      ) : null}
+    </div>
+  );
 };
 
 export default Review;

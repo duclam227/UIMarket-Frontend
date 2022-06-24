@@ -55,7 +55,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 2rem 3rem;
+  padding: 1rem 1rem;
 
   width: 100%;
 }
@@ -116,6 +116,8 @@
   align-items: flex-end;
   flex-direction: row;
   gap: 5px;
+  flex-wrap: wrap;
+  max-width: 80%;
 
   color: var(--gray-600);
 }
@@ -139,25 +141,29 @@
   color: #e9ecef;
 }
 
-.ratingHeader {
-  margin-left: auto;
-}
-
 .reviewBody {
   padding: 1rem 0;
 }
 
 .reviewImages {
-  max-height: 100px;
+  max-height: 240px;
   width: 100%;
+  height: auto;
 
   display: flex;
   flex-direction: row;
   gap: 2px;
 
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
-.img {
+.reviewImages img {
   max-width: 14rem;
+  object-fit: cover;
+}
+
+@media (min-width: 768px) {
+  .review {
+    padding: 2rem 3rem;
+  }
 }

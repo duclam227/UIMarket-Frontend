@@ -33,13 +33,13 @@ const ReviewsPage: FC<IProps> = props => {
   const [isReload, setIsReload] = useState<boolean>(false);
   const [reviews, setReviews] = useState<Array<any> | null>(null);
 
-
   useEffect(() => {
     setIsLoading(true);
     reviewAPI
       .getReviewsOfUserByPage(1, ITEMS_PER_PAGE)
       .then((res: any) => {
         const { reviews } = res;
+        console.log(reviews);
         setReviews([...reviews]);
         setIsLoading(false);
       })
@@ -85,11 +85,9 @@ const ReviewsPage: FC<IProps> = props => {
                     id="ReviewsPage.noReviewsMessage"
                     defaultMessage="Looks like you haven't bought anything."
                   ></FormattedMessage>
-                  <Link to='/products'>
+                  <Link to="/products">
                     <Button className="m-4">
-                      <FormattedMessage
-                        id="PurchaseHistoryPage.continueShoppingMessage"
-                      ></FormattedMessage>
+                      <FormattedMessage id="PurchaseHistoryPage.continueShoppingMessage"></FormattedMessage>
                     </Button>
                   </Link>
                 </div>
