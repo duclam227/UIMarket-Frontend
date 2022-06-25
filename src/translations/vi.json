@@ -475,6 +475,7 @@
   "Auth.invalidGoogleId": "Hiện tại không thể đăng nhập Google.",
   "Answer.notPriviledged": "Bạn không thể xóa câu trả lời này.",
   "Answer.actionFailed": "Xin hãy thử lại sau.",
+  "Answer.validationFailed": "Nội dung câu trả lời chưa hợp lệ.",
   "Answer.answerDeleted": "Câu trả lời đã bị xóa.",
   "Cart.actionFailed": "Xin vui lòng thử lại sau.",
   "Cart.invalidProduct": "Sản phẩm không tồn tại.",

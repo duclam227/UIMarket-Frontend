@@ -17,6 +17,7 @@ export const errors = {
 		'missing-req-body': 'actionFailed',
 		'already-gone': 'answerDeleted',
 		'action-failed': 'actionFailed',
+		'validation-failed': 'validationFailed',
 	},
 	cart: {
 		'missing-req-body': 'actionFailed',

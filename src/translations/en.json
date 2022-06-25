@@ -475,6 +475,7 @@
   "Auth.invalidGoogleId": "Can't log in to Google at the moment.",
   "Answer.notPriviledged": "You can't delete this answer.",
   "Answer.actionFailed": "Can't access answer.",
+  "Answer.validationFailed": "Your answer might be too short",
   "Answer.answerDeleted": "This answer is already deleted.",
   "Cart.actionFailed": "Please try again later.",
   "Cart.invalidProduct": "Invalid product.",
