@@ -2,6 +2,7 @@ export const errors = {
 	auth: {
 		'account-inactivated': 'accountInactive',
 		'email-existed': 'emailExisted',
+		'key-duplicated': 'emailExisted',
 		'invalid-authentication': 'invalidAuthentication',
 		'missing-req-body': 'actionFailed',
 		'validation-failed': 'actionFailed',
@@ -16,6 +17,7 @@ export const errors = {
 		'missing-req-body': 'actionFailed',
 		'already-gone': 'answerDeleted',
 		'action-failed': 'actionFailed',
+		'validation-failed': 'validationFailed',
 	},
 	cart: {
 		'missing-req-body': 'actionFailed',

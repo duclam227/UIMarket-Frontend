@@ -11,7 +11,7 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import logo from './logo.png';
 
-import { BsDownload } from 'react-icons/bs';
+import { BsDownload, BsCheck, BsX } from 'react-icons/bs';
 
 import PageWithSideNav from '../../components/common/OneToFivePage/OneToFivePage';
 import style from './ViewLicensePage.module.css';
@@ -42,7 +42,6 @@ const ViewLicensePage = () => {
     const getLicense = async () => {
       try {
         const res: any = await licenseAPI.getLicenseById(params.id!);
-        console.log(res);
         setLicenseInfo({
           _id: res._id,
           shopName: res.shop.shopName,
@@ -62,7 +61,7 @@ const ViewLicensePage = () => {
 
   const renderLicense = () => (
     <div
-      className={`mt-3 d-flex justify-content-between align-items-start ${style.licenseWrapper}`}
+      className={`my-3 d-flex justify-content-evenly align-items-start ${style.licenseWrapper}`}
     >
       <div className={`w-75`}>
         <div className={`${style.gradientTopBorder}`}></div>
@@ -71,7 +70,7 @@ const ViewLicensePage = () => {
           <LogoIcon className={style.logo} />
           <div id="license">
             <table className={`${style.table}`}>
-              <tbody>
+              <tbody className={`${style.tbody}`}>
                 <tr className={`${style.tr}`}>
                   <th className={`text-primary ${style.th}`}>License ID: </th>
                   <td className={`${style.td}`}>{licenseInfo?._id}</td>
@@ -122,31 +121,57 @@ const ViewLicensePage = () => {
               </p>
               <strong>Can be used for</strong>
               <ul className={`${style.allowedUnorderedList}`}>
-                <li className={`${style.allowedListItem}`}>
+                <li className={`${style.allowedListItem} d-flex align-items-center`}>
+                  <span>
+                    <BsCheck size={30} />
+                  </span>
                   Physical or digital end products for sale
                 </li>
-                <li className={`${style.allowedListItem}`}>
+                <li className={`${style.allowedListItem} d-flex align-items-center`}>
+                  <span>
+                    <BsCheck size={30} />
+                  </span>
                   Unlimited physical advertisements for local & global markets
                 </li>
-                <li className={`${style.allowedListItem}`}>
+                <li className={`${style.allowedListItem} d-flex align-items-center`}>
+                  <span>
+                    <BsCheck size={30} />
+                  </span>
                   Digital paid advertisements with unlimited impressions
                 </li>
-                <li className={`${style.allowedListItem}`}>Broadcast and streaming</li>
+                <li className={`${style.allowedListItem} d-flex align-items-center`}>
+                  <span>
+                    <BsCheck size={30} />
+                  </span>
+                  Broadcast and streaming
+                </li>
               </ul>
               <strong>What you cannot do</strong>
               <ul className={`${style.notAllowedUnorderedList}`}>
-                <li className={`${style.notAllowedListItem}`}>
+                <li className={`${style.notAllowedListItem} d-flex align-items-center`}>
+                  <span>
+                    <BsX size={30} />
+                  </span>
                   Resell or sub-license the Asset in a way that is directly competitive
                   with it
                 </li>
-                <li className={`${style.notAllowedListItem}`}>
+                <li className={`${style.notAllowedListItem} d-flex align-items-center`}>
+                  <span>
+                    <BsX size={30} />
+                  </span>
                   Resell any modification of the Asset on its own
                 </li>
-                <li className={`${style.notAllowedListItem}`}>
+                <li className={`${style.notAllowedListItem} d-flex align-items-center`}>
+                  <span>
+                    <BsX size={30} />
+                  </span>
                   Make the Asset public or share the Asset in any way that allows others
-                  to download, extract, or redistribute it as a standalone filet
+                  to download, extract, or redistribute it as a standalone file
                 </li>
-                <li className={`${style.notAllowedListItem}`}>
+                <li className={`${style.notAllowedListItem} d-flex align-items-center`}>
+                  <span>
+                    <BsX size={30} />
+                  </span>
                   Falsely represent authorship and/or ownership of the Asset
                 </li>
               </ul>
@@ -154,8 +179,9 @@ const ViewLicensePage = () => {
           </div>
         </div>
       </div>
+
       {/* Download button */}
-      <span>
+      <div>
         <Button
           className={`px-5 py-2 d-flex align-items-center`}
           onClick={() => createPDFFile()}
@@ -163,7 +189,7 @@ const ViewLicensePage = () => {
           <span className={`me-2 text-nowrap`}>{downloadButtonLabel}</span>
           <BsDownload />
         </Button>
-      </span>
+      </div>
     </div>
   );
 

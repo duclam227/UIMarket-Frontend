@@ -30,7 +30,11 @@ class Put {
 			},
 		};
 
-		return axiosClient.put(`${QUESTIONS_ENDPOINT}/${questionId}/${answerId}`, null, config);
+		return axiosClient.put(
+			`${QUESTIONS_ENDPOINT}/choose/${questionId}/${answerId}`,
+			null,
+			config,
+		);
 	};
 }
 

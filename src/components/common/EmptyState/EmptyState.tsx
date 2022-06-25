@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 
 interface EmptyStateProps {
-  img: string; //none || image name in asset folder
+  img: any; //none || image name in asset folder
   messageId?: string;
   btn: boolean;
   btnMessageId?: string;
@@ -23,7 +23,7 @@ interface EmptyStateProps {
 @btnDestination Destination URL
 */
 const EmptyState: FunctionComponent<EmptyStateProps> = props => {
-  const getIllustration = (illu: string) => {
+  const getIllustration = (illu: any) => {
     if (illu === 'error-not-found') {
       return <img src={NotFoundIllus} className={styles.illustration} alt="" />;
     }
@@ -33,10 +33,10 @@ const EmptyState: FunctionComponent<EmptyStateProps> = props => {
     if (illu === 'empty-cart') {
       return <img src={EmptyCart} className={styles.illustration} alt="" />;
     }
-    return <></>;
+    return <img src={illu} className={styles.illustration} alt="" />;
   };
 
-  const showIllustration = (illu: string) => {
+  const showIllustration = (illu: any) => {
     return <>{illu === 'none' ? <></> : getIllustration(illu)}</>;
   };
 

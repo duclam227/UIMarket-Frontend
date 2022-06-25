@@ -36,7 +36,7 @@ interface IProps {
   intl: IntlShape;
 }
 
-const EditPersonalInfoPage: FC<IProps> = (props) => {
+const EditPersonalInfoPage: FC<IProps> = props => {
   const { intl } = props;
 
   const pageTitle = (
@@ -52,16 +52,10 @@ const EditPersonalInfoPage: FC<IProps> = (props) => {
     />
   );
   const emailLabel = (
-    <FormattedMessage
-      id="EditPersonalInfoPage.emailLabel"
-      defaultMessage="Email"
-    />
+    <FormattedMessage id="EditPersonalInfoPage.emailLabel" defaultMessage="Email" />
   );
   const dobLabel = (
-    <FormattedMessage
-      id="EditPersonalInfoPage.dobLabel"
-      defaultMessage="Birthday"
-    />
+    <FormattedMessage id="EditPersonalInfoPage.dobLabel" defaultMessage="Birthday" />
   );
   const phoneLabel = (
     <FormattedMessage
@@ -70,10 +64,7 @@ const EditPersonalInfoPage: FC<IProps> = (props) => {
     />
   );
   const editBtnLabel = (
-    <FormattedMessage
-      id="EditPersonalInfoPage.editBtnLabel"
-      defaultMessage="Edit"
-    />
+    <FormattedMessage id="EditPersonalInfoPage.editBtnLabel" defaultMessage="Edit" />
   );
   const saveBtnLabel = (
     <FormattedMessage
@@ -82,16 +73,11 @@ const EditPersonalInfoPage: FC<IProps> = (props) => {
     />
   );
   const cancelBtnLabel = (
-    <FormattedMessage
-      id="EditPersonalInfoPage.cancelBtnLabel"
-      defaultMessage="Cancel"
-    />
+    <FormattedMessage id="EditPersonalInfoPage.cancelBtnLabel" defaultMessage="Cancel" />
   );
   //Function to format Date object into DD/MM/YYYY
   const dateToDDMMYYYY = (date: Date | null) =>
-    date
-      ? `${date.getDate()}/${date.getUTCMonth() + 1}/${date.getFullYear()}`
-      : '';
+    date ? `${date.getDate()}/${date.getUTCMonth() + 1}/${date.getFullYear()}` : '';
   //Function to format Date object into YYYY-MM-DD
   const dateToYYYYMMDD = (date: Date | null) => {
     if (date && isNaN(date.getTime())) {
@@ -117,7 +103,8 @@ const EditPersonalInfoPage: FC<IProps> = (props) => {
       .label('Email'),
     dob: Joi.date().iso().label('Birthday'),
     phone: Joi.string()
-      .max(10)
+      .allow(null, '')
+      .max(11)
       .pattern(/^[0-9]+$/, { name: 'phone numbers' }) // phone number pattern
       .label('Phone number'),
   });
@@ -155,13 +142,12 @@ const EditPersonalInfoPage: FC<IProps> = (props) => {
         reset({
           email: user.customerEmail,
           dob: date,
-          phone: user.customerPhone
-            ? user.customerPhone
-            : 'No phone number added yet',
+          phone: user.customerPhone ? user.customerPhone : '',
         });
       } catch (error) {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.profile[errorMsg as keyof typeof errorCodes.profile];
+        const errorCode: any =
+          errorCodes.profile[errorMsg as keyof typeof errorCodes.profile];
         toast.error(intl.formatMessage({ id: `Profile.${errorCode}` }));
       }
     };
@@ -177,7 +163,7 @@ const EditPersonalInfoPage: FC<IProps> = (props) => {
 
   const handleEnableEditMode = () => {
     setIsEditMode(true);
-    reset({ phone: '' });
+    // reset({ phone: '' });
   };
 
   const handleCancelEdit = () => {
@@ -193,8 +179,12 @@ const EditPersonalInfoPage: FC<IProps> = (props) => {
       setIsSavingChanges(false);
       syncChangesToReduxStore();
       setOriginalInfo({ ...data });
+      toast.success(
+        intl.formatMessage({ id: 'ResetForgetPasswordForm.actionCompleted' }),
+      );
     } catch (e) {
       reset({ ...originalInfo });
+      toast.error(intl.formatMessage({ id: 'AccountVerifiedPage.failedTitle' }));
       console.log('Update user info error: ', e);
       setIsSavingChanges(false);
     }
@@ -211,10 +201,7 @@ const EditPersonalInfoPage: FC<IProps> = (props) => {
       </Row>
       {/* Form */}
       <Row className={`mt-2`}>
-        <Form
-          className={`mx-auto p-0`}
-          onSubmit={handleSubmit(handleSaveChanges)}
-        >
+        <Form className={`mx-auto p-0`} onSubmit={handleSubmit(handleSaveChanges)}>
           <div className={`border`}>
             <Form.Group
               as={Row}
@@ -236,6 +223,7 @@ const EditPersonalInfoPage: FC<IProps> = (props) => {
                   plaintext={!isEditMode}
                   readOnly={!isEditMode}
                   {...register('email')}
+                  disabled={true}
                 />
               </Col>
               {errors.email && (
@@ -245,25 +233,9 @@ const EditPersonalInfoPage: FC<IProps> = (props) => {
                   </Alert>
                 </Col>
               )}
-              {!isEditMode && (
-                <Form.Label
-                  className={`${style.textUnderlineHover} text-primary d-md-flex justify-content-end text-nowrap`}
-                  column
-                  sm={12}
-                  md={{ span: 2, offset: 3 }}
-                  lg={{ span: 2, offset: 3 }}
-                  onClick={handleEnableEditMode}
-                >
-                  {editBtnLabel}
-                </Form.Label>
-              )}
             </Form.Group>
 
-            <Form.Group
-              as={Row}
-              className={`m-0 ${style.infoItem} py-1`}
-              controlId="dob"
-            >
+            <Form.Group as={Row} className={`m-0 ${style.infoItem} py-1`} controlId="dob">
               <Form.Label
                 className={`fw-bolder pe-0 d-flex align-items-center`}
                 column
@@ -328,6 +300,7 @@ const EditPersonalInfoPage: FC<IProps> = (props) => {
               <Col sm={12} md={4} lg={5} className="d-flex align-items-center">
                 <Form.Control
                   type="text"
+                  placeholder='No phone number added yet'
                   plaintext={!isEditMode}
                   readOnly={!isEditMode}
                   {...register('phone')}

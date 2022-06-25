@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Spinner } from 'react-bootstrap';
+import { Button, Spinner, Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaPen } from 'react-icons/fa';
 import { BsFlag, BsExclamationOctagon } from 'react-icons/bs';
@@ -29,14 +29,15 @@ import SectionSeller from './SectionSeller';
 const ITEMS_PER_PAGE = 10;
 
 interface IProps {
-  intl: IntlShape
+  intl: IntlShape;
 }
 
-const ViewProductPage: React.FC<IProps> = (props) => {
+const ViewProductPage: React.FC<IProps> = props => {
   const { intl } = props;
   const { id } = useParams();
 
   const currentUser = useSelector((state: State) => state.auth.user);
+  const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [product, setProduct] = useState<product | null>(null);
@@ -45,15 +46,18 @@ const ViewProductPage: React.FC<IProps> = (props) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
   const [isBought, setIsBought] = useState<boolean | null>(null);
+  const [isActive, setIsActive] = useState<boolean>(true);
+  const [isDeleted, setIsDeleted] = useState<boolean>(false);
 
-  const isCurrentUserSeller = currentUser?.customerEmail === product?.shopId.customerEmail;
+  const isCurrentUserSeller =
+    currentUser?.customerEmail === product?.shopId.customerEmail;
 
   const handleShowReportModal = () => {
     setShowReportModal(true);
   };
   const handleCloseReportModal = () => {
     setShowReportModal(false);
-  }
+  };
 
   const goToPage = (pageNumber: number) => {
     setIsLoading(true);
@@ -81,10 +85,13 @@ const ViewProductPage: React.FC<IProps> = (props) => {
         console.log(res);
         setProduct(res.product);
         setIsBought(res.isBought);
+        setIsActive(res.product.productStatus === 1);
+        setIsDeleted(res.product.deleteFlagged === 1);
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
+        const errorCode: any =
+          errorCodes.product[errorMsg as keyof typeof errorCodes.product];
         toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
       });
 
@@ -96,10 +103,15 @@ const ViewProductPage: React.FC<IProps> = (props) => {
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.review[errorMsg as keyof typeof errorCodes.review];
+        const errorCode: any =
+          errorCodes.review[errorMsg as keyof typeof errorCodes.review];
         toast.error(intl.formatMessage({ id: `Review.${errorCode}` }));
       });
   }, [id]);
+
+  const handleGoBack = () => {
+    navigate(-1);
+  }
 
   return isLoading || !product ? (
     <PageWithNavbar>
@@ -109,15 +121,14 @@ const ViewProductPage: React.FC<IProps> = (props) => {
     </PageWithNavbar>
   ) : (
     <PageWithNavbar>
-      {isCurrentUserSeller
-        ? <div className={style.centerWrapper}>
-          <Link to='edit' className={style.userManagePanel}>
-            <FormattedMessage id='ViewProductPage.ownerMessage' />
+      {isCurrentUserSeller ? (
+        <div className={style.centerWrapper}>
+          <Link to="edit" className={style.userManagePanel}>
+            <FormattedMessage id="ViewProductPage.ownerMessage" />
             <FaPen />
           </Link>
         </div>
-        : null
-      }
+      ) : null}
 
       <div className={style.wrapper}>
         <div className={style.content}>
@@ -142,22 +153,37 @@ const ViewProductPage: React.FC<IProps> = (props) => {
             currentUser={currentUser!}
             onShowReportModal={handleShowReportModal}
             isBought={isBought}
+            isActive={isActive}
           />
-          <SectionSeller
-            product={product!}
-            currentUser={currentUser!}
-          />
-          {
-            isCurrentUserSeller
-              ? null
-              :
-              <div className={style.reportPanel} onClick={() => handleShowReportModal!()}>
-                <BsFlag />
-                <FormattedMessage id='ViewProductPage.reportProduct' />
-              </div>
-          }
+          <SectionSeller product={product!} currentUser={currentUser!} />
+          {(!isCurrentUserSeller && isActive) ? (
+            <div className={style.reportPanel} onClick={() => handleShowReportModal!()}>
+              <BsFlag />
+              <FormattedMessage id="ViewProductPage.reportProduct" />
+            </div>
+          ) : null}
         </div>
       </div>
+      <Modal show={isDeleted} onHide={handleGoBack}>
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <FormattedMessage id="ViewProductPage.deleteModalTitle" />
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div>
+            <FormattedMessage id="ViewProductPage.deleteModalBody1" />
+          </div>
+          <div>
+            <FormattedMessage id="ViewProductPage.deleteModalBody2" />
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary" onClick={handleGoBack}>
+            <FormattedMessage id="ViewProductPage.deleteModalBackBtnLabel" />
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </PageWithNavbar>
   );
 };

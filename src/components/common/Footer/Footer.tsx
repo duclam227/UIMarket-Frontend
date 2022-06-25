@@ -19,7 +19,7 @@ const Footer = () => {
       <LogoIcon className={style.logo} />
       <section className={style.list}>
         <Link to='/about'><FormattedMessage id='Footer.about' /></Link>
-        <Link to='/signup'><FormattedMessage id='Footer.becomeAnArtist' /></Link>
+        <Link to='/products/add'><FormattedMessage id='Footer.becomeAnArtist' /></Link>
         <Link to='/contact'><FormattedMessage id='Footer.contactUs' /></Link>
         {currentUser && currentUser.isAdmin
           ? <Link to='/admin'><FormattedMessage id='Footer.adminDashboard' /></Link>

@@ -21,7 +21,7 @@ import style from './LandingPage.module.css';
 import classNames from 'classnames';
 import { useIntersectionObserver } from '../../app/util/customHooks';
 
-const VIEW_THRESHOLD = 0.7;
+const VIEW_THRESHOLD = 0.4;
 
 interface IProps {
   intl: IntlShape;
@@ -116,7 +116,7 @@ const LandingPage: React.FC<IProps> = props => {
           products={themeProducts}
           title={themeProductsTitle}
           subtitle={themeProductsSubtitle}
-          link="/products/category/627bc2f599bc9a68d1105497"
+          link="/products/category/62a45a3951ca7e1703f0b70b"
         />
       </div>
       <div ref={sectionExploreForumRef} className={style.hide}>

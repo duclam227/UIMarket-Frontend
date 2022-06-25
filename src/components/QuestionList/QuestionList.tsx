@@ -81,7 +81,7 @@ const QuestionList: FC<Props> = (props) => {
             <Link to={qLink} className={style.title}>{q.questionTitle}</Link>
             <div className={style.mainFooter}>
               <div className={style.tagsContainer}>{renderTags(q.questionTag)}</div>
-              <div className={style.authorContainer}>{renderAuthor(q.userId)}</div>
+              {renderAuthor(q.userId)}
             </div>
           </div>
         </div>

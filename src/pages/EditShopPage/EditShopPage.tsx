@@ -132,28 +132,32 @@ const EditShopPage: FunctionComponent<IProps> = props => {
     if (!input.files) return;
     const selectedFile = input.files[0];
     const prevBanner = shopInfo.shopBanner;
-    try {
-      setIsUploading(true);
-      const res: any = await s3API.getSignedUrl('banner');
-      const { url: signedUploadUrl } = res;
-      const imageUrl = signedUploadUrl.split('?')[0];
+    if (selectedFile.type.includes('image')) {
+      try {
+        setIsUploading(true);
+        const res: any = await s3API.getSignedUrl('banner');
+        const { url: signedUploadUrl } = res;
+        const imageUrl = signedUploadUrl.split('?')[0];
 
-      await s3API.uploadToS3Bucket(signedUploadUrl, selectedFile, {
-        //To show progress bar
-        onUploadProgress: (progressEvent: any) => {
-          setUploadProgress((progressEvent.loaded / progressEvent.total) * 100);
-        },
-      });
-      setShopInfo({ ...shopInfo, shopBanner: imageUrl });
-      await shopAPI.updateShop({ ...shopInfo, shopBanner: imageUrl });
-      setIsUploading(false);
-      syncChangesToReduxStore();
-      toast('Upload banner successfully');
-    } catch (error) {
-      setIsUploading(false);
-      setShopInfo({ ...shopInfo, shopBanner: prevBanner });
-      console.log('Upload image handler error:', error);
-      toast('Something is wrong. Please try again later');
+        await s3API.uploadToS3Bucket(signedUploadUrl, selectedFile, {
+          //To show progress bar
+          onUploadProgress: (progressEvent: any) => {
+            setUploadProgress((progressEvent.loaded / progressEvent.total) * 100);
+          },
+        });
+        setShopInfo({ ...shopInfo, shopBanner: imageUrl });
+        await shopAPI.updateShop({ ...shopInfo, shopBanner: imageUrl });
+        setIsUploading(false);
+        syncChangesToReduxStore();
+        toast('Upload banner successfully');
+      } catch (error) {
+        setIsUploading(false);
+        setShopInfo({ ...shopInfo, shopBanner: prevBanner });
+        console.log('Upload image handler error:', error);
+        toast('Something is wrong. Please try again later');
+      }
+    } else {
+      toast('Please upload an image file.');
     }
   };
 
@@ -172,29 +176,13 @@ const EditShopPage: FunctionComponent<IProps> = props => {
   return (
     <OneToFivePage>
       <Container className={styles.mainContainer}>
-        {isLoading
-          ? <div className={styles.loadingContainer}> <Spinner animation='border' /></div>
-          :
+        {isLoading ? (
+          <div className={styles.loadingContainer}>
+            {' '}
+            <Spinner animation="border" />
+          </div>
+        ) : (
           <form onSubmit={handleSubmit(onSubmit)}>
-            {/*no cover*/}
-            <div
-              className={
-                'w-100 mt-4 p-4 text-center d-flex align-items-center justify-content-center ' +
-                styles.shopCover
-              }
-              onClick={() => {
-                imageInput.current?.click();
-              }}
-            >
-              <FormattedMessage
-                id="EditShopPage.AddShopBanner"
-                defaultMessage={
-                  'Update your cover to showcase your business. Recommended size @ 1320 x 320'
-                }
-              ></FormattedMessage>
-
-              {/*with cover*/}
-            </div>
             <Form>
               <Form.Control
                 className={`d-none`}
@@ -219,6 +207,15 @@ const EditShopPage: FunctionComponent<IProps> = props => {
                   }}
                   alt="banner"
                 />
+                <button
+                  type="button"
+                  className="btn btn-light position-absolute bottom-0 end-0 m-3"
+                  onClick={() => {
+                    imageInput.current?.click();
+                  }}
+                >
+                  <i className="bi-image"></i>Edit cover
+                </button>
               </div>
 
               <div className={styles.avatarWrapper}>
@@ -334,7 +331,12 @@ const EditShopPage: FunctionComponent<IProps> = props => {
                   ></FormattedMessage>
                 </Button>
                 {/* </Link> */}
-                <Button variant="primary" className="m-2" type="submit" disabled={!isDirty}>
+                <Button
+                  variant="primary"
+                  className="m-2"
+                  type="submit"
+                  disabled={!isDirty}
+                >
                   <FormattedMessage
                     id="EditShopPage.SaveBtnLabel"
                     defaultMessage={'Save changes'}
@@ -366,7 +368,7 @@ const EditShopPage: FunctionComponent<IProps> = props => {
               </Modal.Footer>
             </Modal>
           </form>
-        }
+        )}
       </Container>
     </OneToFivePage>
   );

@@ -32,10 +32,7 @@ const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
 
   //Page title
   const title = (
-    <FormattedMessage
-      id="RecoverPasswordForm.title"
-      defaultMessage="Forgot Password"
-    />
+    <FormattedMessage id="RecoverPasswordForm.title" defaultMessage="Forgot Password" />
   );
 
   //Email form
@@ -69,6 +66,12 @@ const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
       defaultMessage="We've just sent a link to reset your password to"
     />
   );
+  const pleaseWaitMessage = (
+    <FormattedMessage
+      id="RecoverPasswordForm.pleaseWaitMessage"
+      defaultMessage="We've just sent a link to reset your password to"
+    />
+  );
   const resendBtnLabel = (
     <FormattedMessage
       id="RecoverPasswordForm.resendBtnLabel"
@@ -89,7 +92,7 @@ const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
     },
   });
 
-  const [submittedRecoverCredentials, setSubmittedRecoverCredenttials] =
+  const [submittedRecoverCredentials, setSubmittedRecoverCredentials] =
     useState<RecoverCredentials>({
       email: '',
     });
@@ -102,23 +105,27 @@ const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
     setResendCountdown(resendCountdown - 1);
   };
 
-  const onSubmitEmail: SubmitHandler<RecoverCredentials> = data => {
-    setSubmittedRecoverCredenttials(data);
-    sendRecoverPasswordRequest();
-  };
-  const sendRecoverPasswordRequest = async () => {
-    setResendCountdown(60);
+  const onSubmitEmail: SubmitHandler<RecoverCredentials> = async data => {
     try {
-      await authAPI.sendRecoverPasswordRequest(submittedRecoverCredentials);
+      setSubmittedRecoverCredentials(data);
+      await sendRecoverPasswordRequest(data);
     } catch (error) {
       console.log(error);
     }
   };
+  const sendRecoverPasswordRequest = async (data: RecoverCredentials) => {
+    setResendCountdown(60);
+    try {
+      await authAPI.sendRecoverPasswordRequest(data);
+    } catch (error) {
+      throw error;
+    }
+  };
   return (
-    <Container className={`pt-5`}>
+    <Container className={`pt-2`}>
       <Col sm={{ span: 7, offset: 3 }}>
         {/* Navigate to Sign In */}
-        <Row className="mt-5">
+        <Row className="mt-1">
           <Link
             to="/login"
             className="d-flex align-items-center"
@@ -156,19 +163,19 @@ const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
           </Form>
         ) : (
           // Resend link UI
-          <Row
-            className={'flex-column justify-content-center align-items-center'}
-          >
+          <Row className={'flex-column justify-content-center align-items-center'}>
             <img src={NoMessage} alt="Check email" height={250}></img>
             <span className="text-center">{resetEmailMessage}</span>
-            <p className={`text-center fw-bold text-primary`}>
+            <span className={`text-center fw-bold text-primary`}>
               {submittedRecoverCredentials.email}
-            </p>
-            <span className={`text-center`}>
+            </span>
+            <span className="text-center">{pleaseWaitMessage}</span>
+
+            <span className={`text-center mt-3`}>
               <Button
                 variant={!!resendCountdown ? 'secondary' : 'primary'}
                 disabled={!!resendCountdown}
-                onClick={sendRecoverPasswordRequest}
+                onClick={e => sendRecoverPasswordRequest(submittedRecoverCredentials)}
               >
                 {resendBtnLabel}
                 {!!resendCountdown ? ` - ${resendCountdown}s` : ''}

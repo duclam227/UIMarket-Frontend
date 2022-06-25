@@ -8,7 +8,7 @@ import { joiResolver } from '@hookform/resolvers/joi';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Link } from 'react-router-dom';
-import { GoogleLogin } from 'react-google-login';
+import { GoogleLogin, googleLogout, GoogleOAuthProvider } from '@react-oauth/google';
 import { errors as errorCodes } from '../../app/util/errors';
 import { authCredentials, customer } from '../../app/util/interfaces';
 import { logIn, logInWithGoogle, loginSuccess, setError } from '../../redux';
@@ -63,9 +63,9 @@ const LoginForm: FC<loginFormProps> = props => {
   });
 
   //password
-  const loginFormPasswordLabel = (
-    <FormattedMessage id="LoginForm.passwordLabel" defaultMessage="Password" />
-  );
+  const loginFormPasswordLabel = intl.formatMessage({
+    id: 'LoginForm.passwordLabel',
+  });
   const loginFormPasswordPlaceholder = intl.formatMessage({
     id: 'LoginForm.passwordPlaceholder',
     defaultMessage: 'some-secret-password',
@@ -78,8 +78,20 @@ const LoginForm: FC<loginFormProps> = props => {
       .email({ tlds: { allow: false } })
       //tlds: Top-Level Domain Something, set this to false because it said that built-in TLD is disabled, idk :\
       .required()
+      .messages({
+        "string.base": intl.formatMessage({ id: "FormValidation.missingEmail" }),
+        "string.empty": intl.formatMessage({ id: "FormValidation.requiredEmail" }),
+        "string.email": intl.formatMessage({ id: "FormValidation.missingEmail" }),
+        "any.required": intl.formatMessage({ id: "FormValidation.requiredEmail" })
+      })
       .label('Email'),
-    customerPassword: Joi.string().required().label('Password').min(6), //Remember to add min(8) rule
+    customerPassword: Joi.string().required().label('Password').min(6)
+      .messages({
+        "string.base": intl.formatMessage({ id: "FormValidation.requiredPassword" }),
+        "string.empty": intl.formatMessage({ id: "FormValidation.requiredPassword" }),
+        "string.min": intl.formatMessage({ id: "FormValidation.minLengthPassword" }, { min: 6 }),
+        "any.required": intl.formatMessage({ id: "FormValidation.requiredPassword" })
+      }),
   });
 
   const {
@@ -90,12 +102,13 @@ const LoginForm: FC<loginFormProps> = props => {
     getFieldState,
   } = useForm<authCredentials>({
     resolver: joiResolver(schema),
-    mode: 'onTouched',
+    mode: 'onBlur',
     defaultValues: {
       customerEmail: '',
       customerPassword: '',
     },
   });
+  console.log(errors);
 
   const handleLogin: SubmitHandler<authCredentials> = async data => {
     try {
@@ -120,14 +133,26 @@ const LoginForm: FC<loginFormProps> = props => {
     }
   };
 
-  const handleGoogleLogin = (data: any) => {
-    const { tokenId } = data;
+  const handleGoogleLogin = async (data: any) => {
+    const { credential } = data;
     try {
-      dispatch(logInWithGoogle(tokenId));
-    } catch (error) {
-      const errorMsg = getErrorMessage(error);
-      const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
-      toast.error(intl.formatMessage({ id: `Auth.${errorCode}` }));
+      //dispatch(logInWithGoogle(credential));
+
+      const res = (await authAPI.logInWithGoogle(credential)) as any;
+      const { user, accessToken } = res;
+      const customer: customer = { ...user };
+      localStorage.setItem('authToken', accessToken);
+      dispatch(loginSuccess({ ...customer }));
+
+    } catch (error: any) {
+      if (error.response && error.response.data.msg === 'account-banned') {
+        navigate(`/account-banned`);
+      }
+      else {
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.auth[errorMsg as keyof typeof errorCodes.auth];
+        toast.error(intl.formatMessage({ id: `Auth.${errorCode}` }));
+      }
     }
   };
 
@@ -143,16 +168,14 @@ const LoginForm: FC<loginFormProps> = props => {
         <h2 className={style.title}>{title}</h2>
         <div className={style.otherIdpButtonRow}>
           <GoogleLogin
-            clientId={CLIENT_ID!}
-            buttonText={continueWithGoogleLabel}
+            // buttonText={continueWithGoogleLabel}
+            theme="outline"
             onSuccess={(res: any) => {
               console.log(res);
               handleGoogleLogin(res);
             }}
-            onFailure={(res: any) =>
-              toast.error(intl.formatMessage({ id: 'Auth.actionFailed' }))
-            }
-            cookiePolicy={'single_host_origin'}
+            onError={() => toast.error(intl.formatMessage({ id: 'Auth.actionFailed' }))}
+            allowed_parent_origin={['https://deex.tk', 'https://www.deex.tk']}
           />
         </div>
         <div className={style.divider}>
@@ -167,25 +190,20 @@ const LoginForm: FC<loginFormProps> = props => {
             control={control}
             className={`mb-3`}
           />
-          <Form.Group className="mb-3" controlId="customerPassword">
-            <Form.Label className={style.label}>{loginFormPasswordLabel}</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder={loginFormPasswordPlaceholder}
-              isInvalid={getFieldState('customerPassword').error ? true : false}
-              {...register('customerPassword')}
-            />
-            <Form.Text>
-              <Link to="/recover" className={style.forgetPasswordText}>
-                {forgotPasswordMessage}
-              </Link>
-            </Form.Text>
-            {errors.customerPassword && (
-              <Alert variant="danger" className="mt-1">
-                {errors.customerPassword.message}
-              </Alert>
-            )}
-          </Form.Group>
+
+          <FormInput
+            label={loginFormPasswordLabel}
+            placeholder={loginFormPasswordPlaceholder}
+            name="customerPassword"
+            control={control}
+            className={`mb-3`}
+            type="password"
+          />
+          <Form.Text>
+            <Link to="/recover" className={style.forgetPasswordText}>
+              {forgotPasswordMessage}
+            </Link>
+          </Form.Text>
 
           <Button variant="primary" type="submit" className={style.submitButton}>
             {submitMessage}

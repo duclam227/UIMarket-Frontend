@@ -41,10 +41,9 @@ const NavBar: FC<IProps> = props => {
       defaultMessage="Profile"
     />
   );
-  const userDropdownStoreLabel = (
+  const userDropdownPurchasesLabel = (
     <FormattedMessage
-      id="CommonNavbar.userDropdownStoreLabel"
-      defaultMessage="My Store"
+      id="CommonNavbar.userDropdownPurchasesLabel"
     />
   );
   const userDropdownLogoutBtnLabel = (
@@ -69,6 +68,7 @@ const NavBar: FC<IProps> = props => {
 
   const handleLogout = () => {
     dispatch(logOut());
+    navigate("/");
   };
 
   const handleProductSearch = (e: FormEvent<HTMLFormElement>) => {
@@ -125,11 +125,32 @@ const NavBar: FC<IProps> = props => {
                 </div>
               </Form>
 
-              <Link className="nav-link" to={currentUser ? '/products/add' : '/signup'}>
-                <button className={style.sellButton}>
-                  <FormattedMessage id="NavBar.openShop" defaultMessage="Sell your art" />
-                </button>
-              </Link>
+              {currentUser?.shopId ? (
+                <Link
+                  className="nav-link"
+                  to={
+                    isCurrentUserShop
+                      ? `/shop/${currentUser.shopId}`
+                      : `/user/${currentUser._id}/shop`
+                  }
+                >
+                  <button className={style.sellButton}>
+                    <FormattedMessage
+                      id="CommonNavbar.myStore"
+                      defaultMessage="My store"
+                    />
+                  </button>
+                </Link>
+              ) : (
+                <Link className="nav-link" to={currentUser ? '/products/add' : '/signup'}>
+                  <button className={style.sellButton}>
+                    <FormattedMessage
+                      id="CommonNavbar.openShop"
+                      defaultMessage="Sell your art"
+                    />
+                  </button>
+                </Link>
+              )}
 
               {currentUser ? (
                 <div className="nav-item dropdown p-1">
@@ -161,14 +182,10 @@ const NavBar: FC<IProps> = props => {
                     </li>
                     <li>
                       <Link
-                        to={
-                          isCurrentUserShop
-                            ? `/shop/${currentUser.shopId}`
-                            : `/user/${currentUser._id}/shop`
-                        }
+                        to='/purchases'
                         className="dropdown-item"
                       >
-                        {userDropdownStoreLabel}
+                        {userDropdownPurchasesLabel}
                       </Link>
                     </li>
                     <hr className="dropdown-divider" />

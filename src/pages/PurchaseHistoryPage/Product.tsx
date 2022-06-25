@@ -46,10 +46,11 @@ const Product: React.FC<Props> = props => {
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.upload[errorMsg as keyof typeof errorCodes.upload];
+        const errorCode: any =
+          errorCodes.upload[errorMsg as keyof typeof errorCodes.upload];
         toast.error(intl.formatMessage({ id: `Upload.${errorCode}` }));
-      })
-  }
+      });
+  };
 
   return (
     <div className={style.product}>
@@ -99,14 +100,19 @@ const Product: React.FC<Props> = props => {
             <Dropdown.Item onClick={() => setIsReviewing(true)}>
               <FormattedMessage id="PurchaseHistoryPage.reviewButtonLabel" />
             </Dropdown.Item>
-          ) : <Dropdown.Item>
-            <Link to={`/product/${product._id}`}>
-              <FormattedMessage id="PurchaseHistoryPage.alreadyReviewed" />
-            </Link>
-          </Dropdown.Item>}
+          ) : (
+            <Dropdown.Item>
+              <Link to={`/product/${product._id}`}>
+                <FormattedMessage id="PurchaseHistoryPage.alreadyReviewed" />
+              </Link>
+            </Dropdown.Item>
+          )}
 
-          {!purchase.isInvoiceRefunded && daySinceBought < DAYS_TO_REFUND ? (
-            <><Dropdown.Divider />
+          {!purchase.isInvoiceRefunded &&
+          daySinceBought < DAYS_TO_REFUND &&
+          purchase.productPrice > 0 ? (
+            <>
+              <Dropdown.Divider />
               <Dropdown.Item>
                 <Link to={`/refund/${purchase.invoiceId}`}>
                   <FormattedMessage id="PurchaseHistoryPage.reportButtonLabel" />

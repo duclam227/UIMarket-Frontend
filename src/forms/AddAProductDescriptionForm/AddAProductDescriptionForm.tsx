@@ -48,20 +48,38 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
   const productDescriptionPlaceholder = intl.formatMessage({ id: 'AddAProduct.ProductDescriptionPlaceholder' });
 
   const schema = Joi.object({
-    productName: Joi.string().required().label('Product name').min(10),
-    productPrice: Joi.number().required().label('Product price').min(0).allow(0),
-    productDescription: Joi.string().required().label('Product description').min(20),
+    productName: Joi.string().required().label('Product name').min(10)
+      .messages({
+        "string.base": intl.formatMessage({ id: "FormValidation.missingProductName" }),
+        "string.empty": intl.formatMessage({ id: "FormValidation.requiredProductName" }),
+        "string.min": intl.formatMessage({ id: "FormValidation.minLengthProductName" }),
+        "any.required": intl.formatMessage({ id: "FormValidation.requiredProductName" })
+      }),
+    productPrice: Joi.number().required().label('Product price').min(0).allow(0)
+      .messages({
+        "number.base": intl.formatMessage({ id: "FormValidation.missingProductPrice" }),
+        "number.empty": intl.formatMessage({ id: "FormValidation.requiredProductPrice" }),
+        "number.min": intl.formatMessage({ id: "FormValidation.minProductPrice" }),
+        "any.required": intl.formatMessage({ id: "FormValidation.requiredProductPrice" })
+      }),
+    productDescription: Joi.string().required().label('Product description').min(20)
+      .messages({
+        "string.base": intl.formatMessage({ id: "FormValidation.missingProductDescription" }),
+        "string.empty": intl.formatMessage({ id: "FormValidation.requiredProductDescription" }),
+        "string.min": intl.formatMessage({ id: "FormValidation.minLengthProductDescription" }),
+        "any.required": intl.formatMessage({ id: "FormValidation.requiredProductDescription" })
+      }),
   });
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isDirty },
     control,
     getFieldState,
   } = useForm<any>({
     resolver: joiResolver(schema),
-    mode: 'onTouched',
+    mode: 'onBlur',
     defaultValues: {
       productName: initialValue?.productName || null,
       productPrice: initialValue?.productPrice >= 0 ? initialValue?.productPrice : null,
@@ -105,7 +123,6 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
           as="select"
           id="productCategory"
           aria-label="Default select example"
-          disabled={initialValue?.productCategory ? true : false}
         >
           <option selected={initialValue?.productCategory ? false : true} disabled={true}>
             {intl.formatMessage({ id: 'AddAProduct.ProductCategoryPlaceholder' })}
@@ -142,14 +159,6 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
             {errors.productDescription.message}
           </Alert>
         )}
-        {/* <RichTextEditor
-          onChange={(e: any) => {
-            props.updateProductInfo({
-              productDescription: e
-            })
-          }}
-          initialValue={initialValue?.productDescription || null}
-        /> */}
       </Form.Group>
     </Form >
   )

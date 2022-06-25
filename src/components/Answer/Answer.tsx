@@ -43,6 +43,7 @@ const Answer: FC<SectionAnswerProps> = props => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
   const [isReload, setIsReload] = useState<boolean>(false);
+  const [isReplying, setIsReplying] = useState<boolean>(false);
 
   const handleShowReportModal = () => {
     setShowReportModal(true);
@@ -77,13 +78,16 @@ const Answer: FC<SectionAnswerProps> = props => {
   };
 
   const addReply = () => {
+    setIsReplying(true);
     commentAPI
       .addNewComment(reply, question._id, answer._id, 'Answer')
       .then(res => {
         setIsReload(!isReload);
         setIsReply(false);
+        setIsReplying(false);
       })
       .catch(error => {
+        setIsReplying(false);
         const errorMsg = getErrorMessage(error);
         const errorCode: any = errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
         toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }));
@@ -128,10 +132,7 @@ const Answer: FC<SectionAnswerProps> = props => {
     label: intl.formatMessage({ id: 'Answer.reportLabel' }),
     function: handleShowReportModal,
   };
-  const menuItems = isCurrentUserAuthor
-    ? [reportMenuItem, ...authorMenuItems]
-    : [reportMenuItem];
-
+  const menuItems = isCurrentUserAuthor ? authorMenuItems : [reportMenuItem];
   const confirmDeleteModal = (
     <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)}>
       <Modal.Header closeButton>
@@ -180,6 +181,10 @@ const Answer: FC<SectionAnswerProps> = props => {
   };
 
   const markBestAnswer = () => {
+    if (isCurrentUserAuthor) {
+      return;
+    }
+
     answerAPI
       .markBestAnswer(question._id, answer._id)
       .then((res: any) => {
@@ -204,7 +209,10 @@ const Answer: FC<SectionAnswerProps> = props => {
       {confirmDeleteModal}
       <div className={style.sideContent}>
         <UserAvatar image={answer.customerInfo[0].customerAvatar} />
-        <div className={style.markBestAnswer}>{bestAnswerIcon}</div>
+        {isCurrentUserAuthor
+          ? <div className={style.markBestAnswer}>{bestAnswerIcon}</div>
+          : null
+        }
       </div>
       <div className={style.content}>
         <div className={style.authorInfo + " text-nowrap"}>
@@ -279,6 +287,7 @@ const Answer: FC<SectionAnswerProps> = props => {
                 variant="primary"
                 type="button"
                 onClick={addReply}
+                disabled={isReplying}
               >
                 Reply
               </Button>

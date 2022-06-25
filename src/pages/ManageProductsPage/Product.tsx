@@ -43,18 +43,11 @@ const Product: React.FC<Props> = props => {
   const last30DaysLabel = (
     <FormattedMessage id="ManageProductsPage.Product.last30DaysLabel" />
   );
-  const allTimeLabel = (
-    <FormattedMessage id="ManageProductsPage.Product.allTimeLabel" />
-  );
-  const viewsLabel = (
-    <FormattedMessage id="ManageProductsPage.Product.viewsLabel" />
-  );
-  const saleLabel = (
-    <FormattedMessage id="ManageProductsPage.Product.saleLabel" />
-  );
-  const revenueLabel = (
-    <FormattedMessage id="ManageProductsPage.Product.revenueLabel" />
-  );
+  const allTimeLabel = <FormattedMessage id="ManageProductsPage.Product.allTimeLabel" />;
+  const viewsLabel = <FormattedMessage id="ManageProductsPage.Product.viewsLabel" />;
+  const saleLabel = <FormattedMessage id="ManageProductsPage.Product.saleLabel" />;
+  const salesLabel = <FormattedMessage id="ManageProductsPage.Product.salesLabel" />;
+  const revenueLabel = <FormattedMessage id="ManageProductsPage.Product.revenueLabel" />;
 
   const notAvailableImg =
     'https://us.123rf.com/450wm/pavelstasevich/pavelstasevich1811/pavelstasevich181101031/112815934-no-image-available-icon-flat-vector-illustration.jpg?ver=6';
@@ -69,6 +62,7 @@ const Product: React.FC<Props> = props => {
   } = props;
 
   useEffect(() => {
+    console.log(product.last30Days);
   });
 
   return (
@@ -89,11 +83,7 @@ const Product: React.FC<Props> = props => {
         <Col lg={2} className={`d-flex align-items-center my-3`}>
           <div className={`${style.productThumbnailWrapper}`}>
             <img
-              src={
-                product.productPictures
-                  ? product.productPictures[0]
-                  : notAvailableImg
-              }
+              src={product.productPictures ? product.productPictures[0] : notAvailableImg}
               className={`${style.productThumbnail}`}
               height={100}
               alt="Placeholder"
@@ -118,8 +108,9 @@ const Product: React.FC<Props> = props => {
         >
           {/* {Product status} */}
           <span
-            className={`border d-flex align-items-center ${style.statusBadge} ${product.productStatus ? style.active : style.inactive
-              }`}
+            className={`border d-flex align-items-center ${style.statusBadge} ${
+              product.productStatus ? style.active : style.inactive
+            }`}
           >
             {product.productStatus ? activeBadgeLabel : inactiveBadgeLabel}
           </span>
@@ -185,12 +176,14 @@ const Product: React.FC<Props> = props => {
           </Row>
           <Row>
             <Col className={`d-flex flex-column`}>
-              <span className={`text-muted`}>0</span>
-              <span className={`text-muted`}>{viewsLabel}</span>
+              <span className={`text-muted`}>{product.last30Days.totalSold}</span>
+              <span className={`text-muted`}>
+                {product.last30Days.totalSold > 1 ? salesLabel : saleLabel}
+              </span>
             </Col>
             <Col className={`d-flex flex-column`}>
-              <span className={`text-muted`}>0</span>
-              <span className={`text-muted`}>{saleLabel}</span>
+              <span className={`text-muted`}>${product.last30Days.totalRevenue}</span>
+              <span className={`text-muted`}>{revenueLabel}</span>
             </Col>
           </Row>
         </Col>
@@ -202,7 +195,9 @@ const Product: React.FC<Props> = props => {
           <Row>
             <Col className={`d-flex flex-column`}>
               <span className={`text-muted`}>{product.totalSold}</span>
-              <span className={`text-muted`}>{saleLabel}</span>
+              <span className={`text-muted`}>
+                {product.totalSold! > 1 ? salesLabel : saleLabel}
+              </span>
             </Col>
             <Col className={`d-flex flex-column`}>
               <span className={`text-muted`}>

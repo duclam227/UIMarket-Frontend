@@ -42,12 +42,13 @@ const ProductNavbar: FC<IProps> = props => {
 
   return (
     <nav className={style.subNavbar}>
-      <section className={style.leftSide}>
-        <button className={classNames(style.button, style.trendButton)}>
-          <Link to="/questions">
-            <FormattedMessage id="ProductNavBar.Forum" defaultMessage="DeeX Forum" />
-          </Link>
-        </button>
+      <div className="container-fluid d-flex align-items-center">
+        <section className={style.leftSide}>
+          <button className={classNames(style.button, style.trendButton)}>
+            <Link to="/questions">
+              <FormattedMessage id="ProductNavBar.Forum" defaultMessage="DeeX Forum" />
+            </Link>
+          </button>
 
         <div className={style.categoryList}>
           <Link to={`/products`}>

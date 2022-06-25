@@ -33,6 +33,7 @@ const EditProductPage: React.FC<IProps> = (props) => {
   const [product, setProduct] = useState<product | null>(null);
   const [productDescription, setProductDescription] = useState<string | null>(null);
   const [productFiles, setProductFiles] = useState<Array<File>>([]);
+  const [postInProgress, setPostInProgress] = useState<boolean>(false);
 
   const params = useParams();
   const { id } = params;
@@ -87,6 +88,7 @@ const EditProductPage: React.FC<IProps> = (props) => {
   };
 
   const handleSubmit = async () => {
+    setPostInProgress(true);
     if (isFilesFilled) {
       const zippedFile = await zipFiles();
 
@@ -120,6 +122,9 @@ const EditProductPage: React.FC<IProps> = (props) => {
           const errorMsg = getErrorMessage(error);
           const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
           toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
+        })
+        .finally(() => {
+          setPostInProgress(false);
         });
     } else {
       productAPI
@@ -134,6 +139,9 @@ const EditProductPage: React.FC<IProps> = (props) => {
           const errorMsg = getErrorMessage(error);
           const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
           toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
+        })
+        .finally(() => {
+          setPostInProgress(false);
         });
     }
 
@@ -218,10 +226,13 @@ const EditProductPage: React.FC<IProps> = (props) => {
             </TabContainer>
 
             <Button
-              disabled={!isImagesFilled || !isDescriptionFilled}
+              disabled={!isImagesFilled || !isDescriptionFilled || postInProgress}
               onClick={handleSubmit}
             >
-              Edit product
+              {postInProgress
+                ? <Spinner animation='border' />
+                : <FormattedMessage id="EditProductPage.submitBtn" />
+              }
             </Button>
           </div>
         }

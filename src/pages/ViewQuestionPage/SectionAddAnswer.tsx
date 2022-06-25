@@ -12,7 +12,8 @@ import answerAPI from "../../api/answer";
 import { UserAvatar } from "../../components";
 
 import style from './ViewQuestionPage.module.css';
-import { injectIntl, IntlShape } from "react-intl";
+import { FormattedMessage, injectIntl, IntlShape } from "react-intl";
+import { Link } from "react-router-dom";
 interface AddAnswerProps {
   question: any;
   currentUser: customer | null;
@@ -25,25 +26,32 @@ const SectionAddAnswer: FC<AddAnswerProps> = (props) => {
 
   const [answer, setAnswer] = useState<string>('');
   const [editor, setEditor] = useState<any>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   if (currentUser === null) {
     return (
       <div className={style.addCommentWrapper}>
-        Sign up or Log in to leave your answer.
+        <Link to='/signup'><FormattedMessage id='ViewQuestionPage.signUp' /></Link>
+        <FormattedMessage id='ViewQuestionPage.connectingWordOr' />
+        <Link to='/signup'><FormattedMessage id='ViewQuestionPage.logIn' /></Link>
+        <FormattedMessage id='ViewQuestionPage.leaveAnswerMsg' />
       </div>
     )
   }
 
   const handleSubmit = () => {
+    setIsLoading(true);
     answerAPI.addNewAnswer(answer, question._id)
       .then((res: any) => {
         props.handleAddAnswer(res);
         editor.setData('');
+        setIsLoading(false);
       })
       .catch((error) => {
         const errorMsg = getErrorMessage(error);
         const errorCode: any = errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
         toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }));
+        setIsLoading(false);
       })
   }
 
@@ -69,9 +77,10 @@ const SectionAddAnswer: FC<AddAnswerProps> = (props) => {
             className={style.addCommentButton}
             variant="primary"
             type="button"
+            disabled={isLoading}
             onClick={handleSubmit}
           >
-            Add answer
+            <FormattedMessage id='ViewQuestionPage.addAnswer' />
           </Button>
         </Form>
       </div>

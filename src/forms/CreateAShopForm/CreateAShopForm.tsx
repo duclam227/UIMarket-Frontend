@@ -96,9 +96,25 @@ const CreateAShopForm: React.FC<Props> = (props) => {
 
   const schema = Joi.object({
     shopEmail: Joi.string()
-      .email({ tlds: { allow: false } }).required().label('Email'),
-    shopName: Joi.string().required().label('Name'),
-    shopDescription: Joi.string().required().label('Description'),
+      .email({ tlds: { allow: false } }).required().label('Email')
+      .messages({
+        "string.base": intl.formatMessage({ id: "FormValidation.missingEmail" }),
+        "string.empty": intl.formatMessage({ id: "FormValidation.requiredEmail" }),
+        "string.email": intl.formatMessage({ id: "FormValidation.missingEmail" }),
+        "any.required": intl.formatMessage({ id: "FormValidation.requiredEmail" })
+      }),
+    shopName: Joi.string().required().label('Name')
+      .messages({
+        "string.base": intl.formatMessage({ id: "FormValidation.missingName" }),
+        "string.empty": intl.formatMessage({ id: "FormValidation.requiredName" }),
+        "any.required": intl.formatMessage({ id: "FormValidation.requiredName" })
+      }),
+    shopDescription: Joi.string().required().label('Description')
+      .messages({
+        "string.base": intl.formatMessage({ id: "FormValidation.missingShopDescription" }),
+        "string.empty": intl.formatMessage({ id: "FormValidation.requiredShopDescription" }),
+        "any.required": intl.formatMessage({ id: "FormValidation.requiredShopDescription" })
+      }),
     shopBanner: Joi.string().label('Banner'),
   });
 

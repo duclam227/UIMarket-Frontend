@@ -9,6 +9,13 @@
 	height: 20px;
 }
 
+.dropdownButton,
+.dropdownButton:hover,
+.dropdownButton:active {
+	background-color: transparent;
+	border: none;
+}
+
 .threeDotIcon {
 	height: 100%;
 	fill: var(--gray-500);

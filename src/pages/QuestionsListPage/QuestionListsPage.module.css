@@ -28,7 +28,7 @@
 .mainContent {
 	background-color: var(--gray);
 
-	width: 80%;
+	width: 100%;
 }
 
 .tabContainer {
@@ -73,8 +73,6 @@
 	align-items: center;
 	justify-content: center;
 
-	margin: 0 10px;
-
 	background-color: white;
 	border: 1px solid var(--gray-400);
 	border-radius: 3px;
@@ -82,4 +80,29 @@
 	min-height: 100px;
 	width: 100%;
 	margin-bottom: 50px;
+}
+
+@media (min-width: 768px) {
+	.mainContent {
+		background-color: var(--gray);
+
+		width: 80%;
+	}
+
+	.questionsList {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+
+		margin: 0 10px;
+
+		background-color: white;
+		border: 1px solid var(--gray-400);
+		border-radius: 3px;
+
+		min-height: 100px;
+		width: 100%;
+		margin-bottom: 50px;
+	}
 }

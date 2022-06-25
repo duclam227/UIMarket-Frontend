@@ -21,13 +21,20 @@ interface Props {
   product: product;
   currentUser: customer;
   isBought: boolean | null;
+  isActive: boolean;
   intl: IntlShape;
 }
 
 const SectionHeader: React.FC<Props> = props => {
-  const { product, currentUser, isBought, intl } = props;
+  const { product, currentUser, isBought, intl, isActive } = props;
   const isCurrentUserSeller = currentUser?.customerEmail === product.shopId.customerEmail;
   const navigate = useNavigate();
+  const title = isActive ? `${product.productName}`
+    : <>
+      {product.productName}
+      <br />
+      <Badge pill bg='secondary'>DEACTIVATED</Badge>
+    </>;
 
   const handleAddToCart = (action?: string) => {
     if (!currentUser) {
@@ -105,7 +112,7 @@ const SectionHeader: React.FC<Props> = props => {
           {product.productCategory.categoryName}
         </Badge>
       </Link>
-      <h1 className={style.title}>{product.productName}</h1>
+      <h1 className={style.title}>{title}</h1>
       <div className={style.subtitle}>
         {renderStars(product.productRating!)}
         <div className={style.columnDivider}></div>
@@ -149,14 +156,14 @@ const SectionHeader: React.FC<Props> = props => {
                   onClick={() => {
                     handleCheckout();
                   }}
-                  disabled={isCurrentUserSeller}
+                  disabled={isCurrentUserSeller || !isActive}
                 >
                   <FormattedMessage id="ViewProductPage.BuyNow" />
                 </Button>
                 <Button
                   className={style.button}
                   onClick={() => handleAddToCart()}
-                  disabled={isCurrentUserSeller}
+                  disabled={isCurrentUserSeller || !isActive}
                   variant="outline-primary"
                 >
                   <AiOutlineShoppingCart />

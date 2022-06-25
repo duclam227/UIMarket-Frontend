@@ -89,9 +89,7 @@ const Question: FC<QuestionProps> = props => {
     function: handleShowReportModal,
   };
 
-  const menuItems = isCurrentUserAuthor
-    ? [reportMenuItem, ...authorMenuItems]
-    : [reportMenuItem];
+  const menuItems = isCurrentUserAuthor ? authorMenuItems : [reportMenuItem];
 
   const confirmDeleteModal = (
     <Modal show={isModalOpen} onHide={() => setIsModalOpen(false)}>
