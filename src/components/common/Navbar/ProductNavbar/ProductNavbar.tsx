@@ -50,24 +50,25 @@ const ProductNavbar: FC<IProps> = props => {
             </Link>
           </button>
 
-        <div className={style.categoryList}>
-          <Link to={`/products`}>
-            <button className={style.button}>
-              <FormattedMessage id="ProductNavBar.AllProducts" />
-            </button>
-          </Link>
-          {navbarCategories.map((category: any) => (
-            <Link key={category.id} to={`/products/category/${category.id}`}>
+          <div className={style.categoryList}>
+            <Link to={`/products`}>
               <button className={style.button}>
-                <FormattedMessage id={`Navbar.${category.key}`} />
+                <FormattedMessage id="ProductNavBar.AllProducts" />
               </button>
             </Link>
-          ))
-          }
-        </div>
-      </section>
+            {navbarCategories.map((category: any) => (
+              <Link key={category.id} to={`/products/category/${category.id}`}>
+                <button className={style.button}>
+                  <FormattedMessage id={`Navbar.${category.key}`} />
+                </button>
+              </Link>
+            ))
+            }
+          </div>
+        </section>
+      </div>
     </nav>
-  );
+  )
 };
 
 export default injectIntl(ProductNavbar);
