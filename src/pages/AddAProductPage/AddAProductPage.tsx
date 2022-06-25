@@ -109,6 +109,8 @@ const AddAProductPage: React.FC<IProps> = (props) => {
                 const errorMsg = getErrorMessage(error);
                 const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
                 toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
+
+                setPostInProgress(false);
               });
           })
           .catch(error => {
@@ -118,11 +120,10 @@ const AddAProductPage: React.FC<IProps> = (props) => {
       .catch(error => {
         const errorMsg = getErrorMessage(error);
         const errorCode: any = errorCodes.upload[errorMsg as keyof typeof errorCodes.upload];
-        toast.error(intl.formatMessage({ id: `Upload.${errorCode}` }))
-      })
-      .finally(() => {
+        toast.error(intl.formatMessage({ id: `Upload.${errorCode}` }));
+
         setPostInProgress(false);
-      });
+      })
   };
 
   useEffect(() => {
