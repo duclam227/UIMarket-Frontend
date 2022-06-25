@@ -63,7 +63,6 @@ const Answer: FC<SectionAnswerProps> = props => {
   if (!answer || !answerContent) {
     return null;
   }
-  console.log(question);
 
   const isUserAuthenticated = !!currentUser;
   const isCurrentUserAuthor =
