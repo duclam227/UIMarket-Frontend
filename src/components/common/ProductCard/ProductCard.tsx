@@ -41,48 +41,44 @@ const ProductCard: FunctionComponent<ProductCardProps> = props => {
   const pLink = '/product/' + _id;
   const shopLink = '/shop/' + shopId._id;
 
-  const navigateToProduct = () => {
-    navigate(pLink);
-  }
-
-  const navigateToShop = (e: any) => {
-    navigate(shopLink);
-    e.stopPropagation();
-  }
-
   return (
     <Col xs={12} md={6} lg={3}>
-      <Card className={'border-0 ' + style.pcard} onClick={navigateToProduct}>
-        <div>
-          <Card.Img
-            variant="top"
-            src={coverPicture}
-            className={style.cardImg}
-            style={{ aspectRatio: '2 / 1' }}
-          />
-        </div>
-
-        <Card.Body>
-          <h6>
-            {productName.length > 30
-              ? `${productName.substring(0, 30)}..`
-              : productName}
-          </h6>
-
-          <div className="mb-3 text-secondary">
-            by
-            <span className={'ms-1 ' + style.secondaryLink} onClick={(e: any) => navigateToShop(e)}>
-              {shopId.shopName}
-            </span>
+      <Link to={pLink}>
+        <Card className={'border-0 ' + style.pcard} >
+          <div>
+            <Card.Img
+              variant="top"
+              src={coverPicture}
+              className={style.cardImg}
+              style={{ aspectRatio: '2 / 1' }}
+            />
           </div>
 
-          <div className="d-flex justify-content-between ">
-            {renderStars(productRating)}
-            <strong>${productPrice}</strong>
-          </div>
+          <Card.Body>
+            <h6>
+              {productName.length > 30
+                ? `${productName.substring(0, 30)}..`
+                : productName}
+            </h6>
 
-        </Card.Body>
-      </Card>
+            <div className="mb-3 text-secondary">
+              by
+              <Link to={shopLink}>
+                <span className={'ms-1 ' + style.secondaryLink}
+                >
+                  {shopId.shopName}
+                </span>
+              </Link>
+            </div>
+
+            <div className="d-flex justify-content-between ">
+              {renderStars(productRating)}
+              <strong>${productPrice}</strong>
+            </div>
+
+          </Card.Body>
+        </Card>
+      </Link>
     </Col >
   );
 };
