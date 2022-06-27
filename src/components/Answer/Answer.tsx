@@ -68,6 +68,8 @@ const Answer: FC<SectionAnswerProps> = props => {
   const isCurrentUserAuthor =
     isUserAuthenticated &&
     currentUser.customerEmail === answer.customerInfo[0].customerEmail;
+  const isCurrentUserOwnerQuestion =
+    isUserAuthenticated && currentUser._id === question.userId._id;
 
   const turnOnReply = () => {
     setIsReply(true);
@@ -89,7 +91,8 @@ const Answer: FC<SectionAnswerProps> = props => {
       .catch(error => {
         setIsReplying(false);
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
+        const errorCode: any =
+          errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
         toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }));
       });
   };
@@ -106,8 +109,9 @@ const Answer: FC<SectionAnswerProps> = props => {
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
-        toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }))
+        const errorCode: any =
+          errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
+        toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }));
       });
   };
 
@@ -161,8 +165,9 @@ const Answer: FC<SectionAnswerProps> = props => {
               })
               .catch(error => {
                 const errorMsg = getErrorMessage(error);
-                const errorCode: any = errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
-                toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }))
+                const errorCode: any =
+                  errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
+                toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }));
               });
           }}
         >
@@ -192,8 +197,9 @@ const Answer: FC<SectionAnswerProps> = props => {
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
-        toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }))
+        const errorCode: any =
+          errorCodes.answer[errorMsg as keyof typeof errorCodes.answer];
+        toast.error(intl.formatMessage({ id: `Answer.${errorCode}` }));
       });
   };
 
@@ -209,13 +215,12 @@ const Answer: FC<SectionAnswerProps> = props => {
       {confirmDeleteModal}
       <div className={style.sideContent}>
         <UserAvatar image={answer.customerInfo[0].customerAvatar} />
-        {isCurrentUserAuthor
-          ? <div className={style.markBestAnswer}>{bestAnswerIcon}</div>
-          : null
-        }
+        {isCurrentUserOwnerQuestion ? (
+          <div className={style.markBestAnswer}>{bestAnswerIcon}</div>
+        ) : null}
       </div>
       <div className={style.content}>
-        <div className={style.authorInfo + " text-nowrap"}>
+        <div className={style.authorInfo + ' text-nowrap'}>
           <Link to={`/user/${answer.customerInfo[0]._id}`}>
             {answer.customerInfo[0].customerName}
           </Link>
@@ -236,7 +241,7 @@ const Answer: FC<SectionAnswerProps> = props => {
                 answer={answer}
                 question={question}
                 currentUser={currentUser}
-                handleVoteStatus={() => { }}
+                handleVoteStatus={() => {}}
               />
               {currentUser?.customerEmail ? (
                 <div className={style.replyButton} onClick={turnOnReply}>
