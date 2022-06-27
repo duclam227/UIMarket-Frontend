@@ -25,6 +25,7 @@ import SectionReviews from './SectionReviews';
 
 import style from './ViewProductPage.module.css';
 import SectionSeller from './SectionSeller';
+import SectionSuggestions from './SectionSuggestions';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -134,6 +135,9 @@ const ViewProductPage: React.FC<IProps> = props => {
         <div className={style.content}>
           <SectionImages images={product?.productPictures!} />
           <SectionDescription body={product?.productDescription!} />
+          <SectionSuggestions
+            product={product}
+          />
           <SectionReviews
             reviews={reviews!}
             totalPages={totalPages}

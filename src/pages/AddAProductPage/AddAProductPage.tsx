@@ -137,44 +137,48 @@ const AddAProductPage: React.FC<IProps> = (props) => {
       <div className={style.wrapper}>
         <div className={style.container}>
           <TabContainer defaultActiveKey="description">
-            <Nav variant="pills" className={style.tabButtons}>
-              <Nav.Item className={style.tabItem}>
-                <Nav.Link eventKey="description">
-                  <FormattedMessage id="AddAProductPage.DescriptionTabTitle" />
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item className={style.tabItem}>
-                <Nav.Link disabled={!isDescriptionFilled} eventKey="images">
-                  <FormattedMessage id="AddAProductPage.ImagesTabTitle" />
-                </Nav.Link>
-              </Nav.Item>
-              <Nav.Item className={style.tabItem}>
-                <Nav.Link
-                  disabled={!isDescriptionFilled || !isImagesFilled}
-                  eventKey="product"
-                >
-                  <FormattedMessage id="AddAProductPage.ProductTabTitle" />
-                </Nav.Link>
-              </Nav.Item>
-            </Nav>
+            <div className={style.column}>
+              <Nav variant="pills" className={style.tabButtons}>
+                <div className={style.tabButtons}>
+                  <Nav.Item className={style.tabItem}>
+                    <Nav.Link eventKey="description">
+                      <FormattedMessage id="AddAProductPage.DescriptionTabTitle" />
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item className={style.tabItem}>
+                    <Nav.Link disabled={!isDescriptionFilled} eventKey="images">
+                      <FormattedMessage id="AddAProductPage.ImagesTabTitle" />
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item className={style.tabItem}>
+                    <Nav.Link
+                      disabled={!isDescriptionFilled || !isImagesFilled}
+                      eventKey="product"
+                    >
+                      <FormattedMessage id="AddAProductPage.ProductTabTitle" />
+                    </Nav.Link>
+                  </Nav.Item>
+                </div>
+              </Nav>
 
-            <Tab.Content>
-              <Tab.Pane eventKey="description">
-                <AddAProductDescriptionForm
-                  updateProductInfo={(input: any) => updateProduct(input)}
-                />
-              </Tab.Pane>
-              <Tab.Pane eventKey="images">
-                <AddAProductPicturesForm
-                  updateProductInfo={(input: any) => updateProduct(input)}
-                />
-              </Tab.Pane>
-              <Tab.Pane eventKey="product">
-                <AddAProductFilesForm
-                  updateProductInfo={(input: any) => updateFile(input)}
-                />
-              </Tab.Pane>
-            </Tab.Content>
+              <Tab.Content className={style.tabContent}>
+                <Tab.Pane eventKey="description">
+                  <AddAProductDescriptionForm
+                    updateProductInfo={(input: any) => updateProduct(input)}
+                  />
+                </Tab.Pane>
+                <Tab.Pane eventKey="images">
+                  <AddAProductPicturesForm
+                    updateProductInfo={(input: any) => updateProduct(input)}
+                  />
+                </Tab.Pane>
+                <Tab.Pane eventKey="product">
+                  <AddAProductFilesForm
+                    updateProductInfo={(input: any) => updateFile(input)}
+                  />
+                </Tab.Pane>
+              </Tab.Content>
+            </div>
           </TabContainer>
 
           <Button

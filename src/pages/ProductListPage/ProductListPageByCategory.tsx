@@ -15,6 +15,7 @@ import { ProductList, PageWithNavbar, Paginator, EmptyState } from '../../compon
 import style from './ProductListPage.module.css';
 import Sidebar from './Sidebar';
 import { Button } from 'react-bootstrap';
+import { navbarCategories } from '../../app/util/config';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -35,6 +36,7 @@ const ProductListPage: FC<Props> = props => {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const searchKeyword = searchParams.get('keyword');
+  const searchCategory = navbarCategories.filter((cate: any) => cate.id === id);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -136,6 +138,15 @@ const ProductListPage: FC<Props> = props => {
                 </h5>
               </Row>
             ) : null}
+
+            <Row className={`mt-3`}>
+              <h5>
+                {searchResultMessage} "
+                <span className={style.searchQuery}>{searchCategory.length > 0
+                  ? <FormattedMessage id={`Navbar.${searchCategory[0].key}`} />
+                  : ''}</span>"
+              </h5>
+            </Row>
 
             {isLoading ? (
               <Row className={`mt-5 d-flex justify-content-center`}>

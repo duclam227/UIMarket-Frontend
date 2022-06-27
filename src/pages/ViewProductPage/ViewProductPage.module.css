@@ -204,6 +204,14 @@
 	cursor: pointer;
 }
 
+.suggestions {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+
+	margin-bottom: 2rem;
+}
+
 .userManagePanel {
 	display: flex;
 	flex-direction: row;
