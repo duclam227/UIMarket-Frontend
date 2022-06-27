@@ -8,6 +8,7 @@ import './App.css';
 import {
   RequireAnonymous,
   RequireUser,
+  RequireAdmin,
   RequireAuthenticated,
   AdminRoutes,
   GoToTopButton,
@@ -310,8 +311,22 @@ function App() {
           }
         />
         <Route path="/shop-statistic" element={<ShopStatisticPage />} />
-        <Route path="/admin/*" element={<AdminRoutes />} />
-        <Route path="/admin" element={<Navigate to="/admin/dashboard" replace />} />
+        <Route
+          path="/admin/*"
+          element={
+            <RequireAdmin>
+              <AdminRoutes />
+            </RequireAdmin>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <RequireAdmin>
+              <Navigate to="/admin/dashboard" replace />
+            </RequireAdmin>
+          }
+        />
         <Route
           path="/wallet"
           element={

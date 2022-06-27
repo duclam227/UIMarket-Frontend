@@ -27,6 +27,7 @@ export { default as PageWithNavbar } from './common/PageWithNavbar/PageWithNavba
 export { default as RichTextEditor } from './common/RichTextEditor/RichTextEditor';
 export { default as RequireAnonymous } from './common/RequireAnonymous/RequireAnonymous';
 export { default as RequireUser } from './common/RequireUser/RequireUser';
+export { default as RequireAdmin} from "./common/RequireAdmin/RequireAdmin";
 export {
 	default as RequireAuthenticated,
 } from './common/RequireAuthenticated/RequireAuthenticated';
