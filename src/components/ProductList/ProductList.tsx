@@ -23,7 +23,7 @@ const ProductList: FC<Props> = props => {
 
   const renderProductList = () => {
     return (
-      <div className="py-5">
+      <div className="py-2">
         <Row className="gy-4">{renderProduct()}</Row>
       </div>
     );
