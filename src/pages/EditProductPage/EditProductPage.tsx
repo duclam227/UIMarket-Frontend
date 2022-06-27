@@ -123,10 +123,8 @@ const EditProductPage: React.FC<IProps> = (props) => {
           const errorMsg = getErrorMessage(error);
           const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
           toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
-        })
-        .finally(() => {
           setPostInProgress(false);
-        });
+        })
     } else {
       productAPI
         .editProduct({
@@ -140,12 +138,57 @@ const EditProductPage: React.FC<IProps> = (props) => {
           const errorMsg = getErrorMessage(error);
           const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
           toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
-        })
-        .finally(() => {
           setPostInProgress(false);
-        });
+        })
     }
 
+  };
+
+  const handleDeactivate = async () => {
+    setPostInProgress(true);
+    productAPI
+      .deactivateProduct(id!)
+      .then((res: any) => {
+        const { _id } = res.result;
+        navigate(`/product/${_id}`)
+      })
+      .catch(error => {
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
+        toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
+        setPostInProgress(false);
+      })
+  };
+
+  const handleActivate = async () => {
+    setPostInProgress(true);
+    productAPI
+      .activateProduct(id!)
+      .then((res: any) => {
+        const { _id } = res.result;
+        navigate(`/product/${_id}`)
+      })
+      .catch(error => {
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
+        toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
+        setPostInProgress(false);
+      })
+  };
+
+  const handleDelete = async () => {
+    setPostInProgress(true);
+    productAPI
+      .deleteProduct(id!)
+      .then((res: any) => {
+        navigate(`/user/${currentUser?._id}/products`)
+      })
+      .catch(error => {
+        const errorMsg = getErrorMessage(error);
+        const errorCode: any = errorCodes.product[errorMsg as keyof typeof errorCodes.product];
+        toast.error(intl.formatMessage({ id: `Product.${errorCode}` }));
+        setPostInProgress(false);
+      })
   };
 
   useEffect(() => {
@@ -167,7 +210,6 @@ const EditProductPage: React.FC<IProps> = (props) => {
 
     getProduct();
   }, [id])
-
 
   return (
     <PageWithNavbar>
@@ -200,7 +242,7 @@ const EditProductPage: React.FC<IProps> = (props) => {
                   </div>
                 </Nav>
 
-                <Tab.Content>
+                <Tab.Content className={style.tabContent}>
                   <Tab.Pane eventKey="description">
                     <AddAProductDescriptionForm
                       updateProductInfo={(input: any) => updateProduct(input)}
@@ -230,8 +272,34 @@ const EditProductPage: React.FC<IProps> = (props) => {
               </div>
             </TabContainer>
 
-            <Row>
-              <Col>
+            <div className='d-flex w-100 justify-content-center align-items-center flex-row'>
+              <div className='d-flex justify-content-center align-items-center mx-1'>
+                <Button
+                  variant='outline-danger'
+                  disabled={postInProgress}
+                  onClick={product?.productStatus === 0 ? handleActivate : handleDeactivate}
+                >
+                  {postInProgress
+                    ? <Spinner animation='border' />
+                    : <FormattedMessage id={product?.productStatus === 0
+                      ? "EditProductPage.activateBtn"
+                      : "EditProductPage.deactivateBtn"} />
+                  }
+                </Button>
+              </div>
+              <div className='d-flex justify-content-center align-items-center mx-1'>
+                <Button
+                  variant='danger'
+                  disabled={postInProgress}
+                  onClick={handleDelete}
+                >
+                  {postInProgress
+                    ? <Spinner animation='border' />
+                    : <FormattedMessage id="EditProductPage.deleteBtn" />
+                  }
+                </Button>
+              </div>
+              <div className='d-flex justify-content-center align-items-center mx-1'>
                 <Button
                   disabled={!isImagesFilled || !isDescriptionFilled || postInProgress}
                   onClick={handleSubmit}
@@ -241,9 +309,8 @@ const EditProductPage: React.FC<IProps> = (props) => {
                     : <FormattedMessage id="EditProductPage.submitBtn" />
                   }
                 </Button>
-              </Col>
-
-            </Row>
+              </div>
+            </div>
           </div>
         }
 

@@ -22,6 +22,7 @@
 	padding: 10px 20px;
 
 	min-width: 80vw;
+	max-width: 90vw;
 	min-height: 100%;
 	background-color: white;
 }

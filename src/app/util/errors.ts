@@ -52,6 +52,7 @@ export const errors = {
 		'invalid-shop-id': 'actionFailed',
 		'invalid-product-id': 'actionFailed',
 		'action-failed': 'actionFailed',
+		'already-gone': 'alreadyGone',
 	},
 	profile: {
 		'invalid-user-id': 'actionFailed',
