@@ -110,7 +110,7 @@ const ReportModal: FC<Props> = props => {
     try {
       await reportAPI.submitReport(reportObjectId, reportReason, type);
       toast.success(successToastLabel);
-      onClose();
+      closeReport();
     } catch (e) {
       toast.error(getErrorMessage(e));
     }
