@@ -21,6 +21,7 @@ import {
 import { State } from '../../redux/store';
 
 import style from './EditProductPage.module.css';
+import { Row, Col } from 'react-bootstrap';
 
 interface IProps {
   intl: IntlShape
@@ -169,76 +170,85 @@ const EditProductPage: React.FC<IProps> = (props) => {
 
 
   return (
-    <OneToFivePage>
+    <PageWithNavbar>
       <div className={style.wrapper}>
         {isLoading
           ? <Spinner animation="border" />
           : <div className={style.container}>
             <TabContainer defaultActiveKey="description">
-              <Nav variant="pills" className={style.tabButtons}>
-                <Nav.Item className={style.tabItem}>
-                  <Nav.Link eventKey="description">
-                    <FormattedMessage id="EditProductPage.DescriptionTabTitle" />
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item className={style.tabItem}>
-                  <Nav.Link disabled={!isDescriptionFilled} eventKey="images">
-                    <FormattedMessage id="EditProductPage.ImagesTabTitle" />
-                  </Nav.Link>
-                </Nav.Item>
-                <Nav.Item className={style.tabItem}>
-                  <Nav.Link
-                    disabled={!isDescriptionFilled || !isImagesFilled}
-                    eventKey="product"
-                  >
-                    <FormattedMessage id="EditProductPage.ProductTabTitle" />
-                  </Nav.Link>
-                </Nav.Item>
-              </Nav>
+              <div className={style.column}>
+                <Nav variant="pills" className={style.tabButtons}>
+                  <div className={style.tabButtons}>
+                    <Nav.Item className={style.tabItem}>
+                      <Nav.Link eventKey="description">
+                        <FormattedMessage id="EditProductPage.DescriptionTabTitle" />
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item className={style.tabItem}>
+                      <Nav.Link disabled={!isDescriptionFilled} eventKey="images">
+                        <FormattedMessage id="EditProductPage.ImagesTabTitle" />
+                      </Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item className={style.tabItem}>
+                      <Nav.Link
+                        disabled={!isDescriptionFilled || !isImagesFilled}
+                        eventKey="product"
+                      >
+                        <FormattedMessage id="EditProductPage.ProductTabTitle" />
+                      </Nav.Link>
+                    </Nav.Item>
+                  </div>
+                </Nav>
 
-              <Tab.Content>
-                <Tab.Pane eventKey="description">
-                  <AddAProductDescriptionForm
-                    updateProductInfo={(input: any) => updateProduct(input)}
-                    initialValue={{
-                      productName: product?.productName,
-                      productDescription: productDescription,
-                      productCategory: product?.productCategory,
-                      productPrice: product?.productPrice,
-                    }}
-                    isEdit={true}
-                  />
-                </Tab.Pane>
-                <Tab.Pane eventKey="images">
-                  <AddAProductPicturesForm
-                    updateProductInfo={(input: any) => updateProduct(input)}
-                    images={product?.productPictures}
-                    isEdit={true}
-                  />
-                </Tab.Pane>
-                <Tab.Pane eventKey="product">
-                  <AddAProductFilesForm
-                    updateProductInfo={(input: any) => updateFile(input)}
-                    isEdit={true}
-                  />
-                </Tab.Pane>
-              </Tab.Content>
+                <Tab.Content>
+                  <Tab.Pane eventKey="description">
+                    <AddAProductDescriptionForm
+                      updateProductInfo={(input: any) => updateProduct(input)}
+                      initialValue={{
+                        productName: product?.productName,
+                        productDescription: productDescription,
+                        productCategory: product?.productCategory,
+                        productPrice: product?.productPrice,
+                      }}
+                      isEdit={true}
+                    />
+                  </Tab.Pane>
+                  <Tab.Pane eventKey="images">
+                    <AddAProductPicturesForm
+                      updateProductInfo={(input: any) => updateProduct(input)}
+                      images={product?.productPictures}
+                      isEdit={true}
+                    />
+                  </Tab.Pane>
+                  <Tab.Pane eventKey="product">
+                    <AddAProductFilesForm
+                      updateProductInfo={(input: any) => updateFile(input)}
+                      isEdit={true}
+                    />
+                  </Tab.Pane>
+                </Tab.Content>
+              </div>
             </TabContainer>
 
-            <Button
-              disabled={!isImagesFilled || !isDescriptionFilled || postInProgress}
-              onClick={handleSubmit}
-            >
-              {postInProgress
-                ? <Spinner animation='border' />
-                : <FormattedMessage id="EditProductPage.submitBtn" />
-              }
-            </Button>
+            <Row>
+              <Col>
+                <Button
+                  disabled={!isImagesFilled || !isDescriptionFilled || postInProgress}
+                  onClick={handleSubmit}
+                >
+                  {postInProgress
+                    ? <Spinner animation='border' />
+                    : <FormattedMessage id="EditProductPage.submitBtn" />
+                  }
+                </Button>
+              </Col>
+
+            </Row>
           </div>
         }
 
       </div>
-    </OneToFivePage>
+    </PageWithNavbar>
   );
 };
 
