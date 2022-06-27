@@ -45,15 +45,12 @@ const SectionSuggestions: React.FC<Props> = props => {
     ? <section className={style.suggestions}>
       <Spinner animation='border' />
     </section>
-    : <section className={style.suggestions}>
-      <h5><FormattedMessage id='ViewProductPage.suggestions' /></h5>
-      {
-        products.length > 0
-          ? <ProductList productList={products} />
-          : null
-      }
-
-    </section>
+    : products.length > 0
+      ? <section className={style.suggestions}>
+        <h5><FormattedMessage id='ViewProductPage.suggestions' /></h5>
+        <ProductList productList={products} />
+      </section>
+      : null
 };
 
 export default injectIntl(SectionSuggestions);
