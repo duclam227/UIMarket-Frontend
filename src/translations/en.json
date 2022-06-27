@@ -465,6 +465,7 @@
   "ViewProductPage.totalSold": "{count, plural, =0 {# sold} one {# sold} other {# sold}}",
   "ViewProductPage.ReviewTitle": "Reviews",
   "ViewProductPage.EditProduct": "Edit",
+  "ViewProductPage.suggestions": "More from this category",
   "ViewProductPage.reportProduct": "Report this product",
   "ViewProductPage.viewShopButton": "Visit shop",
   "ViewProductPage.ownerMessage": "You are the owner of this product. Click here to edit.",
