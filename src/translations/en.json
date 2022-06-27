@@ -127,6 +127,7 @@
   "Comment.deleteLabel": "Delete",
   "Comment.editLabel": "Edit",
   "ConfirmPaymentPage.successMessage": "Your purchase has been successful!",
+  "ConfirmPaymentPage.refundMessage": "You can request a refund within 3 days after purchasing.",
   "ConfirmPaymentPage.buyMoreLabel": "Continue shopping",
   "ConfirmPaymentPage.checkPurchasesLabel": "Check out your purchases",
   "CreateAShopPage.title": "Create your shop",

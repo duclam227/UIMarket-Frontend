@@ -36,6 +36,7 @@ const ConfirmPaymentPage: FC<IProps> = (props) => {
         : <div className={style.content}>
           <img src={cover} alt='Picture of a person with a cup' />
           <h3><FormattedMessage id='ConfirmPaymentPage.successMessage' /></h3>
+          <h5><FormattedMessage id='ConfirmPaymentPage.refundMessage' /></h5>
           <div className={style.buttonRow}>
             <Link to='/products'>
               <Button variant="outline-primary">

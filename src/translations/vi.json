@@ -127,6 +127,7 @@
   "Comment.deleteLabel": "Xóa",
   "Comment.editLabel": "Chỉnh sửa",
   "ConfirmPaymentPage.successMessage": "Hoàn tất thủ tục thanh toán!",
+  "ConfirmPaymentPage.refundMessage": "Bạn có thể yêu cầu hoàn tiền trong vòng 3 ngày kể từ khi mua hàng.",
   "ConfirmPaymentPage.buyMoreLabel": "Tiếp tục mua sắm",
   "ConfirmPaymentPage.checkPurchasesLabel": "Xem sản phẩm đã mua",
   "CreateAShopPage.title": "Mở cửa hàng của riêng bạn",
