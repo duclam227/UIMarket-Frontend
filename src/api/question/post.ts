@@ -6,8 +6,8 @@ export interface Question {
 	title: string;
 	body: string;
 	tags: string[];
-	bounty: number;
-	bountyDueDate?: Date;
+	bounty: number | null;
+	bountyDueDate?: Date | null;
 }
 class Post {
 	add = (question: Question) => {
@@ -18,7 +18,7 @@ class Post {
 			},
 		};
 		const { title, body, tags, bounty, bountyDueDate } = question;
-		const questionBounty = +bounty > 0 ? +bounty : -1;
+		const questionBounty = bounty ? +bounty : -1;
 		const questionBountyDueDate = bountyDueDate || undefined;
 		const data = {
 			questionTitle: title,

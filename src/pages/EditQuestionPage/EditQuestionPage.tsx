@@ -123,13 +123,10 @@ const EditQuestionPage = ({ intl }: any) => {
     tags: Joi.string().allow('', null).label('Tags'),
     bounty: Joi.number()
       .allow(null)
-      .min(currentBounty)
+      .greater(currentBounty)
       .max(balance)
       .label('Bounty amount'),
-    bountyDueDate: Joi.date()
-      .allow(null)
-      .min(currentDueDate || new Date())
-      .label('Due date'),
+    bountyDueDate: Joi.date().allow(null).min(new Date()).label('Due date'),
   });
 
   const {
@@ -211,11 +208,17 @@ const EditQuestionPage = ({ intl }: any) => {
 
   const handleToggleAdjustBounty = () => {
     if (isBountyOn) {
-      setValue('bounty', null);
-      setValue('bountyDueDate', null);
+      setValue('bounty', null, { shouldValidate: true });
+      setValue('bountyDueDate', null, { shouldValidate: true });
     } else {
-      setValue('bounty', currentBounty <= 0 ? 0 : currentBounty);
-      setValue('bountyDueDate', currentDueDate);
+      setValue('bounty', currentBounty <= 0 ? 1 : currentBounty + 1, {
+        shouldDirty: false,
+        shouldValidate: true,
+      });
+      setValue('bountyDueDate', currentDueDate, {
+        shouldDirty: false,
+        shouldValidate: true,
+      });
     }
 
     setIsBountyOn(!isBountyOn);
@@ -286,7 +289,6 @@ const EditQuestionPage = ({ intl }: any) => {
                       onChange={onChange}
                       onBlur={onBlur}
                       initialValue={body}
-                    // initialValue={question.body}
                     />
                   )}
                 />

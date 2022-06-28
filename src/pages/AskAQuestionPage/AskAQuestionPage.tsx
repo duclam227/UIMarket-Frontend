@@ -32,7 +32,6 @@ import './AskAQuestionPage.css';
 import style from './AskAQuestionPage.module.css';
 
 const AskAQuestionPage = ({ intl }: any) => {
-
   const [balance, setBalance] = useState<number>(0);
   const [isBountyOn, setIsBountyOn] = useState<boolean>(false);
   const [postInProgress, setPostInProgress] = useState<boolean>(false);
@@ -44,14 +43,10 @@ const AskAQuestionPage = ({ intl }: any) => {
   const containerClassName = classNames(style.pageContainer, 'w-80');
   const postQuestionButtonClassName = 'mb-3';
   const topUpButtonClassName = 'mb-3';
-  const topUpGroupClassName =
-    'd-flex flex-column align-items-end justify-content-evenly';
+  const topUpGroupClassName = 'd-flex flex-column align-items-end justify-content-evenly';
 
   const pageTitle = (
-    <FormattedMessage
-      id="AskAQuestionPage.pageTitle"
-      defaultMessage="Ask a question"
-    />
+    <FormattedMessage id="AskAQuestionPage.pageTitle" defaultMessage="Ask a question" />
   );
   const questionTitle = intl.formatMessage({
     id: 'AskAQuestionPage.questionTitle',
@@ -62,10 +57,7 @@ const AskAQuestionPage = ({ intl }: any) => {
     defaultMessage: 'e.g How do I...',
   });
   const questionBody = (
-    <FormattedMessage
-      id="AskAQuestionPage.questionBody"
-      defaultMessage="Body"
-    />
+    <FormattedMessage id="AskAQuestionPage.questionBody" defaultMessage="Body" />
   );
   const questionTags = intl.formatMessage({
     id: 'AskAQuestionPage.questionTags',
@@ -114,20 +106,20 @@ const AskAQuestionPage = ({ intl }: any) => {
     title: string;
     body: string;
     tags: string;
-    bounty: number;
-    bountyDueDate: Date;
+    bounty: number | null;
+    bountyDueDate: Date | null;
   }
   const navigate = useNavigate();
   const schema = Joi.object({
     title: Joi.string().min(10).max(100).required().label('Title'),
     body: Joi.string().min(20).required().label('Body'),
     tags: Joi.string().allow('', null).label('Tags'),
-    bounty: Joi.number().min(0).max(balance).label('Bounty amount'),
-    bountyDueDate: Joi.date().min(new Date()).label('Due date'),
+    bounty: Joi.number().allow(null).greater(0).max(balance).label('Bounty amount'),
+    bountyDueDate: Joi.date().allow(null).greater(new Date()).label('Due date'),
   });
 
   const {
-    register,
+    setValue,
     handleSubmit,
     formState: { errors, isDirty, isValid },
     control,
@@ -138,12 +130,12 @@ const AskAQuestionPage = ({ intl }: any) => {
       title: '',
       body: '',
       tags: '',
-      bounty: 0,
+      bounty: null,
+      bountyDueDate: null,
     },
   });
 
-  const formatIntoArray = (input: string) =>
-    input.replace(/\s+/g, '').split(',');
+  const formatIntoArray = (input: string) => input.replace(/\s+/g, '').split(',');
 
   const handlePostQuestion: SubmitHandler<Question> = async data => {
     const { tags } = data;
@@ -151,7 +143,7 @@ const AskAQuestionPage = ({ intl }: any) => {
       ...data,
       tags: formatIntoArray(tags),
       bounty: isBountyOn ? data.bounty : -1,
-      bountyDueDate: isBountyOn ? data.bountyDueDate : undefined
+      bountyDueDate: isBountyOn ? data.bountyDueDate : undefined,
     };
     try {
       setPostInProgress(true);
@@ -167,25 +159,43 @@ const AskAQuestionPage = ({ intl }: any) => {
 
   useEffect(() => {
     if (currentUser?._id) {
-      profileAPI.getUserProfileInfoById(currentUser?._id!)
+      profileAPI
+        .getUserProfileInfoById(currentUser?._id!)
         .then((res: any) => {
           const { user } = res;
           setBalance(user.customerWallet.point);
         })
         .catch(error => {
           const errorMsg = getErrorMessage(error);
-          const errorCode: any = errorCodes.profile[errorMsg as keyof typeof errorCodes.profile];
+          const errorCode: any =
+            errorCodes.profile[errorMsg as keyof typeof errorCodes.profile];
           toast.error(intl.formatMessage({ id: `Profile.${errorCode}` }));
-        })
+        });
     }
-  }, [currentUser])
+  }, [currentUser]);
 
+  const handleToggleSetBounty = () => {
+    if (isBountyOn) {
+      setValue('bounty', null, { shouldValidate: true });
+      setValue('bountyDueDate', null, { shouldValidate: true });
+    } else {
+      setValue('bounty', 1, {
+        shouldDirty: false,
+        shouldValidate: true,
+      });
+      setValue('bountyDueDate', new Date(), {
+        shouldDirty: false,
+        shouldValidate: true,
+      });
+    }
+    setIsBountyOn(!isBountyOn);
+  };
   return (
     <PageWithNavbar branch={navbarBranches.question}>
       <Container className={containerClassName}>
         <h1 className={style.pageTitle}>{pageTitle}</h1>
 
-        <Form onSubmit={handleSubmit(handlePostQuestion)} className='d-flex flex-column'>
+        <Form onSubmit={handleSubmit(handlePostQuestion)} className="d-flex flex-column">
           <Card className={cardClassName}>
             <Card.Body>
               <FormInput
@@ -208,7 +218,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                     <RichTextEditor
                       onChange={onChange}
                       onBlur={onBlur}
-                    // initialValue={question.body}
+                      // initialValue={question.body}
                     />
                   )}
                 />
@@ -228,8 +238,8 @@ const AskAQuestionPage = ({ intl }: any) => {
                 labelClassName={style.label}
               />
               <Form.Text muted>
-                Each tag should only be a word, multiple tags should be
-                separated by a comma
+                Each tag should only be a word, multiple tags should be separated by a
+                comma
               </Form.Text>
             </Card.Body>
           </Card>
@@ -237,17 +247,18 @@ const AskAQuestionPage = ({ intl }: any) => {
           <Button
             id="checkBounty"
             variant={isBountyOn ? 'primary' : 'outline-primary'}
-            onClick={() => setIsBountyOn(!isBountyOn)}
+            onClick={() => handleToggleSetBounty()}
             className={style.checkBountyButton}
           >
-            {isBountyOn
-              ? <FormattedMessage id='AskAQuestionPage.removeBountyLabel' />
-              : <FormattedMessage id='AskAQuestionPage.addBountyLabel' />
-            }
+            {isBountyOn ? (
+              <FormattedMessage id="AskAQuestionPage.removeBountyLabel" />
+            ) : (
+              <FormattedMessage id="AskAQuestionPage.addBountyLabel" />
+            )}
           </Button>
 
-          {isBountyOn
-            ? <Card className={cardClassName}>
+          {isBountyOn ? (
+            <Card className={cardClassName}>
               <Card.Body>
                 <Row>
                   <Col md={8}>
@@ -273,7 +284,9 @@ const AskAQuestionPage = ({ intl }: any) => {
 
                 <Row>
                   <FormInput
-                    label={intl.formatMessage({ id: 'AskAQuestionPage.bountyDueDateLabel' })}
+                    label={intl.formatMessage({
+                      id: 'AskAQuestionPage.bountyDueDateLabel',
+                    })}
                     name="bountyDueDate"
                     control={control}
                     type="date"
@@ -282,8 +295,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                 </Row>
               </Card.Body>
             </Card>
-            : null
-          }
+          ) : null}
 
           <Alert
             variant="danger"
