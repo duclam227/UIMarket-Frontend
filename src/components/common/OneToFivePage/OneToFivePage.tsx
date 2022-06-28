@@ -26,12 +26,7 @@ const PageWithSideNav: FC = props => {
           <div className={`${style.pageContainer} container-fluid p-0`}>
             <Row className={`m-0`}>
               <Col lg={3} xl={2} className={`p-0 position-sticky top-0`}>
-                <Navbar
-                  collapseOnSelect
-                  expand="lg"
-                  sticky="top"
-                  className={`p-0`}
-                >
+                <Navbar collapseOnSelect expand="lg" sticky="top" className={`p-0`}>
                   <Container fluid className={`p-0`}>
                     <Navbar.Toggle
                       aria-controls={`offcanvasNavbar-expand-lg`}
@@ -42,6 +37,9 @@ const PageWithSideNav: FC = props => {
                       aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
                       placement="start"
                     >
+                      <Offcanvas.Header closeButton>
+                        <Offcanvas.Title>Menu</Offcanvas.Title>
+                      </Offcanvas.Header>
                       <Offcanvas.Body className={`p-0`}>
                         <SideNav />
                       </Offcanvas.Body>
