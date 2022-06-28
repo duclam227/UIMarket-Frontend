@@ -1,4 +1,6 @@
 import { FC } from 'react';
+import { FormattedMessage } from 'react-intl';
+
 import { GeneralAnswerInfo } from '../UserProfilePage';
 
 import Container from 'react-bootstrap/Container';
@@ -18,22 +20,33 @@ const AllTopAnswers: FC<Props> = props => {
     <Container>
       <Row className="justify-content-between mt-2">
         <Col>
-          <h3>Top Answers</h3>
+          <h3>
+            <FormattedMessage
+              id="UserActivityTab.topAnswersLabel"
+              defaultMessage="Top Answers"
+            />
+          </h3>
         </Col>
       </Row>
       <Row className="gx-0">
         <InfoCardContainer style={{ maxHeight: '200em' }}>
           <>
-            {profileTopAnswers?.map(answer => (
-              <QuestionItem
-                answerId={answer._id}
-                questionId={answer.questionId._id}
-                questionTitle={answer.questionId.questionTitle}
-                key={answer._id}
-                questionPoints={answer.totalUpvote}
-                statVariant="point"
-              />
-            ))}
+            {profileTopAnswers && profileTopAnswers.length > 0 ? (
+              profileTopAnswers?.map(answer => (
+                <QuestionItem
+                  answerId={answer._id}
+                  questionId={answer.questionId._id}
+                  questionTitle={answer.questionId.questionTitle}
+                  key={answer._id}
+                  questionPoints={answer.totalUpvote}
+                  statVariant="point"
+                />
+              ))
+            ) : (
+              <div className={`p-2`}>
+                <FormattedMessage id="UserActivityTab.noData" />
+              </div>
+            )}
           </>
         </InfoCardContainer>
       </Row>

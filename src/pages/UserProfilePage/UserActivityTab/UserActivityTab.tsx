@@ -141,7 +141,7 @@ const UserActivityTab: FC<Props> = props => {
             </Col>
           </Row>{' '}
           <InfoCardContainer className="p-3" style={{ maxHeight: '30em' }}>
-            {profileTopAnswers && profileTopAnswers.length > 0 ? (
+            {profileTagStats && profileTagStats.length > 0 ? (
               <>
                 {profileTagStats?.slice(0, 4).map(tagStat => (
                   <Row className="mb-2 justify-content-between" key={tagStat._id}>
@@ -156,7 +156,9 @@ const UserActivityTab: FC<Props> = props => {
                 ))}
               </>
             ) : (
-              <div className={`p-2`}>This user has no such data</div>
+              <div className={`p-2`}>
+                <FormattedMessage id="UserActivityTab.noData" />
+              </div>
             )}
           </InfoCardContainer>
         </Col>
@@ -189,7 +191,9 @@ const UserActivityTab: FC<Props> = props => {
               ))}
             </>
           ) : (
-            <div className={`p-3`}>This user has no such data</div>
+            <div className={`p-3`}>
+              <FormattedMessage id="UserActivityTab.noData" />
+            </div>
           )}
         </InfoCardContainer>
       </Row>
@@ -220,7 +224,9 @@ const UserActivityTab: FC<Props> = props => {
               ))}
             </>
           ) : (
-            <div className={`p-3`}>This user has no such data</div>
+            <div className={`p-3`}>
+              <FormattedMessage id="UserActivityTab.noData" />
+            </div>
           )}
         </InfoCardContainer>
       </Row>
@@ -259,7 +265,9 @@ const UserActivityTab: FC<Props> = props => {
               ))}
             </>
           ) : (
-            <div className={`p-3`}>This user has no such data</div>
+            <div className={`p-3`}>
+              <FormattedMessage id="UserActivityTab.noData" />
+            </div>
           )}
         </InfoCardContainer>
       </Row>

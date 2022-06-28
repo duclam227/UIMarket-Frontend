@@ -437,6 +437,7 @@
   "UserActivityTab.seeAllLinkLabel": "See all",
   "UserActivityTab.offeredBountyNavBtnLabel": "Offered",
   "UserActivityTab.earnedBountyNavBtnLabel": "Earned",
+  "UserActivityTab.noData":"This user has no such data!",
   "UserProfilePage.editProfileBtnLabel": "Edit profile",
   "UserProfilePage.viewShopBtnLabel": "View shop",
   "UserProfilePage.activityTabNavBtnLabel": "Activity",

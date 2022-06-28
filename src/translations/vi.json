@@ -437,6 +437,7 @@
   "UserActivityTab.seeAllLinkLabel": "Xem tất cả",
   "UserActivityTab.offeredBountyNavBtnLabel": "Đã treo thưởng",
   "UserActivityTab.earnedBountyNavBtnLabel": "Đã nhận thưởng",
+  "UserActivityTab.noData": "Không có dữ liệu! ",
   "UserProfilePage.viewShopBtnLabel": "Xem cửa hàng",
   "UserProfilePage.editProfileBtnLabel": "Chỉnh sửa thông tin",
   "UserProfilePage.activityTabNavBtnLabel": "Hoạt động",
