@@ -62,7 +62,8 @@ const Comment: FC<Props> = props => {
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.comment[errorMsg as keyof typeof errorCodes.comment];
+        const errorCode: any =
+          errorCodes.comment[errorMsg as keyof typeof errorCodes.comment];
         toast.error(intl.formatMessage({ id: `Comment.${errorCode}` }));
       });
   };
@@ -118,7 +119,8 @@ const Comment: FC<Props> = props => {
               })
               .catch(error => {
                 const errorMsg = getErrorMessage(error);
-                const errorCode: any = errorCodes.comment[errorMsg as keyof typeof errorCodes.comment];
+                const errorCode: any =
+                  errorCodes.comment[errorMsg as keyof typeof errorCodes.comment];
                 toast.error(intl.formatMessage({ id: `Comment.${errorCode}` }));
               });
           }}
@@ -136,11 +138,9 @@ const Comment: FC<Props> = props => {
         <UserAvatar image={comment.userId.customerAvatar} />
       </div>
       <div className={style.content}>
-        <div className={style.authorInfo + "text-nowrap"}>
-          <Link to={`/user/${comment.userId._id}`}>
-            {comment.userId.customerName}
-          </Link>
-          <ThreeDotMenu menuItems={menuItems} />
+        <div className={style.authorInfo + 'text-nowrap'}>
+          <Link to={`/user/${comment.userId._id}`}>{comment.userId.customerName}</Link>
+          {currentUser ? <ThreeDotMenu menuItems={menuItems} /> : null}
         </div>
         {isEdit ? (
           <SectionEditComment

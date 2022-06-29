@@ -159,7 +159,7 @@ const Question: FC<QuestionProps> = props => {
         {question.questionTag && (
           <div className={style.tagsContainer}>{renderTags(question.questionTag)}</div>
         )}
-        <ThreeDotMenu menuItems={menuItems} />
+        {currentUser ? <ThreeDotMenu menuItems={menuItems} /> : null}
         <ReportModal
           show={showReportModal}
           onClose={handleCloseReportModal}

@@ -112,7 +112,7 @@ const ViewProductPage: React.FC<IProps> = props => {
 
   const handleGoBack = () => {
     navigate(-1);
-  }
+  };
 
   return isLoading || !product ? (
     <PageWithNavbar>
@@ -160,7 +160,7 @@ const ViewProductPage: React.FC<IProps> = props => {
             isActive={isActive}
           />
           <SectionSeller product={product!} currentUser={currentUser!} />
-          {(!isCurrentUserSeller && isActive) ? (
+          {currentUser && !isCurrentUserSeller && isActive ? (
             <div className={style.reportPanel} onClick={() => handleShowReportModal!()}>
               <BsFlag />
               <FormattedMessage id="ViewProductPage.reportProduct" />
