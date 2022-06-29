@@ -83,7 +83,6 @@ const ViewProductPage: React.FC<IProps> = props => {
     productAPI
       .getProductById(id!)
       .then((res: any) => {
-        console.log(res);
         setProduct(res.product);
         setIsBought(res.isBought);
         setIsActive(res.product.productStatus === 1);
@@ -112,7 +111,7 @@ const ViewProductPage: React.FC<IProps> = props => {
 
   const handleGoBack = () => {
     navigate(-1);
-  }
+  };
 
   return isLoading || !product ? (
     <PageWithNavbar>
@@ -160,7 +159,7 @@ const ViewProductPage: React.FC<IProps> = props => {
             isActive={isActive}
           />
           <SectionSeller product={product!} currentUser={currentUser!} />
-          {(!isCurrentUserSeller && isActive) ? (
+          {currentUser && !isCurrentUserSeller && isActive ? (
             <div className={style.reportPanel} onClick={() => handleShowReportModal!()}>
               <BsFlag />
               <FormattedMessage id="ViewProductPage.reportProduct" />
@@ -168,7 +167,7 @@ const ViewProductPage: React.FC<IProps> = props => {
           ) : null}
         </div>
       </div>
-      <Modal show={isDeleted} onHide={handleGoBack}>
+      <Modal show={isDeleted || product.isBanned === 1} onHide={handleGoBack}>
         <Modal.Header closeButton>
           <Modal.Title>
             <FormattedMessage id="ViewProductPage.deleteModalTitle" />

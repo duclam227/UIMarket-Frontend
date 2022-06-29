@@ -224,7 +224,7 @@ const Answer: FC<SectionAnswerProps> = props => {
           <Link to={`/user/${answer.customerInfo[0]._id}`}>
             {answer.customerInfo[0].customerName}
           </Link>
-          <ThreeDotMenu menuItems={menuItems} />
+          {currentUser ? <ThreeDotMenu menuItems={menuItems} /> : null}
         </div>
         {isEdit ? (
           <SectionEditAnswer
