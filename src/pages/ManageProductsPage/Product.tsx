@@ -28,6 +28,9 @@ const Product: React.FC<Props> = props => {
   const inactiveBadgeLabel = (
     <FormattedMessage id="ManageProductsPage.Product.inactiveBadgeLabel" />
   );
+  const bannedBadgeLabel = (
+    <FormattedMessage id="ManageProductsPage.Product.bannedBadgeLabel" />
+  );
   const editMenuItemLabel = (
     <FormattedMessage id="ManageProductsPage.Product.editMenuItemLabel" />
   );
@@ -60,11 +63,17 @@ const Product: React.FC<Props> = props => {
     onDeactivateProduct,
     onActivateProduct,
   } = props;
+  const productIsNotBanned = !product.isBanned;
 
-  useEffect(() => {
-    console.log(product.last30Days);
-  });
+  const renderStatusStyle = () => {
+    if (product.isBanned) return 'bg-danger';
+    return product.productStatus ? style.active : style.inactive;
+  };
 
+  const renderStatusText = () => {
+    if (product.isBanned) return bannedBadgeLabel;
+    return product.productStatus ? activeBadgeLabel : inactiveBadgeLabel;
+  };
   return (
     <div className={`px-4 pt-1 pb-3 ${style.productWrapper}`}>
       {/* Product description and status */}
@@ -108,61 +117,63 @@ const Product: React.FC<Props> = props => {
         >
           {/* {Product status} */}
           <span
-            className={`border d-flex align-items-center ${style.statusBadge} ${
-              product.productStatus ? style.active : style.inactive
-            }`}
+            className={`border d-flex align-items-center ${
+              style.statusBadge
+            } ${renderStatusStyle()}`}
           >
-            {product.productStatus ? activeBadgeLabel : inactiveBadgeLabel}
+            {renderStatusText()}
           </span>
           {/* Settings dropdown menu */}
 
           <div>
-            <div className="dropdown">
-              <div
-                id="settingsMenuDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <BsGearFill style={{ color: '#5c5c5c' }} />
-                <BsCaretDownFill style={{ color: '#5c5c5c' }} />
+            {productIsNotBanned ? (
+              <div className="dropdown">
+                <div
+                  id="settingsMenuDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <BsGearFill style={{ color: '#5c5c5c' }} />
+                  <BsCaretDownFill style={{ color: '#5c5c5c' }} />
+                </div>
+                <ul
+                  className="dropdown-menu position-absolute mt-1"
+                  aria-labelledby="settingsMenuDropdown"
+                >
+                  <li>
+                    <Link to={`/product/${product._id}/edit`} className="dropdown-item">
+                      {editMenuItemLabel}
+                    </Link>
+                  </li>
+                  <li>
+                    {product.productStatus ? (
+                      <span
+                        onClick={() => onDeactivateProduct(product._id)}
+                        className="dropdown-item"
+                      >
+                        {hideMenuItemLabel}
+                      </span>
+                    ) : (
+                      <span
+                        onClick={() => onActivateProduct(product._id)}
+                        className="dropdown-item"
+                      >
+                        {unHideMenuItemLabel}
+                      </span>
+                    )}
+                  </li>
+                  <li>
+                    <span
+                      onClick={() => onDeleteProduct(product._id)}
+                      className="dropdown-item text-danger"
+                    >
+                      {deleteMenuItemLabel}
+                    </span>
+                  </li>
+                </ul>
               </div>
-              <ul
-                className="dropdown-menu position-absolute mt-1"
-                aria-labelledby="settingsMenuDropdown"
-              >
-                <li>
-                  <Link to={`/product/${product._id}/edit`} className="dropdown-item">
-                    {editMenuItemLabel}
-                  </Link>
-                </li>
-                <li>
-                  {product.productStatus ? (
-                    <span
-                      onClick={() => onDeactivateProduct(product._id)}
-                      className="dropdown-item"
-                    >
-                      {hideMenuItemLabel}
-                    </span>
-                  ) : (
-                    <span
-                      onClick={() => onActivateProduct(product._id)}
-                      className="dropdown-item"
-                    >
-                      {unHideMenuItemLabel}
-                    </span>
-                  )}
-                </li>
-                <li>
-                  <span
-                    onClick={() => onDeleteProduct(product._id)}
-                    className="dropdown-item text-danger"
-                  >
-                    {deleteMenuItemLabel}
-                  </span>
-                </li>
-              </ul>
-            </div>
+            ) : null}
           </div>
         </Col>
       </Row>

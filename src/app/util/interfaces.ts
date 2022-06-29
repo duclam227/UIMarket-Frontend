@@ -1,12 +1,12 @@
 import { any, string } from 'joi';
 import { FormattedMessage } from 'react-intl';
 export interface question {
-	title: string;
-	body: string;
-	tags: string[];
-	bounty: number;
-	question: string;
-	bountyDueDate?: Date;
+  title: string;
+  body: string;
+  tags: string[];
+  bounty: number;
+  question: string;
+  bountyDueDate?: Date;
 }
 
 export interface navigatorTabItem {
@@ -66,6 +66,7 @@ export interface product {
     totalRevenue: number;
     totalSold: number;
   };
+  isBanned: number;
   productName: string;
   productPrice: number;
   productCategory: any;

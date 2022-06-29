@@ -242,6 +242,7 @@
   "LoginForm.invalidAuthentication": "Sai email hoặc mật khẩu.",
   "ManageProductsPage.Product.activeBadgeLabel": "Đang mở bán",
   "ManageProductsPage.Product.inactiveBadgeLabel": "Đã ẩn",
+  "ManageProductsPage.Product.bannedBadgeLabel": "Đã bị chặn",
   "ManageProductsPage.Product.editMenuItemLabel": "Chỉnh sửa",
   "ManageProductsPage.Product.hideMenuItemLabel": "Ẩn",
   "ManageProductsPage.Product.unHideMenuItemLabel": "Hiện",

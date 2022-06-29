@@ -242,6 +242,7 @@
   "LoginForm.invalidAuthentication": "Incorrect email or password.",
   "ManageProductsPage.Product.activeBadgeLabel": "Active",
   "ManageProductsPage.Product.inactiveBadgeLabel": "Inactive",
+  "ManageProductsPage.Product.bannedBadgeLabel": "Banned",
   "ManageProductsPage.Product.editMenuItemLabel": "Edit",
   "ManageProductsPage.Product.hideMenuItemLabel": "Hide",
   "ManageProductsPage.Product.unHideMenuItemLabel": "Unhide",
