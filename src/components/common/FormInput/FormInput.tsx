@@ -9,6 +9,7 @@ import {
 } from 'react-hook-form';
 
 import style from './FormInput.module.css';
+import ValidationErrorMessage from './ValidationErrorMessage';
 interface InputProps<T extends FieldValues> extends UseControllerProps<T> {
   //Q: Why do we have this weird TypeScript generics thing?
   //A: Above is a workaround, the goal is to pass MyDefinedFormFields interface from parent <Form> to this reusable input component. So at runtime it would look like this UseControllerProps<MyDefinedFormFields>
@@ -46,9 +47,7 @@ const FormInput = <T extends FieldValues>(props: InputProps<T>) => {
       {label && <Form.Label className={labelClassName}>{label}</Form.Label>}
       <Form.Control isInvalid={error ? true : false} {...field} {...rest} />
       {error?.message && (
-        <div className={style.error}>
-          {error.message}
-        </div>
+        <ValidationErrorMessage message={error.message}/>
       )}
     </Form.Group>
   );
