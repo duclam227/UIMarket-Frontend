@@ -15,7 +15,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import Alert from 'react-bootstrap/Alert';
 
 import { logInWithJWT } from '../../redux/index';
-import { FormInput, OneToFivePage } from '../../components';
+import { FormInput, OneToFivePage, ValidationErrorMessage } from '../../components';
 import profileAPI from '../../api/profile';
 import s3API from '../../api/amazonS3';
 import { genericAvatarUrl } from '../../app/util/const';
@@ -31,10 +31,7 @@ interface EditProfilePageProps {
 
 const EditProfilePage: FC<EditProfilePageProps> = ({ intl }) => {
   const pageTitle = (
-    <FormattedMessage
-      id="EditProfilePage.pageTitle"
-      defaultMessage="Edit Profile"
-    />
+    <FormattedMessage id="EditProfilePage.pageTitle" defaultMessage="Edit Profile" />
   );
   const pageSubTitle = (
     <FormattedMessage
@@ -53,16 +50,10 @@ const EditProfilePage: FC<EditProfilePageProps> = ({ intl }) => {
     defaultMessage: 'Name',
   });
   const bioFormInputLabel = (
-    <FormattedMessage
-      id="EditProfilePage.bioFormInputLabel"
-      defaultMessage="Bio"
-    />
+    <FormattedMessage id="EditProfilePage.bioFormInputLabel" defaultMessage="Bio" />
   );
   const saveBtnLabel = (
-    <FormattedMessage
-      id="EditProfilePage.saveBtnLabel"
-      defaultMessage="Save changes"
-    />
+    <FormattedMessage id="EditProfilePage.saveBtnLabel" defaultMessage="Save changes" />
   );
   const changeAvatarBtnLabel = (
     <FormattedMessage
@@ -135,9 +126,7 @@ const EditProfilePage: FC<EditProfilePageProps> = ({ intl }) => {
     }
   };
 
-  const handleChangeAvatar = async ({
-    target: input,
-  }: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeAvatar = async ({ target: input }: ChangeEvent<HTMLInputElement>) => {
     if (!input.files) return;
     const selectedFile = input.files[0];
     const previousAvatar = avatarUrl;
@@ -192,11 +181,7 @@ const EditProfilePage: FC<EditProfilePageProps> = ({ intl }) => {
                   {...register('bio')}
                   isInvalid={errors.bio ? true : false}
                 />
-                {errors.bio && (
-                  <Alert variant="danger" className="mt-2">
-                    {errors.bio.message}
-                  </Alert>
-                )}
+                {errors.bio && <ValidationErrorMessage message={errors.bio.message!} />}
               </Form.Group>
               <Button type="submit" disabled={!isDirty || !isValid}>
                 {saveBtnLabel}

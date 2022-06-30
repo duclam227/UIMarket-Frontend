@@ -18,7 +18,7 @@ import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 
-import { FormInput, PageWithNavbar } from '../../components';
+import { FormInput, PageWithNavbar, ValidationErrorMessage } from '../../components';
 import { RichTextEditor } from '../../components';
 import { getErrorMessage } from '../../app/util';
 import { navbarBranches } from '../../app/util/config';
@@ -222,11 +222,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                     />
                   )}
                 />
-                {errors.body && (
-                  <Alert variant="danger" className="mt-2">
-                    {errors.body.message}
-                  </Alert>
-                )}
+                {errors.body && <ValidationErrorMessage message={errors.body.message!} />}
               </Form.Group>
 
               <FormInput

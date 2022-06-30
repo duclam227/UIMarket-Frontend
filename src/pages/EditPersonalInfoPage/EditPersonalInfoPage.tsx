@@ -18,7 +18,7 @@ import Alert from 'react-bootstrap/Alert';
 import { BsPencil } from 'react-icons/bs';
 
 import { logInWithJWT } from '../../redux/index';
-import { OneToFivePage } from '../../components';
+import { OneToFivePage, ValidationErrorMessage } from '../../components';
 
 import profileAPI from '../../api/profile';
 import { getErrorMessage } from '../../app/util';
@@ -228,9 +228,7 @@ const EditPersonalInfoPage: FC<IProps> = props => {
               </Col>
               {errors.email && (
                 <Col sm={12} md={5} lg={5}>
-                  <Alert variant="danger" className="my-1">
-                    {errors.email.message}
-                  </Alert>
+                  <ValidationErrorMessage message={errors.email.message!} />
                 </Col>
               )}
             </Form.Group>
@@ -264,9 +262,7 @@ const EditPersonalInfoPage: FC<IProps> = props => {
               </Col>
               {errors.dob && (
                 <Col sm={12} md={5} lg={5}>
-                  <Alert variant="danger" className="my-1">
-                    {errors.dob.message}
-                  </Alert>
+                  <ValidationErrorMessage message={errors.dob.message!} />
                 </Col>
               )}
               {!isEditMode && (
@@ -300,7 +296,7 @@ const EditPersonalInfoPage: FC<IProps> = props => {
               <Col sm={12} md={4} lg={5} className="d-flex align-items-center">
                 <Form.Control
                   type="text"
-                  placeholder='No phone number added yet'
+                  placeholder="No phone number added yet"
                   plaintext={!isEditMode}
                   readOnly={!isEditMode}
                   {...register('phone')}
@@ -308,9 +304,7 @@ const EditPersonalInfoPage: FC<IProps> = props => {
               </Col>
               {errors.phone && (
                 <Col sm={12} md={5} lg={5}>
-                  <Alert variant="danger" className="my-1">
-                    {errors.phone.message}
-                  </Alert>
+                  <ValidationErrorMessage message={errors.phone.message!} />
                 </Col>
               )}
               {!isEditMode && (

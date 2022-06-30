@@ -6,7 +6,7 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import Joi from "joi";
 import { joiResolver } from "@hookform/resolvers/joi";
 
-import { RichTextEditor, FormInput } from "../../components";
+import { RichTextEditor, FormInput, ValidationErrorMessage } from "../../components";
 
 import categoryAPI from "../../api/category";
 
@@ -155,9 +155,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
           )}
         />
         {errors.productDescription && (
-          <Alert variant="danger" className="mt-2">
-            {errors.productDescription.message}
-          </Alert>
+          <ValidationErrorMessage message={errors.productDescription.message}/>
         )}
       </Form.Group>
     </Form >
