@@ -82,6 +82,12 @@ const RecoverPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
     email: Joi.string()
       .email({ tlds: { allow: false } })
       .required()
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.missingEmail' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.requiredEmail' }),
+        'string.email': intl.formatMessage({ id: 'FormValidation.missingEmail' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.requiredEmail' }),
+      })
       .label('Email'),
   });
   const { handleSubmit, control } = useForm<RecoverCredentials>({

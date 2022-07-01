@@ -50,9 +50,12 @@ const EditQuestionPage = ({ intl }: any) => {
     id: 'EditQuestionPage.questionTitlePlaceholder',
     defaultMessage: 'e.g How do I...',
   });
-  const questionBody = (
-    <FormattedMessage id="EditQuestionPage.questionBody" defaultMessage="Body" />
-  );
+  const questionBody = intl.formatMessage({
+    id: 'EditQuestionPage.questionBody',
+  });
+  // const questionBody = (
+  //   <FormattedMessage id="EditQuestionPage.questionBody" defaultMessage="Body" />
+  // );
   const questionTags = intl.formatMessage({
     id: 'EditQuestionPage.questionTags',
     defaultMessage: 'Tags',
@@ -68,6 +71,9 @@ const EditQuestionPage = ({ intl }: any) => {
       defaultMessage="Add a bounty"
     />
   );
+  const bountyLabel = intl.formatMessage({
+    id: 'AskAQuestionPage.bountyLabel',
+  });
   const addBountyDescription = (
     <FormattedMessage
       id="EditQuestionPage.addBountyDescription"
@@ -80,12 +86,9 @@ const EditQuestionPage = ({ intl }: any) => {
       defaultMessage="Balance: $"
     />
   );
-  const addBountyTopUpBtnText = (
-    <FormattedMessage
-      id="EditQuestionPage.addBountyTopUpBtnText"
-      defaultMessage="Top up"
-    />
-  );
+  const bountyDueDateText = intl.formatMessage({
+    id: 'AskAQuestionPage.bountyDueDateText',
+  });
   const addBountyInputPlaceholder = intl.formatMessage({
     id: 'EditQuestionPage.addBountyInputPlaceholder',
     defaultMessage: '$10',
@@ -118,15 +121,58 @@ const EditQuestionPage = ({ intl }: any) => {
   const currentUser = useSelector((state: State) => state.auth.user);
   const navigate = useNavigate();
   const schema = Joi.object({
-    title: Joi.string().min(10).max(100).required().label('Title'),
-    body: Joi.string().min(20).required().label('Body'),
-    tags: Joi.string().allow('', null).label('Tags'),
+    title: Joi.string()
+      .min(10)
+      .max(100)
+      .required()
+      .label(questionTitle)
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'string.min': intl.formatMessage({ id: 'FormValidation.stringMin' }),
+        'string.max': intl.formatMessage({ id: 'FormValidation.stringMax' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
+    body: Joi.string()
+      .min(20)
+      .required()
+      .label(questionBody)
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'string.min': intl.formatMessage({ id: 'FormValidation.stringMin' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
+    tags: Joi.string()
+      .allow('', null)
+      .max(40)
+      .label(questionTags)
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'string.max': intl.formatMessage({ id: 'FormValidation.stringMax' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
     bounty: Joi.number()
       .allow(null)
       .greater(currentBounty)
       .max(balance)
-      .label('Bounty amount'),
-    bountyDueDate: Joi.date().allow(null).min(new Date()).label('Due date'),
+      .label(bountyLabel)
+      .messages({
+        'number.base': intl.formatMessage({ id: 'FormValidation.numberBase' }),
+        'number.max': intl.formatMessage({ id: 'FormValidation.numberMax' }),
+        'number.greater': intl.formatMessage({ id: 'FormValidation.numberGreater' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
+    bountyDueDate: Joi.date()
+      .allow(null)
+      .greater(new Date())
+      .label(bountyDueDateText)
+      .messages({
+        'date.base': intl.formatMessage({ id: 'FormValidation.dateBase' }),
+        'date.greater': intl.formatMessage({ id: 'FormValidation.dateGreater' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
   });
 
   const {

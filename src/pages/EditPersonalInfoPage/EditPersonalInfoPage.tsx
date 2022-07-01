@@ -54,15 +54,18 @@ const EditPersonalInfoPage: FC<IProps> = props => {
   const emailLabel = (
     <FormattedMessage id="EditPersonalInfoPage.emailLabel" defaultMessage="Email" />
   );
-  const dobLabel = (
-    <FormattedMessage id="EditPersonalInfoPage.dobLabel" defaultMessage="Birthday" />
-  );
-  const phoneLabel = (
-    <FormattedMessage
-      id="EditPersonalInfoPage.phoneLabel"
-      defaultMessage="Phone number"
-    />
-  );
+  // const dobLabel = (
+  //   <FormattedMessage id="EditPersonalInfoPage.dobLabel" defaultMessage="Birthday" />
+  // );
+  const dobLabel = intl.formatMessage({ id: 'EditPersonalInfoPage.dobLabel' });
+  // const phoneLabel = (
+  //   <FormattedMessage
+  //     id="EditPersonalInfoPage.phoneLabel"
+  //     defaultMessage="Phone number"
+  //   />
+  // );
+  const phoneLabel = intl.formatMessage({ id: 'EditPersonalInfoPage.phoneLabel' });
+  const phoneNumber = intl.formatMessage({ id: 'EditPersonalInfoPage.phoneNumber' });
   const editBtnLabel = (
     <FormattedMessage id="EditPersonalInfoPage.editBtnLabel" defaultMessage="Edit" />
   );
@@ -100,13 +103,31 @@ const EditPersonalInfoPage: FC<IProps> = props => {
       .email({ tlds: { allow: false } })
       //tlds: Top-Level Domain Something, set this to false because it said that built-in TLD is disabled, idk :\
       .required()
-      .label('Email'),
-    dob: Joi.date().iso().label('Birthday'),
+      .label('Email')
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'string.email': intl.formatMessage({ id: 'FormValidation.stringEmail' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
+    dob: Joi.date()
+      .iso()
+      .label(dobLabel)
+      .messages({
+        'date.base': intl.formatMessage({ id: 'FormValidation.dateBase' }),
+      }),
     phone: Joi.string()
       .allow(null, '')
       .max(11)
-      .pattern(/^[0-9]+$/, { name: 'phone numbers' }) // phone number pattern
-      .label('Phone number'),
+      .pattern(/^[0-9]+$/, phoneNumber) // phone number pattern
+      .label(phoneLabel)
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'string.max': intl.formatMessage({ id: 'FormValidation.stringMax' }),
+        'string.pattern.name': intl.formatMessage({ id: 'FormValidation.stringPatternName' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
   });
   const {
     register,

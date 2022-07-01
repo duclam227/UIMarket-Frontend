@@ -49,9 +49,13 @@ const EditProfilePage: FC<EditProfilePageProps> = ({ intl }) => {
     id: 'EditProfilePage.nameFormInputLabel',
     defaultMessage: 'Name',
   });
-  const bioFormInputLabel = (
-    <FormattedMessage id="EditProfilePage.bioFormInputLabel" defaultMessage="Bio" />
-  );
+  const bioFormInputLabel = intl.formatMessage({
+    id: 'EditProfilePage.bioFormInputLabel',
+    defaultMessage: 'Bio',
+  });
+  // const bioFormInputLabel = (
+  //   <FormattedMessage id="EditProfilePage.bioFormInputLabel" defaultMessage="Bio" />
+  // );
   const saveBtnLabel = (
     <FormattedMessage id="EditProfilePage.saveBtnLabel" defaultMessage="Save changes" />
   );
@@ -62,8 +66,27 @@ const EditProfilePage: FC<EditProfilePageProps> = ({ intl }) => {
     />
   );
   const schema = Joi.object({
-    name: Joi.string().max(20).trim().required().label('Name'),
-    bio: Joi.string().max(100).trim().label('Bio'),
+    name: Joi.string()
+      .max(20)
+      .trim()
+      .required()
+      .label(nameFormInputLabel)
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'string.max': intl.formatMessage({ id: 'FormValidation.stringMax' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
+    bio: Joi.string()
+      .max(100)
+      .trim()
+      .label(bioFormInputLabel)
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'string.max': intl.formatMessage({ id: 'FormValidation.stringMax' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
   });
 
   const dispatch = useDispatch();
