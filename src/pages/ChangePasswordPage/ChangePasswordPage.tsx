@@ -49,12 +49,24 @@ const ChangePasswordPage: FC<{ intl: IntlShape }> = ({ intl }) => {
   const navigate = useNavigate();
   const params = useParams();
   const schema = Joi.object({
-    newPassword: Joi.string().required().label('New password'),
+    newPassword: Joi.string()
+      .required()
+      .label(newPasswordLabel)
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
     confirmPassword: Joi.any()
       .equal(Joi.ref('newPassword'))
       .required()
-      .label('Confirm password')
-      .options({ messages: { 'any.only': '{{#label}} does not match' } }),
+      .label(confirmPasswordLabel)
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+        'any.only': intl.formatMessage({ id: 'FormValidation.passwordNotMatch' }),
+      }),
   });
 
   const { handleSubmit, control } = useForm<ChangePasswordRHFProps>({

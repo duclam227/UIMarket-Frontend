@@ -18,7 +18,7 @@ import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 
-import { FormInput, PageWithNavbar } from '../../components';
+import { FormInput, PageWithNavbar, ValidationErrorMessage } from '../../components';
 import { RichTextEditor } from '../../components';
 import { getErrorMessage } from '../../app/util';
 import { navbarBranches } from '../../app/util/config';
@@ -56,9 +56,13 @@ const AskAQuestionPage = ({ intl }: any) => {
     id: 'AskAQuestionPage.questionTitlePlaceholder',
     defaultMessage: 'e.g How do I...',
   });
-  const questionBody = (
-    <FormattedMessage id="AskAQuestionPage.questionBody" defaultMessage="Body" />
-  );
+  // const questionBody = (
+  //   <FormattedMessage id="AskAQuestionPage.questionBody" defaultMessage="Body" />
+  // );
+  const questionBody = intl.formatMessage({
+    id: 'AskAQuestionPage.questionBody',
+    defaultMessage: 'Body',
+  });
   const questionTags = intl.formatMessage({
     id: 'AskAQuestionPage.questionTags',
     defaultMessage: 'Tags',
@@ -67,6 +71,9 @@ const AskAQuestionPage = ({ intl }: any) => {
   const questionTagsPlaceholder = intl.formatMessage({
     id: 'AskAQuestionPage.questionTagsPlaceholder',
     defaultMessage: 'e.g UI, color, alignment, ...',
+  });
+  const bountyLabel = intl.formatMessage({
+    id: 'AskAQuestionPage.bountyLabel',
   });
   const addBountyLabel = (
     <FormattedMessage
@@ -96,6 +103,9 @@ const AskAQuestionPage = ({ intl }: any) => {
     id: 'AskAQuestionPage.addBountyInputPlaceholder',
     defaultMessage: '$10',
   });
+  const bountyDueDateText = intl.formatMessage({
+    id: 'AskAQuestionPage.bountyDueDateText',
+  });
   const submitBtnText = (
     <FormattedMessage
       id="AskAQuestionPage.submitBtnText"
@@ -111,11 +121,58 @@ const AskAQuestionPage = ({ intl }: any) => {
   }
   const navigate = useNavigate();
   const schema = Joi.object({
-    title: Joi.string().min(10).max(100).required().label('Title'),
-    body: Joi.string().min(20).required().label('Body'),
-    tags: Joi.string().allow('', null).label('Tags'),
-    bounty: Joi.number().allow(null).greater(0).max(balance).label('Bounty amount'),
-    bountyDueDate: Joi.date().allow(null).greater(new Date()).label('Due date'),
+    title: Joi.string()
+      .min(10)
+      .max(100)
+      .required()
+      .label(questionTitle)
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'string.min': intl.formatMessage({ id: 'FormValidation.stringMin' }),
+        'string.max': intl.formatMessage({ id: 'FormValidation.stringMax' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
+    body: Joi.string()
+      .min(20)
+      .required()
+      .label(questionBody)
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'string.min': intl.formatMessage({ id: 'FormValidation.stringMin' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
+    tags: Joi.string()
+      .allow('', null)
+      .label(questionTags)
+      .max(40)
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'string.max': intl.formatMessage({ id: 'FormValidation.stringMax' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
+    bounty: Joi.number()
+      .allow(null)
+      .greater(0)
+      .max(balance)
+      .label(bountyLabel)
+      .messages({
+        'number.base': intl.formatMessage({ id: 'FormValidation.numberBase' }),
+        'number.max': intl.formatMessage({ id: 'FormValidation.numberMax' }),
+        'number.greater': intl.formatMessage({ id: 'FormValidation.numberGreater' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
+    bountyDueDate: Joi.date()
+      .allow(null)
+      .greater(new Date())
+      .label(bountyDueDateText)
+      .messages({
+        'date.base': intl.formatMessage({ id: 'FormValidation.dateBase' }),
+        'date.greater': intl.formatMessage({ id: 'FormValidation.dateGreater' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
   });
 
   const {
@@ -222,11 +279,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                     />
                   )}
                 />
-                {errors.body && (
-                  <Alert variant="danger" className="mt-2">
-                    {errors.body.message}
-                  </Alert>
-                )}
+                {errors.body && <ValidationErrorMessage message={errors.body.message!} />}
               </Form.Group>
 
               <FormInput

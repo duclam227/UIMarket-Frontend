@@ -15,6 +15,7 @@ export { default as AdminNavbar } from './common/AdminNavbar/AdminNavbar';
 export { default as EmptyState } from './common/EmptyState/EmptyState';
 export { default as Footer } from './common/Footer/Footer';
 export { default as FormInput } from './common/FormInput/FormInput';
+export { default as ValidationErrorMessage } from './common/FormInput/ValidationErrorMessage';
 export { default as FileInput } from './common/FileInput/FileInput';
 export { default as GoToTopButton } from './common/GoToTopButton/GoToTopButton';
 export { default as ImageCarousel } from './common/ImageCarousel/ImageCarousel';

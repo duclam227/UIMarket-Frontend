@@ -1,4 +1,3 @@
-
 import { FC, useState } from 'react';
 import { Form, Modal, Button } from 'react-bootstrap';
 import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
@@ -21,11 +20,21 @@ interface IProps {
   intl: IntlShape;
 }
 
-const WithdrawModal: FC<IProps> = (props) => {
+const WithdrawModal: FC<IProps> = props => {
   const { balance, intl } = props;
+  const amountLabel = intl.formatMessage({
+    id: 'ShopWalletPage.withdrawModalAmountLabel',
+  });
 
   const schema = Joi.object({
-    amountValue: Joi.number().label('Amount').max(balance),
+    amountValue: Joi.number()
+      .label(amountLabel)
+      .max(balance)
+      .messages({
+        'number.base': intl.formatMessage({ id: 'FormValidation.numberBase' }),
+        'number.max': intl.formatMessage({ id: 'FormValidation.numberMax' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
   });
 
   const {
@@ -41,18 +50,20 @@ const WithdrawModal: FC<IProps> = (props) => {
 
   const handleWithdraw: SubmitHandler<any> = async data => {
     const { amountValue } = data;
-    paymentAPI.withdrawMoney(amountValue)
+    paymentAPI
+      .withdrawMoney(amountValue)
       .then((res: any) => {
         props.handleClose();
         toast.success(intl.formatMessage({ id: 'ShopWalletPage.successMessage' }), {
-          onOpen: () => props.handleReload()
+          onOpen: () => props.handleReload(),
         });
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.payment[errorMsg as keyof typeof errorCodes.payment];
-        toast.error(intl.formatMessage({ id: `ShopWalletPage.${errorCode}` }))
-      })
+        const errorCode: any =
+          errorCodes.payment[errorMsg as keyof typeof errorCodes.payment];
+        toast.error(intl.formatMessage({ id: `ShopWalletPage.${errorCode}` }));
+      });
   };
 
   return (
@@ -61,28 +72,30 @@ const WithdrawModal: FC<IProps> = (props) => {
       backdrop="static"
       onHide={() => props.handleClose()}
       centered
-      size='lg'
+      size="lg"
     >
       <Modal.Header closeButton>
         <Modal.Title>
-          <h3><FormattedMessage id='ShopWalletPage.withdrawModalTitle' /></h3>
+          <h3>
+            <FormattedMessage id="ShopWalletPage.withdrawModalTitle" />
+          </h3>
         </Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit(handleWithdraw)}>
         <Modal.Body className={style.withdrawModalBody}>
-
           <h5>
-            <FormattedMessage id='ShopWalletPage.withdrawCurrentBalance' values={{ money: balance }} />
+            <FormattedMessage
+              id="ShopWalletPage.withdrawCurrentBalance"
+              values={{ money: balance }}
+            />
           </h5>
 
           <Form.Group>
             <FormInput
-              name='amountValue'
-              label={intl.formatMessage({
-                id: 'ShopWalletPage.withdrawModalAmountLabel'
-              })}
+              name="amountValue"
+              label={amountLabel}
               placeholder={intl.formatMessage({
-                id: 'ShopWalletPage.withdrawModalAmountPlaceholder'
+                id: 'ShopWalletPage.withdrawModalAmountPlaceholder',
               })}
               control={control}
             />
@@ -90,16 +103,16 @@ const WithdrawModal: FC<IProps> = (props) => {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant='outline-primary' onClick={() => props.handleClose()}>
-            <FormattedMessage id='ReviewProduct.cancelButtonLabel' />
+          <Button variant="outline-primary" onClick={() => props.handleClose()}>
+            <FormattedMessage id="ReviewProduct.cancelButtonLabel" />
           </Button>
-          <Button type='submit'>
-            <FormattedMessage id='ReviewProduct.submitButtonLabel' />
+          <Button type="submit">
+            <FormattedMessage id="ReviewProduct.submitButtonLabel" />
           </Button>
         </Modal.Footer>
       </Form>
     </Modal>
-  )
+  );
 };
 
 export default injectIntl(WithdrawModal);

@@ -68,12 +68,25 @@ const ResetForgetPasswordForm: FC<{ intl: IntlShape }> = ({ intl }) => {
   const navigate = useNavigate();
 
   const schema = Joi.object({
-    password: Joi.string().required().label('New password'),
+    password: Joi.string()
+      .required()
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      })
+      .label(intl.formatMessage({ id: 'FormValidation.labelPassword' })),
     confirmPassword: Joi.any()
       .equal(Joi.ref('password'))
       .required()
-      .label('Confirm password')
-      .options({ messages: { 'any.only': '{{#label}} does not match' } }),
+      .label(intl.formatMessage({ id: 'FormValidation.labelConfirmPassword' }))
+      // .options({ messages: { 'any.only': intl.formatMessage({ id: 'FormValidation.passwordNotMatch' }) } })
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+        'any.only': intl.formatMessage({ id: 'FormValidation.passwordNotMatch' }),
+      }),
   });
   const { handleSubmit, control } = useForm<UpdatePasswordRHFProps>({
     resolver: joiResolver(schema),

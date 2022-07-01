@@ -108,7 +108,6 @@ const LoginForm: FC<loginFormProps> = props => {
       customerPassword: '',
     },
   });
-  console.log(errors);
 
   const handleLogin: SubmitHandler<authCredentials> = async data => {
     try {

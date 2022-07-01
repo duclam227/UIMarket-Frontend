@@ -24,8 +24,10 @@ interface IProps {
   intl: IntlShape;
 }
 
-const RequestRefundPage: FC<IProps> = (props) => {
+const RequestRefundPage: FC<IProps> = props => {
   const { intl } = props;
+
+  const reasonLabel = intl.formatMessage({ id: 'RequestRefundPage.reasonLabel' });
 
   const { id } = useParams();
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -37,7 +39,16 @@ const RequestRefundPage: FC<IProps> = (props) => {
   const navigate = useNavigate();
 
   const schema = Joi.object({
-    refundReason: Joi.string().required().label('Reason').min(20),
+    refundReason: Joi.string()
+      .required()
+      .label(reasonLabel)
+      .min(20)
+      .messages({
+        'string.base': intl.formatMessage({ id: 'FormValidation.stringBase' }),
+        'string.empty': intl.formatMessage({ id: 'FormValidation.stringEmpty' }),
+        'string.min': intl.formatMessage({ id: 'FormValidation.stringMin' }),
+        'any.required': intl.formatMessage({ id: 'FormValidation.anyRequired' }),
+      }),
   });
 
   const {
@@ -57,7 +68,7 @@ const RequestRefundPage: FC<IProps> = (props) => {
     } else {
       setSelectedProducts([...selectedProducts, id]);
     }
-  }
+  };
 
   const uploadImagesToStorage = async (imagesFromInput: Array<File>) => {
     const imageUrls: Array<string> = [];
@@ -66,20 +77,22 @@ const RequestRefundPage: FC<IProps> = (props) => {
         const response: any = await s3API.getSignedUrl('images');
         const signedUploadUrl: string = response.url;
 
-        const responseUpload: any = await s3API.uploadToS3Bucket(signedUploadUrl, imagesFromInput[i]);
+        const responseUpload: any = await s3API.uploadToS3Bucket(
+          signedUploadUrl,
+          imagesFromInput[i],
+        );
         const imageUrl = signedUploadUrl.split('?')[0];
         imageUrls.push(imageUrl);
-
-      }
-      catch (error) {
+      } catch (error) {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.upload[errorMsg as keyof typeof errorCodes.upload];
+        const errorCode: any =
+          errorCodes.upload[errorMsg as keyof typeof errorCodes.upload];
         toast.error(intl.formatMessage({ id: `Upload.${errorCode}` }));
       }
     }
 
     return imageUrls;
-  }
+  };
 
   const uploadImage = async (imagesFromInput: Array<File>) => {
     const imageUrls: Array<string> = await uploadImagesToStorage(imagesFromInput);
@@ -92,24 +105,29 @@ const RequestRefundPage: FC<IProps> = (props) => {
 
   const handleRequestRefund: SubmitHandler<any> = async data => {
     const { refundReason } = data;
-    paymentAPI.requestRefund(invoiceDetail._id!, [...selectedProducts], refundReason, [...images]
-    )
+    paymentAPI
+      .requestRefund(invoiceDetail._id!, [...selectedProducts], refundReason, [...images])
       .then((res: any) => {
-        toast.success(intl.formatMessage({ id: 'RequestRefundPage.submitSuccessMessage' }), {
-          onClose: () => navigate('/purchases')
-        })
+        toast.success(
+          intl.formatMessage({ id: 'RequestRefundPage.submitSuccessMessage' }),
+          {
+            onClose: () => navigate('/purchases'),
+          },
+        );
       })
       .catch(error => {
         const errorMsg = getErrorMessage(error);
-        const errorCode: any = errorCodes.payment[errorMsg as keyof typeof errorCodes.payment];
+        const errorCode: any =
+          errorCodes.payment[errorMsg as keyof typeof errorCodes.payment];
         toast.error(intl.formatMessage({ id: `Payment.${errorCode}` }));
-      })
+      });
   };
 
   useEffect(() => {
     if (id) {
       setIsLoading(true);
-      invoiceAPI.getInvoiceById(id)
+      invoiceAPI
+        .getInvoiceById(id)
         .then((res: any) => {
           const { invoice } = res;
           const { productList, ...rest } = invoice;
@@ -122,35 +140,46 @@ const RequestRefundPage: FC<IProps> = (props) => {
         })
         .finally(() => {
           setIsLoading(false);
-        })
+        });
     }
-  }, [id])
+  }, [id]);
 
   return (
     <PageWithNavbar>
       <div className={style.wrapper}>
-        {isLoading
-          ? <Spinner animation='border' />
-          : <>
+        {isLoading ? (
+          <Spinner animation="border" />
+        ) : (
+          <>
             <section className={style.header}>
-              <h2><FormattedMessage id='RequestRefundPage.title' /></h2>
-              <h4><FormattedMessage id='RequestRefundPage.subtitle' /></h4>
-              <div className={style.warning}><FormattedMessage id='RequestRefundPage.warning' /></div>
+              <h2>
+                <FormattedMessage id="RequestRefundPage.title" />
+              </h2>
+              <h4>
+                <FormattedMessage id="RequestRefundPage.subtitle" />
+              </h4>
+              <div className={style.warning}>
+                <FormattedMessage id="RequestRefundPage.warning" />
+              </div>
             </section>
             <section className={style.container}>
               {productList && productList.length > 0
-                ? productList.map((product, index) => <Product
-                  key={index}
-                  product={product}
-                  handleToggleProduct={(id: string) => onToggleProductSelect(id)}
-                />)
-                : null
-              }
+                ? productList.map((product, index) => (
+                    <Product
+                      key={index}
+                      product={product}
+                      handleToggleProduct={(id: string) => onToggleProductSelect(id)}
+                    />
+                  ))
+                : null}
             </section>
-            <Form className={style.container} onSubmit={handleSubmit(handleRequestRefund)}>
+            <Form
+              className={style.container}
+              onSubmit={handleSubmit(handleRequestRefund)}
+            >
               <section className={classNames(style.form)}>
                 <FormInput
-                  label={intl.formatMessage({ id: 'RequestRefundPage.reasonLabel' })}
+                  label={reasonLabel}
                   name="refundReason"
                   control={control}
                   className={`mb-3`}
@@ -158,7 +187,7 @@ const RequestRefundPage: FC<IProps> = (props) => {
                 <br />
                 <Form.Group>
                   <Form.Label>
-                    <FormattedMessage id='RequestRefundPage.reasonLabel' />
+                    <FormattedMessage id="RequestRefundPage.reasonLabel" />
                   </Form.Label>
                   <ImageInput
                     multiple={true}
@@ -170,19 +199,20 @@ const RequestRefundPage: FC<IProps> = (props) => {
               </section>
 
               <Button
-                type='submit'
-                variant='primary'
-                disabled={!isDirty || !isValid || images.length < 1 || selectedProducts.length < 1}
+                type="submit"
+                variant="primary"
+                disabled={
+                  !isDirty || !isValid || images.length < 1 || selectedProducts.length < 1
+                }
               >
-                <FormattedMessage id='RequestRefundPage.submitLabel' />
+                <FormattedMessage id="RequestRefundPage.submitLabel" />
               </Button>
             </Form>
-
           </>
-        }
+        )}
       </div>
-    </PageWithNavbar >
-  )
+    </PageWithNavbar>
+  );
 };
 
 export default injectIntl(RequestRefundPage);
