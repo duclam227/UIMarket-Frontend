@@ -12,14 +12,11 @@ import {
   AdminRefundPage,
   AdminRefundDetailPage,
   AdminDashboardPage,
+  AdminUserDetailPage,
 } from '../../pages';
 
 const AdminRoutes = () => {
   const currentUser = useSelector((state: State) => state.auth.user);
-  // console.log(currentUser);
-  // if (!currentUser || !currentUser.isAdmin) return <Navigate to="/forbidden" replace />;
-  // if (!(params.tab! in ADMIN_TAB)) return <Navigate to="/not-found" replace />;
-  // else
   return (
     <PageWithNavbar branch="admin">
       <Routes>
@@ -28,7 +25,9 @@ const AdminRoutes = () => {
         <Route path="/shop-management" element={<AdminShopManagementPage />} />
         <Route path="/reports/:id" element={<AdminReportDetailPage />} />
         <Route path="/reports" element={<AdminReportPage />} />
-        <Route path="/user-management" element={<AdminUserManagementPage />} />
+        <Route path="/user-management/*" element={<AdminUserManagementPage />} />
+        <Route path="/user-management/:id/*" element={<AdminUserDetailPage />} />
+        <Route path="/user-management/:id" element={<Navigate to="forum" replace />} />
         <Route path="/dashboard" element={<AdminDashboardPage />} />
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
       </Routes>

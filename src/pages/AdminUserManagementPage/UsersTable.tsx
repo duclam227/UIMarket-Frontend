@@ -7,6 +7,7 @@ import { BsChevronDown } from 'react-icons/bs';
 import { Column, customer } from '../../app/util/interfaces';
 import { Table } from '../../components';
 import style from './AdminUserManagementPage.module.css';
+import { Link } from 'react-router-dom';
 
 interface Props {
   users: customer[] | null;
@@ -35,7 +36,14 @@ const UsersTable: FC<Props> = props => {
     id: 'AdminUserManagementPage.actionTableHeaderLabel',
   });
   const columns: Column[] = [
-    { path: 'customerName', label: nameTableHeaderLabel, bold: true },
+    {
+      key: 'customerName',
+      label: nameTableHeaderLabel,
+      bold: true,
+      content: (user: customer) => {
+        return <Link to={`${user._id}`}>{user.customerName}</Link>
+      }
+    },
     { path: 'customerEmail', label: emailTableHeaderLabel, width: 50 },
     {
       key: 'action',
