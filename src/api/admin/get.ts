@@ -94,7 +94,10 @@ class Get {
 				Authorization: `Bearer ${jwt}`,
 			},
 		};
-		return axiosClient.get(`${API_ENDPOINT}/users/${userId}`, config);
+		return axiosClient.get(
+			`${API_ENDPOINT}/users/${userId}/purchase-history?page=1&limit=100`,
+			config,
+		);
 	};
 }
 

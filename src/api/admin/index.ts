@@ -9,6 +9,7 @@ const adminAPI = {
 	getAllRefunds: get.getAllRefunds,
 	getRefundDetails: get.getRefundDetails,
 	getUserDetails: get.getUserDetails,
+	getShopOrders: get.getShopOrders,
 
 	acceptRefund: post.acceptRefund,
 	rejectRefund: post.rejectRefund,
