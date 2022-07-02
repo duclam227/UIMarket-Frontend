@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import style from './FormInput.module.css';
 interface Props {
-  message: string;
+  message: any;
 }
 const ValidationErrorMessage: FC<Props> = props => {
   const { message } = props;
