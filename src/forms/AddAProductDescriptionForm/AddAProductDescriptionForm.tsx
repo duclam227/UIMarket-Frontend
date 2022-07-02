@@ -155,7 +155,7 @@ const AddAProductDescriptionForm: React.FC<Props> = (props) => {
           )}
         />
         {errors.productDescription && (
-          <ValidationErrorMessage message={errors.productDescription.message}/>
+          <ValidationErrorMessage message={errors.productDescription.message!}/>
         )}
       </Form.Group>
     </Form >
