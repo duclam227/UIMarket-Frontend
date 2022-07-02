@@ -13,6 +13,7 @@ export { default as AdminReportPage } from './AdminReportPage/AdminReportPage';
 export {
 	default as AdminShopManagementPage,
 } from './AdminShopManagementPage/AdminShopManagementPage';
+export { default as AdminUserDetailPage } from './AdminUserDetailPage/AdminUserDetailPage';
 export {
 	default as AdminUserManagementPage,
 } from './AdminUserManagementPage/AdminUserManagementPage';

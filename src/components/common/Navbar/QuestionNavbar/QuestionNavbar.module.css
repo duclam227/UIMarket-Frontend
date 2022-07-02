@@ -2,71 +2,70 @@
 @import url('../../../../app/util/propertySet.css');
 
 .subNavbar {
-  display: flex;
-  flex-direction: row;
+	display: flex;
+	flex-direction: row;
 
-  width: 100%;
-  height: 50px;
-  box-sizing: border-box;
-  background-color: white;
-  border-bottom: 1px solid #f7f7f8;
-  font-size: 0.9rem;
+	width: 100%;
+	height: 50px;
+	box-sizing: border-box;
+	background-color: white;
+	border-bottom: 1px solid #f7f7f8;
+	font-size: 0.9rem;
 
-  align-items: center;
+	align-items: center;
 }
 
-
 .leftSide {
-  display: flex;
-  flex-direction: row;
+	display: flex;
+	flex-direction: row;
 }
 
 .rightSide::before {
-  content: ' ';
+	content: ' ';
 
-  position: absolute;
-  left: 0;
+	position: absolute;
+	left: 0;
 
-  width: 1px;
-  height: 50%;
-  border-left: 1px solid black;
+	width: 1px;
+	height: 50%;
+	border-left: 1px solid black;
 }
 
 .rightSide {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-  position: relative;
+	position: relative;
 
-  height: 100%;
+	height: 100%;
 }
 
 .trendButton {
-  flex-direction: row;
-  gap: 5px;
+	flex-direction: row;
+	gap: 5px;
 
-  color: var(--pink-600);
+	color: var(--pink-600);
 }
 
 .button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-  height: 100%;
-  margin: 0 5px;
+	height: 100%;
+	margin: 0 5px;
 
-  background-color: transparent;
-  border: none;
+	background-color: transparent;
+	border: none;
 }
 
 .button:hover {
-  color: var(--themeColor);
+	color: var(--themeColor);
 }
 
 @media (min-width: 768px) {
-  .subNavbar {
-    font-size: medium;
-  }
+	.subNavbar {
+		font-size: medium;
+	}
 }

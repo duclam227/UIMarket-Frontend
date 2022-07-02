@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl';
 const QuestionNavbar = () => {
   return (
     <nav className={style.subNavbar}>
-      <div className={'container-fluid ms-1'}>
+      <div className={'container-fluid d-flex align-items-center'}>
         <section className={style.leftSide}>
           <Link to="/products">
             <button className={classNames(style.button, style.trendButton)}>

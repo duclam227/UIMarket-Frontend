@@ -53,7 +53,7 @@ const AdminNavbar = () => {
     },
   ];
   return (
-    <nav className={`d-flex justify-content-between border border-bottom p-2`}>
+    <nav className={`d-flex justify-content-between border border-bottom p-2 bg-light`}>
       <LogoIcon className={`${style.logo}`} />
       <ul
         className={`nav nav-pills justify-content-center align-items-center ${style.navItemWrapper}`}
