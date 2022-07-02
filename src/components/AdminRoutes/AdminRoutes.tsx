@@ -27,7 +27,7 @@ const AdminRoutes = () => {
         <Route path="/reports" element={<AdminReportPage />} />
         <Route path="/user-management/*" element={<AdminUserManagementPage />} />
         <Route path="/user-management/:id/*" element={<AdminUserDetailPage />} />
-        <Route path="/user-management/:id" element={<Navigate to="forum" replace />} />
+        <Route path="/user-management/:id" element={<Navigate to="marketplace" replace />} />
         <Route path="/dashboard" element={<AdminDashboardPage />} />
         <Route path="/" element={<Navigate to="/dashboard" replace />} />
       </Routes>

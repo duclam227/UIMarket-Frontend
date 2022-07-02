@@ -16,6 +16,7 @@ import adminAPI from "../../api/admin";
 import classNames from "classnames";
 import SectionUserQuestions from "./SectionUserQuestions";
 import SectionUserAnswers from "./SectionUserAnswers";
+import SectionUserOrders from "./SectionUserOrders";
 
 interface IProps {
   intl: IntlShape;
@@ -29,6 +30,7 @@ const AdminUserDetailPage: FC<IProps> = (props) => {
   const [user, setUser] = useState<customer | null>(null);
   const [activity, setActivity] = useState<any>(null);
   const [productBought, setProductBought] = useState<any>(null);
+  const [orders, setOrders] = useState<any>(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -55,10 +57,18 @@ const AdminUserDetailPage: FC<IProps> = (props) => {
         })
     }
 
+    const getOrders = () => {
+      adminAPI.getShopOrders(id!)
+        .then((res: any) => {
+          setOrders(res.products);
+        })
+    }
+
     try {
       getUserProfile();
       getUserActivity();
       getProductBought();
+      getOrders();
       setIsLoading(false);
     }
     catch (error) {
@@ -78,14 +88,14 @@ const AdminUserDetailPage: FC<IProps> = (props) => {
           <SectionUserPanel user={user!} activity={{ ...activity, productBought }} />
           <div className={style.branchDetail}>
             <div className={style.tabRow}>
-              {/* <NavLink
+              <NavLink
                 className={
                   ({ isActive }: { isActive: any }) => isActive ? classNames(style.tabButton, style.active) : style.tabButton
                 }
                 to='marketplace'
               >
                 <FormattedMessage id='AdminUserDetailPage.Marketplace' />
-              </NavLink> */}
+              </NavLink>
               <NavLink
                 className={
                   ({ isActive }: { isActive: any }) => isActive ? classNames(style.tabButton, style.active) : style.tabButton
@@ -100,7 +110,7 @@ const AdminUserDetailPage: FC<IProps> = (props) => {
               <Routes>
                 <Route path='marketplace' element={<>
                   <section className={style.section}>
-                    <SectionUserQuestions questions={activity?.questions!} />
+                    <SectionUserOrders orders={orders!} />
                   </section>
                 </>}
                 />
