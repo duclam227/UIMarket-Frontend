@@ -57,6 +57,13 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
       return;
     }
 
+
+    const oldVoteStatus: any = { ...voteStatus };
+
+    props.handleVoteStatus({
+      upvote: !oldVoteStatus.upvote,
+      downvote: oldVoteStatus.downvote ? false : oldVoteStatus.downvote
+    });
     voteAPI.upvote('Question', question._id, question._id)
       .then((res: any) => {
         switch (res) {
@@ -66,12 +73,10 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
             } else {
               setUpvote(upvote + 1);
             }
-            props.handleVoteStatus({ upvote: true, downvote: false });
             break;
           }
           case 'UNVOTED': {
             setUpvote(upvote - 1);
-            props.handleVoteStatus({ upvote: false, downvote: false });
             break;
           }
         }
@@ -80,6 +85,7 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
         const errorMsg = getErrorMessage(error);
         const errorCode: any = errorCodes.voting[errorMsg as keyof typeof errorCodes.voting];
         toast.error(intl.formatMessage({ id: `Vote.${errorCode}` }));
+        props.handleVoteStatus({ ...oldVoteStatus });
       })
       .finally(() => {
         setVoteInProgress(false);
@@ -99,6 +105,12 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
       return;
     }
 
+    const oldVoteStatus: any = { ...voteStatus };
+
+    props.handleVoteStatus({
+      upvote: oldVoteStatus.upvote ? false : oldVoteStatus.upvote,
+      downvote: !oldVoteStatus.downvote
+    });
     voteAPI.downvote('Question', question._id, question._id)
       .then((res: any) => {
         switch (res) {
@@ -108,12 +120,10 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
             } else {
               setDownvote(downvote + 1);
             }
-            props.handleVoteStatus({ upvote: false, downvote: true });
             break;
           }
           case 'UNVOTED': {
             setDownvote(downvote - 1);
-            props.handleVoteStatus({ upvote: false, downvote: false });
             break;
           }
         }
@@ -122,6 +132,7 @@ const SectionQuestionVoter: FC<VoterProps> = (props) => {
         const errorMsg = getErrorMessage(error);
         const errorCode: any = errorCodes.voting[errorMsg as keyof typeof errorCodes.voting];
         toast.error(intl.formatMessage({ id: `Vote.${errorCode}` }));
+        props.handleVoteStatus({ ...oldVoteStatus });
       })
       .finally(() => {
         setVoteInProgress(false);
