@@ -344,6 +344,7 @@ const AskAQuestionPage = ({ intl }: any) => {
                     control={control}
                     type="date"
                     labelClassName={style.label}
+                    className={`mt-3`}
                   />
                 </Row>
               </Card.Body>
