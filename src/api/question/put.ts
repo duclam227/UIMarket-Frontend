@@ -18,7 +18,7 @@ class Put {
       {
         questionTitle: question.title,
         questionContent: question.body,
-        questionTags: question.tags,
+        questionTag: question.tags,
         questionBounty: question.bounty,
         bountyDueDate: question.bountyDueDate,
       },
