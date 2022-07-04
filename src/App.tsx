@@ -56,6 +56,7 @@ import {
   TagListPage,
   ShopStatisticPage,
   AccountBannedPage,
+  LicenseLookupPage,
 } from './pages';
 import ConfirmPaymentPage from './pages/ConfirmPaymentPage/ConfirmPaymentPage';
 import { logInWithJWT } from './redux/index';
@@ -335,6 +336,7 @@ function App() {
             </RequireUser>
           }
         />
+        <Route path="/license-lookup" element={<LicenseLookupPage />} />
         <Route path="/forbidden" element={<ForbiddenPage />} />
         <Route path="/bad-request" element={<BadRequestPage />} />
         <Route path="/" element={<LandingPage />} />

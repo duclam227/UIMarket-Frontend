@@ -18,26 +18,47 @@ const Footer = () => {
     <footer className={style.wrapper}>
       <LogoIcon className={style.logo} />
       <section className={style.list}>
-        <Link to='/about'><FormattedMessage id='Footer.about' /></Link>
-        <Link to='/products/add'><FormattedMessage id='Footer.becomeAnArtist' /></Link>
-        <Link to='/contact'><FormattedMessage id='Footer.contactUs' /></Link>
-        {currentUser && currentUser.isAdmin
-          ? <Link to='/admin'><FormattedMessage id='Footer.adminDashboard' /></Link>
-          : null
-        }
+        <Link to="/about">
+          <FormattedMessage id="Footer.about" />
+        </Link>
+        <Link to="/products/add">
+          <FormattedMessage id="Footer.becomeAnArtist" />
+        </Link>
+        <Link to="/contact">
+          <FormattedMessage id="Footer.contactUs" />
+        </Link>
+        <Link to="/license-lookup">
+          <FormattedMessage id="SideNav.licenseLookupNavLinkLabel" />
+        </Link>
+        {currentUser && currentUser.isAdmin ? (
+          <Link to="/admin">
+            <FormattedMessage id="Footer.adminDashboard" />
+          </Link>
+        ) : null}
       </section>
       <div className={style.langSelector}>
-        <div className={classNames(style.langItem, context.locale !== 'en-US' ? style.inactive : '')}
+        <div
+          className={classNames(
+            style.langItem,
+            context.locale !== 'en-US' ? style.inactive : '',
+          )}
           onClick={() => context.changeLanguage('en-US')}
-        >English</div>
+        >
+          English
+        </div>
         <MdLanguage />
-        <div className={classNames(style.langItem, context.locale !== 'vi-VN' ? style.inactive : '')}
+        <div
+          className={classNames(
+            style.langItem,
+            context.locale !== 'vi-VN' ? style.inactive : '',
+          )}
           onClick={() => context.changeLanguage('vi-VN')}
-        >Tiếng Việt</div>
+        >
+          Tiếng Việt
+        </div>
       </div>
-
     </footer>
-  )
+  );
 };
 
 export default Footer;
