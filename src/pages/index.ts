@@ -34,6 +34,7 @@ export { default as EditQuestionPage } from './EditQuestionPage/EditQuestionPage
 export { default as EditShopPage } from './EditShopPage/EditShopPage';
 export { default as ForbiddenPage } from './ForbiddenPage/ForbiddenPage';
 export { default as LandingPage } from './LandingPage/LandingPage';
+export { default as LicenseLookupPage } from './LicenseLookupPage/LicenseLookupPage';
 export { default as ManageProductsPage } from './ManageProductsPage/ManageProductsPage';
 export { default as NotFoundPage } from './NotFoundPage/NotFound';
 export { default as PopularQuestionListsPage } from './QuestionsListPage/PopularQuestionListsPage';

@@ -48,6 +48,8 @@ const SideNav: FC<Props> = props => {
   );
   const purchasesNavLinkLabel = <FormattedMessage id="SideNav.purchasesNavLinkLabel" />;
   const reviewsNavLinkLabel = <FormattedMessage id="SideNav.reviewsNavLinkLabel" />;
+  const licenseLookupNavLinkLabel = <FormattedMessage id="SideNav.licenseLookupNavLinkLabel" />;
+  
   const myStoreNavGroupLabel = (
     <FormattedMessage id="SideNav.myStoreNavGroupLabel" defaultMessage="My Store" />
   );
@@ -100,6 +102,9 @@ const SideNav: FC<Props> = props => {
         </Link>
         <Link to={`/user/${currentUser?._id}/reviews`}>
           <li className={style.navLinkItem}>{reviewsNavLinkLabel}</li>
+        </Link>
+        <Link to={`/license-lookup`}>
+          <li className={style.navLinkItem}>{licenseLookupNavLinkLabel}</li>
         </Link>
       </ul>
 
