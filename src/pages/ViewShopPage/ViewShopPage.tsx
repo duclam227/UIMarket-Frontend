@@ -48,7 +48,6 @@ const EditShopPage: FunctionComponent = () => {
         setShopInfo(shop);
         const { customerAvatar } = shop.userId;
         setShopAvatar(customerAvatar);
-        console.log(currentUser);
       })
       .catch(error => {
         if (error.response && error.response.data.msg === 'shop-deactivated')
