@@ -6,7 +6,7 @@ import { FormattedMessage, injectIntl, IntlShape } from 'react-intl';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { FaPen } from 'react-icons/fa';
-import { BsFlag, BsExclamationOctagon } from 'react-icons/bs';
+import { BsFlag, BsEye } from 'react-icons/bs';
 
 import { State } from '../../redux/store';
 import { product } from '../../app/util/interfaces';
@@ -26,6 +26,7 @@ import SectionReviews from './SectionReviews';
 import style from './ViewProductPage.module.css';
 import SectionSeller from './SectionSeller';
 import SectionSuggestions from './SectionSuggestions';
+import LicenseDescription from '../../components/common/ProductLicense/LicenseDescription';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -35,6 +36,15 @@ interface IProps {
 
 const ViewProductPage: React.FC<IProps> = props => {
   const { intl } = props;
+
+  const licensePreviewButton = (
+    <FormattedMessage id="ViewProductPage.licensePreviewButton" />
+  );
+
+  const licensePreviewModalTitle = (
+    <FormattedMessage id="ViewProductPage.licensePreviewModalTitle" />
+  );
+
   const { id } = useParams();
 
   const currentUser = useSelector((state: State) => state.auth.user);
@@ -49,6 +59,7 @@ const ViewProductPage: React.FC<IProps> = props => {
   const [isBought, setIsBought] = useState<boolean | null>(null);
   const [isActive, setIsActive] = useState<boolean>(true);
   const [isDeleted, setIsDeleted] = useState<boolean>(false);
+  const [showLicensePreviewModal, setShowLicensePreviewModal] = useState<boolean>(false);
 
   const isCurrentUserSeller =
     currentUser?.customerEmail === product?.shopId.customerEmail;
@@ -58,6 +69,12 @@ const ViewProductPage: React.FC<IProps> = props => {
   };
   const handleCloseReportModal = () => {
     setShowReportModal(false);
+  };
+  const handleShowLicensePreviewModal = () => {
+    setShowLicensePreviewModal(true);
+  };
+  const handleCloseLicensePreviewModal = () => {
+    setShowLicensePreviewModal(false);
   };
 
   const goToPage = (pageNumber: number) => {
@@ -134,9 +151,7 @@ const ViewProductPage: React.FC<IProps> = props => {
         <div className={style.content}>
           <SectionImages images={product?.productPictures!} />
           <SectionDescription body={product?.productDescription!} />
-          <SectionSuggestions
-            product={product}
-          />
+          <SectionSuggestions product={product} />
           <SectionReviews
             reviews={reviews!}
             totalPages={totalPages}
@@ -159,6 +174,13 @@ const ViewProductPage: React.FC<IProps> = props => {
             isActive={isActive}
           />
           <SectionSeller product={product!} currentUser={currentUser!} />
+          <div
+            className={style.reportPanel}
+            onClick={() => handleShowLicensePreviewModal()}
+          >
+            <BsEye />
+            {licensePreviewButton}
+          </div>
           {currentUser && !isCurrentUserSeller && isActive ? (
             <div className={style.reportPanel} onClick={() => handleShowReportModal!()}>
               <BsFlag />
@@ -186,6 +208,14 @@ const ViewProductPage: React.FC<IProps> = props => {
             <FormattedMessage id="ViewProductPage.deleteModalBackBtnLabel" />
           </Button>
         </Modal.Footer>
+      </Modal>
+      <Modal show={showLicensePreviewModal} onHide={handleCloseLicensePreviewModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>{licensePreviewModalTitle}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <LicenseDescription />
+        </Modal.Body>
       </Modal>
     </PageWithNavbar>
   );

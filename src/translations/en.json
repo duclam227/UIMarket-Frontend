@@ -503,6 +503,8 @@
   "ViewProductPage.deleteModalBody1": "This product has been banned/deleted by our moderators or shop owner.",
   "ViewProductPage.deleteModalBody2": "If you think that there has been a mistake, please contact us to resolve this problem.",
   "ViewProductPage.deleteModalBackBtnLabel": "Ok, take me back",
+  "ViewProductPage.licensePreviewButton": "License preview",
+  "ViewProductPage.licensePreviewModalTitle": "License Preview",
   "ViewQuestionPage.addAnswer": "Send answer",
   "ViewQuestionPage.signUp": "Sign up",
   "ViewQuestionPage.connectingWordOr": "or",

@@ -4,6 +4,7 @@ import { FormattedDate } from 'react-intl';
 import { Link } from 'react-router-dom';
 import { LogoIcon } from '../..';
 import { LicenseInfo } from '../../../pages/ViewLicensePage/ViewLicensePage';
+import LicenseDescription from './LicenseDescription';
 
 import style from './ProductLicense.module.css';
 interface Props {
@@ -60,7 +61,18 @@ const ProductLicense: FC<Props> = props => {
 
           {/* License description section */}
           <section className={`mt-2 px-1`}>
-            <p>
+            <LicenseDescription />
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductLicense;
+
+{
+  /* <p>
               The DeeX License grants the user an ongoing, non-exclusive, worldwide
               license to utilize the digital work (“Licensed Asset”).
             </p>
@@ -123,12 +135,5 @@ const ProductLicense: FC<Props> = props => {
                 </span>
                 Falsely represent authorship and/or ownership of the Asset
               </li>
-            </ul>
-          </section>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default ProductLicense;
+            </ul> */
+}
