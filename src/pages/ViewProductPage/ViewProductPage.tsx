@@ -110,7 +110,7 @@ const ViewProductPage: React.FC<IProps> = props => {
   }, [id]);
 
   const handleGoBack = () => {
-    navigate(-1);
+    navigate('/products');
   };
 
   return isLoading || !product ? (
